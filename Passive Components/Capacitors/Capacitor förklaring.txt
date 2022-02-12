@@ -1,0 +1,45 @@
+
+Tänk dig att du har en väldigt liten kondensator. Kanske på 10nF. Då är 
+plattorna väldigt små och sitter tätt.Tänk såhär; Då kan helt enkelt 
+inte stooora lååånga vågor som tex 100Hz få plats på denna lilla yta. 
+Däremot höga frekvenser som har korta snabba vågor kanske på 100000Hz 
+kan lätt få plats på dessa små ytor och på så sätt kan man göra 
+ett filter. Sätts en kondensator i serie på detta sätt 
+bryter den för låga frekvenser men släpper igenom höga. 
+Kopplar man kondensatorn istället mot jord med ett motstånd 
+kortsluter man alla höga frekvenser och släpper igenom dom 
+som den egenliten spärrar för. 
+
+En spole, induktor, har precis motsatt effekt. Det blir trögt för 
+höga frekvenser men lätt för låga att ta sig igenom beroende på 
+induktansen (XL=2*pi*F*L) Då förstår du säkert att om man kombinerar 
+spolar och kondensatorer i olika kopplingar kan man skapa olika 
+filter som tex bara släpper igenom ett visst frekvensband tex 600Hz-1200Hz. 
+Ett såkallat bandpass filter. Finns även motsatt koppling (bandspärr) 
+så man spärrar för ett visst område osv osv.
+
+Har använt rc formeln och räknat ut att jag behöver ett motstånd 
+på 800 ohm samt en kondensator på 100 nF för att dela ca. 200 Hz 
+(198.944 i teorin). Kondensatorn sätter jag mellan signal och jord. 
+Motståndet i "i serie" med signalen. Men nu undrar jag bara: 
+Motståndet - skall det sitta före eller efter kondensatorn, 
+eller spelar det ingen roll? Före, komponenterna bildar då en spänningsdelare.
+
+Fortsätter med kondensator frågor. Hur stor resistans 
+ska man ha parallellt med kondensatorerna vid serie koppling 
+av elektrolyter?Lämpligen en tredjedel till hälften av märkspänningen 
+delat med max läckström enligt databladet. Det är iaf en konstruktionsregel 
+jag blivit lärd och det är sunt då man undviker att få för hög spänning 
+över en kondensator om en av dem läcker max och en läcker inget.
+
+Vad är då typisk läckström på en elektrolyt? Det är återvunna konidngar 
+från ett gammalt moderkort. Så jag har inte databled. Men det går ju 
+att leta. Men sådär mellan tummen och pekfingret?
+tja, 0,01 gånger kapacitansen gånger märkspänningen kan man 
+gissa om man inte har något datablad och om detta är under 4uA 
+räkna med 4 uA. Så en 16V 220uF konding räknat på detta värsta fallet bör 
+då hamna på 46kOhm och med min regel så dryga 20kOhm så är du säker. Det går 
+antagligen att använda högre värden utan problem, men det är 
+fingervisningen iaf - och är inte 20kOhm något problem 
+för kretsen i övrigt, så kör på det.
+
