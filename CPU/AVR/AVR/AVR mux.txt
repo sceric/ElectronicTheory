@@ -1,0 +1,66 @@
+
+
+1
+
+I'm trying to configure my ATMEGA328p to measure temperature using the TMP36GZ temperature sensor. However, the 10-bit ADC keeps returning 1023. I've tried disconnecting the temperature sensor (it should return 0 at this point for the ADC reading), but it still returns 1023. I'm not exactly sure what I'm doing wrong in my code:
+
+volatile uint16_t TMP36_VoutADCReading = 0U;
+
+void TMP36_Init( void )
+{
+   // Set the ADC prescaler to 128 (i.e., 16MHz/128 = 125KHz)
+   ADCSRA |= ( 1 << ADPS2 ) | ( 1 << ADPS1 ) | ( 1 << ADPS0 );
+
+   // Set the voltage reference from AVcc (i.e., 5V).
+   ADMUX |= ( 1 << REFS0 );
+
+   // Turn on the ADC.
+   ADCSRA |= ( 1 << ADEN );
+
+   // Do the initial conversion (i.e., the slowest conversion)
+   // to ensure that everything is up and running.
+   ADCSRA |= ( 1 << ADSC );
+}
+
+void TMP36_ADCRead( uint8_t channel )
+{
+   // Clear the previously read channel.
+   // ADCSRA &= 0xf0;                      <-- This was causing the bug.
+   ADMUX &= 0xf0;                          // <-- This is the fix. Thanks IgnacioVazquez-Abrams!
+
+   // Select the ADC channel to be read.
+   ADMUX |= channel;
+
+   // Start a new conversion. By default, this conversion will
+   // be performed in single conversion mode.
+   ADCSRA |= ( 1 << ADSC );
+
+   // Wait until the conversion is complete.
+   // while( ADCSRA & ( 1 << ADSC ) );        <-- This is probably also correct.
+   while( ADCSRA & ( 1 << ADIF ) );           // <-- Added. Thanks Adithya!
+
+   // Obtain the ADC reading from Vout.
+   TMP36_VoutADCReading = ADC;
+
+   // Clear the ADIF flag.
+   ADCSRA |= ( 1 << ADIF );                    // <-- Just added. Thanks Adithya!
+}
+
+int main( void )
+{
+   // Disable all interrupts for the time being.
+   cli();
+
+   // Initialize the TMP36GZ temperature sensor.
+   TMP36_Init();
+
+   // Enable all interrupts.
+   sei();
+
+   while( 1 )
+   {
+      // Compute the distance.
+      uint8_t channel = 1;
+      TMP36_ADCRead( channel ); // At this point, TMP36_VoutADCReading = 1023
+   }
+}

@@ -1,0 +1,10 @@
+
+
+K = Kilobyte = 1024 byte
+M = Megabyte = 1048 576 byte
+G = Gigabyte = 1 073 741 824 byte   ex: 16Gb = 1 073 741 824 x 8 bitar x 16 = 137438953472 bitar
+T = Tera = 1 099 511 627 776 byte
+P = Peta = 1125 899 906 842 624 byte
+E = Exa = 1 152 921 504 606 846 976 byte
+Z = Zetta = 1 180 591 620 717 411 303 424 byte
+Y = Yotta = 1 208 925 819 614 629 174 706 176 byte
