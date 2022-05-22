@@ -1,0 +1,4 @@
+
+Simbol Desing:	IPC-STD-2612
+
+Footprint:		IPC-STD-7351
