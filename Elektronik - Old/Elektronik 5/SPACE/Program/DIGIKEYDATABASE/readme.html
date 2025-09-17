@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=us-ascii">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./readme_files/filelist.xml">
+<title>Release 9.2 Capture CIS Starter DatabaseRelease Notes</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Timothy Brandis</o:Author>
+  <o:LastAuthor>Timothy Brandis</o:LastAuthor>
+  <o:Revision>4</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-08-30T23:50:00Z</o:Created>
+  <o:LastSaved>2001-08-31T15:24:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>444</o:Words>
+  <o:Characters>2531</o:Characters>
+  <o:Company>Cadence Design Systems, Inc</o:Company>
+  <o:Lines>21</o:Lines>
+  <o:Paragraphs>5</o:Paragraphs>
+  <o:CharactersWithSpaces>3108</o:CharactersWithSpaces>
+  <o:Version>9.4402</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor=white lang=EN-US link=blue vlink=blue style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span
+style='font-size:24.0pt;font-family:Arial;color:#990000'>Release 9.2 Capture
+CIS Starter Database<br>
+Release Notes</span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:13.5pt;font-family:Arial;color:#990000'>September, 2001 </span></p>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>This database contains
+information for more than 66,000 parts found in the Digi-Key catalog (<a
+href="http:\\www.digikey.com">http:\\www.digikey.com</a>). Roughly 45,000 of
+these Digi-Key parts have associated Orcad schematic graphical representations.
+Using this database, you can explore, query, filter, and place Digi-Key parts
+directly onto your Release 9.2 (or later version) Capture CIS schematic page. <o:p></o:p></span></p>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>Although this database is
+supplied in Microsoft Access Database format (DIGIKEY.MDB), you can transition
+the data into any database format you and your company require. When used with
+a database application less robust than Access, such a large database of parts
+will decrease CIS performance. For this reason, we recommend that you
+transition the database to SQL Server or an equivalent client/server database.
+If you must transition to a less robust database application, reduce the number
+of parts in the database by including only those that meet your immediate
+design requirements (your set of &quot;preferred parts&quot;). <o:p></o:p></span></p>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>This database is intended
+for Release 9.2 (or later version) Capture CIS users because the schematic
+parts associated in the database are only available from the new schematic
+parts libraries supplied on the Release 9.2 (or later version) CD. You will
+also need to download DIGIKEYLIBRARIES.ZIP from the CIS Starter Database
+download web page to complete the set of libraries required to support this
+database. <o:p></o:p></span></p>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>In addition to the starter
+database, the .ZIP file contains a Capture CIS Release 9.2 configuration file
+DIGIKEY.DBC. When prompted, it is important that you save the configuration
+file in the new format for use with your version of Capture CIS. If you use the
+database with another version of Capture CIS, you need to save the
+configuration file again for that version of Capture CIS. <o:p></o:p></span></p>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>For the configuration file
+and the database to operate as intended, you need to use the ODBC Access driver
+to create a data source named Digikey. This name is case-sensitive and needs to
+be created before opening the configuration file. <o:p></o:p></span></p>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>For information about
+creating the Data Source Name, see Setting up the ODBC data source in the OrCAD
+Component Information System User's Guide. <o:p></o:p></span></p>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>The content of the
+DIGIKEY.MDB file includes the following: <o:p></o:p></span></p>
+
+<div align=center>
+
+<table border=1 cellpadding=0 width="30%" style='width:30.0%;mso-cellspacing:
+ 1.5pt;border:outset 3.0pt;mso-padding-alt:0in 0in 0in 0in' height="30%">
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>Capacitors</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>2424</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>Connectors</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>18573</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>Discretes</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>5897</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>ICs</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>14009</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>Inductors</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>2295</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>Misc</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>8258</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>Potentiometers</span><span style='font-size:10.0pt;
+  mso-bidi-font-size:12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>503</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>Resistors</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>14867</span><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>Total</span></b><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>66826</span></b><span style='font-size:10.0pt;mso-bidi-font-size:
+  12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>For help with this
+database, you can reach PSD Customer Support by calling (877) 237-4911 between
+5:00 AM and 5:00 PM PST, Monday through Friday. <o:p></o:p></span></p>
+
+<p><span style='font-size:10.0pt;font-family:Arial'>Other sources for support
+include the following web sites: <o:p></o:p></span></p>
+
+<table border=1 cellpadding=0 style='mso-cellspacing:1.5pt;mso-padding-alt:
+ 0in 0in 0in 0in'>
+ <tr width="50%">
+  <td width="50%" valign=top style='width:50.0%;padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><left><span style='font-size:10.0pt;mso-bidi-font-size:
+  7.5pt;font-family:Arial'>PSD web site</span><span style='font-size:10.0pt;
+  mso-bidi-font-size:12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'><a href="http:\\www.pcb.cadence.com">www.pcb.cadence.com</a></span><span
+  style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>PSD customer support web page</span><span
+  style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'><a
+  href="http://www.pcb.cadence.com/technical/technical.asp">www.pcb.cadence.com/technical/technical.asp</a></span><span
+  style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'>PSD customer support email form</span><span
+  style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:7.5pt;
+  font-family:Arial'><a
+  href="http://www.pcb.cadence.com/technical/email_support.asp">www.pcb.cadence.com/technical/email_support.asp</a></span><span
+  style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:Arial'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+</html>

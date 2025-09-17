@@ -1,0 +1,23 @@
+* D:\Elektronik\SPACE\Program\Test\Schematic1.sch
+
+* Schematics Version 9.1 - Web Update 1
+* Fri May 28 23:31:33 2010
+
+
+
+** Analysis setup **
+.OP 
+.STMLIB "Schematic1.stl"
+
+
+* From [PSPICE NETLIST] section of pspiceev.ini:
+.lib "nom.lib"
+
+.INC "Schematic1.net"
+.INC "Schematic1.als"
+
+
+.probe
+
+
+.END
