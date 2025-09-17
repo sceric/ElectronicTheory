@@ -1,0 +1,50 @@
+<html><head><title>Exception4.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! visar hur egna exceptions kan definieras som enum:s</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+
+<font color="#444444">// definiera en egen datatyp för exceptions</font>
+<strong>enum</strong> <font color="#993333">Exception</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">Problem</font>, <font color="#993333">Illa</font>, <font color="#993333">Hemsk</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+ 
+<strong>void</strong> <font color="#993333">thrower</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>throw</strong> <font color="#4444FF">(</font> <font color="#993333">Exception</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// något illa har hänt!</font>
+  <strong>throw</strong> <font color="#993333">Illa</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>void</strong> <font color="#993333">catcher</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// försök anropa thrower och se vad som händer</font>
+  <font color="#993333">try</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">thrower</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>catch</strong> <font color="#4444FF">(</font> <font color="#993333">Exception</font> <font color="#993333">E</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#444444">// är det något vi kan hanter</font>
+    <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">E</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#993333">Problem</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+      <font color="#444444">// allt är ok, vi kan hantera problemt</font>
+      <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Ingen fara!&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+    <font color="#4444FF"><strong>}</strong></font>
+    <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+      <font color="#444444">// allvarligt problem</font>
+      <strong>throw</strong><font color="#4444FF">;</font>
+    <font color="#4444FF"><strong>}</strong></font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>void</strong> <font color="#993333">dummy</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// ingen 'try' här inte</font>
+  <font color="#993333">catcher</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// anropa 'dummy'</font>
+  <font color="#993333">try</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">dummy</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>catch</strong> <font color="#4444FF">(</font> <font color="#993333">Exception</font> <font color="#993333">E</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#444444">// vilken typ av exception är det frågan om?</font>
+    <strong>switch</strong> <font color="#4444FF">(</font> <font color="#993333">E</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <strong>case</strong> <font color="#993333">Problem</font> <font color="#4444FF">:</font> <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Ett litet problem&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font> <strong>break</strong><font color="#4444FF">;</font>
+    <strong>case</strong> <font color="#993333">Illa</font> <font color="#4444FF">:</font>    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Ett större problem&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font> <strong>break</strong><font color="#4444FF">;</font>
+    <strong>case</strong> <font color="#993333">Hemsk</font> <font color="#4444FF">:</font>   <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Ett hemskt problem&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font> <strong>break</strong><font color="#4444FF">;</font>
+    <font color="#4444FF"><strong>}</strong></font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

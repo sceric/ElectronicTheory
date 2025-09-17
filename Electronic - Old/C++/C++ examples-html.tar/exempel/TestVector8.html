@@ -1,0 +1,24 @@
+<html><head><title>TestVector8.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! testar klassen Vector (operator*(float))</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&quot;Vector8.h&quot;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">Vector</font> <font color="#993333">V1</font> <font color="#4444FF">(</font> <font color="#FF0000">1</font>, <font color="#FF0000">2</font>, <font color="#FF0000">3</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Vector</font> <font color="#993333">V2</font> <font color="#4444FF">(</font> <font color="#FF0000">6</font>, <font color="#FF0000">5</font>, <font color="#FF0000">4</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Vector</font> <font color="#993333">V3</font> <font color="#4444FF">(</font> <font color="#FF0000">1</font>, <font color="#FF0000">2</font>, <font color="#FF0000">3</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+ 
+  <font color="#444444">// jämför V1 och V2</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">V1</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#993333">V2</font> <font color="#4444FF">)</font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;V1 == V2&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <strong>else</strong>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;V1 != V2&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// jämför V1 och V3</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">V1</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#993333">V3</font> <font color="#4444FF">)</font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;V1 == V3&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <strong>else</strong>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;V1 != V3&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

@@ -1,0 +1,22 @@
+<html><head><title>CStringCompare3.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! jämför två C-strängar</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string.h&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">S1</font> <font color="#4444FF">=</font> <font color="#008000">&quot;Hej!&quot;</font><font color="#4444FF">;</font>
+  <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">S2</font> <font color="#4444FF">=</font> <font color="#008000">&quot;Hello world, this is main() calling&quot;</font><font color="#4444FF">;</font>
+  <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">S3</font> <font color="#4444FF">=</font> <font color="#008000">&quot;Hello world, this is main() calling&quot;</font><font color="#4444FF">;</font>
+ 
+  <font color="#444444">// jämförelse</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">strcmp</font> <font color="#4444FF">(</font> <font color="#993333">S1</font>, <font color="#993333">S2</font> <font color="#4444FF">)</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;S1 och S2 är lika&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <strong>else</strong>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;S1 och S2 är olika&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">strcmp</font> <font color="#4444FF">(</font> <font color="#993333">S2</font>, <font color="#993333">S3</font> <font color="#4444FF">)</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;S2 och S3 är lika&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <strong>else</strong>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;S2 och S3 är olika&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

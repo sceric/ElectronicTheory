@@ -1,0 +1,25 @@
+<html><head><title>Stack.h</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">// Stack.h</font>
+
+<font color="#444444">// se till att vi inte får problem om filen inkluderas multipla gånger</font>
+<font color="#0000FF">#ifndef STACK_H</font>
+<font color="#0000FF">#define STACK_H</font>
+
+<font color="#444444">// inkludera headers som kan behövas</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+
+<font color="#444444">// definiera ett element i stacken</font>
+<strong>struct</strong> <font color="#993333">Element</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// data för detta element</font>
+  <strong>char</strong> <font color="#993333">Data</font><font color="#4444FF">;</font>
+  <font color="#444444">// nästa element under detta i stacken</font>
+  <font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Previous</font><font color="#4444FF">;</font>  
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<font color="#444444">// funktionsprototyper</font>
+<font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">push</font> <font color="#4444FF">(</font><font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Top</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">pop</font> <font color="#4444FF">(</font><font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Top</font>, <strong>char</strong> <font color="#4444FF">&amp;</font> <font color="#993333">Data</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+<strong>bool</strong> <font color="#993333">isEmpty</font> <font color="#4444FF">(</font><font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Top</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+	 
+<font color="#0000FF">#endif</font>
+</pre></body></html>

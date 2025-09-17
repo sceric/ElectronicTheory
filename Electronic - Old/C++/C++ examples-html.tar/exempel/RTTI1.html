@@ -1,0 +1,65 @@
+<html><head><title>RTTI1.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;stdlib.h&gt;</font></font>
+
+<font color="#444444">// definiera våra klasser</font>
+<strong>class</strong> <font color="#993333">A</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <strong>virtual</strong> <strong>void</strong> <font color="#993333">foo</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+<strong>class</strong> <font color="#993333">B</font> <font color="#4444FF">:</font> <strong>public</strong> <font color="#993333">A</font> <font color="#4444FF"><strong>{</strong></font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+<strong>class</strong> <font color="#993333">C</font> <font color="#4444FF">:</font> <strong>public</strong> <font color="#993333">B</font> <font color="#4444FF"><strong>{</strong></font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<strong>void</strong> <font color="#993333">doIt</font> <font color="#4444FF">(</font><font color="#993333">A</font> <font color="#4444FF">*</font> <font color="#993333">Data</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">C</font> <font color="#4444FF">*</font> <font color="#993333">ObjC</font><font color="#4444FF">;</font>
+  <font color="#993333">B</font> <font color="#4444FF">*</font> <font color="#993333">ObjB</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// försök konvertera till ett 'C'</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">(</font> <font color="#993333">ObjC</font> <font color="#4444FF">=</font> <strong>dynamic_cast</strong><font color="#4444FF">&lt;</font><font color="#993333">C</font> <font color="#4444FF">*</font><font color="#4444FF">&gt;</font><font color="#4444FF">(</font><font color="#993333">Data</font><font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Objektet av typen C&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// ett 'B'?</font>
+  <strong>else</strong> <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">(</font> <font color="#993333">ObjB</font> <font color="#4444FF">=</font> <strong>dynamic_cast</strong><font color="#4444FF">&lt;</font><font color="#993333">B</font> <font color="#4444FF">*</font><font color="#4444FF">&gt;</font><font color="#4444FF">(</font><font color="#993333">Data</font><font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Objektet av typen B&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// måste vara ett 'A'</font>
+  <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Objektet av typen A&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+
+  <font color="#993333">A</font> <font color="#4444FF">*</font> <font color="#993333">Tmp</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// iterera och skapa 10 slumpmässiga objekt</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#FF0000">10</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <strong>int</strong> <font color="#993333">Type</font> <font color="#4444FF">=</font> <font color="#993333">rand</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF">%</font> <font color="#FF0000">3</font><font color="#4444FF">;</font>
+
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Skapade ett &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#4444FF">(</font><strong>char</strong><font color="#4444FF">)</font><font color="#4444FF">(</font><font color="#008000">'A'</font> <font color="#4444FF">+</font> <font color="#993333">Type</font><font color="#4444FF">)</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+
+    <font color="#444444">// vad blev det?</font>
+    <strong>switch</strong> <font color="#4444FF">(</font> <font color="#993333">Type</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <strong>case</strong> <font color="#FF0000">0</font> <font color="#4444FF">:</font>
+      <font color="#993333">Tmp</font> <font color="#4444FF">=</font> <strong>new</strong> <font color="#993333">A</font><font color="#4444FF">;</font>
+      <font color="#993333">doIt</font> <font color="#4444FF">(</font> <font color="#993333">Tmp</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+      <strong>break</strong><font color="#4444FF">;</font>
+    <strong>case</strong> <font color="#FF0000">1</font> <font color="#4444FF">:</font>
+      <font color="#993333">Tmp</font> <font color="#4444FF">=</font> <strong>new</strong> <font color="#993333">B</font><font color="#4444FF">;</font>
+      <font color="#993333">doIt</font> <font color="#4444FF">(</font> <font color="#993333">Tmp</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+      <strong>break</strong><font color="#4444FF">;</font>
+    <strong>case</strong> <font color="#FF0000">2</font> <font color="#4444FF">:</font>
+      <font color="#993333">Tmp</font> <font color="#4444FF">=</font> <strong>new</strong> <font color="#993333">C</font><font color="#4444FF">;</font>
+      <font color="#993333">doIt</font> <font color="#4444FF">(</font> <font color="#993333">Tmp</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+      <strong>break</strong><font color="#4444FF">;</font>
+    <font color="#4444FF"><strong>}</strong></font>
+
+    <font color="#444444">// frigör minne</font>
+    <strong>delete</strong> <font color="#993333">Tmp</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+
+</pre></body></html>

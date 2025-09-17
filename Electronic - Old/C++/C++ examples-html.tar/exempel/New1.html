@@ -1,0 +1,36 @@
+<html><head><title>New1.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! dynamiska allokering av en vektor</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+
+<strong>void</strong> <font color="#993333">in</font> <font color="#4444FF">(</font><strong>int</strong> <font color="#4444FF">*</font> <font color="#993333">Tal</font>, <strong>unsigned</strong> <strong>int</strong> <font color="#993333">Antal</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// iterera och läs in tal</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>unsigned</strong> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#993333">Antal</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Ge in ett tal: &quot;</font><font color="#4444FF">;</font>
+	<font color="#993333">cin</font> <font color="#4444FF">&gt;</font><font color="#4444FF">&gt;</font> <font color="#993333">Tal</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>void</strong> <font color="#993333">ut</font> <font color="#4444FF">(</font><strong>int</strong> <font color="#4444FF">*</font> <font color="#993333">Tal</font>, <strong>unsigned</strong> <strong>int</strong> <font color="#993333">Antal</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// iterera och skriv ut våra tal</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>unsigned</strong> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#993333">Antal</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Talet är: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Tal</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  
+  <strong>unsigned</strong> <strong>int</strong> <font color="#993333">Antal</font><font color="#4444FF">;</font>
+  <strong>int</strong> <font color="#4444FF">*</font> <font color="#993333">Vektor</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// hur många tal önskas?</font>
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Antalet tal i vektorn: &quot;</font><font color="#4444FF">;</font>
+  <font color="#993333">cin</font> <font color="#4444FF">&gt;</font><font color="#4444FF">&gt;</font> <font color="#993333">Antal</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// allokera en vektor för att hålla alla tal</font>
+  <font color="#993333">Vektor</font> <font color="#4444FF">=</font> <strong>new</strong> <strong>int</strong> <font color="#4444FF">[</font> <font color="#993333">Antal</font> <font color="#4444FF">]</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// läs in data och skriv sedan ut igen</font>
+  <font color="#993333">in</font> <font color="#4444FF">(</font> <font color="#993333">Vektor</font>, <font color="#993333">Antal</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">ut</font> <font color="#4444FF">(</font> <font color="#993333">Vektor</font>, <font color="#993333">Antal</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

@@ -1,0 +1,23 @@
+<html><head><title>StringStream3.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! demonstrerar hur enskilda ord kan läsas ur en sträng med istrstream</font>
+<font color="#0000FF">#include <font color="#008000">&lt;strstream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">string</font> <font color="#993333">Rad</font><font color="#4444FF">;</font>
+  <font color="#993333">string</font> <font color="#993333">Ord</font><font color="#4444FF">;</font>
+  <strong>int</strong> <font color="#993333">Antal</font> <font color="#4444FF">=</font> <font color="#FF0000">1</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// läs in en rad</font>
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Ge en rad med text: &quot;</font><font color="#4444FF">;</font>
+  <font color="#993333">getline</font> <font color="#4444FF">(</font> <font color="#993333">cin</font>, <font color="#993333">Rad</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// skapa stream</font>
+  <font color="#993333">istrstream</font> <font color="#993333">Stream</font> <font color="#4444FF">(</font> <font color="#993333">Rad</font>.<font color="#993333">c_str</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// iterera så länge det finns flera ord</font>
+  <strong>while</strong> <font color="#4444FF">(</font> <font color="#993333">Stream</font> <font color="#4444FF">&gt;</font><font color="#4444FF">&gt;</font> <font color="#993333">Ord</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Ord &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Antal</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; = &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Ord</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

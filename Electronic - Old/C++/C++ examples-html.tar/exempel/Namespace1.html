@@ -1,0 +1,15 @@
+<html><head><title>Namespace1.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! visar hur ett program som &lt;em&gt;inte&lt;/em&gt; fungerar</font>
+<font color="#0000FF">#include <font color="#008000">&lt;vector&gt;</font></font>
+
+<strong>class</strong> <font color="#993333">vector</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <font color="#993333">vector</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font><font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+
+  <font color="#444444">// skapa en vektor av vektorer. FUNGERAR INTE!</font>
+  <font color="#993333">vector</font><font color="#4444FF">&lt;</font><font color="#993333">vector</font><font color="#4444FF">&gt;</font> <font color="#993333">VektorContainer</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

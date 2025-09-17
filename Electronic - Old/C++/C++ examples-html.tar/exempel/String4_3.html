@@ -1,0 +1,20 @@
+<html><head><title>String4_3.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! testar access till tecken i strängar m.h.a. at()</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">string</font> <font color="#993333">S1</font> <font color="#4444FF">=</font> <font color="#008000">&quot;Hello world&quot;</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// ändra 'w' till 'W'</font>
+  <font color="#993333">try</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">S1</font>.<font color="#993333">at</font> <font color="#4444FF">(</font><font color="#FF0000">100</font><font color="#4444FF">)</font> <font color="#4444FF">=</font> <font color="#008000">'W'</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>catch</strong> <font color="#4444FF">(</font>...<font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Error&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+	<strong>return</strong> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">S1</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

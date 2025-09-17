@@ -1,0 +1,44 @@
+<html><head><title>Vector5.h</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! första definition av en vektorklass</font>
+<font color="#0000FF">#ifndef VECTOR_H</font>
+<font color="#0000FF">#define VECTOR_H</font>
+
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;math.h&gt;</font></font>
+
+<strong>class</strong> <font color="#993333">Vector</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <font color="#444444">// konstruktorer</font>
+  <font color="#993333">Vector</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Vector</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Vector</font> <font color="#4444FF">(</font><strong>const</strong> <strong>float</strong> <font color="#993333">X</font>, <strong>const</strong> <strong>float</strong> <font color="#993333">Y</font>, <strong>const</strong> <strong>float</strong> <font color="#993333">Z</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// accessera individuella komponenter</font>
+  <strong>void</strong> <font color="#993333">setX</font> <font color="#4444FF">(</font><strong>const</strong> <strong>float</strong> <font color="#993333">X</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_X</font> <font color="#4444FF">=</font> <font color="#993333">X</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>void</strong> <font color="#993333">setY</font> <font color="#4444FF">(</font><strong>const</strong> <strong>float</strong> <font color="#993333">Y</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Y</font> <font color="#4444FF">=</font> <font color="#993333">Y</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>void</strong> <font color="#993333">setZ</font> <font color="#4444FF">(</font><strong>const</strong> <strong>float</strong> <font color="#993333">Z</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Z</font> <font color="#4444FF">=</font> <font color="#993333">Z</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>float</strong> <font color="#993333">x</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_X</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>float</strong> <font color="#993333">y</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_Y</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>float</strong> <font color="#993333">z</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_Z</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+  <font color="#444444">// get the length of the vector</font>
+  <strong>float</strong> <font color="#993333">length</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+
+  <font color="#444444">// överlagrade operatorer</font>
+  <font color="#993333">Vector</font> <strong>operator</strong><font color="#4444FF">+</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  <font color="#993333">Vector</font> <strong>operator</strong><font color="#4444FF">-</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  <font color="#993333">Vector</font> <strong>operator</strong><font color="#4444FF">-</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  <font color="#993333">Vector</font> <strong>operator</strong><font color="#4444FF">*</font> <font color="#4444FF">(</font><strong>const</strong> <strong>float</strong> <font color="#993333">S</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  
+<strong>private</strong><font color="#4444FF">:</font>
+
+  <font color="#444444">// x, y och z-komponenterna</font>
+  <strong>float</strong> <font color="#993333">m_X</font><font color="#4444FF">;</font>
+  <strong>float</strong> <font color="#993333">m_Y</font><font color="#4444FF">;</font>
+  <strong>float</strong> <font color="#993333">m_Z</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<font color="#0000FF">#endif  <font color="#444444">// VECTOR_H</font></font>
+
+
+</pre></body></html>

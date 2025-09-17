@@ -1,0 +1,57 @@
+<html><head><title>Social.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! kontrollerar om en given sträng kan vara ett giltigt soccialskyddssignum</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;ctype.h&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;stdlib.h&gt;</font></font>
+
+<strong>bool</strong> <font color="#993333">okSignum</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">string</font> <font color="#4444FF">&amp;</font> <font color="#993333">Data</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// är längde ok?</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">Data</font>.<font color="#993333">length</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#FF0000">11</font> <font color="#4444FF">)</font> 
+	<font color="#444444">// kan inte vara ett signum</font>
+	<strong>return</strong> <strong>false</strong><font color="#4444FF">;</font>
+  
+  <font color="#444444">// först skall vi ha 6 siffror</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#FF0000">6</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">!</font> <font color="#993333">isdigit</font> <font color="#4444FF">(</font> <font color="#993333">Data</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font> <font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	  <font color="#444444">// ingen siffra</font>
+	  <strong>return</strong> <strong>false</strong><font color="#4444FF">;</font>
+	<font color="#4444FF"><strong>}</strong></font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// nästa skall vara ett '-'</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">Data</font><font color="#4444FF">[</font><font color="#FF0000">6</font><font color="#4444FF">]</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#008000">'-'</font> <font color="#4444FF">)</font>
+    <font color="#444444">// inget '-'</font>
+    <strong>return</strong> <strong>false</strong><font color="#4444FF">;</font>
+  
+  <font color="#444444">// sedan 4 alfanumeriska tecken</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">7</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#FF0000">11</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">!</font> <font color="#993333">isalnum</font> <font color="#4444FF">(</font> <font color="#993333">Data</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font> <font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+      <font color="#444444">// ingen siffra</font>
+      <strong>return</strong> <strong>false</strong><font color="#4444FF">;</font>
+    <font color="#4444FF"><strong>}</strong></font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// det kan vara ett signum</font>
+  <strong>return</strong> <strong>true</strong><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><strong>int</strong> <font color="#993333">argc</font>, <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#4444FF">]</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// verifiera antal parametrar</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">argc</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#FF0000">2</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Fel antal parametrar!&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Användning: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#FF0000">0</font><font color="#4444FF">]</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; signum&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+    <strong>return</strong> <font color="#993333">EXIT_FAILURE</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  
+  <font color="#993333">string</font> <font color="#993333">Signum</font> <font color="#4444FF">=</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#FF0000">1</font><font color="#4444FF">]</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// kolla ifall det är ett signum</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">okSignum</font> <font color="#4444FF">(</font> <font color="#993333">Signum</font> <font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Signum</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; kan vara ett giltigt socialskyddssignum.&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Signum</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; är inte ett giltigt socialskyddssignum.&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

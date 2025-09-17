@@ -1,0 +1,164 @@
+<html><head><title>Shape1.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+
+<font color="#444444">// definiera klassen 'Coordinate'</font>
+<strong>class</strong> <font color="#993333">Coordinate</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <font color="#444444">// konstruktorer</font>
+  <font color="#993333">Coordinate</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">X</font>, <strong>float</strong> <font color="#993333">Y</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_X</font> <font color="#4444FF">=</font> <font color="#993333">X</font><font color="#4444FF">;</font> <font color="#993333">m_Y</font> <font color="#4444FF">=</font> <font color="#993333">Y</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <font color="#993333">Coordinate</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Original</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_X</font> <font color="#4444FF">=</font> <font color="#993333">Original</font>.<font color="#993333">x</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font> <font color="#993333">m_Y</font> <font color="#4444FF">=</font> <font color="#993333">Original</font>.<font color="#993333">y</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <font color="#993333">Coordinate</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_X</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">m_Y</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+  <font color="#444444">// accessera medlemmar</font>
+  <strong>float</strong> <font color="#993333">x</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_X</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>float</strong> <font color="#993333">y</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_Y</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>void</strong> <font color="#993333">setX</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">X</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_X</font> <font color="#4444FF">=</font> <font color="#993333">X</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>void</strong> <font color="#993333">setY</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Y</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Y</font> <font color="#4444FF">=</font> <font color="#993333">Y</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<strong>private</strong><font color="#4444FF">:</font>
+  <font color="#444444">// medlemmar</font>
+  <strong>float</strong> <font color="#993333">m_X</font><font color="#4444FF">;</font>
+  <strong>float</strong> <font color="#993333">m_Y</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+
+<font color="#444444">// definiera klassen 'Shape'</font>
+<strong>class</strong> <font color="#993333">Shape</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <font color="#444444">// konstruktor</font>
+  <font color="#993333">Shape</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Origin</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// virtuella metoder för area och omkrets</font>
+  <strong>virtual</strong> <strong>float</strong> <font color="#993333">area</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  <strong>virtual</strong> <strong>float</strong> <font color="#993333">circum</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+
+  <font color="#444444">// position för figuren</font>
+  <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">origin</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  <strong>void</strong> <font color="#993333">setOrigin</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Origin</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+<strong>private</strong><font color="#4444FF">:</font>
+  <font color="#444444">// position</font>
+  <font color="#993333">Coordinate</font> <font color="#993333">m_Origin</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<font color="#993333">Shape</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Shape</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Origin</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">m_Origin</font> <font color="#4444FF">=</font> <font color="#993333">Origin</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>float</strong> <font color="#993333">Shape</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">area</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <strong>return</strong> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>float</strong> <font color="#993333">Shape</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">circum</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <strong>return</strong> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Shape</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">origin</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <strong>return</strong> <font color="#993333">m_Origin</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>void</strong> <font color="#993333">Shape</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">setOrigin</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Origin</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">m_Origin</font> <font color="#4444FF">=</font> <font color="#993333">Origin</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+
+<font color="#444444">// definiera klassen 'Circle'</font>
+<strong>class</strong> <font color="#993333">Circle</font> <font color="#4444FF">:</font> <strong>public</strong> <font color="#993333">Shape</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <font color="#444444">// konstruktor</font>
+  <font color="#993333">Circle</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Origin</font>, <strong>float</strong> <font color="#993333">Radius</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// överlagrade metoder</font>
+  <strong>virtual</strong> <strong>float</strong> <font color="#993333">area</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  <strong>virtual</strong> <strong>float</strong> <font color="#993333">circum</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  
+  <font color="#444444">// accessera radien</font>
+  <strong>float</strong> <font color="#993333">radius</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  <strong>void</strong> <font color="#993333">setRadius</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Radius</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+<strong>private</strong><font color="#4444FF">:</font>
+  <font color="#444444">// radie</font>
+  <strong>float</strong> <font color="#993333">m_Radius</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<font color="#993333">Circle</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Circle</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Origin</font>, <strong>float</strong> <font color="#993333">Radius</font><font color="#4444FF">)</font> <font color="#4444FF">:</font> <font color="#993333">Shape</font> <font color="#4444FF">(</font><font color="#993333">Origin</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">m_Radius</font> <font color="#4444FF">=</font> <font color="#993333">Radius</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+  
+<strong>float</strong> <font color="#993333">Circle</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">radius</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <strong>return</strong> <font color="#993333">m_Radius</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>void</strong> <font color="#993333">Circle</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">setRadius</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Radius</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">m_Radius</font> <font color="#4444FF">=</font> <font color="#993333">Radius</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>float</strong> <font color="#993333">Circle</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">area</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// returnera en cirkles area</font>
+  <strong>return</strong> <font color="#FF0000">3.14</font> <font color="#4444FF">*</font> <font color="#993333">m_Radius</font> <font color="#4444FF">*</font> <font color="#993333">m_Radius</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>float</strong> <font color="#993333">Circle</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">circum</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// returnera en cirkles omkrets</font>
+  <strong>return</strong> <font color="#FF0000">2</font> <font color="#4444FF">*</font> <font color="#FF0000">3.14</font> <font color="#4444FF">*</font> <font color="#993333">m_Radius</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+
+<font color="#444444">// definiera klassen 'Rectangle'</font>
+<strong>class</strong> <font color="#993333">Rectangle</font> <font color="#4444FF">:</font> <strong>public</strong> <font color="#993333">Shape</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <font color="#444444">// konstruktor</font>
+  <font color="#993333">Rectangle</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Origin</font>,
+			 <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Corner1</font>, <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Corner2</font>,
+			 <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Corner3</font>, <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Corner4</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// överlagrade metoder</font>
+  <strong>virtual</strong> <strong>float</strong> <font color="#993333">area</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+  <strong>virtual</strong> <strong>float</strong> <font color="#993333">circum</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+
+<strong>private</strong><font color="#4444FF">:</font>
+  <font color="#444444">// de fyra hörnpunkterna</font>
+  <font color="#993333">Coordinate</font> <font color="#993333">m_Corners</font><font color="#4444FF">[</font><font color="#FF0000">4</font><font color="#4444FF">]</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<font color="#993333">Rectangle</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Rectangle</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Origin</font>, <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Corner1</font>,
+					  <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Corner2</font>, <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Corner3</font>,
+					  <strong>const</strong> <font color="#993333">Coordinate</font> <font color="#4444FF">&amp;</font> <font color="#993333">Corner4</font><font color="#4444FF">)</font> <font color="#4444FF">:</font> <font color="#993333">Shape</font> <font color="#4444FF">(</font><font color="#993333">Origin</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">m_Corners</font><font color="#4444FF">[</font><font color="#FF0000">0</font><font color="#4444FF">]</font> <font color="#4444FF">=</font> <font color="#993333">Corner1</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Corners</font><font color="#4444FF">[</font><font color="#FF0000">1</font><font color="#4444FF">]</font> <font color="#4444FF">=</font> <font color="#993333">Corner2</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Corners</font><font color="#4444FF">[</font><font color="#FF0000">2</font><font color="#4444FF">]</font> <font color="#4444FF">=</font> <font color="#993333">Corner3</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Corners</font><font color="#4444FF">[</font><font color="#FF0000">3</font><font color="#4444FF">]</font> <font color="#4444FF">=</font> <font color="#993333">Corner4</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>float</strong> <font color="#993333">Rectangle</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">area</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// returnera en rektangels area</font>
+  <strong>return</strong> <font color="#FF0000">10</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>float</strong> <font color="#993333">Rectangle</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">circum</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// returnera en rektangels omkrets</font>
+  <strong>return</strong> <font color="#FF0000">10</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+
+<strong>void</strong> <font color="#993333">print</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Shape</font> <font color="#4444FF">&amp;</font> <font color="#993333">S</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+   <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Arean: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">S</font>.<font color="#993333">area</font> <font color="#4444FF">(</font><font color="#4444FF">)</font>
+		<font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;, omkretsen: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">S</font>.<font color="#993333">circum</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">Coordinate</font> <font color="#993333">Origin</font> <font color="#4444FF">(</font> <font color="#FF0000">10</font>, <font color="#FF0000">10</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Coordinate</font> <font color="#993333">Corner1</font> <font color="#4444FF">(</font><font color="#FF0000">0</font>, <font color="#FF0000">0</font> <font color="#4444FF">)</font>, <font color="#993333">Corner2</font> <font color="#4444FF">(</font> <font color="#FF0000">3</font>, <font color="#FF0000">0</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Coordinate</font> <font color="#993333">Corner3</font> <font color="#4444FF">(</font> <font color="#FF0000">3</font>, <font color="#FF0000">3</font> <font color="#4444FF">)</font>, <font color="#993333">Corner4</font> <font color="#4444FF">(</font> <font color="#FF0000">0</font>, <font color="#FF0000">3</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  
+  <font color="#993333">Circle</font> <font color="#993333">C1</font> <font color="#4444FF">(</font> <font color="#993333">Origin</font>, <font color="#FF0000">5.0</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Rectangle</font> <font color="#993333">R1</font> <font color="#4444FF">(</font><font color="#993333">Origin</font>, <font color="#993333">Corner1</font>, <font color="#993333">Corner2</font>, <font color="#993333">Corner3</font>, <font color="#993333">Corner4</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// skriv ut arean och omkretsen</font>
+  <font color="#993333">print</font> <font color="#4444FF">(</font> <font color="#993333">C1</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">print</font> <font color="#4444FF">(</font> <font color="#993333">R1</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+
+</pre></body></html>

@@ -1,0 +1,30 @@
+<html><head><title>Namespace4.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! visar hur ett program som använder namespaces med flera kalsser i</font>
+<font color="#0000FF">#include <font color="#008000">&lt;vector&gt;</font></font>
+
+<font color="#444444">// definiera ett nytt namespace</font>
+<strong>namespace</strong> <font color="#993333">math</font> <font color="#4444FF"><strong>{</strong></font>
+
+  <font color="#444444">// en matematisk vektor</font>
+  <strong>class</strong> <font color="#993333">vector</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>public</strong><font color="#4444FF">:</font>
+    <font color="#993333">vector</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font><font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+  <font color="#444444">// en matematisk matris</font>
+  <strong>class</strong> <font color="#993333">matrix</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>public</strong><font color="#4444FF">:</font>
+    <font color="#993333">matrix</font> <font color="#4444FF">(</font><strong>int</strong> <font color="#993333">X</font>, <strong>int</strong> <font color="#993333">Y</font><font color="#4444FF">)</font> <font color="#4444FF">:</font> <font color="#993333">m_X</font><font color="#4444FF">(</font><font color="#993333">X</font><font color="#4444FF">)</font>, <font color="#993333">m_Y</font><font color="#4444FF">(</font><font color="#993333">Y</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font><font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+  <strong>private</strong><font color="#4444FF">:</font>
+    <strong>int</strong> <font color="#993333">m_X</font>, <font color="#993333">m_Y</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// skapa en vektor av vektorer</font>
+  <font color="#993333">std</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">vector</font><font color="#4444FF">&lt;</font><font color="#993333">math</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">vector</font><font color="#4444FF">&gt;</font> <font color="#993333">VektorContainer</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// skapa en matrix</font>
+  <font color="#993333">math</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">matrix</font> <font color="#993333">M</font> <font color="#4444FF">(</font> <font color="#FF0000">3</font>, <font color="#FF0000">3</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

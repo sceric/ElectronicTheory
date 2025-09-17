@@ -1,0 +1,24 @@
+<html><head><title>StringStream2.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! demonstrerar hur tal kan konverteras till strängar med ostrstream</font>
+<font color="#0000FF">#include <font color="#008000">&lt;strstream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>float</strong> <font color="#993333">Tal</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// läs in ett tal</font>
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Ge flyttal: &quot;</font><font color="#4444FF">;</font>
+  <font color="#993333">cin</font> <font color="#4444FF">&gt;</font><font color="#4444FF">&gt;</font> <font color="#993333">Tal</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// skapa stream</font>
+  <font color="#993333">ostrstream</font> <font color="#993333">Stream</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// utför konverteringen</font>
+  <font color="#993333">Stream</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Tal</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// hämta det konverterade talet</font>
+  <font color="#993333">string</font> <font color="#993333">TalStrang</font> <font color="#4444FF">=</font> <font color="#993333">Stream</font>.<font color="#993333">str</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Talet som sträng: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">TalStrang</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

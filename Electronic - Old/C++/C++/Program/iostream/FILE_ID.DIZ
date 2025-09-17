@@ -1,0 +1,7 @@
+Turbo C++ Tutorial on <iostream.h> by Eric
+Nagler.  This is a tutorial on the use of the
+header file <iostream.h>, as implemented by
+Borland in its Turbo C++.  This tutorial
+assumes prior knowledge of C Language and
+assumes you have knowledge of member function
+and can write simple classes.

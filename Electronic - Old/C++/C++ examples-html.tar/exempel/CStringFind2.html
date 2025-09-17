@@ -1,0 +1,28 @@
+<html><head><title>CStringFind2.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! söker ett tecken ur en sträng med index()</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string.h&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">Found</font><font color="#4444FF">;</font>
+  <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">S</font> <font color="#4444FF">=</font> <font color="#008000">&quot;En sträng ur vilken vi söker text&quot;</font><font color="#4444FF">;</font>
+
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Söksträngen är: '&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">S</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;'&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// sök ett 'v'</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">(</font> <font color="#993333">Found</font> <font color="#4444FF">=</font> <font color="#993333">index</font> <font color="#4444FF">(</font><font color="#993333">S</font>, <font color="#008000">'v'</font> <font color="#4444FF">)</font><font color="#4444FF">)</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Hittade ett 'v' på index &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Found</font> <font color="#4444FF">-</font> <font color="#993333">S</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+ 	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Hittade inget 'v'&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+ 
+  <font color="#444444">// sök ett 'P'</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">(</font> <font color="#993333">Found</font> <font color="#4444FF">=</font> <font color="#993333">index</font> <font color="#4444FF">(</font><font color="#993333">S</font>, <font color="#008000">'P'</font> <font color="#4444FF">)</font><font color="#4444FF">)</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Hittade ett 'P' på index &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Found</font> <font color="#4444FF">-</font> <font color="#993333">S</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Hittade inget 'P'&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

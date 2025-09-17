@@ -1,0 +1,40 @@
+<html><head><title>DynamicVector2.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! bättre version av dynamisk vektorklass</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+
+<strong>class</strong> <font color="#993333">Vector</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <font color="#444444">// konstruktor och destruktor</font>
+  <font color="#993333">Vector</font> <font color="#4444FF">(</font><strong>unsigned</strong> <strong>int</strong> <font color="#993333">Size</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Data</font> <font color="#4444FF">=</font> <strong>new</strong> <strong>int</strong> <font color="#4444FF">[</font><font color="#993333">Size</font><font color="#4444FF">]</font><font color="#4444FF">;</font> <font color="#993333">m_Size</font> <font color="#4444FF">=</font> <font color="#993333">Size</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+  ~<font color="#993333">Vector</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <strong>delete</strong> <font color="#4444FF">[</font><font color="#4444FF">]</font> <font color="#993333">m_Data</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+  
+  <font color="#444444">// accessmetoder</font>
+  <strong>void</strong> <font color="#993333">set</font> <font color="#4444FF">(</font><strong>unsigned</strong> <strong>int</strong> <font color="#993333">Index</font>, <strong>int</strong> <font color="#993333">Value</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Data</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font> <font color="#4444FF">=</font> <font color="#993333">Value</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+  <strong>int</strong> <font color="#993333">get</font> <font color="#4444FF">(</font><strong>unsigned</strong> <strong>int</strong> <font color="#993333">Index</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_Data</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// storleken på vektorn</font>
+  <strong>unsigned</strong> <strong>int</strong> <font color="#993333">size</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_Size</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+
+<strong>private</strong><font color="#4444FF">:</font>
+  <font color="#444444">// pekare till datablock</font>
+  <strong>int</strong> <font color="#4444FF">*</font> <font color="#993333">m_Data</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// storlek på vektor</font>
+  <strong>unsigned</strong> <strong>int</strong> <font color="#993333">m_Size</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+  
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+
+  <font color="#444444">// skapa en dynamisk vektor med 10 element</font>
+  <font color="#993333">Vector</font> <font color="#993333">Source</font> <font color="#4444FF">(</font> <font color="#FF0000">10</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// skapa en kopia</font>
+  <font color="#993333">Vector</font> <font color="#993333">Destination</font> <font color="#4444FF">(</font> <font color="#993333">Source</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// fyll den ena med data</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#FF0000">100</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">Source</font>.<font color="#993333">set</font> <font color="#4444FF">(</font> <font color="#993333">Index</font>, <font color="#993333">Index</font> <font color="#4444FF">*</font> <font color="#FF0000">10</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

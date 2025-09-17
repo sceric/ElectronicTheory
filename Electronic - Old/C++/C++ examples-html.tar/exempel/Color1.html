@@ -1,0 +1,46 @@
+<html><head><title>Color1.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! implementation av klassen 'Color'</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+
+<font color="#444444">// definiera klasser 'Color'</font>
+<strong>class</strong> <font color="#993333">Color</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font>
+  <font color="#444444">// konstruktor</font>
+  <font color="#993333">Color</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Red</font> <font color="#4444FF">=</font> <font color="#FF0000">0.0</font>, <strong>float</strong> <font color="#993333">Blue</font> <font color="#4444FF">=</font> <font color="#FF0000">0.0</font>, <strong>float</strong> <font color="#993333">Green</font> <font color="#4444FF">=</font> <font color="#FF0000">0.0</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Color</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Color</font> <font color="#4444FF">&amp;</font> <font color="#993333">Original</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// accessera de enskilda komponenterna</font>
+  <strong>float</strong> <font color="#993333">red</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_Red</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+  <strong>float</strong> <font color="#993333">green</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_Green</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+  <strong>float</strong> <font color="#993333">blue</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> <strong>return</strong> <font color="#993333">m_Blue</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+  <strong>void</strong> <font color="#993333">setRed</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Red</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Red</font> <font color="#4444FF">=</font> <font color="#993333">Red</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+  <strong>void</strong> <font color="#993333">setGreen</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Green</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Green</font> <font color="#4444FF">=</font> <font color="#993333">Green</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+  <strong>void</strong> <font color="#993333">setBlue</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Blue</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Blue</font> <font color="#4444FF">=</font> <font color="#993333">Blue</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+
+<strong>private</strong><font color="#4444FF">:</font>
+  <font color="#444444">// de enskilda komponenterna</font>
+  <strong>float</strong> <font color="#993333">m_Red</font><font color="#4444FF">;</font>  
+  <strong>float</strong> <font color="#993333">m_Green</font><font color="#4444FF">;</font>  
+  <strong>float</strong> <font color="#993333">m_Blue</font><font color="#4444FF">;</font>   
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<font color="#993333">Color</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Color</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Red</font>, <strong>float</strong> <font color="#993333">Blue</font>, <strong>float</strong> <font color="#993333">Green</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">m_Red</font> <font color="#4444FF">=</font> <font color="#993333">Red</font><font color="#4444FF">;</font>  
+  <font color="#993333">m_Green</font><font color="#4444FF">=</font> <font color="#993333">Green</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Blue</font> <font color="#4444FF">=</font> <font color="#993333">Blue</font><font color="#4444FF">;</font> 
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#993333">Color</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Color</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Color</font> <font color="#4444FF">&amp;</font> <font color="#993333">Original</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">m_Red</font> <font color="#4444FF">=</font> <font color="#993333">Original</font>.<font color="#993333">red</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>  
+  <font color="#993333">m_Green</font><font color="#4444FF">=</font> <font color="#993333">Original</font>.<font color="#993333">green</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Blue</font> <font color="#4444FF">=</font> <font color="#993333">Original</font>.<font color="#993333">blue</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font> 
+<font color="#4444FF"><strong>}</strong></font>
+
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// skapa några färger</font>
+  <font color="#993333">Color</font> <font color="#993333">Red</font> <font color="#4444FF">(</font> <font color="#FF0000">1</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Color</font> <font color="#993333">Grey</font> <font color="#4444FF">(</font> <font color="#FF0000">0.6</font>, <font color="#FF0000">0.6</font>, <font color="#FF0000">0.6</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Color</font> <font color="#993333">White</font> <font color="#4444FF">(</font> <font color="#FF0000">1</font>, <font color="#FF0000">1</font>, <font color="#FF0000">1</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

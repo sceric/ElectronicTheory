@@ -1,0 +1,22 @@
+<html><head><title>Const3.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<strong>void</strong> <font color="#993333">testaKonstant</font> <font color="#4444FF">(</font><strong>const</strong> <strong>int</strong> <font color="#4444FF">&amp;</font> <font color="#993333">Tal</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// gör någonting</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+
+  <strong>const</strong> <strong>int</strong> <font color="#993333">Test1</font> <font color="#4444FF">=</font> <font color="#FF0000">10</font><font color="#4444FF">;</font>
+  <strong>const</strong> <strong>int</strong> <font color="#993333">Test2</font> <font color="#4444FF">=</font> <font color="#FF0000">50</font><font color="#4444FF">;</font>
+  <strong>int</strong>       <font color="#993333">Test3</font> <font color="#4444FF">=</font> <font color="#FF0000">100</font><font color="#4444FF">;</font>
+  
+  <strong>const</strong> <strong>int</strong> <font color="#4444FF">*</font> <font color="#993333">T</font> <font color="#4444FF">=</font> <font color="#4444FF">&amp;</font><font color="#993333">Test1</font><font color="#4444FF">;</font>
+  <font color="#993333">T</font> <font color="#4444FF">=</font> <font color="#4444FF">&amp;</font><font color="#993333">Test2</font><font color="#4444FF">;</font>
+
+  <strong>int</strong> <font color="#4444FF">*</font> <strong>const</strong> <font color="#993333">T2</font> <font color="#4444FF">=</font> <font color="#4444FF">&amp;</font><font color="#993333">Test3</font><font color="#4444FF">;</font>
+
+  <strong>const</strong> <strong>int</strong> <font color="#4444FF">*</font> <strong>const</strong> <font color="#993333">T3</font> <font color="#4444FF">=</font> <font color="#4444FF">&amp;</font><font color="#993333">Test2</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// anropa en konstant funktion</font>
+  <font color="#993333">testaKonstant</font> <font color="#4444FF">(</font> <font color="#993333">Test1</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

@@ -1,0 +1,25 @@
+<html><head><title>Exception5.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! program som sätter en egen termineringsfunktion</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;exception&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;stdlib.h&gt;</font></font>
+
+<font color="#444444">// vår egna termineringsfunktion</font>
+<strong>void</strong> <font color="#993333">betterTerminate</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// vår specieliserade felhantering...</font>
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Aiiee...&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// vi måste avsluta programmet</font>
+  <font color="#993333">abort</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// sätt en ny 'teminate'</font>
+  <font color="#993333">set_terminate</font> <font color="#4444FF">(</font> <font color="#993333">betterTerminate</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Kastar en exception.&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// kasta en exception</font>
+  <strong>throw</strong> <font color="#FF0000">1</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

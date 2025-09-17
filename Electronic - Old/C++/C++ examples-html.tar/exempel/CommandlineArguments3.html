@@ -1,0 +1,22 @@
+<html><head><title>CommandlineArguments3.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! visar hur man kan kontrollera att programmet får ett visst antal parametrar</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><strong>int</strong> <font color="#993333">argc</font>, <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#4444FF">]</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+
+  <font color="#993333">string</font> <font color="#993333">Parameter</font><font color="#4444FF">;</font>
+  <font color="#993333">string</font> <font color="#993333">Namn</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// har vi fått tillräckligt med parametrar?</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">argc</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#FF0000">2</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#444444">// fel antal parametrar, skirv kort hjälptext och avsluta</font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Fel antal parametrar!&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Användning: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#FF0000">0</font><font color="#4444FF">]</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; filnamn&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+	<strong>return</strong> <font color="#FF0000">1</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// korrekt antal parametrar eftersom vi kommit ända hit</font>
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Antalet parametrar korrekt.&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

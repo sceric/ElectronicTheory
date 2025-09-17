@@ -1,0 +1,24 @@
+<html><head><title>COutput6.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! demonstrerar hur en fil öppnas och stängs i C</font>
+<font color="#0000FF">#include <font color="#008000">&lt;stdio.h&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// öppna filen för skrivning</font>
+  <font color="#993333">FILE</font> <font color="#4444FF">*</font> <font color="#993333">F</font> <font color="#4444FF">=</font> <font color="#993333">fopen</font> <font color="#4444FF">(</font> <font color="#008000">&quot;foo.txt&quot;</font>, <font color="#008000">&quot;w&quot;</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// kunde vi öppna den?</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">F</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#444444">// allt ok, skriv meddelande til skärmen</font>
+	<font color="#993333">printf</font> <font color="#4444FF">(</font> <font color="#008000">&quot;Filen öppnades ok<font color="#77dd77">\n</font>&quot;</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+	
+	<font color="#444444">// stäng filen igen</font>
+	<font color="#993333">fclose</font> <font color="#4444FF">(</font> <font color="#993333">F</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#444444">// kunde inte öppna filen</font>
+    <font color="#993333">printf</font> <font color="#4444FF">(</font> <font color="#008000">&quot;Filen kunde inte öppnas!<font color="#77dd77">\n</font>&quot;</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+
+  
+</pre></body></html>

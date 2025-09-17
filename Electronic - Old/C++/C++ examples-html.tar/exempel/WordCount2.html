@@ -1,0 +1,37 @@
+<html><head><title>WordCount2.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! läser en given fil och räknar antalet ord i filen</font>
+<font color="#0000FF">#include <font color="#008000">&lt;fstream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><strong>int</strong> <font color="#993333">argc</font>, <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#4444FF">]</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>int</strong> <font color="#993333">Antal</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+  <font color="#993333">string</font> <font color="#993333">Ord</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// har vi tillräckligt parametrar?</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">argc</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#FF0000">2</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Fel antal parametrar!&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Användning: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#FF0000">0</font><font color="#4444FF">]</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; filnamn&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+    <font color="#993333">exit</font> <font color="#4444FF">(</font> <font color="#993333">EXIT_FAILURE</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// öppna en fil</font>
+  <font color="#993333">ifstream</font> <font color="#993333">Data</font> <font color="#4444FF">(</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#FF0000">1</font><font color="#4444FF">]</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">!</font> <font color="#993333">Data</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#444444">// kunde inte öppna filen</font>
+    <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Kunde inte öppna filen: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">argv</font><font color="#4444FF">[</font><font color="#FF0000">1</font><font color="#4444FF">]</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+    <font color="#993333">exit</font> <font color="#4444FF">(</font> <font color="#993333">EXIT_FAILURE</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// iterera över all ord i filen</font>
+  <strong>while</strong> <font color="#4444FF">(</font> <font color="#4444FF">!</font> <font color="#993333">Data</font>.<font color="#993333">eof</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#444444">// läs ett ord</font>
+    <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">Data</font> <font color="#4444FF">&gt;</font><font color="#4444FF">&gt;</font> <font color="#993333">Ord</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+      <font color="#444444">// öka antalet lästa ord</font>
+      <font color="#993333">Antal</font><font color="#4444FF">+</font><font color="#4444FF">+</font><font color="#4444FF">;</font>
+    <font color="#4444FF"><strong>}</strong></font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// skriv ett svar</font>
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Läste &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Antal</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; ord.&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

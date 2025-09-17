@@ -1,0 +1,119 @@
+<html><head><title>Vector9.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! första implementation av en vektorklass</font>
+<font color="#0000FF">#include <font color="#008000">&quot;Vector9.h&quot;</font></font>
+
+<font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Vector</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// nollställ alla medlemmar</font>
+  <font color="#993333">m_X</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Y</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Z</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// copy-konstruktor</font>
+<font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Vector</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// kopiera data från 'V'</font>
+  <font color="#993333">m_X</font> <font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_X</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Y</font> <font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_Y</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Z</font> <font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_Z</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// skapa från separata värden</font>
+<font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Vector</font> <font color="#4444FF">(</font><strong>const</strong> <strong>float</strong> <font color="#993333">X</font>, <strong>const</strong> <strong>float</strong> <font color="#993333">Y</font>, <strong>const</strong> <strong>float</strong> <font color="#993333">Z</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// spara värden i medlemmar</font>
+  <font color="#993333">m_X</font> <font color="#4444FF">=</font> <font color="#993333">X</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Y</font> <font color="#4444FF">=</font> <font color="#993333">Y</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Z</font> <font color="#4444FF">=</font> <font color="#993333">Z</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// beräkna längden av vektorn</font>
+<strong>float</strong> <font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">length</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// använd Pythagoras</font>
+  <strong>return</strong> <font color="#993333">sqrt</font> <font color="#4444FF">(</font> <font color="#993333">m_X</font> <font color="#4444FF">*</font> <font color="#993333">m_X</font> <font color="#4444FF">+</font> <font color="#993333">m_Y</font> <font color="#4444FF">*</font> <font color="#993333">m_Y</font> <font color="#4444FF">+</font> <font color="#993333">m_Z</font> <font color="#4444FF">*</font> <font color="#993333">m_Z</font> <font color="#4444FF">)</font><font color="#4444FF">;</font> 
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// överlagrade operatorn '+'</font>
+<font color="#993333">Vector</font> <font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><strong>operator</strong><font color="#4444FF">+</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">Vector</font> <font color="#993333">Result</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// sätt den nya vektorns värden</font>
+  <font color="#993333">Result</font>.<font color="#993333">setX</font> <font color="#4444FF">(</font> <font color="#993333">m_X</font> <font color="#4444FF">+</font> <font color="#993333">V</font>.<font color="#993333">m_X</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Result</font>.<font color="#993333">setY</font> <font color="#4444FF">(</font> <font color="#993333">m_Y</font> <font color="#4444FF">+</font> <font color="#993333">V</font>.<font color="#993333">m_Y</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Result</font>.<font color="#993333">setZ</font> <font color="#4444FF">(</font> <font color="#993333">m_Z</font> <font color="#4444FF">+</font> <font color="#993333">V</font>.<font color="#993333">m_Z</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// returnera den nya vektorn</font>
+  <strong>return</strong> <font color="#993333">Result</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// överlagrade '+='</font>
+<strong>void</strong> <font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><strong>operator</strong><font color="#4444FF">+</font><font color="#4444FF">=</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">m_X</font> <font color="#4444FF">+</font><font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_X</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Y</font> <font color="#4444FF">+</font><font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_Y</font><font color="#4444FF">;</font>
+  <font color="#993333">m_Z</font> <font color="#4444FF">+</font><font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_Z</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// överlagrade binära operatorn '-'</font>
+<font color="#993333">Vector</font> <font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><strong>operator</strong><font color="#4444FF">-</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">Vector</font> <font color="#993333">Result</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// sätt den nya vektorns värden</font>
+  <font color="#993333">Result</font>.<font color="#993333">setX</font> <font color="#4444FF">(</font> <font color="#993333">m_X</font> <font color="#4444FF">-</font> <font color="#993333">V</font>.<font color="#993333">m_X</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Result</font>.<font color="#993333">setY</font> <font color="#4444FF">(</font> <font color="#993333">m_Y</font> <font color="#4444FF">-</font> <font color="#993333">V</font>.<font color="#993333">m_Y</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Result</font>.<font color="#993333">setZ</font> <font color="#4444FF">(</font> <font color="#993333">m_Z</font> <font color="#4444FF">-</font> <font color="#993333">V</font>.<font color="#993333">m_Z</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// returnera den nya vektorn</font>
+  <strong>return</strong> <font color="#993333">Result</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// överlagrade unära operatorn '-'</font>
+<font color="#993333">Vector</font> <font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><strong>operator</strong><font color="#4444FF">-</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">Vector</font> <font color="#993333">Result</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// sätt den nya vektorns värden</font>
+  <font color="#993333">Result</font>.<font color="#993333">setX</font> <font color="#4444FF">(</font> <font color="#4444FF">-</font><font color="#993333">m_X</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Result</font>.<font color="#993333">setY</font> <font color="#4444FF">(</font> <font color="#4444FF">-</font><font color="#993333">m_Y</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Result</font>.<font color="#993333">setZ</font> <font color="#4444FF">(</font> <font color="#4444FF">-</font><font color="#993333">m_Z</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// returnera den nya vektorn</font>
+  <strong>return</strong> <font color="#993333">Result</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// överlagrade binära '*'</font>
+<font color="#993333">Vector</font> <font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><strong>operator</strong><font color="#4444FF">*</font> <font color="#4444FF">(</font><strong>const</strong> <strong>float</strong> <font color="#993333">S</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">Vector</font> <font color="#993333">Result</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// sätt den nya vektorns värden</font>
+  <font color="#993333">Result</font>.<font color="#993333">setX</font> <font color="#4444FF">(</font> <font color="#993333">m_X</font> <font color="#4444FF">*</font> <font color="#993333">S</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Result</font>.<font color="#993333">setY</font> <font color="#4444FF">(</font> <font color="#993333">m_Y</font> <font color="#4444FF">*</font> <font color="#993333">S</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#993333">Result</font>.<font color="#993333">setZ</font> <font color="#4444FF">(</font> <font color="#993333">m_Z</font> <font color="#4444FF">*</font> <font color="#993333">S</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// returnera den nya vektorn</font>
+  <strong>return</strong> <font color="#993333">Result</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// överlagrade operatorn '=='</font>
+<strong>bool</strong> <font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><strong>operator</strong><font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// jämför V1 och denna vektor</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">m_X</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_X</font> <font color="#4444FF">&amp;</font><font color="#4444FF">&amp;</font> <font color="#993333">m_Y</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_Y</font> <font color="#4444FF">&amp;</font><font color="#4444FF">&amp;</font> <font color="#993333">m_Z</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#993333">V</font>.<font color="#993333">m_Z</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#444444">// vektorerna är lika</font>
+    <strong>return</strong> <strong>true</strong><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// de är olika</font>
+  <strong>return</strong> <strong>false</strong><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// överlagrade operatorn '!='</font>
+<strong>bool</strong> <font color="#993333">Vector</font><font color="#4444FF">:</font><font color="#4444FF">:</font><strong>operator</strong><font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// använd negerad jämförelse</font>
+  <strong>return</strong> <font color="#4444FF">!</font> <font color="#4444FF">(</font> <font color="#4444FF">*</font><strong>this</strong> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#993333">V</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// extern funktion för överlagrad '*'</font>
+<font color="#993333">Vector</font> <strong>operator</strong><font color="#4444FF">*</font> <font color="#4444FF">(</font><strong>const</strong> <strong>float</strong> <font color="#993333">S</font>, <strong>const</strong> <font color="#993333">Vector</font> <font color="#4444FF">&amp;</font> <font color="#993333">V</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// använd tidigare överlagrad operator '*'</font>
+  <strong>return</strong> <font color="#993333">V</font> <font color="#4444FF">*</font> <font color="#993333">S</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+
+
+</pre></body></html>

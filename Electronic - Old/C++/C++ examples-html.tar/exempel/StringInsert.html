@@ -1,0 +1,18 @@
+<html><head><title>StringInsert.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! testar insättning i strängar</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">string</font> <font color="#993333">Namn</font> <font color="#4444FF">=</font> <font color="#008000">&quot;Frodo Bagger&quot;</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// lägg till initialen för mellannamnet</font>
+  <font color="#993333">string</font> <font color="#993333">Initial</font> <font color="#4444FF">=</font> <font color="#008000">&quot;T. &quot;</font><font color="#4444FF">;</font>
+  <font color="#993333">Namn</font>.<font color="#993333">insert</font> <font color="#4444FF">(</font> <font color="#FF0000">6</font>, <font color="#993333">Initial</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// sätt in i början av strängen</font>
+  <font color="#993333">Namn</font>.<font color="#993333">insert</font> <font color="#4444FF">(</font> <font color="#FF0000">0</font>, <font color="#008000">&quot;Mr. &quot;</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Namnet är: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Namn</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

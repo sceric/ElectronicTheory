@@ -1,0 +1,43 @@
+<html><head><title>Tokenizer.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! använder string::find() för att tokenisera en sträng</font>
+<font color="#0000FF">#include <font color="#008000">&lt;fstream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;iomanip&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">string</font> <font color="#993333">Rad</font><font color="#4444FF">;</font>
+  <font color="#993333">string</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">size_type</font> <font color="#993333">Index1</font><font color="#4444FF">;</font>
+  <font color="#993333">string</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">size_type</font> <font color="#993333">Index2</font><font color="#4444FF">;</font>
+  <strong>int</strong> <font color="#993333">Falt</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// öppna passwd</font>
+  <font color="#993333">ifstream</font> <font color="#993333">In</font> <font color="#4444FF">(</font> <font color="#008000">&quot;/etc/passwd&quot;</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// läs rader från filen</font>
+  <strong>while</strong> <font color="#4444FF">(</font> <font color="#993333">getline</font> <font color="#4444FF">(</font> <font color="#993333">In</font>, <font color="#993333">Rad</font> <font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#444444">// nollställ alla index för varje ny rad</font>
+	<font color="#993333">Index1</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+	<font color="#993333">Index2</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+	<font color="#993333">Falt</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+	
+	<font color="#444444">// iterera nu över varje rad och separera på ett ':'</font>
+	<strong>while</strong> <font color="#4444FF">(</font> <font color="#4444FF">(</font><font color="#993333">Index2</font> <font color="#4444FF">=</font> <font color="#993333">Rad</font>.<font color="#993333">find</font> <font color="#4444FF">(</font> <font color="#008000">':'</font>, <font color="#993333">Index1</font> <font color="#4444FF">)</font><font color="#4444FF">)</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#993333">string</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">npos</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	  <font color="#444444">// har vi användarnamnet (fält 1)?</font>
+	  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">Falt</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+		<font color="#993333">cout</font>.<font color="#993333">setf</font> <font color="#4444FF">(</font> <font color="#993333">ios</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">left</font>, <font color="#993333">ios</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">adjustfield</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+		<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">setw</font><font color="#4444FF">(</font><font color="#FF0000">10</font><font color="#4444FF">)</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Rad</font>.<font color="#993333">substr</font> <font color="#4444FF">(</font> <font color="#993333">Index1</font>, <font color="#993333">Index2</font> <font color="#4444FF">-</font> <font color="#993333">Index1</font> <font color="#4444FF">)</font>.<font color="#993333">c_str</font><font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; = &quot;</font><font color="#4444FF">;</font>
+	  <font color="#4444FF"><strong>}</strong></font>
+	  
+	  <font color="#444444">// har vi fulla namnet (fält 5?</font>
+	  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">Falt</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#FF0000">2</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+		<font color="#993333">cout</font>.<font color="#993333">setf</font> <font color="#4444FF">(</font> <font color="#993333">ios</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">right</font>, <font color="#993333">ios</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">adjustfield</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+		<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">setw</font><font color="#4444FF">(</font><font color="#FF0000">4</font><font color="#4444FF">)</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Rad</font>.<font color="#993333">substr</font> <font color="#4444FF">(</font> <font color="#993333">Index1</font>, <font color="#993333">Index2</font> <font color="#4444FF">-</font> <font color="#993333">Index1</font> <font color="#4444FF">)</font>.<font color="#993333">c_str</font><font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+	  <font color="#4444FF"><strong>}</strong></font>
+
+	  <font color="#444444">// öka alla index</font>
+	  <font color="#993333">Index1</font> <font color="#4444FF">=</font> <font color="#993333">Index2</font> <font color="#4444FF">+</font> <font color="#FF0000">1</font><font color="#4444FF">;</font>
+	  <font color="#993333">Falt</font><font color="#4444FF">+</font><font color="#4444FF">+</font><font color="#4444FF">;</font>
+	<font color="#4444FF"><strong>}</strong></font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

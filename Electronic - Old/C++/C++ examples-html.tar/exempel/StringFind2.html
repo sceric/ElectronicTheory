@@ -1,0 +1,15 @@
+<html><head><title>StringFind2.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! testar sökning av tecken i en sträng</font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">string</font> <font color="#993333">Text</font> <font color="#4444FF">=</font> <font color="#008000">&quot;The Lord of the Rings&quot;</font><font color="#4444FF">;</font>
+  <font color="#993333">string</font> <font color="#993333">S</font> <font color="#4444FF">=</font> <font color="#008000">&quot;ABCL&quot;</font><font color="#4444FF">;</font>
+  
+  <font color="#993333">string</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">size_type</font> <font color="#993333">I1</font> <font color="#4444FF">=</font> <font color="#993333">Text</font>.<font color="#993333">find_first_of</font> <font color="#4444FF">(</font> <font color="#008000">'e'</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>   <font color="#444444">// I1 == 2</font>
+  <font color="#993333">string</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">size_type</font> <font color="#993333">I2</font> <font color="#4444FF">=</font> <font color="#993333">Text</font>.<font color="#993333">find_first_of</font> <font color="#4444FF">(</font> <font color="#008000">&quot; or&quot;</font> <font color="#4444FF">)</font><font color="#4444FF">;</font> <font color="#444444">// I2 == 3</font>
+  <font color="#993333">string</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">size_type</font> <font color="#993333">I3</font> <font color="#4444FF">=</font> <font color="#993333">Text</font>.<font color="#993333">find_first_of</font> <font color="#4444FF">(</font> <font color="#993333">S</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>     <font color="#444444">// I3 == 4</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+
+</pre></body></html>

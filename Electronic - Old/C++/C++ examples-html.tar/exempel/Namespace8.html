@@ -1,0 +1,22 @@
+<html><head><title>Namespace8.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! visar hur aliaset till ett namespace kan implementeras</font>
+
+<strong>namespace</strong> <font color="#993333">DepartmentOfComputerScience</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>class</strong> <font color="#993333">Foo</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>public</strong><font color="#4444FF">:</font>
+    <font color="#993333">Foo</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font><font color="#4444FF"><strong>}</strong></font>
+  <font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// använd namespacet oförkortat</font>
+  <font color="#993333">DepartmentOfComputerScience</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Foo</font> <font color="#993333">F1</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// definiera en alias</font>
+  <strong>namespace</strong> <font color="#993333">CS</font> <font color="#4444FF">=</font> <font color="#993333">DepartmentOfComputerScience</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// använd aliasen</font>
+  <font color="#993333">CS</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">Foo</font> <font color="#993333">F2</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+</pre></body></html>

@@ -1,0 +1,11 @@
+
+broj 0 nalazi se u ulaznoj datoteci 2 puta
+broj 1 nalazi se u ulaznoj datoteci 2 puta
+broj 2 nalazi se u ulaznoj datoteci 2 puta
+broj 3 nalazi se u ulaznoj datoteci 0 puta
+broj 4 nalazi se u ulaznoj datoteci 0 puta
+broj 5 nalazi se u ulaznoj datoteci 3 puta
+broj 6 nalazi se u ulaznoj datoteci 0 puta
+broj 7 nalazi se u ulaznoj datoteci 0 puta
+broj 8 nalazi se u ulaznoj datoteci 0 puta
+broj 9 nalazi se u ulaznoj datoteci 0 puta

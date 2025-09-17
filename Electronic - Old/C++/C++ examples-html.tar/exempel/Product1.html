@@ -1,0 +1,38 @@
+<html><head><title>Product1.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;string&gt;</font></font>
+
+<strong>class</strong> <font color="#993333">Product</font> <font color="#4444FF"><strong>{</strong></font>
+<strong>public</strong><font color="#4444FF">:</font> 
+  <font color="#444444">// konstruktor</font>
+  <font color="#993333">Product</font> <font color="#4444FF">(</font><strong>const</strong> <font color="#993333">string</font> <font color="#4444FF">&amp;</font> <font color="#993333">Name</font>, <strong>int</strong> <font color="#993333">Id</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font> <font color="#993333">m_Name</font> <font color="#4444FF">=</font> <font color="#993333">Name</font>, <font color="#993333">m_Id</font> <font color="#4444FF">=</font> <font color="#993333">Id</font><font color="#4444FF">;</font> <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// skriv ut produkten på skärmen</font>
+  <strong>void</strong> <font color="#993333">print</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong><font color="#4444FF">;</font>
+
+<strong>private</strong><font color="#4444FF">:</font>
+  <font color="#993333">string</font> <font color="#993333">m_Name</font><font color="#4444FF">;</font>
+  <strong>int</strong>    <font color="#993333">m_Id</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<strong>void</strong> <font color="#993333">Product</font><font color="#4444FF">:</font><font color="#4444FF">:</font><font color="#993333">print</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <strong>const</strong> <font color="#4444FF"><strong>{</strong></font> 
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Produktnamn: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">m_Name</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;, id: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">m_Id</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+
+  <font color="#993333">Product</font> <font color="#4444FF">*</font> <font color="#993333">Lager</font> <font color="#4444FF">[</font><font color="#FF0000">10</font><font color="#4444FF">]</font><font color="#4444FF">;</font>
+  <strong>int</strong> <font color="#993333">Id</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+  <font color="#993333">string</font> <font color="#993333">Names</font> <font color="#4444FF">[</font><font color="#FF0000">10</font><font color="#4444FF">]</font> <font color="#4444FF">=</font> <font color="#4444FF"><strong>{</strong></font><font color="#008000">&quot;a&quot;</font>, <font color="#008000">&quot;b&quot;</font>, <font color="#008000">&quot;c&quot;</font>, <font color="#008000">&quot;d&quot;</font>, <font color="#008000">&quot;e&quot;</font>, <font color="#008000">&quot;f&quot;</font>, <font color="#008000">&quot;g&quot;</font>, <font color="#008000">&quot;h&quot;</font>, <font color="#008000">&quot;i&quot;</font>, <font color="#008000">&quot;j&quot;</font><font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+   
+  <font color="#444444">// skapa nya produkter</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#FF0000">10</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">Lager</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font> <font color="#4444FF">=</font> <strong>new</strong> <font color="#993333">Product</font> <font color="#4444FF">(</font> <font color="#993333">Names</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font>, <font color="#993333">Id</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// skriv ut vårt lager</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#FF0000">10</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">Lager</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font><font color="#4444FF">-</font><font color="#4444FF">&gt;</font><font color="#993333">print</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

@@ -1,0 +1,45 @@
+<html><head><title>CStringFind1.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! kopierar en C-sträng med en funktion copy(). Allokerar minne.</font>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">findChar</font> <font color="#4444FF">(</font><strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">String</font>, <strong>char</strong> <font color="#993333">Seek</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// iterera tills vi kommer till slutet</font>
+  <strong>while</strong> <font color="#4444FF">(</font> <font color="#993333">String</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#008000">'<font color="#77dd77">\0</font>'</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#444444">// är det korrekt tecken?</font>
+	<strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">String</font><font color="#4444FF">[</font><font color="#993333">Index</font><font color="#4444FF">]</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#993333">Seek</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	  <font color="#444444">// vi har korrekt index</font>
+	  <strong>return</strong> <font color="#993333">Index</font><font color="#4444FF">;</font>
+	<font color="#4444FF"><strong>}</strong></font>
+
+	<font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// inget index hittades</font>
+  <strong>return</strong> <font color="#4444FF">-</font><font color="#FF0000">1</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>int</strong> <font color="#993333">Index</font><font color="#4444FF">;</font>
+  <strong>char</strong> <font color="#4444FF">*</font> <font color="#993333">S</font> <font color="#4444FF">=</font> <font color="#008000">&quot;En sträng ur vilken vi söker text&quot;</font><font color="#4444FF">;</font>
+
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Söksträngen är: '&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">S</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;'&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// sök ett 'v'</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">(</font> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#993333">findChar</font> <font color="#4444FF">(</font><font color="#993333">S</font>, <font color="#008000">'v'</font> <font color="#4444FF">)</font><font color="#4444FF">)</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#4444FF">-</font><font color="#FF0000">1</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Hittade ett 'v' på index &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+ 	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Hittade inget 'v'&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+ 
+  <font color="#444444">// sök ett 'P'</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">(</font> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#993333">findChar</font> <font color="#4444FF">(</font><font color="#993333">S</font>, <font color="#008000">'P'</font> <font color="#4444FF">)</font><font color="#4444FF">)</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#4444FF">-</font><font color="#FF0000">1</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Hittade ett 'P' på index &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+  <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+ 	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Hittade inget 'P'&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

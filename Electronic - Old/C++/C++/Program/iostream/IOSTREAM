@@ -1,0 +1,3136 @@
+************************* INTRODUCTION *************************
+
+This document is a tutorial on the use of the header file <iostream.h>, as
+implemented by Borland International, Inc. in its product Turbo C++.
+
+There are 4 main sections:
+
+   1) Header file
+   2) Output
+   3) Input
+   4) Manipulators
+   5) File I/O
+
+These sections are actually just part of the complete set of notes on the C++
+language that I use in my programming classes here in Silicon Valley. Before
+you begin this tutorial, you must be familiar with C, know how to write simple 
+classes, have some knowledge of member functions, can create instances of
+classes, etc.
+
+I have spent many hours putting this material together, and hope that it
+serves its intended purpose, which is to give CIS subscribers an understand-
+ing of <iostream.h> that none of the manuals or textbooks seem to provide. 
+I am deeply indebted to John Dlugosz, with whom many of you are already 
+familiar, for taking the time out of his busy schedule, to proof-read this 
+tutorial. Without his help and guidance, the information contained herein 
+would not be as accurate and complete as (I hope!) it is. Nevertheless, if 
+you find an error, or have a suggestion as to how this tutorial can be 
+improved, please let me know.
+
+Eric Nagler         CIS 76357,1146
+P. O. Box 2483
+Santa Clara, California 95055-2483
+
+
+*********************** SECTION 1 --  HEADER FILE ***************************
+
+All program examples in this tutorial include a file called <header.h>. It is
+my own creation (so don't call Borland!), and is tailored to accommodate
+all of the program examples. I suggest that you copy and use this header file 
+if you wish to execute the examples. But feel free to modify it according to 
+your own needs.
+
+If the examples sometimes appear to be "scrunched" toward the left-hand side
+of the screen, it's because they are designed to be shown in 40-column mode,
+double height.
+
+// header.h
+// for iostream tutorial by Eric Nagler
+//
+////////////////////////////////////
+// My private header file for C++ programs
+////////////////////////////////////
+
+// There's also a #define ZORTECH in my Zortech header file so that I can
+// write different statements to print addresses.
+
+#define BORLAND
+
+// OLD is defined in the cc.bat file which I use to compile Turbo C++
+// using the old (version 1.2) style I/O. Therefore, use <stream.h>
+
+#ifdef OLD
+#include <stream.h>
+
+// Otherwise, it must be version 2.0, so use <fstream.h>, which also
+// includes <iostream.h>
+
+#else
+#include <fstream.h>
+
+// Any manipulators taking a parameter will also be accommodated
+
+#include <iomanip.h>
+#endif
+
+// I also need console I/O for the PAUSE() function
+
+#include <conio.h>
+
+// Include <stdio.h> for C style I/O
+
+#include <stdio.h>
+
+// Include these because they're used so frequently, and really don't add
+// that much to the compilation time
+
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <time.h>
+
+///////////////////////////////////
+
+// My private defines
+
+#define FALSE               0
+#define TRUE                !FALSE
+#define AND                 &&
+#define OR                  ||
+#define NO                  0
+#define YES                 !NO
+#define EQUALS              ==
+#define IS_EQUAL_TO         ==
+#define NOT                 !
+#define IS_NOT_EQUAL_TO     !=
+#define NOT_EQUAL_TO        !=
+//
+#define BLANK               ' '
+#define SPACE               ' '
+#define ASTERISK            '*'
+#define DECIMAL             '.'
+#define NEW_LINE            '\n'
+#define NUL                 '\0'
+#define TAB                 '\t'
+#define BACKSPACE           '\b'
+#define BEEP                '\a'
+#define FORMFEED            '\f'
+#define RETURN              '\r'
+
+///////////////////////////////////
+
+// My private PAUSE function
+
+void PAUSE()
+{
+   cout << "Press any key to "
+        << "continue...\n" ;
+   getch() ;
+}
+
+// My private flush-the-input-buffer manipulator until either EOF or
+// new-line is found.
+
+istream& FLUSH(istream& strm)
+{
+   strm.clear() ;
+   char ch ;
+   while (!strm.get(ch).eof() AND ch != NEW_LINE)
+                         ;  // Empty body
+   return strm ;
+}
+
+////////////////////////////////////
+// This function prints the various I/O flags of an input stream.
+// Defaults to 'cin'
+
+void IOFLAGS(istream& stream=cin)
+{
+   cout << "eof state is  " << (stream.eof()
+           ? "ON" : "OFF") << endl ;
+   cout << "good state is " << (stream.good()
+           ? "ON" : "OFF") << endl ;
+   cout << "fail state is " << (stream.fail()
+           ? "ON" : "OFF") << endl ;
+   cout << "bad state is  " << (stream.bad()
+           ? "ON" : "OFF") << endl ;
+   cout << "if (!instance) returns "<< (!stream ? "TRUE" : "FALSE") << endl ;
+   cout << "if (instance) returns " << (stream ? "TRUE" : "FALSE") << endl ;
+}
+
+/////////////////////////////////////
+// This function prints the format flags of an output stream.
+// Defaults to 'cout'
+
+void FORMATFLAGS(ostream& stream=cout)
+{
+   static char* message[] =
+   {
+     "skipws" ,
+     "left" ,
+     "right" ,
+     "internal" ,
+     "dec" ,
+     "oct" ,
+     "hex" ,
+     "showbase" ,
+     "showpoint" ,
+     "uppercase" ,
+     "showpos" ,
+     "scientific" ,
+     "fixed" ,
+     "unitbuf" ,
+     "stdio"
+   } ;
+
+   cout << "FORMAT FLAGS\n" ;
+   long f = stream.flags() ;
+   for (int i = 0 ; i < 16 ; ++i)
+   {
+     if (f & 0x0001)
+       cout << message[i] << endl ;
+     f >>= 1 ;
+   }
+}
+
+///////////////////////////////////
+
+// Define a global instance of the
+// class 'ofstream' called POUT that
+// is tied to the printer
+
+ofstream POUT("prn") ;
+
+/////////////////////////////////////
+
+// A manipulator that directs to the printer all subsequent output for
+// the one statement in which it is found
+
+ostream& PRINTER(ostream&)
+{
+   return POUT ;
+}
+
+// A manipulator that directs to the screen all subsequent output for
+// the one statement in which it is found
+
+ostream& SCREEN(ostream&)
+{
+   return cout ;
+}
+
+// A manipluator to set left justification
+
+ostream& LEFT(ostream& str)
+{
+   str.setf(ios::left , ios::adjustfield) ;
+   return str ;
+}
+
+// A manipluator to set right justification
+
+ostream& RIGHT(ostream& str)
+{
+   str.setf(ios::right , ios::adjustfield) ;
+   return str ;
+}
+
+// A manipluator to set internal justification
+
+ostream& INTERNAL(ostream& str)
+{
+   str.setf(ios::internal , ios::adjustfield) ;
+   return str ;
+}
+
+// A manipulator to show the decimal point
+
+ostream& SHOWPOINT(ostream& str)
+{
+   str.setf(ios::showpoint) ;
+   return str ;
+}
+
+// A manipulator to show the base on hex and octal output
+
+ostream& SHOWBASE(ostream& str)
+{
+   str.setf(ios::showbase) ;
+   return str ;
+}
+
+// A manipulator to suppress the showing of the base
+
+ostream& NOSHOWBASE(ostream& str)
+{
+   str.unsetf(ios::showbase) ;
+   return str ;
+}
+
+// A manipulator to show fixed point output
+
+ostream& FIXED(ostream& str)
+{
+   str.setf(ios::fixed , ios::floatfield) ;
+   return str ;
+}
+
+// A manipulator to show scientific point output
+
+ostream& SCIENTIFIC(ostream& str)
+{
+   str.setf(ios::scientific , ios::floatfield) ;
+   return str ;
+}
+
+// A manipulator to show uppercase output on hex and scientific
+// numbers
+
+ostream& UPPERCASE(ostream& str)
+{
+   str.setf(ios::uppercase) ;
+   return str ;
+}
+
+// A manipulator to show lowercase output on hex and scientific
+// numbers
+
+ostream& LOWERCASE(ostream& str)
+{
+   str.unsetf(ios::uppercase) ;
+   return str ;
+}
+
+// A manipulator to show a '+' on positive numbers
+
+ostream& SHOWPOS(ostream& str)
+{
+   str.setf(ios::showpos) ;
+   return str ;
+}
+
+// A manipulator to negate showing a '+' on positive numbers
+
+ostream& NOSHOWPOS(ostream& str)
+{
+   str.unsetf(ios::showpos) ;
+   return str ;
+}
+
+*********************** SECTION 2 -- OUTPUT *********************************
+
+Introduction
+
+Whenever data gets sent to a text output device, it takes on the form of a
+stream of characters. For example, the floating point number 1.234 is not
+stored internally as 5 characters ('1' , '.' , '2' , '3' , '4'), but rather 
+in a special format designed to accommodate floating point values. In character
+format, this value is meaningless. Yet, if you were to print this number,
+you certainly would want to have the aforementioned 5 characters appear
+on your output device.
+
+The C++ input/output mechanism provided with AT&T release 2.0
+provides a series of classes that have been created to handle the problem of
+sending and receiving data. This mechanism consists of many classes, some
+derived from others, and some contained within others. At the lowest level,
+the most fundamental operation is to manipulate the characters within some
+buffer, also known as a stream. This is done by the class "streambuf".
+
+Because input and output must be formatted to be legible, another class
+called "ios" contains functions and data to handle this task. When an instance
+of the class "ios" comes into existence, it receives a pointer to some
+"streambuf" area. To send the actual formatted output to the user, another
+class called "ostream" (which is derived from "ios") is used.
+
+Classes, like built-in scalar types, don't occupy any memory. What is
+needed, then, is an instance, or object, of that class type. In the hierarchy 
+of derivation, the last class,  ostream , is the one that used to create the
+instance, as follows:
+
+   ostream cout ;
+
+Since the instance "cout" is an instance of a class that has been derived from
+parent classes, by definition it has inherited all of the data members of its
+parent classes, and has all of the functionality of those classes. Also, since
+this instance is defined at global scope, your program has unlimited access
+to it at all times. Output operations are initiated using the instance "cout".
+
+In addition to data members, classes can contain functions to operate upon
+these members. In the class  ostream , the function you will use the most
+often is called the insertion operator, and its name is "operator<<". The
+argument to this function is the data item that you wish to output. The name
+'insertion' comes from the fact that you are 'inserting' items into an
+output buffer.
+
+In a manner similar to that of accessing a data member of a structure,
+function members of a class are also accessed using the direct member
+operator, also known as the dot operator (.). This is done by first writing
+the instance, followed by the dot operator, and then the function name with
+any arguments enclosed within parentheses. For example, to output a simple
+message, you would code:
+
+   cout.operator<<("THE ANSWER IS ") ;
+
+where "THE ANSWER IS " is the argument to the function "operator<<".
+Similarly, to output the number 65, you would code:
+
+   cout.operator<<(65) ;
+
+To output a new-line character, you would code:
+
+   cout.operator<<('\n') ;
+
+or, if you wish, a string containing nothing but a new-line character:
+
+   cout.operator<<("\n") ;
+
+If you really think about it, you should be asking the obvious question,
+"How can a function take a single argument of different types?" In other
+words, in the first call above a string (type "char*") was passed as the
+argument, in the second call an integer (type "int") was passed, and in the
+third a character (type "char") was passed. How can this be? The answer is
+that the function "operator<<" has been "overloaded", so that many versions
+of the "same function" exist within the class "ostream". The compiler is smart
+enough to distinguish one version from another, so that your function call
+correctly accesses the function specifically written to handle the type of
+argument that you provide.
+
+The next obvious question you should be asking is whether you have to
+code a series of such function calls if more than one data item is to be
+output. In other words, in the examples above, are three separate function
+calls really necessary? Fortunately, the answer is no. The way the
+"operator<<" function is written, a reference (address) to the calling
+instance ( cout ) is returned by the function, and can therefore be used as the
+calling instance for a concatenated function call. That is, the three function
+calls can be written:
+
+   cout.operator<<("THE ANSWER IS ")
+       .operator<<(65)
+       .operator<<('\n') ;
+
+That's the good news. The bad news is that it's still too much coding and
+still too awkward. With this in mind, the designers of C++ allow the
+programmer to abbreviate the notation:
+
+   cout.operator<<(argument1) ;
+
+with the more convenient:
+
+   cout << argument1 ;
+
+and the notation:
+
+   cout.operator<<(argument1).operator<<(argument2) ;
+
+with the more convenient:
+
+   cout << argument1 << argument2 ;
+
+Note that the dot operator has been eliminated, and the function
+"operator<<" has been replaced with just the insertion operator "<<".
+
+For stylistic purposes you could write each insertion operator on its own
+line. Try running this program.
+
+  // EXAMPLE OUTPUT-01
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << "THE ANSWER IS "
+         << 65
+         << "\n" ;
+
+    return 0 ;
+ }
+
+Only one such occurrence of "cout" needs to be written until the end of the
+statement is reached.
+
+Of course, you could restrict each statement to having just one insertion
+operator. This program produces exactly the same output as before.
+
+ // EXAMPLE OUTPUT-02
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << "THE ANSWER IS " ;
+    cout << 65 ;
+    cout << "\n" ;
+
+    return 0 ;
+ }
+
+In addition to a string, an integer, and a character, the function
+"operator<<" has been overloaded to accept arguments of type "long", "float",
+"double", pointer, and so forth.
+
+******************************************************************
+Bit Format Flags
+
+Now think about a "printf" function call. It usually consists of a control
+string argument and, optionally, a list of expressions to be output. The
+control string contains literals which will be output exactly as shown, and
+conversion specifications that indicate exactly how an expression from the
+list of expressions is to appear. Each conversion specification starts with a
+'%' and ends with a conversion character, e.g., 'd' for decimal format, 'c' for
+character format, 's' for a string, etc. Between the start and end you may
+enter various flags, the field width, base formatting, justification, floating
+point precision, and so forth. Each conversion specification stands on its
+own; there is no connection to any other one.
+
+In the C++ version 2.0 stream I/O, all of the characteristics relating to how
+an expression should appear apply, not to each individual expression, but to
+the output stream as a whole . In other words, once you specify that decimal
+format is desired, ALL integer numbers from that point on are output in
+decimal format. No further action need be taken. If you decide to switch to
+hexadecimal output, then all integer numbers from that point on will be
+shown in their hex formats. The same is true for floating point precision.
+Once it is set, it stays set for all subsequent floating point numbers. (There
+is one important exception to the "set it and forget it" feature of C++
+streaming that will be discussed later).
+
+Any binary characteristic of the output stream is stored in a long
+(protected) field in the class "ios". In Turbo C++ this field is called
+"x_flags". (The fact that it's  protected  means that you cannot access it
+directly.) Each characteristic occupies one bit of this field, which simply
+means that it's either true or false; on or off; set or not set. For example,
+the output state of decimal is either on or off. The same can be said for the
+output states of hexadecimal and octal. Also, the state of left-justification 
+is either set or not set, as is its opposite, right-justification. On the other
+hand, stream characteristics that require values, such as the field width and
+floating point precision, are stored in integer variables.
+
+Each binary characteristic is represented by a unique value in a field that is
+part of an unnamed public enumerated type in the class "ios". This value is
+represented by exactly one bit in the field. Thus, no two characteristics will
+ever have the same bit position (ranging from 15 down to 0) set on. By
+ORing these bits into the field "x_flags", the different states can be set with
+no conflict. This allows someone examining the field "x_flags" to infer with
+no ambiguity which characteristics are on and which are off.
+
+Each binary characteristic also has a name associated with it that you may
+reference. The complete list of all enumerated values is shown below.
+Because these names exist within the class "ios", the name of this class must
+be specified in conjunction with the scope resolution operator (::) to
+unambiguously access a specific value. These are the names and values for
+Turbo C++:
+
+ NAME            VALUE    MEANING
+
+ ios::skipws     0x0001   Skip whitespace on input
+ ios::left       0x0002   Left-justification of output
+ ios::right      0x0004   Right-justification of output
+ ios::internal   0x0008   Pad after sign or base indicator
+ ios::dec        0x0010   Show integers in decimal  format
+ ios::oct        0x0020   Show integers in octal format
+ ios::hex        0x0040   Show integers in hexadecimal format
+ ios::showbase   0x0080   Show the base for octal and hex numbers
+ ios::showpoint  0x0100   Ensure that the decimal point is shown for all
+                          floating point numbers
+ ios::uppercase  0x0200   Show uppercase hex numbers
+ ios::showpos    0x0400   Show + for positive numbers
+ ios::scientific 0x0800   Use exponential notation on floating point numbers
+ ios::fixed      0x1000   Use fixed decimal output on floating point numbers
+ ios::unitbuf    0x2000   Flush all streams after insertion
+ ios::stdio      0x4000   Flush stdout and stderr after insertion
+
+Because we will be examining these bits very carefully in the coming
+examples, it is very useful to have a function to clearly display the status
+for us. This has been done in the function "FORMATFLAGS" which is
+contained in the file "header.h". This function takes one argument: an
+instance of an output stream. If no argument is supplied, then the function
+defaults to using the name "cout".
+
+Try running this test. Are any of these enumerated bits in the field "x_flags"
+already on when your program first gets control? This little program will
+provide the answer.
+
+ // EXAMPLE OUTPUT-11
+
+ // TEST THE DEFAULT OF x_flags
+
+ #include <header.h>
+
+ int main()
+ {
+   FORMATFLAGS() ;
+ }
+
+The output of this program is:
+
+FORMAT FLAGS
+skipws
+unitbuf
+
+The next item of concern is how to turn these settings on and off. Within
+the class "ios" there are several member functions provided that allow this to
+be done. The first of these functions is called "setf". Remember: to call it,
+you must first specify the instance name, "cout", the dot member operator,
+and then the function name. Thus, you would write:
+
+   cout.setf
+
+The function "setf" has been overloaded to accept either one or two
+arguments. In both cases, the first argument specifies which bits are to be
+turned on in the field "x_flags".
+
+For example, to turn on the  ios::dec  bit, you would code:
+
+   cout.setf(ios::dec) ;
+
+The function "setf" works by ORing its first argument into the field
+"x_flags", thereby leaving any other bits in this field undisturbed. This means
+that it's possible to turn on more than one bit with just one call to "setf" by
+using an expression for the first argument that contains several bits ORed
+together. For example, to turn on the "ios::dec" and the "ios::right" bits, you
+would code:
+
+  cout.setf(ios::dec | ios::right) ;
+
+How can you turn the bits off? Use the member function "unsetf". This
+function takes exactly one argument: the bit pattern to be turned off. Thus,
+to turn off the bit "ios::dec", you would code:
+
+  cout.unsetf(ios::dec) ;
+
+Like "setf", more than one bit at a time can be turned off by ORing the
+enumerated values together in the argument field.
+
+Unfortunately, the previous method of turning bits on and off is awkward
+because in many cases the bits are mutually exclusive, and it would
+normally take 2 function calls to (a) turn a bit off using "unsetf", and (b)
+turn another bit on using "setf". Fortunately, a better way exists by using the
+"setf" function with 2 arguments. In this case the second argument represents
+those specific bits which are to be turned OFF prior to having those bits
+turned ON that are specified by the logical AND of the first and second
+arguments. For example, to turn the bit "ios::dec" ON and ensure that the
+mutually exclusive bits "ios::oct" and "ios::hex" are OFF, you would code:
+
+   cout.setf(ios::dec , ios::dec | ios::oct | ios::hex) ;
+
+To prove this, run this program:
+
+ // EXAMPLE OUTPUT-12
+
+ // TEST TURNING ON FORMAT FLAG BITS
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::oct | ios::hex) ;
+    FORMATFLAGS() ;
+    cout.setf(ios::dec , ios::dec | ios::oct | ios::hex) ;
+    FORMATFLAGS() ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+FORMAT FLAGS
+skipws
+oct
+hex
+unitbuf
+FORMAT FLAGS
+skipws
+dec
+unitbuf
+
+Because "ios::dec", "ios::oct" and "ios::hex" are mutually exclusive bit fields
+(that is, you only want ONE of them on at any time), you would normally
+AND the one bit of the first argument of "setf" with the OR of all 3 bits, as
+shown above. The second argument can also be specified as "ios::basefield",
+where this value is pre-defined as: "ios::dec | ios::oct | ios::hex".
+
+For example, program OUTPUT-12 can be re-written as:
+
+ // EXAMPLE OUTPUT-13
+
+ // TEST ios::basefield
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::oct | ios::hex) ;
+    FORMATFLAGS() ;
+    cout.setf(ios::dec , ios::basefield) ;
+    FORMATFLAGS() ;
+
+    return 0 ;
+ }
+
+The output of this program is the same.
+
+In a similar manner, the field "ios::adjustfield" represents the bit positions
+of "ios::left", "ios::right" and "ios::internal" ORed together, and the field
+"ios::floatfield" represents the bit positions of "ios::fixed" and
+"ios::scientific" ORed together.
+
+Because the field "x_flags" in the class "ios" is protected, this means that
+you cannot access it directly. However, there is a public member function
+called "flags" that will return this field to you. If you provide a long integer
+as an argument to "flags", then the existing value of "x_flags" will be
+returned to you after your argument is used to provide a new setting for
+"x_flags".
+
+For example:
+
+ // EXAMPLE OUTPUT-14
+
+ // TEST THE flags MEMBER FUNCTION
+
+ #include <header.h>
+
+ int main()
+ {
+    long value = cout.flags(0) ;
+    cout.setf(ios::hex , ios::basefield) ;
+    cout << "value is "
+         << value
+         << '\n' ;
+    FORMATFLAGS(cout) ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+value is 2001
+FORMAT FLAGS
+hex
+
+Note that "value" is the old value of "x_flags", and is printed in hexadecimal.
+The '2' represents the "unitbuf" bit, and the '1' is the "skipws" bit. There is
+nothing shown under the heading "FORMAT FLAGS" except "hex" because
+all of the bits were turned off by the call to "flags", then the hex bit was
+turned back on.
+
+Both the "setf" and "unsetf" functions return a value, which you are free to
+use or ignore. The value returned is a long integer representing the
+previous value of the field "x_flags". However, you will probably never
+have occasion to use this value.
+
+******************************************************************
+The Base Setting and Integer Output
+
+Output formatting is important because you want to have complete
+flexibility in the manner in which your data appears. Let's start with the
+base in which integers will be shown. If a "printf" function call, you have 3
+choices: decimal, octal and hex. A decimal output can be obtained by using
+a conversion specification of "%d" or "%i", an octal by using "%o", and hex by
+using "%x" or "%X". (How to emulate lower vs. upper case will be discussed
+later.) There are 3 bits in the enumerated values shown in the Bit Format
+Flags section that control the base setting:
+
+   ios::dec    0x0010     Show integers in decimal format
+   ios::oct    0x0020     Show integers in octal format
+   ios::hex    0x0040     Show integers in hexadecimal format
+
+To guarantee that decimal output is used, you must turn on the bit
+"ios::dec", and ensure that all the remaining 2 bits are turned off. The same
+reasoning applies to octal and hex output. But we proved in example
+OUTPUT-11 that no bit pertaining to the output base is on by default.
+Therefore, which base will be used? The answer is that the compiler will
+default to decimal output if none of the 3 base field bits is on. But be
+careful! If more than one output base bit happends to be on, then the output
+is unpredictable. (Of course, you would never deliberately put yourself in
+this situation.). Remember: Once the base has been set, it stays set for all
+future integers unless it is subsequently changed.
+
+Recall that the field "ios::basefield" has been defined for you to contain all
+3 base field bits ORed together, and should be used in the second parameter
+of "setf" to ensure that all 3 bits are turned off before altering them. So now
+let's create a program to output the number 65 using the default base,
+followed by the base in octal, hexadecimal, and decimal. (NOTE: a better
+way in which to write this program will be shown in the section on
+manipulators.)
+
+ // EXAMPLE OUTPUT-21
+
+ // HOW TO PRINT IN DECIMAL, OCTAL
+ // AND HEXADECIMAL FORMATS
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << 65 << '\n' ;
+    cout.setf(ios::oct , ios::basefield) ;
+    cout << 65 << '\n' ;
+    cout.setf(ios::hex , ios::basefield) ;
+    cout << 65 << '\n' ;
+    cout.setf(ios::dec , ios::basefield) ;
+    cout << 65 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program, as expected, is:
+
+65
+101
+41
+65
+
+One final point: In a "printf" function call, the use of the flag # causes the
+base of an octal or hexadecimal number to appear (0 and 0x, respectively).
+The same effect can be achieved in C++ by setting on the bit "ios::showbase".
+Here is example OUTPUT-21 again, but this time the base of the octal and
+hexadecimal numbers is shown. To turn off this feature, use the "unsetf"
+function.
+
+ // EXAMPLE OUTPUT-22
+
+ // HOW TO PRINT IN DECIMAL, OCTAL
+ // AND HEXADECIMAL FORMATS AND SHOW
+ // THE BASE FOR OCTAL AND HEX
+ // NUMBERS
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::showbase) ;
+    cout << 65 << '\n' ;
+    cout.setf(ios::oct , ios::basefield) ;
+    cout << 65 << '\n' ;
+    cout.setf(ios::hex , ios::basefield) ;
+    cout << 65 << '\n' ;
+    cout.setf(ios::dec , ios::basefield) ;
+    cout << 65 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+65
+0101
+0x41
+65
+
+Note that on positive decimal output, a '+' sign is assumed. If you want this
+sign to appear, turn on the bit "ios::showpos". (Of course, if the number is
+negative, the '-' sign will always appear.) To turn off this feature, use the
+"unsetf" function. In this example the number 65 is displayed with a '+' sign.
+
+ // EXAMPLE OUTPUT-23
+
+ // HOW TO SHOW THE SIGN OF A POSITIVE
+ // NUMBER
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::showpos) ;
+    cout << 65 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
++65
+
+There is one other option you can employ with hexadecimal numbers. By
+default any hex digit, as well as the 'x' in the base, appears in lower-case.
+The same rule applies to the 'e' when printing in scientific notation. If you
+want to see upper-case, turn on the bit "ios::uppercase". To revert back to
+lower-case, use the "unsetf" function.
+
+This example prints the number 171 in hexadecimal, and shows all hex
+digits in upper-case.
+
+ // EXAMPLE OUTPUT-24
+
+ // HOW TO PRINT HEX DIGITS IN
+ // UPPER CASE LETTERS
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::uppercase | ios::showbase) ;
+    cout.setf(ios::hex , ios::basefield) ;
+    cout << 171 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+0XAB
+
+*****************************************************************
+Character Output
+
+Integer output pertains to the display of decimal, octal and hexadecimal
+numbers. The next question is: Can you emulate "%c" in a "printf" function
+call to set the base for character output, i.e., set it so that all integral
+values appear in their character representations? Unfortunately, the answer
+is no. However, the problem only arises when a non-character value needs to be
+displayed in its character form, because if you define a character using type
+char , then it will automatically be shown in its character format. Thus, to
+make a non-char type appear in character format, an explicit cast to type
+"char" is required.
+
+For example, this program prints the letter 'A' five times:
+
+ // EXAMPLE OUTPUT-31
+
+ // HOW TO PRINT A CHARACTER AND A
+ // NON-CHARACTER IN CHARACTER
+ // FORMAT.
+
+ #include <header.h>
+
+ int main()
+ {
+    // No cast needed here
+    char ch1 = 'A' ;
+    cout << ch1 << '\n' ;
+    char ch2 = 65 ;
+    cout << ch2 << '\n' ;
+
+    // Cast needed here
+    int ch3 = 65 ;
+    cout << (char)ch3 << '\n' ;
+    int ch4 = 0101 ;
+    cout << (char)ch4 << '\n' ;
+    int ch5 = 0x41 ;
+    cout << (char)ch5 << '\n' ;
+
+    return 0 ;
+ }
+
+How about the opposite? That is, suppose you want a character to be shown
+in its decimal, octal, and hexadecimal representations. Once again, a cast is
+required, this time to type "int". By doing this cast in conjunction with the
+proper base setting, the desired result can be obtained. In this example, the
+character "ch" is shown in its decimal, octal, and hexadecimal
+representations.
+
+ // EXAMPLE OUTPUT-32
+
+ // HOW TO PRINT A CHARACTER AS A
+ // DECIMAL, OCTAL AND HEXADECIMAL
+ // VALUE.
+
+ #include <header.h>
+
+ int main()
+ {
+    char ch = 'A' ;
+
+    cout << (int)ch << '\n' ;
+    cout.setf(ios::oct , ios::basefield) ;
+    cout << (int)ch << '\n' ;
+    cout.setf(ios::hex , ios::basefield) ;
+    cout << (int)ch << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+65
+101
+41
+
+There is another way to guarantee that an integral value gets shown in its
+character format. That is with the use of the member function called "put"
+(think of the C function "putchar"). This function always outputs its one
+argument in character format, regardless of how it was defined. This
+example prints the character 'A' three times.
+
+ // EXAMPLE OUTPUT-33
+
+ // HOW TO USE THE MEMBER FUNCTION
+ // put TO OUTPUT A CHARACTER
+
+ #include <header.h>
+
+ int main()
+ {
+    char ch1 = 'A' ;
+    int ch2 = 65 ;
+
+    cout.put(ch1) << '\n' ;
+    cout.put('A') << '\n' ;
+    cout.put(ch2) << '\n' ;
+
+    return 0 ;
+ }
+
+******************************************************************
+Setting the Field Width
+
+The field width in C++ works in a similar manner to that of C. If the total
+number of characters needed for output is less than the specified width,
+then the extra spaces will be filled with the current fill character. If the
+number of characters is greater than the specified width, then the width is
+'expanded' to accommodate the entire field. (In C the fill character in a
+"printf" function call can only be either a zero or a space; in C++ it can be
+any character you desire. This topic is dicussed following width.)
+
+If no width is ever specified, then the default value of zero is assumed (just
+as it is in C). To change the field width, use the member function "width"
+with one argument: the width value itself. Then the next field to be output
+will use this value.
+
+For example, this program prints the number 1 right-justified and preceded
+by 4 blanks, while the number 23 has 3 preceding blanks.
+
+ // EXAMPLE OUTPUT-41
+
+ // HOW TO SET THE FIELD WIDTH
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.width(5) ;
+    cout << 1 << '\n' ;
+    cout.width(5) ;
+    cout << 23 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+    1
+   23
+
+Something should strike you as odd about this example. Why was it
+necessary to write the line "cout.width(5)" twice? The answer is that the
+width specification only applies to the next field to be output.  To prove this
+statement, let's modify this example slightly and remove the second width
+setting.
+
+ // EXAMPLE OUTPUT-42
+
+ // NOTE THAT THE WIDTH SETTING
+ // ONLY APPLIES TO THE NEXT FIELD
+ // TO BE OUTPUT
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.width(5) ;
+    cout << 1 << '\n' ;
+    cout << 23  << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+    1
+23
+
+Now the number 23 appears left-justified because the width reverted back
+to its default value of 0.
+
+In addition to setting the field width, the "width" function also returns the
+value of the width just prior to the function call. If you wish to return this
+value and leave it alone, then call the  width  function with no argument
+specified.
+
+IMPORTANT NOTE: Under the current implementation of Turbo C++,
+the field width specification does NOT apply to character fields that are
+output. This does not mean that the width reverts back to zero upon
+encountering a character field, but instead is applied to the next non-
+character field that is encountered. The patch IOPAT.ZIP in the
+CompuServe BPROGB forum will fix this problem.
+
+******************************************************************
+Specifying the Fill Character
+
+If the total number of characters needed to display a field is less than the
+current field width, the extra output spaces will be filled with the current
+fill character. In a "printf" function call, the default fill character is a
+blank, and you only have the option to change it to a zero.
+
+In C++, however, you now have the option for any character to serve as the
+fill character. As before, the default is a blank. The member function "fill"
+is used to specify a new fill character. Once it is specified, it remains as
+the fill character unless it is subsequently changed. The function takes a
+single argument: the new fill character, and returns the previous fill
+character. As with "width", it may be called with no actual argument if you
+merely want to return the previous fill character.
+
+This example outputs the default fill character, changes it to an asterisk, and
+then proves that the current fill character is, indeed, an asterisk.
+
+ // EXAMPLE OUTPUT-51
+
+ // HOW TO SET THE FILL CHARACTER
+
+ #include <header.h>
+
+ int main()
+ {
+    const char quote = '\'' ;
+    char old_fill = cout.fill('*') ;
+    cout << "Old fill character is "
+         << quote
+         << old_fill
+         << quote
+         << '\n' ;
+
+    cout << "It was changed to "
+         << quote
+         << cout.fill()
+         << quote
+         << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+Old fill character is ' '
+It was changed to '*'
+
+Now let's re-run example OUTPUT-41, but this time we'll fill the first
+field with zeroes, and the second with asterisks.
+
+ // EXAMPLE OUTPUT-52
+
+ // A COMBINATION OF SETTING THE
+ // FIELD WIDTH AND SPECIFYING
+ // THE FILL CHARACTER
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.width(5) ;
+    cout.fill('0') ;
+    cout << 1 << '\n' ;
+    cout.width(5) ;
+    cout.fill('*') ;
+    cout << 23 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+00001
+***23
+
+******************************************************************
+Field Justification
+
+Whenever a field gets output, and the field width is greater than the number
+of characters needed to display the field, the data is always right-justified
+with the fill character used as padding to the left. (Of course, if the field
+width is less than or equal to the number of characters needed, no
+justification occurs and the fill character is ignored.)
+
+Recall that there are 3 bits which are used to set the field justification:
+
+ ios::left      0x0002     Left-justification of output
+ ios::right     0x0004     Right-justification of output
+ ios::internal  0x0008     Pad after sign or base indicator
+
+If no bit is set in the field "x_flags", then the justification defaults to
+right. Once the justification has been set, it remains set unless it is sub-
+sequently changed. As with setting the base, there is a field called
+"ios::adjustfield" which has been defined with all 3 justification bits turned
+on. When setting the justification, this field should be used as the second
+argument in the "setf" member function call to ensure that the other 2 bits are
+turned off. To set the justification to left, use the member function "setf"
+with the bit "ios::left", and to change it back to right, use the bit
+"ios::right".
+
+Here is example OUTPUT-41 again, this time with both fields left-justified.
+
+ // EXAMPLE OUTPUT-60
+
+ // HOW TO LEFT-JUSTIFY A FIELD
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::left , ios::adjustfield) ;
+    cout.width(5) ;
+    cout.fill('0') ;
+    cout << 1 << '\n' ;
+    cout.width(5) ;
+    cout.fill('*') ;
+    cout << 23 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+10000
+23***
+
+The justification resulting from the "ios::internal" bit means that padding
+with the fill character, if any, will occur after the base of the number has
+been shown (for octal and hexadecimal numbers) and before the number
+itself. In the case of decimal numbers, the padding will occur after the sign
+('+' or '-') and before the number itself. That is, instead of padding
+occurring on the left or on the right, it occurs "in the middle".
+
+In this example, the base is shown, the fill character is set to '=', the
+internal  bit is set on, the field width is set to 10, hexadecimal output is
+requested, and the number 65 is printed. Then the same number is printed
+again, but with left justification.
+
+ // EXAMPLE OUTPUT-61
+
+ // HOW TO DO INTERNAL JUSTIFICATION
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::showbase) ;
+    cout.fill('=') ;
+    cout.setf(ios::internal , ios::adjustfield) ;
+    cout.width(10) ;
+    cout.setf(ios::hex , ios::basefield) ;
+    cout << 65 << '\n' ;
+    cout.setf(ios::left , ios::adjustfield) ;
+    cout.width(10) ;
+    cout << 65 << '\n' ;
+
+    return 0 ;
+ }
+
+ The output of this program is:
+
+0x======41
+0x41======
+
+******************************************************************
+Floating Point Output
+
+Floating point numbers are output in C++ just like any other type of
+number. However, the formatting is certainly different, and default values
+are not the same as you would get from using a "printf" function call.
+
+In this example some floating point constants are output.
+
+ // EXAMPLE OUTPUT-70
+
+ // DISPLAY SOME FLOATING POINTS
+ // CONSTANTS WITHOUT ANY FORMATTING
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << 1.2300 << '\n' ;
+    cout << 4.00 << '\n' ;
+    cout << 5.678E2 << '\n' ;
+    cout << 0.0 << '\n' ;
+ }
+
+The output of this program is:
+
+1.23
+4
+567.8
+0
+
+For the first constant, note that the 2 trailing zeroes were not printed. This
+is certainly different from "printf" in which the default is to show 6
+positions after the decimal point. In the second case, not only do the trailing
+zeroes  not  show, but even the decimal point does not appear. In the third
+case, the number prints in fixed point notation despite being keyed in
+scientific notation. In the final case, at least one significant digit will
+always appear.
+
+Thus, we can infer that by default, all trailing zeroes, even the decimal
+point, will be suppressed. If you really want to emulate how the "printf"
+function works, you need to turn on the "ios::showpoint" bit. To revert
+back to the default value, use the function "unsetf" to turn it off. Here is
+the same example with this bit now on in the field "x_flags".
+
+ // EXAMPLE OUTPUT-71
+
+ // HOW TO EMULATE printf
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::showpoint) ;
+    cout << 1.2300 << '\n' ;
+    cout << 4.00 << '\n' ;
+    cout << 5.678E2 << '\n' ;
+    cout << 0.0 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+1.230000
+4.000000
+567.800000
+0.000000
+
+The next step is to override the default of 6 decimal positions. To do this,
+use the member function "precision" in which the one argument is the
+number of decimal positions to be shown. This function also returns the
+previous value of the precision. If it is called without an argument, it
+merely returns the current value of the precision and does not alter it. The
+default precision is 0.
+
+Here is the same example with the precision now set to 1.
+
+ // EXAMPLE OUTPUT-72
+
+ // HOW TO EMULATE printf AND SET
+ // THE PRECISION
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::showpoint) ;
+    cout.precision(1) ;
+    cout << 1.2300 << '\n' ;
+    cout << 4.00 << '\n' ;
+    cout << 5.678E2 << '\n' ;
+    cout << 0.0 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+1.2
+4.0
+5.7e+02
+0.0
+
+Note that the third answer is displayed in scientific notation. To guarantee
+that all output is shown in either fixed decimal or scientific notation, recall
+that the following bits are pre-defined in the class "ios":
+
+   ios::scientific     0x0800    Use exponential notation on floating
+                                 point numbers
+   ios::fixed          0x1000    Use fixed decimal output on floating point
+                                 numbers
+
+If neither bit is turned on, then the compiler emulates the "%g" conversion
+specification in a "printf" function call. Also recall that there is a constant
+called "ios:floatfield" that is the value of these two bits ORed together, and
+may be used as the second argument in a "setf" function call.
+
+ // EXAMPLE OUTPUT-73
+
+ // HOW TO EMULATE printf AND SET
+ // THE PRECISION
+
+ #include <header.h>
+
+ int main()
+ {
+    cout.setf(ios::showpoint) ;
+    cout.precision(2) ;
+
+    // Guarantee fixed decimal
+    cout.setf(ios::fixed , ios::floatfield) ;
+    cout << 1.2300 << '\n' ;
+    cout << 4.00 << '\n' ;
+    cout << 5.678E2  << '\n' ;
+    cout << 0.0 << '\n' ;
+
+    // Guarantee scientific
+    cout.setf(ios::scientific , ios::floatfield) ;
+    cout << 1.2300 << '\n' ;
+    cout << 4.00  << '\n' ;
+    cout << 5.678E2<< '\n' ;
+    cout << 0.0 << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+1.23
+4.00
+567.80
+0.00
+1.23e+00
+4.00e+00
+5.68e+02
+0.00e+00
+
+******************************************************************
+Printing addresses
+
+The address of a variable (or instance of a class) can be generated by using
+the address operator (&). Because the address operator can be applied to a
+wide variety of types (both built-in and user-defined), the type of argument
+can theoretically be "pointer to int" or "pointer to float" or even 'pointer to
+my class type'. To accommodate all of these various types, the class
+"ostream" contains an overloaded function "operator<<" to handle all such
+argument types. This function is prototyped to accept an argument of type
+"void*" which, according to the rules of argument matching, is acceptable to
+the compiler as a "match".
+
+In Turbo C++, this address is always shown in 32-bit (4 byte) hexadecimal
+form, even though the default output base is decimal .
+
+ // EXAMPLE OUTPUT-80
+
+ // HOW TO PRINT AN ADDRESS
+
+ #include <header.h>
+
+ int main()
+ {
+    int number ;
+
+    cout << "Address of number as a\n"
+         << "  32-bit hex is "
+         << &number
+         << '\n' ;
+
+    return 0 ;
+ }
+
+If you wish, you may view this address in decimal by using a cast to an
+unsigned long.
+
+ // EXAMPLE OUTPUT-81
+
+ // HOW TO PRINT AN ADDRESS IN
+ // DECIMAL AS AN UNSIGNED LONG
+
+ #include <header.h>
+
+ int main()
+ {
+    int number ;
+
+    cout << "Address of number as a\n"
+         << "  long integer is "
+         << (unsigned long)&number
+         << '\n' ;
+
+    return 0 ;
+ }
+
+But since addresses are stored in 2 bytes when using the small memory
+model, it's probably better to cast to an "unsigned int".
+
+ // EXAMPLE OUTPUT-82
+
+ // HOW TO PRINT AN ADDRESS IN
+ // DECIMAL AS AN UNSIGNED INT
+
+ #include <header.h>
+
+ int main()
+ {
+    int number ;
+
+     cout << "Address of number as an\n"
+          << "  unsigned int is "
+          << (unsigned)&number
+          << '\n' ;
+
+    return 0 ;
+ }
+
+When dealing with a string, a problem arises. It's the same problem that
+occurred in C in a program fragment such as:
+
+  char* ptr = "ABC" ;
+  printf ("%s" , ptr) ;
+
+No doubt the user will see "ABC" as the output. The problem is how to print
+the ADDRESS contained within the pointer variable "ptr". The solution in C is
+to provide a different conversion specification, namely "%p".
+
+In C++ this program fragment:
+
+  char* ptr = "ABC" ;
+  cout << ptr ;
+
+would also output "ABC" because the argument "ptr" is of type "char*" which
+matches exactly an overloaded "operator<<" that accepts an argument of
+type "char*". To emulate the "%p" in C++, you must override the built-in
+type of "char*" with the type "void*" so that the "operator<<" function that
+outputs an ADDRESS will be called instead.
+
+ // EXAMPLE OUTPUT-83
+
+ // HOW TO PRINT AN ADDRESS OF
+ // A STRING
+
+ #include <header.h>
+
+ int main()
+ {
+    char* ptr = "ABC" ;
+
+    cout << "The string itself is "
+         << ptr
+         << '\n' ;
+
+    cout << "The address of the"
+         << "string is "
+         << (unsigned)(void*)ptr
+         << '\n' ;
+
+    return 0 ;
+ }
+
+******************************************************************
+Binary output
+
+It's possible to take any internal representation of a C++ type and output it
+as though it were just an array of characters. For a type such as "float", this
+will produce meaningless output, but it may be useful for integers. To do
+this, the member function  write  must be used. This function takes 2
+arguments: The first is the address of the data to be output, and the second
+is the number of bytes to be shown. Note that in the case of a string, the
+null byte is treated just like any other byte.
+
+Because the function "write" is declared to accept an argument of type
+"char*", if the item you wish to print is not of this type, then the address
+must be generated using the address operator, and then cast to type "char*".
+
+ // EXAMPLE OUTPUT-90
+
+ // HOW TO DISPLAY THE BINARY REPRE-
+ // SENTATION OF A NUMBER
+
+ #include <header.h>
+
+ int main()
+ {
+    long number = 0x414243 ;
+
+    cout.write((char*)&number , sizeof(number)) ;
+    cout << '\n' ;
+
+    return 0 ;
+ }
+
+Note that the output of this program is "CBA", because the address of a "long"
+refers to the low-order byte.
+
+************************ SECTION 3 -- INPUT *********************************
+
+Introduction
+
+In addition to being able to use classes to control output, C++ stream I/O
+classes also handle all input. Just as output consists of a stream of characters
+being sent to some device, input consists of characters coming in from some
+device and being translated into their proper defined type. In other words,
+the characters '1', '2' and '3' could be the string '123' or the integer 123,
+depending upon the type of the receiving field. Unlike output, the realm of
+possibilities for 'formatting' simply does not exist when inputting data.
+
+The class "istream" is derived from the class "ios", and it controls the input
+handling functions. The global instance that is defined for you is called "cin",
+and is defined as:
+
+   istream cin ;
+
+In addition to data members, the class "istream" contains functions to
+operate upon these members. The function you will use the most often is
+called the extraction operator, and it is written as:
+
+   operator>>
+
+The argument to this function is the variable name that you wish to contain
+the input. The name 'extraction' comes from the fact that you are
+'extracting' (taking) data from the input stream.
+
+For example, to input an integer, you would code:
+
+   int number ;
+   cin.operator>>(number) ;
+
+As with the insertion operator, this code can be replaced with the simpler
+form:
+
+   int number ;
+   cin >> number ;
+
+Note that the type of the input variable determines how the characters from
+the input stream are to be stored.
+
+For example, this program inputs a number, character and float, and then
+echoes them back.
+
+ // EXAMPLE INPUT-01
+
+ // HOW TO INPUT SOME SIMPLE TYPES
+
+ #include <header.h>
+
+ int main()
+ {
+    int number ;
+    cout << "Enter a number: " ;
+    cin >> number ;
+    cout << "You entered: "
+         << number
+         << '\n' ;
+
+    char ch ;
+    cout << "Enter a character: " ;
+    cin >> ch ;
+    cout << "You entered: "
+         << ch
+         << '\n' ;
+
+    float fl ;
+    cout << "Enter a float: " ;
+    cin >> fl ;
+    cout << "You entered: "
+         << fl
+         << '\n' ;
+
+    return 0 ;
+ }
+
+The extraction operator, like the insertion operator, can be chained
+together.
+
+ // EXAMPLE INPUT-02
+
+ // EXTRACTION OPERATORS CAN BE
+ // CHAINED TOGETHER
+
+ #include <header.h>
+
+ int main()
+ {
+    int number1 , number2 ;
+    cout << "Enter 2 numbers: " ;
+    cin >> number1 >> number2 ;
+    cout << "You entered: "
+         << number1
+         << " and "
+         << number2
+         << '\n' ;
+
+    return 0 ;
+ }
+
+Recall from the discussion on output that numbers can be displayed in
+either their decimal, octal, or hexadecimal representations. This is done by
+changing the base setting of the output stream. In a similar fashion, the base
+of the input stream can be changed from its default setting of decimal to
+either octal or hexadecimal. This is how the "%o" and "%x" conversion
+specifications in a "scanf" function call can be emulated. For example, this
+program prompts the user for numbers in decimal, octal, and hexadecimal
+formats, then echoes each number back. Note that the output is always in
+decimal because the setting of the output base has not been affected. In
+other words, the base setting is stored separately for each stream.
+Obviously, if an illegal input value is entered, the value will not be stored.
+(NOTE: Borland Turbo C++ version 1.00 had a bug in regard to the
+inputting of octal and hex numbers, but it was corrected in version 1.01.)
+
+ // EXAMPLE INPUT-03
+
+ // INTEGERS CAN BE INPUT IN ANY OF
+ // 3 DIFFERENT BASES
+
+ #include <header.h>
+
+ int main()
+ {
+    int number ;
+
+    cout << "Enter a decimal number: " ;
+    cin >> number ;
+    cout << "You entered: "
+         << number
+         << endl ;
+
+    cout << "Enter an octal number: " ;
+    cin.setf(ios::oct , ios::basefield) ;
+    cin >> number ;
+    cout << "You entered: "
+         << number
+         << endl ;
+
+    cout << "Enter a hex number: " ;
+    cin.setf(ios::hex , ios::basefield) ;
+    cin >> number ;
+    cout << "You entered: "
+         << number
+         << endl ;
+
+    return 0 ;
+ }
+
+If the operator enters 65 for all 3 prompts, then the output of this program
+is:
+
+65
+53
+101
+
+*****************************************************************
+Character Input
+
+Characters may be read in using either the extraction operator ">>" or the
+member function "get" (think of the C function "getchar"). If the extraction
+operator is used, then leading whitespace is bypassed and the first non-
+whitespace character is fetched. Also, a reference to the invoking instance is
+returned. In this example, enter some spaces and tabs before striking a
+character and <RETURN>.
+
+ // EXAMPLE INPUT-11
+
+ // DEMONSTRATE HOW TO READ IN A
+ // CHARACTER AND BYPASS LEADING
+ // WHITESPACE
+
+ #include <header.h>
+
+ int main()
+ {
+    const char quote = '\'' ;
+
+    cout << "Enter a character: " ;
+    char ch ;
+    cin >> ch ;
+    cout << "You entered: "
+         << quote
+         << ch
+         << quote
+         << '\n' ;
+
+    return 0 ;
+ }
+
+Another method to read a character is to use the member function "get". This
+can be done in two differenct ways. The first takes one argument: the
+character variable name pass in by reference. It returns a reference to the
+invoking instance. The difference between the extraction operator ">>" and
+"get" is that "get" does not use the format flags, so it does not bypass
+leading whitespace. In this example, enter some spaces and then another
+character. You will see that the first space gets entered into the variable.
+
+ // EXAMPLE INPUT-12
+
+ // DEMONSTRATE HOW TO READ IN A
+ // CHARACTER AND RETAIN LEADING
+ // WHITESPACE USING get(char&)
+
+ #include <header.h>
+
+ int main()
+ {
+    const char quote = '\'' ;
+
+    cout << "Enter a character: " ;
+    char ch ;
+    cin.get(ch) ;
+    cout << "You entered: "
+         << quote
+         << ch
+         << quote
+         << '\n' ;
+
+    return 0 ;
+ }
+
+The other function using "get" takes no input argument (just like "getchar" in
+C) and returns a value of type "int", which represents the character just read,
+or the "EOF" constant if either (a) end-of-file was detected, or (b) no
+character could be read. This function is unique in that it does not set
+'failbit'. The other unformatted extractors will set 'failbit' if called at
+end-of-file time, so that no other characters can be read.
+
+Here is example INPUT-12 repeated, but now it uses "get()" and checks for
+end-of-file. Because the variable "ch" must be defined as type "int", don't
+forget the cast in order to display it as a character.
+
+ // EXAMPLE INPUT-13
+
+ // DEMONSTRATE HOW TO READ IN A
+ // CHARACTER AND RETAIN LEADING
+ // WHITESPACE USING get()
+
+ #include <header.h>
+
+ int main()
+ {
+    const char quote = '\'' ;
+
+    cout << "Enter a character: " ;
+    int ch ;
+    ch = cin.get() ;
+    if (ch != EOF)
+       cout << "You entered: "
+            << quote
+            << (char)ch
+            << quote
+            << '\n' ;
+    else
+       cout << "End-of-file\n" ;
+
+    return 0 ;
+ }
+
+******************************************************************
+String Input
+
+As with character input, strings may be entered using the extraction
+operator or the overloaded member function "get". With the extraction
+operator, leading whitespace is bypassed, and the first whitespace
+encountered terminates the input. (This acts just like the function "scanf".)
+
+ // EXAMPLE INPUT-21
+
+ // DEMONSTRATE HOW TO READ IN A
+ // STRING AND BYPASS WHITESPACE
+ // TOTALLY (LOOKS LIKE scanf)
+
+ #include <header.h>
+
+ const int length = 100 ;
+
+ int main()
+ {
+    char string [length] ;
+    const char quote = '\"' ;
+
+    cout << "Enter a string: " ;
+    cin >> string ;
+    cout << "Your string: "
+         << quote
+         << string
+         << quote
+         << '\n' ;
+
+    return 0 ;
+ }
+
+But just like "scanf", the possibility exists for a program hang or crash if
+the operator enters more characters than can safely be accommodated by the
+string array. In other words, run this program and enter more than 10
+characters.
+
+ // EXAMPLE INPUT-22
+
+ // IT'S POSSIBLE TO OVERFLOW AN
+ // ARRAY WHEN INPUTTING A STRING
+
+ #include <header.h>
+
+ const int max = 10 ;
+
+ int main()
+ {
+    char array[max] ;
+
+    cout << "Enter a string: " ;
+    cin >> array ;
+    cout << "You entered: "
+         << array
+         << '\n' ;
+
+    return 0 ;
+ }
+
+If it didn't bomb, consider yourself lucky. To guard against this disaster,
+you may set the width of the input stream to physically limit the number of
+characters that will be stored. This is done by using the member function
+"width" in the class "istream". Run this program and enter the letters 'A'
+through 'M'. Note that only the letters 'A' through 'I' got stored into the
+string (the last byte is always reserved for the null character) and the
+remaining characters remain in the input buffer.
+
+ // EXAMPLE INPUT-23
+
+ // HOW TO AVOID OVERFLOWING AN
+ // ARRAY WHEN INPUTTING A STRING
+ // WITH THE EXTRACTION OPERATOR
+
+ #include <header.h>
+
+ const int max = 10 ;
+
+ int main()
+ {
+    char array[max] ;
+
+    cout << "Enter a string: " ;
+    cin.width(max) ;
+    cin >> array ;
+    cout << "You entered: "
+         << array
+         << '\n' ;
+
+    return 0 ;
+ }
+
+Caution: Just like the "width" function used for output, the input "width"
+function only applies to the next item to be input.
+
+Another way to read in strings is to use the member function  get  with 3
+arguments. (Note the similarity to the C function "fgets".) The first
+argument is the address of the string area, the second is the maximum
+number of characters (less 1) than can be read in, and the third specifies the
+terminating character (the one that will stop the transfer of characters from
+the buffer into the string array). This third argument defaults to the value
+'\n', which is the <RETURN> key. Note, however, that if it is changed to
+some other character, then the <RETURN> key must still be pressed for
+the input action to cease. Both leading whitespace and embedded
+whitespace are retained as part of the string value.
+
+ // EXAMPLE INPUT-24
+
+ // DEMONSTRATE HOW TO READ IN A
+ // STRING AND RETAIN WHITESPACE,
+ // BOTH LEADING AND EMBEDDED
+
+ #include <header.h>
+
+ const int length = 100 ;
+
+ int main()
+ {
+    char string [length] ;
+    const char quote = '\"' ;
+
+    cout << "Enter a string: " ;
+    cin.get(string , length) ;
+    cout << "Your string: "
+         << quote
+         << string
+         << quote
+         << '\n' ;
+
+    return 0 ;
+ }
+
+A slight variation on the function "get" taking 3 arguments is the function
+"getline". The only difference is that "getline" extracts the newline character
+('\n') from the input buffer, whereas "get" leaves it alone (and, presumably,
+must then be flushed by the programmer). In Turbo C++ version 1.01, this
+newline character is made part of the string, even though the A T & T spec
+does not say to do this.
+
+ // EXAMPLE INPUT-25
+
+ // TEST getline FUNCTION
+
+ // NOTE THAT THE LAST DOUBLE QUOTE
+ // APPEARS ON THE FOLLOWING LINE
+ // DUE TO THE INCLUSION OF THE
+ // NEWLINE CHARACTER IN string
+
+ #include <header.h>
+
+ const int length = 100 ;
+
+ int main()
+ {
+    char string [length] ;
+    const char quote = '\"' ;
+
+    cout << "Enter a string: " ;
+    cin.getline(string , length) ;
+    cout << "Your string: "
+         << quote
+         << string
+         << quote ;
+
+    return 0 ;
+ }
+
+******************************************************************
+Checking for End-Of-File
+
+When reading data from the keyboard or a file, the programmer must
+always be on guard for the occurrence of an end-of-file mark (in DOS it's
+the character ^Z or decimal value 26 from text files). This is comparable to
+detecting the value "EOF" when doing a "scanf" in C.
+
+In C++, the member function "eof" in the class "istream" taking no arguments
+will report 'true' if the end-of-file condition was found, 'false' if not
+found.
+
+Normally data is obtained within a 'while' loop, with the loop continuing to
+execute as long as end-of-file is  not  detected. This situation could be coded
+like this:
+
+ // EXAMPLE INPUT-31
+
+ // ENTER A NUMBER AND LOOP
+ // UNTIL EOF IS DETECTED
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << "Enter a number: " ;
+    int num ;
+    cin >> num ;
+    while (!cin.eof())
+    {
+       cout << "You entered: "
+            << num
+            << '\n' ;
+       cout << "\nNext number: " ;
+       cin >> num ;
+    }
+
+    return 0 ;
+ }
+
+While this program certainly works, there is a better way to code it. Since
+the statement:
+
+   cin >> num ;
+
+returns a reference to the invoking object itself (namely "cin"), this object
+can be used as the invoking object for the "eof" member function call. Thus,
+the revised code looks like:
+
+ // EXAMPLE INPUT-32
+
+ // A BETTER METHOD OF CODING
+ // EXAMPLE INPUT-31
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << "Enter a number: " ;
+    int num ;
+    while (!(cin >> num).eof())
+    {
+      cout << "You entered: "
+           << num
+           << '\n' ;
+      cout << "\nNext number: " ;
+    }
+
+    return 0 ;
+ }
+
+Notice how the read and check for end-of-file have been combined to form
+the Boolean condition of the 'while' loop.
+
+******************************************************************
+Checking for Errors
+
+Unfortunately, we live in an imperfect world. People don't smile, cars
+crash, checks bounce, and data entry operators don't always do what they're
+supposed to do. This means that as a programmer you must be responsible
+for making your code as 'operator-proof' as possible. In other words, no
+matter what the user may enter as 'data', your program must capture it and
+successfully trap all error conditions to avoid such catastrophes as 'garbage
+in, garbage out', aborts, hangs, endless loops, etc.
+
+When expecting character or string input, there's not too much that can go
+wrong, other than array overflow which has already been covered. But
+with numeric data, such as "int"s, "float"s and "double"s, only certain
+keystrokes in a prescribed order and considered to be valid. For example,
+when you expect a decimal integer to be input, the user may enter a sign (+
+or -) followed by the digits 0 through 9. An entry of A12 is obviously
+invalid. An entry such as 12A, however, is considered to be the number 12,
+with the "invalid" character 'A' serving to terminate the numeric portion of
+the input stream. In addition, any whitespace character terminates a
+numeric entry, and all leading whitespace characters are bypassed
+automatically.
+
+There are several ways to check for 'garbage' input when expecting valid
+numeric data. Within the class "istream" the member function "good" will
+return 'true' if the preceding operation succeeded, 'false' otherwise. In
+addition, the member function "fail" will do just the opposite.
+
+Another way to check for an input error is to use the overloaded "operator!"
+(Boolean not) on the instance of "istream". This operator will return
+'true' if an error occurred, 'false' otherwise. Similarly, testing the
+instance itself as a Boolean value will return 'true' if the input was good,
+'false' otherwise.
+
+Note that in the header file <header.h> the function "IOFLAGS" has been
+defined to accept an instance of an input stream as an argument, and will
+display the various input states. The default argument is the instance "cin".
+To test this, trying entering some numeric and non-numeric data for this
+program, as well as end-of-file.
+
+ // EXAMPLE INPUT-41
+
+ // TEST THE INPUT STREAM STATES
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << "Enter a number: " ;
+    int number ;
+    cin >> number ;
+    IOFLAGS() ;
+
+    return 0 ;
+ }
+
+Now that you see what does and does not work, the next problem is how to
+eliminate the excess, or garbage, characters from the input stream. This can
+be accomplished by reading 1 character at a time until the <RETURN>
+('\n') character has been read. (Of course this method assumes that if an
+error condition is encountered, then the integrity of the remaining
+characters in the buffer is in question.) In addition, when an error occurs,
+the status of the input stream is changed from 'good' to 'fail' and  no more
+characters can be read until the status is reset to 'good' . To do this, you
+must call upon the "istream" member function "clear" with no arguments (the
+default argument is 0, which means 'set the status of the stream to 'good'').
+
+To save you the trouble of having to code a function to accomplish this
+'flushing' task, the file <header.h> has a manipulator called FLUSH that will
+do this for you. (The subject of manipulators and how they work will be
+covered in the section on manipulators.)
+
+Thus, an 'operator-proof' program that loops while reading numbers and
+checking for end-of-file and garbage input might resemble this:
+
+ // EXAMPLE INPUT-42
+
+ // SHOW HOW TO HANDLE ANYTHING
+ // THE OPERATOR CAN THROW AT
+ // THE PROGRAM
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << "\nEnter a number: " ;
+    int number ;
+    while (!(cin >> number).eof())
+    {
+      // Test for a bad number
+      if (!cin)
+        cout << "Input error!\n" ;
+
+      // Process a good number
+      else
+        cout << "YOU ENTERED: "
+             << number
+             << endl ;
+
+      // Clear out the input buffer.
+      cin >> FLUSH ;
+
+      cout << "\nNext number: " ;
+    }
+    cout << "\nEND OF PROGRAM\n" ;
+
+    return 0 ;
+ }
+
+One note about the logic of this program. If 2 valid numbers are entered
+before the user presses <RETURN>, then only the first number will be
+processed; the second will be flushed. You may or may not want this to
+happen, depending upon your design philosophy.
+
+************************ SECTION 4 -- MANIPULATORS ************************
+
+Introduction
+
+As you have probably noticed by now, the elimination of conversion
+specifications ("%d", "%c", etc.) found in the "scanf" and "printf" functions
+in C causes you to do a lot of extra coding to accomplish the same end result.
+For example, to output a number in hex, the specification "%x" does the job
+in a "printf" statement, but with <iostream.h> you have to write:
+
+  cout.setf(ios::hex , ios::basefield) ;
+
+before outputting the number itself.
+
+Fortunately, the input and output stream classes provide the capability to
+eliminate much of this tedious coding, as well as a method to combine the
+setting of the stream state with the actual outputting (or inputting) of the
+data itself. This method uses what is called a 'manipulator'. The term
+comes from the fact that a manipulator does just what it implies: it
+manipulates, or changes, the state of the stream.
+
+In the same sense that a call of a function causes that function to do any
+number of individual tasks the programmer may specify, a manipulator is
+also a function that sets the stream state. The input and output classes come
+with some manipulators already built in, and a nice feature is that you can
+easily define your own.
+
+The one peculiar aspect about manipulators is that they are always called
+'indirectly' by a separate function. This other function knows which
+individual manipulator to call because it has the manipulator's  address  as
+its one argument. How does it get this address? When the name of a function is
+written without the open and close parentheses, the compiler generates the
+address  of the function instead of actually calling the function. This address
+can, in turn, be passed as an argument to another function. Of course, this
+address must be stored into a variable declared as 'pointer to function' and
+which has the proper return type and argument list.
+
+In this example the address of the function "print" is passed as an argument
+to the function called "test", stored into the pointer variable called "ptr",
+and then executed via the statement "ptr();". Note that this is the same as
+coding (*ptr)();
+
+ // EXAMPLE MANIP-01
+
+ // HOW TO PASS THE ADDRESS OF A
+ // FUNCTION AS AN ARGUMENT
+
+ #include <header.h>
+
+ // Function declarations
+
+ void print() ;
+ void test(void (*)()) ;
+
+ int main()
+ {
+    test(print) ;
+
+    return 0 ;
+ }
+
+ void print()
+ {
+    cout << "print function\n" ;
+ }
+
+ void test(void (*ptr)())
+ {
+    ptr() ;
+ }
+
+Since the manipulators to handle input and output stream states can be
+chained with other arguments, then (assuming output) generically they have
+the form:
+
+  cout << data-item1 << manipulator << data-item2 ;
+
+In order to preserve the ability to concatenate successive calls to the
+insertion operator function, each manipulator function must adhere to the
+rule that the invoking instance is always passed in by reference and
+returned by reference. This means that all manipulator functions have the
+format:
+
+ ostream& manipulator_name(ostream& strm)
+ {
+   // your code here
+  return strm ;
+ }
+
+In a similar fashion, all input manipulators have the format:
+
+ istream& manipulator_name(istream& strm)
+ {
+   // your code here
+  return strm ;
+ }
+
+To accommodate an argument of type 'pointer to function', the class
+"ostream" has an overloaded insertion operator similar to this:
+
+ ostream& operator<<(ostream& (*ptr)(ostream&))
+ {
+  return (*ptr)(*this) ;
+ }
+
+ The class  istream  has an overloaded insertion operator similar to this:
+
+ istream& operator<<(istream& (*ptr)(istream&))
+ {
+  return (*ptr)(*this) ;
+ }
+
+It's these two functions that call upon your manipulator function whose
+address has been stored into the pointer variable "ptr".
+
+As a test, here is a program that creates a manipulator function called
+"manip" that sets the field width to 5 and the fill character to '*'.
+
+ // EXAMPLE MANIP-02
+
+ // HOW TO PASS CREATE YOUR OWN
+ // MANIPULATOR
+
+ #include <header.h>
+
+ ostream& manip(ostream& strm)
+ {
+    strm.width(5) ;
+    strm.fill('*') ;
+    return strm ;
+ }
+
+ int main()
+ {
+    cout << manip
+         << 23
+         << '\n' ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+***23
+
+******************************************************************
+Built-in Manipulators Taking No Arguments
+
+Because some output (and input) stream manipulations are done so
+frequently, the header file <iostream.h> includes some pre-defined
+manipulators. These manipulators may take no arguments, or 1 argument.
+Let's first consider some built-in manipulators that take no arguments.
+
+As the first example, the manipulator "endl" is designed to output a new line
+character and flush the output buffer. Use may use this in place of '\n'. For
+example,
+
+ // EXAMPLE MANIP-11
+
+ // THE endl MANIPULATOR
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << 1
+         << endl
+         << 2
+         << endl ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+1
+2
+
+The manipulators "dec", "oct" and "hex" work for both input and output
+operations, and set the stream state accordingly. For example,
+
+ // EXAMPLE MANIP-12
+
+ // SETTING THE STREAM STATES USING
+ // MANIPULATORS
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << "Input a hex number: " ;
+    int number ;
+    cin >> hex >> number ;
+    cout << "The number in octal is "
+         << oct
+         << number
+         << endl ;
+
+    return 0 ;
+ }
+
+If you enter the number '1f' (hex), you will then see the number 37 (octal).
+
+Recall that when using the function "get" with 3 arguments to read in a
+string, both leading and embedded whitespace are retained. If you want to
+bypass the leading whitespace, and still retain the embedded whitespace,
+then use the input manipulator "ws". In this program enter some leading
+whitespace, then some significant characters including embedded
+whitespace.
+
+ // EXAMPLE MANIP-13
+
+ // DEMONSTRATE HOW TO READ IN A
+ // STRING AND RETAIN EMBEDDED
+ // WHITE SPACE, BUT BYPASS
+ // LEADING WHITE SPACE
+
+ #include <header.h>
+
+ const int length = 100 ;
+
+ int main()
+ {
+    char string [length] ;
+    const char quote = '\"' ;
+
+    cout << "Enter a string: " ;
+    cin >> ws ;
+    cin.get(string , length) ;
+    cout << "Your string: "
+         << quote
+         << string
+         << quote
+         << endl ;
+
+    return 0 ;
+ }
+
+There is one other built-in manipulator that takes no argument: "ends". This
+causes a null character to be output, and is useful for objects of type
+strstream .
+
+******************************************************************
+Built-in Manipulators Taking 1 Argument
+
+Because a manipulator that takes 1 argument requires special handling by
+the compiler, a separate header file  must  be included with each program.
+This file is called <iomanip.h>. Note that in the file <header.h> it is
+automatically included.
+
+Perhaps the most frequently used manipulator taking an argument is "setw".
+Like its counterpart, the member function "width()", it is used to set the
+field width  for the next output item only.  But since manipulators are
+designed to be coded 'in line' with data to be output, they do not return a
+value (which would cause spurious data to appear in the output buffer). The
+one argument is, of course, the field width itself.
+
+Here is example OUTPUT-41 again, this time using a manipulator to set the
+field width.
+
+ // EXAMPLE MANIP-21
+
+ // HOW TO SET THE FIELD WIDTH
+ // USING A MANIPULATOR
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << setw(5)
+         << 1
+         << endl ;
+    cout << setw(5)
+         << 23
+         << endl ;
+
+    return 0 ;
+ }
+
+Another frequently used manipulator is the one that sets the fill character.
+It is called "setfill" and, as you would expect, the 1 argument is the fill
+character itself.
+
+Here is example OUTPUT-52 again, this time using manipulators to set the
+field width and fill character.
+
+ // EXAMPLE MANIP-22
+
+ // A COMBINATION OF SETTING THE
+ // FIELD WIDTH AND SPECIFYING
+ // THE FILL CHARACTER USING
+ // MANIPULATORS
+
+ #include <header.h>
+
+ int main()
+ {
+    cout << setw(5)
+         << setfill('0')
+         << 1
+         << endl ;
+    cout << setw(5)
+         << setfill('*')
+         << 23
+         << endl ;
+
+    return 0 ;
+ }
+
+The other manipulators that take an argument are:
+
+   resetiosflags(long flag)  -- turns off the bits specified in "flag"
+                                (input and output)
+   setbase(int base)  -- sets the output base to decimal if "base" if 0
+                         or 10; to octal if "base" is 8; to hexadecimal
+                         if "base" is 16 (output)
+   setiosflags(long flag)  -- turns on the bits specified in "flag" (input
+                              and output)
+   setprecision(int prec)  -- sets the number of digits displayed after the
+                              decimal point to "prec" (output)
+
+******************************************************************
+Creating Your Own Manipulators Taking 1 Argument
+
+The explanation of how manipulators taking 1 argument are handled by the
+compiler is too complex to be explained here, so let's just see how it is
+coded.
+
+First, the generic form (assuming output) of the manipulator is:
+
+ ostream& manipulator-name(ostream& strm , type arg)
+ {
+   // your code here using arg
+   return strm ;
+ }
+
+where "type" is either "int" or "long", and "arg" is the formal argument name.
+
+Next, you must include this code:
+
+ OMANIP(type) manipulator-name(type arg)
+ {
+    return OMANIP(type) (manipulator-name , arg) ;
+ }
+
+where "OMANIP" is a class defined in <iomanip.h>.
+
+For example, here is a manipulator called "manip" that sets the field width to
+whatever the argument happens to be, and also sets the fill character to '*'.
+
+ // EXAMPLE MANIP-31
+
+ // HOW TO CREATE A MANIPULATOR THAT
+ // TAKES 1 ARGUMENT
+
+ #include <header.h>
+
+ ostream& manip(ostream& strm , int length)
+ {
+    strm << setw(length) << setfill('*') ;
+    return strm ;
+ }
+
+ OMANIP(int) manip(int length)
+ {
+    return OMANIP(int) (manip , length) ;
+ }
+
+ int main()
+ {
+    cout << manip(7)
+         << 123
+         << endl ;
+    cout << manip(5)
+         << 45
+         << endl ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+****123
+***45
+
+If you wish to use a type other than "int" or "long", then you must include the
+following statement:
+
+  IOMANIPdeclare(type) ;
+
+where "type" is either "char", "float", "double", etc.
+
+Here is the same example, but now it is the fill character that is variable.
+
+ // EXAMPLE MANIP-32
+
+ // HOW TO CREATE A MANIPULATOR THAT
+ // TAKES 1 ARGUMENT, AND THAT ARGUMENT
+ // IS NOT int OR long
+
+ #include <header.h>
+
+ // Don't forget this statement
+ IOMANIPdeclare(char) ;
+
+ ostream& manip(ostream& strm , char ch)
+ {
+    strm << setw(7) << setfill(ch) ;
+    return strm ;
+ }
+
+ OMANIP(char) manip(char ch)
+ {
+    return OMANIP(char) (manip , ch) ;
+ }
+
+ int main()
+ {
+    cout << manip('*')
+         << 123
+         << endl ;
+    cout << manip('$')
+         << 45
+         << endl ;
+
+    return 0 ;
+ }
+
+The output of this program is:
+
+****123
+$$$$$45
+
+Finally, take a look at the file <header.h> for some useful manipulators that
+have already been defined for you.
+
+************************* SECTION 5 -- FILE I/O ****************************
+
+Introduction
+
+File input/output using <iostream.h> involves any of these 3 operations:
+
+ 1) Reading a file
+ 2) Writing a file
+ 3) Both reading and writing a file
+
+To handle these operations, special classes have already been defined. They
+are:
+
+ Read -- class  ifstream  (derived from  istream )
+ Write -- class  ofstream  (derived from  ostream )
+ Both -- class "fstream" (derived from  iostream )
+
+To use any of these classes, you must:
+
+  #include <fstream.h>
+
+which automatically includes the header file <iostream.h>. (The file
+<fstream.h> is already included in <header.h>.)
+
+There are no pre-defined instances of these classes comparable to "cin" and
+"cout". Therefore, the first step in using file I/O is to create an instance of the
+appropriate class, e.g.,
+
+  ifstream file_in ;
+  ofstream file_out ;
+  fstream  file_both ;
+
+****************************************************************
+Using the instances
+
+The first step in using the file instances is to open the disk file. In any
+computer language this means establishing a communication link between
+your code and the external file. Each of the 3 classes provides the member
+function called  open  to do this. The declarations for these  open  functions
+are as follows:
+
+  void ifstream::open(const char* name ,
+                      int m = ios::in ,
+                      int prot = filebuf::openprot) ;
+
+  void ofstream::open(const char* name ,
+                      int m = ios::out ,
+                      int prot = filebuf::openprot) ;
+
+  void fstream::open(const char* name ,
+                     int m,
+                     int prot = filebuf::openprot) ;
+
+The first argument is the external file name passed in as a constant string
+literal.
+
+The second argument is the file mode, and comes from a  public
+enumerated type in the class "ios". There are eight possible modes, as
+follows:
+
+    ios::in        Input mode. (Default for input file.)
+    ios::out       Output mode. (Default for output file.)
+    ios::app       Append to an output file rather than update an existing
+                   record.
+    ios::ate       Position file marker at end of file instead of beginning.
+    ios::trunc     Delete file if it exists and re-create it.
+    ios::nocreate  File must exist, otherwise open fails (output only)
+    ios::noreplace File must not exist, otherwise open fails (output only)
+    ios::binary    Binary mode; default is text (Binary is a Borland
+                   enhancement)
+
+Note that for "fstream" instances, there is no default mode. Obviously, these
+various modes may be bitwise ORed together if more than one is desired.
+
+The third argument is the file access. Under Turbo C++ version 1.01, the
+possible values are:
+
+    0 = Default
+    1 = Read-only file
+    2 = Hidden file
+    4 = System file
+    8 = Archive bit set
+
+If the open fails, the overloaded "operator!" used on the instance will
+return 'true'.
+
+For example:
+
+    file_in.open("INPUT") ;
+    file_out.open("OUTPUT") ;
+    file_both.open("BOTH" , ios::in | ios::out) ;
+
+An alternate method of calling the open function is to call the constructor
+with the same argument(s) that you would use for the "open". Thus, instead
+of creating the instance and then explicitly calling the "open" function, you
+can combine these two steps by writing:
+
+   ifstream file_in("INPUT") ;
+   ofstream file_out("OUTPUT") ;
+   fstream  file_both("BOTH", ios::in | ios::out) ;
+
+When you are done using the file, the member function "close" taking no
+arguments will close it. This function is called automatically by the
+destructor for the class, but you may call it explicitly if you wish.
+
+Let's start with a simple program that accepts string input from the user
+and writes it to a disk file called "OUTPUT.DAT".
+
+// EXAMPLE FILEIO-01
+
+// CREATE AN OUTPUT FILE AND WRITE
+// WHATEVER DATA THE OPERATOR MAY
+// ENTER
+
+#include <header.h>
+
+const int max = 100 ;
+
+////////////////////////////////////
+
+int main()
+{
+   char buffer[max] ;
+   ofstream file_out("OUTPUT.DAT") ;
+   if (!file_out)
+   {
+      cout << "OPEN FAILED\n" ;
+      PAUSE() ;
+      exit(1) ;
+   }
+
+   cout << "Enter a line of data: " ;
+   while (!cin.get(buffer , max).eof())
+   {
+      file_out << buffer << endl ;
+      cout << "Next line: " ;
+      cin >> FLUSH ;
+   }
+
+   return 0 ;
+}
+
+Now give the user a chance to append more records to the file. Note that
+the mode of the file is "ios::out | ios::app" (although "ios::app" by itself
+would still have worked).
+
+// EXAMPLE FILEIO-02
+
+// GIVE THE USER A CHANCE TO APPEND
+// RECORDS TO THE FILE
+
+#include <header.h>
+
+const int max = 100 ;
+
+////////////////////////////////////
+
+int main()
+{
+   char buffer[max] ;
+   ofstream file_out("OUTPUT.DAT" , ios::out | ios::app) ;
+   if (!file_out)
+   {
+      cout << "OPEN FAILED\n" ;
+      PAUSE() ;
+      exit(1) ;
+   }
+
+   cout << "Enter a line of data: " ;
+   while (!cin.get(buffer , max).eof\())
+   {
+      file_out << buffer << endl ;
+      cout << "Next line: " ;
+      cin >> FLUSH ;
+   }
+
+   return 0 ;
+}
+
+Finally, this program numbers and prints the records that were just written.
+
+// EXAMPLE FILEIO-03
+
+// NOW READ THE FILE THAT WAS JUST
+// CREATED
+
+#include <header.h>
+
+const int max = 100 ;
+
+////////////////////////////////////
+
+int main()
+{
+   char buffer[max] ;
+   ifstream file_in("OUTPUT.DAT") ;
+   if (!file_in)
+   {
+      cout << "OPEN FAILED\n" ;
+      PAUSE() ;
+      exit(1) ;
+   }
+
+   int rec = 0 ;
+   while (!file_in.get(buffer , max).eof())
+   {
+      cout << "Record #"
+           << ++rec
+           << ": "
+           << buffer
+           << endl ;
+      file_in >> FLUSH ;
+   }
+
+   return 0 ;
+}
+
+****************************************************************
+The File Position Markers
+
+So that the file I/O classes can keep track of where in a file the data is
+to be written to and read from, they establish what is called a 'file position
+marker' (fpm). On Turbo C++ this marker has been 'typedef'ed as a 'long'
+integer representing an offset value from the beginning of the file. In point
+of fact, there are two such markers, one for reading, and one for writing.
+You may alter these markers by using two member functions: "seekg" and
+"seekp". "seekg" is associated with the file's 'get or read' pointer, and
+"seekp" with the file's 'put or write' pointer. The declarations for these two
+functions are as follows:
+
+  istream& istream::seekg(streampos offset) ;
+  istream& istream::seekg(streamoff offset , seek_dir) ;
+
+  ostream& ostream::seekp(streampos offset) ;
+  ostream& ostream::seekp(streamoff offset , seek_dir) ;
+
+where "streampos" and "streamoff" represent "long" integers, and "seek_dir"
+is an enumerated type defined as follows:
+
+  enum seek_dir {ios::beg , ios::cur , ios::end} ;
+
+If the 1-argument form of the function is used, then "offset" is the offset
+from the beginning of the file. If the 2-argument form is used, then "offset"
+is the offset number of bytes (positive or negative) from the absolute
+"seek_dir" position. Therefore, a call to "seekg" with an argument of 0 causes
+the file to rewind and data to be read starting with the first record.
+
+To find out the positions of these markers, you may use the member functions
+"tellg" and "tellp". They are declared as follows:
+
+  streampos istream::tellg() ;
+  streampos ostream::tellp() ;
+
+To illustrate this, here is the previous example of writing and reading a
+file, but now it uses an instance of the class "fstream" so that the output and
+input can be combined. After each record is read and printed, the file
+position marker (fpm) is displayed. NOTE: The inclusion of the mode
+"ios::binary" is to avoid a Borland bug with "tellg" corrupting the fpm.
+
+// EXAMPLE FILEIO-04
+
+// HOW TO WRITE AND READ A FILE IN
+// THE SAME PROGRAM
+
+// NOTE: FILE IS OPENED IN BINARY
+// MODE TO AVOID A tellg BUG IN
+// TURBO C++
+
+#include <header.h>
+
+const int max = 100 ;
+
+////////////////////////////////////
+
+int main()
+{
+   char buffer[max] ;
+  "fstream"file_both("BOTH.DAT" ,
+                      ios::in |
+                      ios::out |
+                      ios::binary) ;
+   if (!file_both)
+   {
+      cout << "OPEN FAILED\n" ;
+      PAUSE() ;
+      exit(1) ;
+   }
+
+   cout << "Enter a line of data: " ;
+   while (!cin.get(buffer , max).eof())
+   {
+      file_both << buffer << endl ;
+      cout << "Next line: " ;
+      cin >> FLUSH ;
+   }
+
+   // Flush the output buffer
+   file_both << flush ;
+
+   // Return to the start of the file
+   file_both.seekg(0) ;
+
+   // Read and print the records, and
+   // show the file position marker
+   int rec = 0 ;
+   while (!file_both.get(buffer , max).eof())
+   {
+      cout << "Record #"
+           << ++rec
+           << ": "
+           << buffer
+           << endl ;
+      cout << "fpm is: "
+           << file_both.tellg()
+           << endl ;
+      file_both >> FLUSH ;
+   }
+
+   return 0 ;
+}
+
+This program gives the user complete flexibility as to the name of the
+external file to be manipulated, and modes to be used. NOTE: Do not try to
+include an instance of a file class within a class declaration. As of version
+1.01, there is a bug which does not allow this. As an avoidance technique,
+you may include a pointer of the class type, and then obtain the space for
+the instance via the "new" operator.
+
+// EXAMPLE FILEIO-05
+
+// GIVE THE USER COMPLETE FLEXIBILITY
+// AS TO THE MODE OF THE FILE AND THE
+// DATA WRITTEN AND READ
+
+// ARGUMENTS ARE ENTERED FROM THE DOS
+// COMMAND LINE. THE FIRST ARGUMENT
+// IS THE DISK FILE NAME, AND THE
+// REMAINING ARGUMENTS REPRESENT THE
+// VARIOUS OPEN MODES, EXACTLY AS
+// SPECIFIED BY THE ENUMERATED TYPES
+
+// NOTE THAT A CLASS IS NOW USED TO
+// CONTROL THE VARIOUS OPERATIONS ON
+// A FILE OBJECT. HOWEVER, A POINTER
+// IS DECLARED INSTEAD OF AN INSTANCE
+// TO AVOID A BORLAND BUG
+
+#include <header.h>
+
+const int max = 100 ;
+
+class file
+{
+   fstream* ptr ;
+     public:
+
+   file()
+   {
+      ptr = new fstream() ;
+   }
+
+   int open(int argc , char* argv[]) ;
+   void read() ;
+   void write() ;
+   void beginning() ;
+   void end() ;
+   void close() ;
+} ;
+
+// Open the file by setting up the
+// field 'mode' with the OR of what-
+// ever modes the user has chosen
+
+int file::open(int argc , char* argv[])
+{
+   int mode = 0 ;
+
+   for (int i = 2 ; i < argc ; ++i)
+   {
+      if (!strcmp (argv[i] , "out"))
+          mode |= ios::out ;
+      else if (!strcmp (argv[i] , "in"))
+          mode |= ios::in ;
+      else if (!strcmp (argv[i] , "app"))
+          mode |= ios::app ;
+      else if (!strcmp (argv[i] , "ate"))
+          mode |= ios::ate ;
+      else if (!strcmp (argv[i] , "trunc"))
+          mode |= ios::trunc ;
+      else if (!strcmp (argv[i] , "nocreate"))
+          mode |= ios::nocreate ;
+      else if (!strcmp (argv[i] , "noreplace"))
+          mode |= ios::noreplace ;
+      else if (!strcmp (argv[i] , "binary"))
+          mode |= ios::binary ;
+      else
+          cout << "Invalid mode: "
+                << argv[i]
+                << endl ;
+   }
+
+   // Perform the actual open
+   ptr->open(argv[1] , mode) ;
+
+   // If an error occurred, return
+   // "true"
+   return (!*ptr) ;
+}
+
+// Read the file
+
+void file::read()
+{
+   char buffer [max] ;
+
+   cout << "Data line: " ;
+   ptr->get(buffer , max) ;
+   *ptr >> FLUSH ;
+   if (!(ptr->eof()))
+      cout << buffer << endl ;
+   else
+      cout << "EOF\n" ;
+   ptr->clear() ;
+}
+
+// Write the file
+
+void file::write()
+{
+   char buffer [max] ;
+
+   cout << "Enter some data: " ;
+   cin.get(buffer , max) ;
+   cin >> FLUSH ;
+   *ptr << buffer << endl ;
+}
+
+// Return to the start of the file
+
+void file::beginning()
+{
+   ptr->seekg(0) ;
+   ptr->seekp(0) ;
+}
+
+// Seek to the end of the file
+
+void file::end()
+{
+   ptr->seekg(0 , ios::end) ;
+   ptr->seekp(0 , ios::end) ;
+}
+
+// Close the file
+
+void file::close()
+{
+   ptr->close() ;
+}
+
+///////////////////////////////////
+
+char menu() ;
+
+int main(int argc , char* argv [])
+{
+   file my_file ;
+
+   if (argc < 2)
+   {
+      cout << "NO FILE NAME\n" ;
+      exit(1) ;
+   }
+
+   if(my_file.open(argc , argv))
+   {
+      cout << "OPEN FAILED\n" ;
+      exit(2) ;
+   }
+
+   char ch ;
+   while ((ch = menu()) != 'X')
+   {
+      switch (ch)
+      {
+        case 'R' : my_file.read() ;
+                   break ;
+        case 'W' : my_file.write() ;
+                   break ;
+        case 'B' : my_file.beginning() ;
+                   break ;
+        case 'E' : my_file.end() ;
+                   break ;
+        default :  cout << "INVALID\n" ;
+                   break ;
+      }
+   }
+   my_file.close() ;
+
+   return 0 ;
+}
+
+///////////////////////////////////////
+
+char menu()
+{
+   cout << "\t(R)ead a record\n" ;
+   cout << "\t(W)rite a record\n" ;
+   cout << "\t(B)eginning of file\n" ;
+   cout << "\t(E)nd of the file\n" ;
+   cout << "\te(X)it\n" ;
+
+   cout << "\n\tYour choice: " ;
+   char ch ;
+   cin >> ch >> FLUSH ;
+   return (toupper(ch)) ;
+}
+
+****************************************************************
+Using the Line Printer
+
+The line printer is just another output file insofar as DOS is concerned. To
+redirect output to a printer from within your program, use the predefined
+name "prn".
+
+// EXAMPLE FILEIO-06
+
+// HOW TO PRINT FROM WITHIN A
+// PROGRAM
+
+#include <header.h>
+
+int main()
+{
+   ofstream printer ;
+   // "prn" is the DOS printer
+   printer.open("prn") ;
+   if (!printer)
+   {
+     cerr << "Can't open\n" ;
+     exit(1) ;
+   }
+   printer << "This line appears"
+           << " on the printer\n" ;
+
+   return 0 ;
+}
+

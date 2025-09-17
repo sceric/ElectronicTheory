@@ -1,0 +1,19 @@
+<html><head><title>StaticVariable.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#0000FF">#include  <font color="#008000">&lt;stream.h&gt;</font></font>
+
+<strong>void</strong> <font color="#993333">raknaAnrop</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// statisk variabel med värdet 0</font>
+  <strong>static</strong> <strong>int</strong> <font color="#993333">Anrop</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// öka antalet anrop med 1</font>
+  <font color="#993333">Anrop</font><font color="#4444FF">+</font><font color="#4444FF">+</font><font color="#4444FF">;</font>
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;raknaAnrop har anroptats: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Anrop</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot; gånger.&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// anropa funktionen 'Anrop' några gånger</font>
+  <strong>for</strong> <font color="#4444FF">(</font> <strong>int</strong> <font color="#993333">Index</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font> <font color="#993333">Index</font> <font color="#4444FF">&lt;</font> <font color="#FF0000">5</font><font color="#4444FF">;</font> <font color="#993333">Index</font><font color="#4444FF">+</font><font color="#4444FF">+</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+    <font color="#993333">raknaAnrop</font> <font color="#4444FF">(</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font> 
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

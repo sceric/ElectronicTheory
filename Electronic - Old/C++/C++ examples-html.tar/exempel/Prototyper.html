@@ -1,0 +1,24 @@
+<html><head><title>Prototyper.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream.h&gt;</font></font>
+
+<font color="#444444">// prototyper för våra två funktioner</font>
+<strong>float</strong> <font color="#993333">RaknaArea</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Sida1</font>, <strong>float</strong> <font color="#993333">Sida2</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+<strong>void</strong> <font color="#993333">SkrivSvar</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Area</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// beräkna arean</font>
+  <strong>float</strong> <font color="#993333">Area</font> <font color="#4444FF">=</font> <font color="#993333">RaknaArea</font> <font color="#4444FF">(</font> <font color="#FF0000">5.5</font>, <font color="#FF0000">10</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// skriv ut svaret</font>
+  <font color="#993333">SkrivSvar</font> <font color="#4444FF">(</font> <font color="#993333">Area</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>float</strong> <font color="#993333">RaknaArea</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Sida1</font>, <strong>float</strong> <font color="#993333">Sida2</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// beräkna och returnera en area av en rektangel</font>
+  <strong>return</strong> <font color="#993333">Sida1</font> <font color="#4444FF">*</font> <font color="#993333">Sida2</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>void</strong> <font color="#993333">SkrivSvar</font> <font color="#4444FF">(</font><strong>float</strong> <font color="#993333">Area</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Arean är: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Area</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

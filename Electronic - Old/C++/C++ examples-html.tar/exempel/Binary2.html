@@ -1,0 +1,24 @@
+<html><head><title>Binary2.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#444444">//! läser in tal från en binär fil</font>
+<font color="#0000FF">#include <font color="#008000">&lt;fstream&gt;</font></font>
+<font color="#0000FF">#include <font color="#008000">&lt;stdlib.h&gt;</font></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>int</strong> <font color="#993333">Tmp</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// öppna filen</font>
+  <font color="#993333">ifstream</font> <font color="#993333">In</font> <font color="#4444FF">(</font> <font color="#008000">&quot;Test.bin&quot;</font><font color="#4444FF">)</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// kunde filen öppnas?</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">!</font> <font color="#993333">In</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#444444">// kunde inte öppna filen!</font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Kunde inte öppna filen 'Test.bin'!&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+	<font color="#993333">exit</font> <font color="#4444FF">(</font> <font color="#993333">EXIT_FAILURE</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// läs in tal från filen</font>
+  <strong>while</strong> <font color="#4444FF">(</font> <font color="#993333">In</font>.<font color="#993333">read</font> <font color="#4444FF">(</font> <font color="#4444FF">&amp;</font><font color="#993333">Tmp</font>, <strong>sizeof</strong><font color="#4444FF">(</font><strong>int</strong><font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Läste: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Tmp</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+</pre></body></html>

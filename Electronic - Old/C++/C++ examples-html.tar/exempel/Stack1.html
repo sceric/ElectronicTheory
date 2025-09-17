@@ -1,0 +1,89 @@
+<html><head><title>Stack1.cpp</title></head><body bgcolor="#FFFFFF" text="#000000"><pre>
+<font color="#0000FF">#include <font color="#008000">&lt;iostream&gt;</font></font>
+
+<strong>struct</strong> <font color="#993333">Element</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// data för detta element</font>
+  <strong>char</strong> <font color="#993333">Data</font><font color="#4444FF">;</font>
+  <font color="#444444">// nästa element under detta i stacken</font>
+  <font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Previous</font><font color="#4444FF">;</font>  
+<font color="#4444FF"><strong>}</strong></font><font color="#4444FF">;</font>
+
+<font color="#444444">// push:a ett element på stacken</font>
+<font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">push</font> <font color="#4444FF">(</font><font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Top</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <strong>char</strong> <font color="#993333">Data</font><font color="#4444FF">;</font>
+  
+  <font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Elementets värde: &quot;</font><font color="#4444FF">;</font>
+  <font color="#993333">cin</font> <font color="#4444FF">&gt;</font><font color="#4444FF">&gt;</font> <font color="#993333">Data</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// skapa nytt element</font>
+  <font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">New</font> <font color="#4444FF">=</font> <strong>new</strong> <font color="#993333">Element</font><font color="#4444FF">;</font>
+  <font color="#993333">New</font><font color="#4444FF">-</font><font color="#4444FF">&gt;</font><font color="#993333">Data</font> <font color="#4444FF">=</font> <font color="#993333">Data</font><font color="#4444FF">;</font>
+  <font color="#993333">New</font><font color="#4444FF">-</font><font color="#4444FF">&gt;</font><font color="#993333">Previous</font> <font color="#4444FF">=</font> <font color="#993333">Top</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// återvänd och returnera nya topp-elementet</font>
+  <strong>return</strong> <font color="#993333">New</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// pop:a ett element från stacken</font>
+<font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">pop</font> <font color="#4444FF">(</font><font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Top</font>, <strong>char</strong> <font color="#4444FF">&amp;</font> <font color="#993333">Data</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#444444">// är stacken tom?</font>
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">Top</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#444444">// stacken tom</font>
+	<strong>return</strong> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// spara data som är lagret i elementet</font>
+  <font color="#993333">Data</font> <font color="#4444FF">=</font> <font color="#993333">Top</font><font color="#4444FF">-</font><font color="#4444FF">&gt;</font><font color="#993333">Data</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// spara pekare till det element som blir nytt topp-element</font>
+  <font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Tmp</font> <font color="#4444FF">=</font> <font color="#993333">Top</font><font color="#4444FF">-</font><font color="#4444FF">&gt;</font><font color="#993333">Previous</font><font color="#4444FF">;</font>
+
+  <font color="#444444">// frigör minne och återvänd</font>
+  <strong>delete</strong> <font color="#993333">Top</font><font color="#4444FF">;</font>
+  <strong>return</strong> <font color="#993333">Tmp</font><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<font color="#444444">// kolla om stacken är tom</font>
+<strong>bool</strong> <font color="#993333">isEmpty</font> <font color="#4444FF">(</font><font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Top</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+
+  <strong>if</strong> <font color="#4444FF">(</font> <font color="#993333">Top</font> <font color="#4444FF">=</font><font color="#4444FF">=</font> <font color="#FF0000">0</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#444444">// stacken tom</font>
+	<strong>return</strong> <strong>true</strong><font color="#4444FF">;</font>
+  <font color="#4444FF"><strong>}</strong></font>
+
+  <font color="#444444">// stacken inte tom</font>
+  <strong>return</strong> <strong>false</strong><font color="#4444FF">;</font>
+<font color="#4444FF"><strong>}</strong></font>
+
+<strong>int</strong> <font color="#993333">main</font> <font color="#4444FF">(</font><font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+  <font color="#993333">Element</font> <font color="#4444FF">*</font> <font color="#993333">Top</font> <font color="#4444FF">=</font> <font color="#FF0000">0</font><font color="#4444FF">;</font>
+  <strong>char</strong> <font color="#993333">Choice</font> <font color="#4444FF">=</font> <font color="#008000">' '</font><font color="#4444FF">;</font>
+  <strong>char</strong> <font color="#993333">Data</font><font color="#4444FF">;</font>
+  
+  <font color="#444444">// iterera tills användaren vill avsluta</font>
+  <strong>while</strong> <font color="#4444FF">(</font> <font color="#993333">Choice</font> <font color="#4444FF">!</font><font color="#4444FF">=</font> <font color="#008000">'3'</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Välj: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;1 - push&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;2 - pop&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+	<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;3 - sluta &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;-&gt; &quot;</font><font color="#4444FF">;</font>
+
+	<font color="#444444">// läs in ett menyval</font>
+	<font color="#993333">cin</font> <font color="#4444FF">&gt;</font><font color="#4444FF">&gt;</font> <font color="#993333">Choice</font><font color="#4444FF">;</font>
+
+	<font color="#444444">// vad vill användaren göra</font>
+	<strong>switch</strong> <font color="#4444FF">(</font> <font color="#993333">Choice</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+	<strong>case</strong> <font color="#008000">'1'</font> <font color="#4444FF">:</font> <font color="#993333">Top</font> <font color="#4444FF">=</font> <font color="#993333">push</font> <font color="#4444FF">(</font> <font color="#993333">Top</font> <font color="#4444FF">)</font><font color="#4444FF">;</font> <strong>break</strong><font color="#4444FF">;</font>
+	<strong>case</strong> <font color="#008000">'2'</font> <font color="#4444FF">:</font>
+	  <font color="#444444">// har vi element i listan?</font>
+	  <strong>if</strong> <font color="#4444FF">(</font> <font color="#4444FF">!</font> <font color="#993333">isEmpty</font> <font color="#4444FF">(</font> <font color="#993333">Top</font> <font color="#4444FF">)</font> <font color="#4444FF">)</font> <font color="#4444FF"><strong>{</strong></font>
+		<font color="#444444">// ja, poppa och skriv ut det poppade värdet</font>
+		<font color="#993333">Top</font> <font color="#4444FF">=</font> <font color="#993333">pop</font> <font color="#4444FF">(</font> <font color="#993333">Top</font>, <font color="#993333">Data</font> <font color="#4444FF">)</font><font color="#4444FF">;</font>
+		<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Poppade: &quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">Data</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+	  <font color="#4444FF"><strong>}</strong></font>
+	  <strong>else</strong> <font color="#4444FF"><strong>{</strong></font>
+		<font color="#993333">cout</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#008000">&quot;Stacken tom!&quot;</font> <font color="#4444FF">&lt;</font><font color="#4444FF">&lt;</font> <font color="#993333">endl</font><font color="#4444FF">;</font>
+	  <font color="#4444FF"><strong>}</strong></font>
+	  <strong>break</strong><font color="#4444FF">;</font>
+	<font color="#4444FF"><strong>}</strong></font>
+  <font color="#4444FF"><strong>}</strong></font>
+<font color="#4444FF"><strong>}</strong></font>
+
+</pre></body></html>
