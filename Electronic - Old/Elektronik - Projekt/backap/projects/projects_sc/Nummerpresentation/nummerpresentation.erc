@@ -1,0 +1,27 @@
+EAGLE Version 4.16r2 Copyright (c) 1988-2006 CadSoft
+
+Electrical Rule Check for C:/Program/EAGLE-4.16r2/projects/projects_sc/Nummerpresentation/nummerpresentation.sch at 2007-10-21 20:50:20 
+
+WARNING: Sheet 2/2: POWER Pin IC2 AGND connected to GND
+WARNING: Sheet 2/2: POWER Pin IC2 AVCC connected to VCC
+WARNING: Sheet 2/2: POWER Pin IC2 AREF connected to VCC
+WARNING: Sheet 2/2: POWER Pin IC2 GND1 connected to GND
+WARNING: Sheet 2/2: POWER Pin IC2 GND2 connected to GND
+WARNING: Sheet 2/2: POWER Pin IC2 VCC1 connected to VCC
+WARNING: Sheet 2/2: POWER Pin IC2 VCC2 connected to VCC
+WARNING: Only 1 Pin on net CS
+WARNING: Only 1 Pin on net R/W
+WARNING: Only 1 Pin on net RS0
+WARNING: Sheet 2/2, Net N$5: missing Junction at (4.95 8.45)
+WARNING: Sheet 2/2, Net N$6: missing Junction at (4.95 8.65)
+WARNING: Sheet 2/2, Net N$22: missing Junction at (0.6 5.05)
+WARNING: Sheet 2/2, Net RSIG: missing Junction at (4 5.05)
+WARNING: Sheet 2/2: Nets GND and N$22 too close at (1.75 4.25)
+WARNING: Sheet 2/2, Net VCC: close but unconnected wires at (1.75 5.05)
+WARNING: Sheet 2/2, Net VCC: close but unconnected wires at (1.75 5.05)
+WARNING: Sheet 2/2: Nets N$22 and GND too close at (1.75 4.25)
+
+Board and schematic are consistent
+
+    0 errors
+   18 warnings

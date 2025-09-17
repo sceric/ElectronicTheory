@@ -1,0 +1,9 @@
+Soft Musical Telephone Ringer
+
+
+
+The normal telephone bell, at 
+	times (specially during night 
+	when one does not want to be disturbed), appears to be quite irritating. The circuit shown here converts the loud sounding bell into a soft and pleasing musical tone.
+The incoming ring is detected by transistor T1 and components wired around it. In absence of ringing voltage, transistor T1 is cut off while transistor T2 is forward biased as resistor R2 is returned to the positive supply rails. As a result collector of transistor T2 is at near-ground potential and hence IC1 (UM66) is off. Also capacitor C2 is charged to a slightly positive potential.
+During positive half of the ringing voltage, diode D1 forward biases transistor T1 and rapidly discharges capacitor C2 to near ground potential and cuts off transistor T2 which, in turn, causes IC1 to be forward biased and music signal is applied to base of transistor T3 which drives the speaker. During   negative half of the ringing voltage, capacitor C2 cannot charge rapidly via resistor R2 and hence transistor T2 remains cut off during the ringing interval. Thus the soft musical note into the loudspeaker sounds in synchronism with the ringing signal. When handset is lifted off the cradle, the ringing voltage is no more available and hence the soft musical note switches off. 

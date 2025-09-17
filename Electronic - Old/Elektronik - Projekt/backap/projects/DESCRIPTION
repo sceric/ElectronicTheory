@@ -1,0 +1,7 @@
+<b>Project Folder</b>
+<p>
+This folder contains subfolders which contain all your projects.
+<p>
+Subfolders which contain an EAGLE project file (eagle.epf) have
+a red folder icon. Click on a project's marker here in the projects branch
+to open or close an existing project.

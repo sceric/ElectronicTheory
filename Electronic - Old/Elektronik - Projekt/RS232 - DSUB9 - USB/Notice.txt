@@ -1,0 +1,4 @@
+
+
+EAGLE CAD ; 	C01-20071002-RS232 - DSUB9 - USB : finns inte layout färdig
+		C02-20071004-RS232 - DSUB9 - USB : bara små korigeringar

@@ -1,0 +1,16 @@
+Atmel ISP programer  
+
+ 
+ 
+Citat autora: "
+
+Ovaj programator podržava slijedece Atmelove kontrolere: AT89LS53, AT89LS8252, AT89S52, AT89S53, AT89S825X.
+Jednostavan je za izradu i vrlo praktican. Softver možete skinuti sa slijedece lokacije:
+http://www.atmel.com/dyn/products/tools_card.asp?tool_id=2877
+
+Izradio sam PCB programatora u jednostranoj i dvostranoj tehnnici. Moja je preporuka dvostrana plocica ali ko nema uslova dobra je i jednostrana.
+Na jednostranoj plocici primeticete više jumpera (preskakaca), to je namjerno uradeno zbog smanjenja gabarita plocice.
+Sve je radeno u DXP_u 2004 pa može doci do nekompatibilnosti ako imate starije verzije Protela. Zbog toga sam i prebacio u pdf najvažnije dijelove. 
+
+Još interesantnih stvari na www.jovica.co.sr
+ 

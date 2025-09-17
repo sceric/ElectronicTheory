@@ -1,0 +1,160 @@
+'**************************************************************
+'*  Name    : PIC-Temp.BAS                                    *
+'*  Author  : F. San                                          *
+'*  Date    : 10.10.2003                                      *
+'*  Notes   : Temperature control, -55°C to +125°C            *
+'*          : Using the PIC16F84 and DS1621 temp.sens         *
+'**************************************************************
+@ device  xt_osc, wdt_off, pwrt_on, protect_off
+
+Define LCD_DREG PORTB
+Define LCD_DBIT 0 
+Define LCD_EREG PORTB 
+Define LCD_EBIT 4 
+Define LCD_RSREG PORTB 
+Define LCD_RSBIT 5 
+
+Temp        var word    'DS1621 Temperature   
+TempLo      var byte    'DS1621 Temp. Low byte
+TempHi      var byte    'DS1621 Temp. High byte  
+TempX       var byte    'misc. storage variables
+TempNeg     var byte    ' "
+SetTemp     var bit     ' "
+i2c_sda     var PortA.2 'DS1621 Data pin  
+i2c_scl     var PortA.3 'DS1621 Clock pin  
+RelayOut    var PortA.0 'Relay output pin
+Sw_SET      var PortA.1 'Set temp. switch
+Sw_DEC      var PortB.6 'Dec temp. switch
+Sw_INC      var PortB.7 'Inc temp. switch
+
+TrisA 	=	%11110
+PortA = 0
+TrisB 	=	%11000000
+PortB = 0
+SetTemp = 0
+
+EEPROM 0,[22,0]  'Default temp. 22.0°C, stored at EEprom location 0 and 1
+Read 0, TempHi   'Get Temp. High.byte from EEprom address 0
+Read 1, TempLo   'Get Temp. Low.byte from EEprom address 1      
+
+Main:
+   gosub Read_Temp
+   gosub Chk_RelayOut
+   gosub Chk_Switches
+   if not settemp then gosub Disp_Temp
+   pause 100
+goto Main
+
+Read_Temp:
+   i2cwrite i2c_sda,i2c_scl,$90,$ac,[0]   'Access Config [ACh]
+   Pause 1
+   I2CWrite i2c_sda, i2c_scl,$90,[$ee]    'Start Convert T [EEh]
+   Pause 1
+   I2CRead i2c_sda, i2c_scl, $90,$aa,[Temp],Error  'Read Temperature [AAh]
+   TempNeg = " "
+   TempX = Temp.HighByte
+   if TempX >= 128 then
+      TempNeg = "-"
+      TempX = 256 - (TempX + Temp.7)
+   endif
+return
+
+Disp_Temp:    
+   Lcdout $fe, 1, TempNeg, Dec TempX,".", Dec (Temp.7/1*50/10),223,"C  Tout:",dec Relayout
+   Lcdout $fe, $c0, "(",SDec TempHi,".",Dec(TempLo/1*50/10),223,"C)"
+return
+
+Disp_SetTemp: 
+   Lcdout $fe,1,TempNeg, Dec TempX,".", Dec (Temp.7/1*50/10),223,"C  Tout:",dec Relayout
+   Lcdout $fe, $c0, "Tset: ",sDec TempHi,".",Dec(TempLo/1*50/10),223,"C"
+return
+
+Error:
+   Lcdout $fe, 1, "Error!", $fe, $C0, "Reading Temp."
+goto Main
+
+Chk_RelayOut:
+   if Temphi < 128 then 'Set Temp = pos.temp.
+      if temp.highbyte < 128 then 'Temp = pos.temp
+         if temp.highbyte = temphi then 
+            if temp.7 < Templo then
+               RelayOut = 1 
+            else 
+               RelayOut = 0 
+            endif
+         else
+            if temp.highbyte < temphi then
+               RelayOut = 1
+            else 
+               RelayOut = 0
+            endif
+         endif   
+      else  'Set Temp = neg.temp. 
+         RelayOut = 1
+      endif
+   else 'Set Temp = neg.temp.
+      if temp.highbyte > 128 then 'Temp = neg.temp
+         if temp.highbyte = temphi then 
+            if temp.7 > Templo then
+               RelayOut = 1 
+            else 
+               RelayOut = 0 
+            endif
+         else
+            if temp.highbyte > temphi then
+               RelayOut = 0
+            else 
+               RelayOut = 1
+            endif
+         endif   
+      else  'Set Temp = pos.temp. 
+         RelayOut = 0
+      endif
+   endif   
+return
+
+Chk_Switches: 
+   if Sw_SET = 0 then 
+      if SetTemp then 
+         gosub Disp_Temp
+      else   
+         gosub Disp_SetTemp
+      endif      
+      while SW_SET = 0 : wend
+      if SetTemp then
+         Write 0, TempHi     'Store TempHi to EEprom location 0
+         Write 1, TempLo     'Store TempLo to EEprom location 1     
+      endif
+      settemp = not Settemp
+   endif
+
+   if not settemp then return
+   
+   if Sw_DEC = 0 then 
+      if TempHi > 128 then
+         if Temphi > 201 then
+            TempLo = TempLo ^ 1 'invert state of TempLo
+            if TempLo = 1 then TempHi = TempHi - 1
+         endif   
+      else
+         TempLo = TempLo ^ 1 
+         if TempLo = 1 then TempHi = TempHi - 1
+      endif
+   endif
+   
+   if Sw_INC = 0 then
+      if TempHi < 128 then
+         if TempHi < 125 then
+            TempLo = TempLo ^ 1 
+            if TempLo = 0 then TempHi = TempHi + 1
+         endif
+      else
+         TempLo = TempLo ^ 1 
+         if TempLo = 0 then TempHi = TempHi + 1
+      endif  
+   endif
+      gosub Disp_SetTemp
+return
+
+end
+

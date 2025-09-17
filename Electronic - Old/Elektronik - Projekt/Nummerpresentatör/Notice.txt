@@ -1,0 +1,11 @@
+
+2007-10-27
+
+
+--------------------------------------
+
+1.	BOOM C01-20071027- Nummerpresentatör, faställd
+2.	EAGLE C01-20071027- Nummerpresentatör, ej layout, bara schema är färdig
+
+--------------------------------------
+
