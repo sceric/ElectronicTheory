@@ -1,0 +1,18 @@
+
+20070619
+
+C01-20070619-Testkort Atmega8 (Eeagle CAD) har jag ritat schema 
+men inte layout.Lars har hemma layout och schema.
+
+Sycklista som laddes i databas (Unit_components)
+C03-20070619-Testkort Atmega8
+
+20070620
+
+C02-20070620-Testkort Atmega8 (Eagle CAD) Schema och layout från Lars.
+
+C04-20070621-Testkort Atmega8 (Eagle CAD) Schema och layout från Lars - ändrade
+namn på komponenterna så att schema stämmer väl med stycklista.Den har registreras
+under nummer 1000012
+(C03-20070619-Testkort Atmega8 är stycklista för schema och layout från Lars och
+har nummer 1400008 i databas)

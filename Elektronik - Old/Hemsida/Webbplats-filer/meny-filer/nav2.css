@@ -1,0 +1,15 @@
+.adress {
+	FONT-SIZE: 9px; COLOR: #333333; LINE-HEIGHT: 130%; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+A {
+	FONT-SIZE: 11px; COLOR: #397dbb; LINE-HEIGHT: 130%; FONT-FAMILY: verdana, arial; LETTER-SPACING: 1px; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-SIZE: 11px; COLOR: #397dbb; LINE-HEIGHT: 130%; FONT-FAMILY: verdana, arial; LETTER-SPACING: 1px; TEXT-DECORATION: underline
+}
+A:visited {
+	FONT-SIZE: 11px; COLOR: #397dbb; LINE-HEIGHT: 130%; FONT-FAMILY: verdana, arial; LETTER-SPACING: 1px; TEXT-DECORATION: none
+}
+.streck {
+	BORDER-RIGHT: #6699cc 1px dashed; BORDER-LEFT-COLOR: #ffffff; BORDER-BOTTOM-COLOR: #ffffff; BORDER-TOP-STYLE: dashed; BORDER-TOP-COLOR: #ffffff; BORDER-LEFT-STYLE: dashed; BORDER-BOTTOM-STYLE: dashed
+}

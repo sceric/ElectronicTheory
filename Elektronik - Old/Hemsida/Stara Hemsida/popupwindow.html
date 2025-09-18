@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>POPUP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<!---ZASTITA---DESNO DUGME JOK BA --->
+
+<script language="Javascript1.2">
+
+// (C) 2000 www.CodeLifter.com
+// http://www.codelifter.com
+// Free for all users, but leave in this  header
+
+// Set the message for the alert box
+am = "POKUSAJ SA LIJEVIM DUGMETOM!!!! ";
+
+// do not edit below this line
+// ===========================
+bV  = parseInt(navigator.appVersion)
+bNS = navigator.appName=="Netscape"
+bIE = navigator.appName=="Microsoft Internet Explorer"
+
+function nrc(e) {
+   if (bNS && e.which > 1){
+      alert(am)
+      return false
+   } else if (bIE && (event.button >1)) {
+     alert(am)
+     return false;
+   }
+}
+
+document.onmousedown = nrc;
+if (document.layers) window.captureEvents(Event.MOUSEDOWN);
+if (bNS && bV<5) window.onmousedown = nrc;
+
+</script>
+
+
+
+
+
+
+</head>
+
+<body bgcolor="#FF0000" text="#FFFF00">
+
+<!---SKRIPTA ZA OVAJ PROZOR SE NALAZI U POPUP-PRIJEODR--->
+<table width="168" border="2" cellpadding="0" bordercolor="#00FF00" bgcolor="#000066">
+  <tr>
+    <td><b><center><font color="#03A7FC" size="2">Your's IP: 
+              <!--IP adress-->
+              <script language="JavaScript" src="http://www.webaid.de/js/docs/jav75.php3" type="text/javascript"></script>
+              </font></center></b></td>
+  </tr>
+  <tr>
+    <td><font size="2" color="#00FFFF"><b><center>You are 
+              visitor:</center></b></font>
+     <!-- Start counter.bloke.com -->
+      <table border=4 align="center">
+        <tr><td>
+<applet 
+CODEBASE="http://www3.counter.bloke.com/c/"
+CODE="Counter.class" WIDTH=75 HEIGHT=20>
+<param name=URL value="http://hem.spray.se">
+<param name=reset value="0">
+<param name=img value="/c/default-black-cyan.gif">
+</applet></td></tr></table></td>
+  </tr>
+  <tr>
+    <td height="32"><font color="#00FFFF"><b><i><font size="6">WELCOME</font></i></b></font></td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,9 @@
+
+
+Instalera mysql dataserver
+
+Instalera aqua data studio
+
+instalera php
+
+flita jtdc till root map mysql

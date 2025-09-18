@@ -1,0 +1,9 @@
+
+20070116, Hörby
+
+Fungerande kretskort för CPU ARM9. CPU sitter sepparat i en modul.
+Kretskort ska modifieras så att CPU läggs in på kreskort och med detta
+ska bilda en fungerande kretskort med alla komponenterna.
+Alla komponenter ska placeras på en sida av kretskortet.
+
+MVH/Sefik

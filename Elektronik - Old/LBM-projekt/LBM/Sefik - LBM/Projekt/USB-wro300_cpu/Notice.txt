@@ -1,0 +1,17 @@
+
+20070619
+
+C00-20070614-USB_weo300_cpu (Eeagle CAD) har jag ritat schema 
+men inte layout.Lars har hemma layout och schema
+
+
+20070626
+
+C01-20070626-USB_wro300_cpu (Eagle CAD) Schema och layout från Lars. (ORGINAL)
+
+
+C02-20070626-USB_wro300_cpu (Eagle CAD) schema och layout från Lars, med värderna.
+Jag annpassade namn i schema mot stycklista C02-2007619-USB-wro300_cpu. Avkopplings
+kondensator C3, 100n och C4, 100n utgår (finns inte i schema).
+C02-2007619-USB-wro300_cpu har registrerats under nummer 14000009 och
+C02-20070626-USB_wro300_cpu (Eagle CAD) under nummer 10000013 i databas.

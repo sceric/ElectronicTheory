@@ -1,0 +1,360 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<STYLE type="text/css">
+<!--
+BODY {
+scrollbar-face-color:#0000FF;
+scrollbar-highlight-color:#C0C0C0;
+scrollbar-3dlight-color:#C0C0C0;
+scrollbar-darkshadow-color:#000000;
+scrollbar-shadow-color:#00FF00;
+scrollbar-arrow-color:#FFFF80;
+scrollbar-track-color:#000000;
+}
+-->
+</STYLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Original:  Eric King (eric_andrew_king@hotmail.com) -->
+<!-- Web Site:  http://redrival.com/eak/ -->
+
+<!-- This script and many more are available free online at -->
+<!-- The JavaScript Source!! http://javascript.internet.com -->
+
+<!-- Begin
+function NewWindow(mypage, myname, w, h, scroll) {
+var winl = 50;
+var wint = 50;
+winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars='+scroll+',resizable'
+win = window.open(mypage, myname, winprops)
+if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
+}
+//  End -->
+</script>
+
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Original:  Eric King (eric_andrew_king@hotmail.com) -->
+<!-- Web Site:  http://redrival.com/eak/ -->
+
+<!-- This script and many more are available free online at -->
+<!-- The JavaScript Source!! http://javascript.internet.com -->
+
+<!-- Begin
+function NewWindow(mypage, myname, w, h, scroll) {
+var winl = (screen.width - w) / 2;
+var wint =20
+
+winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars='+scroll+',resizable'
+win = window.open(mypage, myname, winprops)
+if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
+}
+//  End -->
+</script>
+
+
+<script language=javaScript>
+<!-- Beginning of JavaScript -
+
+var thissize=30
+var textfont="Arial"
+var i_color=0
+var i_message=0
+
+var textcolor= new Array()
+textcolor[0] ="000000 "
+textcolor[1] ="050505 "
+textcolor[2] ="101010"
+textcolor[3] ="151515"
+textcolor[4] ="202020"
+textcolor[5] ="252525"
+textcolor[6] ="303030"
+textcolor[7] ="353535"
+textcolor[8] ="404040"
+textcolor[9] ="454545"
+textcolor[10] ="505050"
+textcolor[11] ="555555"
+textcolor[12] ="606060"
+textcolor[13] ="656565"
+textcolor[14] ="707070"
+textcolor[15] ="757575"
+textcolor[16] ="808080"
+textcolor[17] ="858585"
+textcolor[18] ="909090"
+textcolor[19] ="a6a6a6"
+textcolor[20] ="b6b6b6"
+textcolor[21] ="c6c6c6"
+textcolor[22] ="d6d6d6"
+textcolor[23] ="e6e6e6"
+textcolor[24] ="f6f6f6"
+textcolor[25] ="ffffff"
+textcolor[26] ="ffffff"
+textcolor[27] ="ffffff"
+
+
+
+var message = new Array()
+message[0]="Welcome Welcome Welcome Welcome"
+message[1]="Välkommen Välkommen Välkommen"
+
+
+
+function morecolor() {		
+	if (i_color <= textcolor.length-1) {
+		if(document.all) {
+			zoomer.innerHTML="<span style='font-family:"+textfont+";font-size:"+thissize+"px;color:"+textcolor[i_color]+"'>"+message[i_message]+"</span>"
+		}
+	
+		if(document.layers) {
+			document.zoomer.document.write("<span style='font-family:"+textfont+";font-size:"+thissize+"px;color:"+textcolor[i_color]+"'>"+message[i_message]+"</span>")
+			document.close()
+		}
+		i_color++
+		var timer=setTimeout("morecolor()",50)
+	}
+	else {
+		i_color--
+		clearTimeout(timer)
+		var intermezzo=setTimeout("lesscolor()",1000)
+	}
+}
+
+function lesscolor() {	
+	if (i_color >= 0) {
+		if(document.all) {
+			zoomer.innerHTML="<span style='font-family:"+textfont+";font-size:"+thissize+"px;color:"+textcolor[i_color]+"'>"+message[i_message]+"</span>"
+		}
+	
+		if(document.layers) {
+			document.zoomer.document.write("<span style='font-family:"+textfont+";font-size:"+thissize+"px;color:"+textcolor[i_color]+"'>"+message[i_message]+"</span>")
+			document.close()
+		}
+		
+		i_color--
+		var timer=setTimeout("lesscolor()",50)
+	}
+	else {
+		i_message++
+		if (i_message >= message.length) {i_message=0}
+		i_color=0
+		clearTimeout(timer)																				
+		var intermezzo=setTimeout("morecolor()",1000)
+	}
+}
+
+// - End of JavaScript - -->
+</script>
+
+
+
+
+
+
+</head>
+
+<body bgcolor="#000000" text="#000000" onLoad="morecolor()" link="#0000FF" vlink="#0099FF" alink="#00FFFF">
+<div align="center" valign="top"> 
+
+<div align="center" valign="top">
+      <div id="zoomer" style="top:52px;left=14% ; width: 600; height: 19px"></div></div>
+  <table width="600" border="0" cellpadding="0" align="center">
+    <tr>
+      <td><img src="Bilder/SWsida/mal_traka1.gif" width="600" height="92"></td>
+    </tr>
+  </table>
+  
+</div>
+ <center>
+  <Hr width="600" align="center">
+  <hr width="600" align="center">
+  <table width="600" border="2" cellpadding="0" bgcolor="#1C5105" height="108">
+    <tr>
+      <td width="110" height="100"><a href="http://www.stadsbygg.malmo.se/malmokarta/karta/lev1/index.html" onclick="NewWindow(this.href,'name','820','640','yes');return false;"><img src="Bilder/SWsida/karta1.gif" width="96" height="84"></a></td>
+
+
+
+      <td width="373" height="100" background="Bilder/SWsida/Wheatherbg.gif"><a href="http://www.wunderground.com/global/stations/02636.html"><img src="http://banners.wunderground.com/banner/gizmotempbig/global/stations/02636.gif" height=40 width=373 alt="CLICK TO SEE MALMÖ WHEATHER" align="top"></a></td>
+      <td width="114" height="100"><a href="http://www.stadskartan.se/" onclick="NewWindow(this.href,'name','820','640','yes');return false;"><img src="Bilder/SWsida/karta1a.gif" width="92" height="88" align="middle"></a> 
+      </td>
+    </tr>
+  </table>
+  <hr width="603" align="center">
+  <hr width="600" align="center">
+  
+  <table width="600" border="2" cellpadding="0" height="307" align="center">
+    <tr> 
+      
+      <td height="310" width="456"> 
+        <table width="457" border="0" cellpadding="0" height="100%" background="Bilder/SWsida/Bg_sweden.gif" align="center">
+          <tr> 
+            
+          <td height="303">
+            <div align="top">
+                <table width="95%" border="0" cellpadding="0">
+                  <tr>
+                  <td><font face="Arial, Helvetica, sans-serif"><font size="3"><b>Fakta 
+                    om Malm&ouml; stad</b></font></font><font face="Arial, Helvetica, sans-serif" size="3"><br>
+                    <font size="2">Malm&ouml; v&auml;xer och frodas &#150; vi 
+                    har ett h&auml;rligt 2000-tal att se fram emot... <br>
+                    Malm&ouml;s folkm&auml;ngd &ouml;kar f&ouml;r sextonde &aring;ret 
+                    i rad. Under 2000 blev det 2 005 fler Malm&ouml;bor, vilket 
+                    inneb&auml;r att Malm&ouml;s folkm&auml;ngd nu &auml;r 259 
+                    579. <br>
+                    Fram till &aring;r 2010 f&ouml;rv&auml;ntas folkm&auml;ngden 
+                    forts&auml;tta att &ouml;ka till 291 400. Under &aring;r 2000 
+                    flyttade 14 446 personer in till Malm&ouml; medan 12 227 l&auml;mnade 
+                    staden. Antalet d&ouml;da &auml;r fortfarande fler &auml;n 
+                    antalet f&ouml;dda vilket f&ouml;r &aring;r 2000 ger ett negativt 
+                    f&ouml;delse&ouml;verskottet p&aring; -171 personer.<br>
+                    Malm&ouml; &auml;r en m&aring;ngfaldens stad - h&auml;r bor 
+                    m&auml;nniskor fr&aring;n hela 163 olika l&auml;nder i v&auml;rlden. 
+                    De st&ouml;rsta grupperna &auml;r fr&aring;n Jugoslavien, 
+                    Polen, Bosnien-Hercegovina, Irak och Danmark!<br>
+                    N&auml;stan h&auml;lften av Malm&ouml;s 130.000 hush&aring;ll 
+                    best&aring;r av en person, i ytterligare 30 procent av hush&aring;llen 
+                    bor det endast tv&aring; personer. Det betyder att i 4/5 av 
+                    hush&aring;llen i Malm&ouml; bor det som mest tv&aring; personer</font>.</font> 
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          </tr>
+        </table>
+      </td>
+      
+      <td height="310" width="123"> 
+        <table width="114%" border="0" cellpadding="0" background="Bilder/SWsida/Bg_service.gif" height="100%">
+        <tr> 
+            <td><a href="http://www.skanetrafiken.skane.se/default.asp" target="mainFrame"            onMouseOver="document.image1.src='Bilder/SWsida/kn_sk%E5netrafik1.gif'"
+   onMouseOut="document.image1.src='Bilder/SWsida/kn_sk%E5netrafik.gif'"> <img src="Bilder/SWsida/kn_sk%E5netrafik.gif" width="123" height="28" name="image1"></a></td>
+          </tr>
+          <tr> 
+            <td><a href="http://www.sj.se" target="mainFrame"            onMouseOver="document.image2.src='Bilder/SWsida/kn_SJ1.gif'"
+   onMouseOut="document.image2.src='Bilder/SWsida/kn_SJ.gif'"><img src="Bilder/SWsida/kn_SJ.gif" width="123" height="28" name="image2"></a></td>
+          </tr>
+          <tr> 
+            <td><a href="buss171.html" target="mainFrame"            onMouseOver="document.image3.src='Bilder/SWsida/kn_bus1.gif'"
+   onMouseOut="document.image3.src='Bilder/SWsida/kn_bus.gif'"><img src="Bilder/SWsida/kn_bus.gif" width="123" height="28" name="image3"></a></td>
+          </tr>
+          <tr> 
+            <td><a href="http://www.vv.se/i_bilregistret.shtml" target="mainFrame"            onMouseOver="document.image4.src='Bilder/SWsida/kn_vag1.gif'"
+   onMouseOut="document.image4.src='Bilder/SWsida/kn_vag.gif'"><img src="Bilder/SWsida/kn_vag.gif" width="123" height="28" name="image4"></a></td>
+          </tr>
+          <tr> 
+            <td><a href="http://www.cph.dk/" target="mainFrame"            onMouseOver="document.image5.src='Bilder/SWsida/kn_cop_airport1.gif'"
+   onMouseOut="document.image5.src='Bilder/SWsida/kn_cop_airport.gif'"><img src="Bilder/SWsida/kn_cop_airport.gif" width="123" height="28" name="image5"></a></td>
+          </tr>
+          <tr> 
+            <td><a href="http://www.gulasidorna.se/main/frameset.asp" target="mainFrame"            onMouseOver="document.image6.src='Bilder/SWsida/kn_gulasidor1.gif'"
+   onMouseOut="document.image6.src='Bilder/SWsida/kn_gulasidor.gif'"><img src="Bilder/SWsida/kn_gulasidor.gif" width="123" height="28" name="image6"></a></td>
+          </tr>
+          <tr> 
+            <td><a href="http://www.mkbfastighet.se/" target="mainFrame"            onMouseOver="document.image7.src='Bilder/SWsida/kn_mkb1.gif'"
+   onMouseOut="document.image7.src='Bilder/SWsida/kn_mkb.gif'"><img src="Bilder/SWsida/kn_mkb.gif" width="123" height="28" name="image7"></a></td>
+          </tr>
+          <tr> 
+            <td><a href="http://www.msb.malmo.se/" target="mainFrame"            onMouseOver="document.image8.src='Bilder/SWsida/kn_bibliotek1.gif'"
+   onMouseOut="document.image8.src='Bilder/SWsida/kn_bibliotek.gif'"><img src="Bilder/SWsida/kn_bibliotek.gif" width="123" height="28" name="image8"></a></td>
+          </tr>
+          <tr> 
+            <td><a href="http://www.ams.se/skane/malmo/" target="mainFrame"            onMouseOver="document.image9.src='Bilder/SWsida/kn_arbet1.gif'"
+   onMouseOut="document.image9.src='Bilder/SWsida/kn_arbet.gif'"><img src="Bilder/SWsida/kn_arbet.gif" width="123" height="28" name="image9"></a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <hr width="600" align="center">
+  <table width="600" border="0" cellpadding="0">
+    <tr> 
+      <td align="center"><a href="http://www.malmo.se" target="mainFrame"                    onMouseOver="document.image10.src='Bilder/SWsida/kn_malmo1.gif'"
+        onMouseOut="document.image10.src='Bilder/SWsida/kn_malmo.gif'"><img         src="Bilder/SWsida/kn_malmo.gif" width="123" height="28" alt="www.malmo.se" name="image10"></a></td>
+
+      <td align="center"><a href="http://www.gotenborg.se" target="mainFrame"                       onMouseOver="document.image11.src='Bilder/SWsida/kn_goteborg1.gif'"
+        onMouseOut="document.image11.src='Bilder/SWsida/kn_goteborg.gif'"><img        src="Bilder/SWsida/kn_goteborg.gif" width="123" height="28" alt="www.gotenborg.se" name="image11"></a></td>
+
+      <td align="center"><a href="http://www.stockholm.se" target="mainFrame"                       onMouseOver="document.image12.src='Bilder/SWsida/kn_stockholm1.gif'"
+        onMouseOut="document.image12.src='Bilder/SWsida/kn_stockholm.gif'"><img src="Bilder/SWsida/kn_stockholm.gif" width="123" height="28" alt="www,stockholm.se" name="image12"></a></td>
+    </tr>
+  </table>
+  <hr width="600" align="center">
+  
+  <table width="604" border="0" cellpadding="0" height="250" background="Bilder/SWsida/traka_sw_sida.gif" align="center">
+    <tr> 
+      <td height="21"> 
+        <div align="center"><a href="http://www.foreningssparbanken.se" target="mainFrame"><font color="#FFFFFF">F&ouml;reningssparbanken</font></a> 
+          <font color="#00FFFF">|</font><font color="#00CCFF"> </font><a href="http://www.fk.se" target="mainFrame"><font color="#FFFFFF">F&ouml;rs&auml;kningskassa</font></a> 
+          <font color="#00FFFF">|</font> <a href="http://www.rsv.se/" target="mainFrame"><font color="#FFFFFF">Riksskatteverkets</font></a> 
+          <font color="#00FFFF">|</font><font color="#00CCFF"> </font><a href="http://www.rsv.se/gemensamt/index_regionala.html" target="mainFrame"><font color="#FFFFFF">Regionala 
+          Skattemyndigheterna</font></a> </div>
+      </td>
+  </tr>
+  <tr>
+      <td height="26"> 
+        <p align="center"><a href="http://www.apoteket.se/"><font color="#FFFFFF">Apoteket</font></a> 
+          <font color="#00FFFF"> | </font><a href="http://www2.bilprovningen.se/" target="mainFrame"><font color="#FFFFFF">Sveriges 
+          bilprovning</font></a><font color="#00FFFF"> |</font> <a href="http://www.systembolaget.se/"><font color="#FFFFFF">Systembolaget</font></a> 
+          <font color="#00FFFF"> |</font> <a href="http://www.skolverket.se/skolnet/" target="mainFrame"><font color="#FFFFFF">Skoldatan&auml;tet</font></a> 
+          <font color="#00FFFF">| </font><a href="http://www.infomedica.se/" target="mainFrame"><font color="#FFFFFF">Infomedica</font></a> 
+          <font color="#00FFFF">| </font><a href="http://www.hur-dricker-du.org/huvudmeny/huvudmeny.htm" target="mainFrame"><font color="#FFFFFF">Hur 
+          dricker du ?</font></a></p>
+      </td>
+  </tr>
+  <tr>
+      <td> 
+        <div align="center"><a href="http://www.eurofat.se/"><font color="#FFFFFF">F&ouml;reningen 
+          Auktoriserade Translatorer</font></a><font color="#00FFFF"> |</font> 
+          <a href="http://www.studera.nu/"><font color="#FFFFFF">Studera.nu</font></a><font color="#00FFFF"> 
+          | </font><a href="http://www.migrationsverket.se/" target="mainFrame"><font color="#FFFFFF"> 
+          Migratonsverket</font></a><font color="#00FFFF">|</font><font color="#00CCFF"> 
+          </font> <a href="http://www.vv.se/i_bilregistret.htm" target="mainFrame"><font color="#FFFFFF">Bilregister</font></a> 
+          <font color="#00FFFF">| </font><a href="http://www.posten.se/index.jsp" target="mainFrame"><font color="#FFFFFF">Posten</font></a><font color="#00FFFF"></font> 
+        </div>
+      </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+      <td><b><font color="#FFFFFF">Vet du hur en flaga av Bolivija, Cile, Bosnia, 
+        Libien ... ser ut?&nbsp; Klick<a href="Flags.html" target="mainFrame"><font color="#00FFFF"> 
+        h&auml;r</font></a> om du vill veta!</font></b></td>
+  </tr>
+</table>
+  <hr width="600" align="center">
+  <table width="600" border="0" cellpadding="0" align="center">
+    <tr>
+      <td><font color="#FFFFFF"><b>&copy; Ceric </b></font> 
+     
+
+
+
+
+      </td>
+    </tr>
+  </table>
+
+</center>
+
+</body>
+</html>

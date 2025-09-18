@@ -1,0 +1,378 @@
+<html>
+<head>
+<title>Top stori</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<STYLE type="text/css">
+<!--
+BODY {
+scrollbar-face-color:#0000FF;
+scrollbar-highlight-color:#C0C0C0;
+scrollbar-3dlight-color:#C0C0C0;
+scrollbar-darkshadow-color:#000000;
+scrollbar-shadow-color:#00FF00;
+scrollbar-arrow-color:#FFFF80;
+scrollbar-track-color:#000000;
+}
+-->
+</STYLE>
+
+<script language="Javascript1.2">
+// Set the message for the alert box
+am = "Wrong button !!!! ";
+
+// do not edit below this line
+// ===========================
+bV  = parseInt(navigator.appVersion)
+bNS = navigator.appName=="Netscape"
+bIE = navigator.appName=="Microsoft Internet Explorer"
+
+function nrc(e) {
+   if (bNS && e.which > 1){
+      alert(am)
+      return false
+   } else if (bIE && (event.button >1)) {
+     alert(am)
+     return false;
+   }
+}
+
+document.onmousedown = nrc;
+if (document.layers) window.captureEvents(Event.MOUSEDOWN);
+if (bNS && bV<5) window.onmousedown = nrc;
+
+</script>
+
+
+
+
+
+
+
+
+</head>
+
+<body bgcolor="000000" text="#000000">
+<table width="399" border="0" cellpadding="0" background="Kn_news/Top_stori.gif" height="40" align="center">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<p><SCRIPT LANGUAGE="Javascript">
+  <!--
+  // the array global_article is used to allow multiple categories
+  var global_article = new Array();
+  var global_article_counter = 0;
+  var article = null;
+  var early_exit = 1;
+  var moreover_text = 0;
+  function load_wizard()
+    {
+    
+    var newwin = window.open("","clone","resizable,scrollbars,width=500,height=590");
+    document.forms.moreover_clone.submit();
+    return true;
+    }
+  
+  // -->
+  </SCRIPT>
+  <SCRIPT LANGUAGE="Javascript" SRC="http://p.moreover.com/cgi-local/page?c=Top%20stories&o=js">
+  </SCRIPT>
+  <SCRIPT LANGUAGE="Javascript">
+  <!--
+  // load global_article array with articles from category
+  if (article != null)
+    {
+    early_exit = 0;
+
+    for (var article_counter = 0; article_counter < Math.min(article.length,20); article_counter++)
+      {
+      global_article[global_article_counter] = article[article_counter];
+      global_article[global_article_counter].url += "&w=643500";
+      global_article[global_article_counter].url += "' TARGET='_blank";
+      global_article[global_article_counter].document_url += "' TARGET='_blank";
+      global_article_counter++;
+      }
+
+
+    }
+  // -->
+  </SCRIPT>
+  <SCRIPT LANGUAGE="Javascript">
+  <!--
+  if (global_article.length == 0)
+      {
+      if (early_exit)
+        {
+        document.writeln('<CENTER>Please reload this page to view the headlines</CENTER>');
+        }
+      else
+        {
+        document.writeln('<CENTER>Sorry, no articles matched your search criteria</CENTER>');
+        early_exit = 1;
+        }
+      }
+  // -->
+  </SCRIPT>
+  <SCRIPT LANGUAGE="Javascript" SRC="http://p.moreover.com/dr/wizard_text.js"></SCRIPT>
+  <SCRIPT LANGUAGE="Javascript">
+  <!--
+  if (!early_exit)
+  {
+  var webfeed_heading = "";
+  var width = "400";
+  var numberofarticles = global_article.length;
+  var item_spacing = "10";
+  var cluster_bgcolor = "000000";
+  var cluster_border = "0";
+  var heading_display = "Yes";
+  var time_display = "Yes";
+  var cell_spacing = "0";
+  var cell_padding = "1";
+  var heading_bgcolor = "000000";
+  var heading_font = "Arial,Helvetica, sans-serif";
+  var heading_font_size = "+1";
+  var heading_fgcolor = "00ffff";
+  var headline_bgcolor = "000000";
+  var headline_font = "Arial,Helvetica, sans-serif";
+  var headline_font_size = "+1";
+  var headline_fgcolor = "00ffff";
+  var source_font = "Arial,Helvetica, sans-serif";
+  var source_font_size = "-1";
+  var source_fgcolor = "ffffff";
+  var access_font = "Arial,Helvetica, sans-serif";
+  var access_font_size = "-1";
+  var access_fgcolor = "ffffff";
+  var time_font = "Arial,Helvetica, sans-serif";
+  var time_font_size = "-1";
+  var time_fgcolor = "ffffff";
+  var time = new Array(global_article.length);
+
+  // Print out the table containing the headlines
+  document.writeln('<CENTER><TABLE BORDER='+cluster_border+' BGCOLOR="#'+cluster_bgcolor+'" WIDTH='+width+' CELLPADDING=2 CELLSPACING=0>');
+  document.writeln("<tr><td  align='center'><img src='http://i.moreover.com/images/moreover_wizard_link.gif' border='0'></td></tr>")
+  document.writeln('<TR><TD><CENTER><TABLE BGCOLOR="#'+cluster_bgcolor+'" CELLPADDING='+cell_padding+' CELLSPACING='+cell_spacing+'  WIDTH="100%">');
+
+  if (heading_display == "Yes")
+    {
+    // Print a new category heading
+    document.writeln('<TR BGCOLOR="#'+heading_bgcolor+'"><TD>');
+    document.writeln('<FONT SIZE='+heading_font_size+' FACE="'+heading_font+'" COLOR="#'+heading_fgcolor+'">');
+    document.writeln('<B>'+webfeed_heading+'</B></FONT></TD></TR>');
+    }
+
+  // Start loop for articles
+    for (var counter=0; counter < Math.min(numberofarticles,global_article.length); counter++)
+    {
+    if ((counter == (global_article.length - 1)) && moreover_text == 1) 
+      { 
+      headline_fgcolor = source_fgcolor; 
+      time_display = "No";
+      }
+
+    // Print out the headline
+    document.writeln("<TR BGCOLOR='#"+headline_bgcolor+"'><TD><A HREF='"+global_article[counter].url+"' >");
+    document.writeln('<FONT SIZE='+headline_font_size+' FACE="'+headline_font+'" COLOR="#'+headline_fgcolor+'"');
+    document.writeln('>'+global_article[counter].headline_text+'...</FONT></A><br>');
+
+    
+      // Print out the source
+        if ((counter != (global_article.length - 1)) || moreover_text != 1)
+        {
+        document.writeln("<A HREF='"+global_article[counter].document_url+"' >");
+        document.writeln('<FONT FACE="'+source_font+'" SIZE='+source_font_size+' COLOR="#'+source_fgcolor+'">');
+        document.writeln(''+global_article[counter].source+'</FONT></A>&nbsp;&nbsp;');
+        }
+    
+
+    // Print out reg/sub if appropriate
+    if (global_article[counter].access_status == "sub" || global_article[counter].access_status == "reg")
+      {
+      document.writeln(" <A HREF='"+global_article[counter].access_registration+"'>");
+      document.writeln('<FONT FACE="'+access_font+'" SIZE='+access_font_size);
+      document.writeln(' COLOR="#'+access_fgcolor+'">'+global_article[counter].access_status+'</FONT></A>&nbsp;&nbsp;');
+      }
+
+
+        // Print out the harvest time
+    if (time_display == "Yes")
+      {
+      // Make a new date object
+      time[counter] = new Date(global_article[counter].harvest_time);
+      time[counter].setHours(time[counter].getHours() - (time[counter].getTimezoneOffset() / 60 ));
+      document.writeln('<FONT FACE="'+time_font+'" SIZE='+time_font_size+' COLOR="#'+time_fgcolor+'">');
+      document.writeln(''+time[counter].toString()+'</FONT>');
+      } 
+
+
+
+    document.writeln('</TD></TR><TR BGCOLOR="#'+headline_bgcolor+'"><TD BGCOLOR="#'+headline_bgcolor+'" HEIGHT='+item_spacing+'></TD></TR>');
+    } // End of article loop
+
+  // Start of clone button code //
+  // NOTE: DO NOT REMOVE any of the code in this section //
+  document.writeln('<FORM METHOD="POST" ACTION="http://www.moreover.com/cgi-local/wizard_clone.pl" target="clone" name="moreover_clone">');
+  document.writeln('<INPUT TYPE="hidden" NAME="parent_code" VALUE="643500">');
+  document.writeln('<INPUT TYPE="hidden" NAME="heading_font_size" VALUE="+1"><INPUT TYPE="hidden" NAME="source_font_size" VALUE="-1">')
+  document.writeln('<INPUT TYPE="hidden" NAME="cluster_width" VALUE="400"><INPUT TYPE="hidden" NAME="time_display" VALUE="Yes">')
+  document.writeln('<INPUT TYPE="hidden" NAME="time_font" VALUE="Arial,Helvetica, sans-serif"><INPUT TYPE="hidden" NAME="cluster_cellspacing" VALUE="0">')
+  document.writeln('<INPUT TYPE="hidden" NAME="heading_font" VALUE="Arial,Helvetica, sans-serif"><INPUT TYPE="hidden" NAME="number_of_headlines" VALUE="20">')
+  document.writeln('<INPUT TYPE="hidden" NAME="cluster_bgcolor" VALUE="000000"><INPUT TYPE="hidden" NAME="search_keywords" VALUE="">')
+  document.writeln('<INPUT TYPE="hidden" NAME="refine_category" VALUE=""><INPUT TYPE="hidden" NAME="time_fgcolor" VALUE="ffffff">')
+  document.writeln('<INPUT TYPE="hidden" NAME="access_fgcolor" VALUE="ffffff"><INPUT TYPE="hidden" NAME="time_font_size" VALUE="-1">')
+  document.writeln('<INPUT TYPE="hidden" NAME="headline_bgcolor" VALUE="000000"><INPUT TYPE="hidden" NAME="access_font_size" VALUE="-1">')
+  document.writeln('<INPUT TYPE="hidden" NAME="cluster_name" VALUE="c=Top%20stories&o=js"><INPUT TYPE="hidden" NAME="heading_display" VALUE="Yes">')
+  document.writeln('<INPUT TYPE="hidden" NAME="headline_fgcolor" VALUE="00ffff"><INPUT TYPE="hidden" NAME="source_font" VALUE="Arial,Helvetica, sans-serif">')
+  document.writeln('<INPUT TYPE="hidden" NAME="access_font" VALUE="Arial,Helvetica, sans-serif"><INPUT TYPE="hidden" NAME="headline_font_size" VALUE="+1">')
+  document.writeln('<INPUT TYPE="hidden" NAME="headline_font" VALUE="Arial,Helvetica, sans-serif"><INPUT TYPE="hidden" NAME="heading_bold" VALUE="Yes">')
+  document.writeln('<INPUT TYPE="hidden" NAME="item_spacing" VALUE="10"><INPUT TYPE="hidden" NAME="wizard_brand" VALUE="moreover_new">')
+  document.writeln('<INPUT TYPE="hidden" NAME="heading_bgcolor" VALUE="000000"><INPUT TYPE="hidden" NAME="cluster_cellpadding" VALUE="1">')
+  document.writeln('<INPUT TYPE="hidden" NAME="heading_fgcolor" VALUE="00ffff"><INPUT TYPE="hidden" NAME="source_fgcolor" VALUE="ffffff">')
+  document.writeln('<INPUT TYPE="hidden" NAME="cluster_border" VALUE="0"><INPUT TYPE="hidden" NAME="cluster_layout" VALUE="<br>">')
+
+  document.writeln('</FORM>');
+  // End of clone button code //
+
+  document.writeln('</TABLE></CENTER></TD></TR></TABLE></CENTER>');
+
+  // ************************************************************************************
+  // This code is subject to the copyright and warranty restrictions detailed at 
+  // http://www.moreover.com/wizard_copyright.html
+  // Copyright 2000 Moreover.com Inc. All rights reserved.
+  // *************************************************************************************
+  } 
+  // -->
+  </SCRIPT>
+  <A HREF="http://www.moreover.com"><FONT COLOR="#000000"> </FONT></A>
+  <!-- End Of Moreover.com News Javascript Code -->
+
+      
+
+
+
+
+ 
+<script language="JavaScript">
+<!-- Standard Scroll Clock by kurt.grigg@virgin.net
+
+
+fCol='FFD8A0';//boja sata.
+sCol='03FFF0';//boja sekundarice.
+mCol='ffffff';//boja kazaljke za minute.
+hCol='ffffff';//boja kazaljke za sate.
+
+
+H='....';
+H=H.split('');
+M='.....';
+M=M.split('');
+S='......';
+S=S.split('');
+Ypos=0;
+Xpos=0;
+Ybase=8;
+Xbase=8;
+dots=12;
+ns=(document.layers)?1:0;
+if (ns){
+dgts='1 2 3 4 5 6 7 8 9 10 11 12';
+dgts=dgts.split(' ')
+for (i=0; i < dots; i++){
+document.write('<layer name=nsDigits'+i+' top=0 left=0 height=30 width=30><center><font face=Arial,Verdana size=1 color='+fCol+'>'+dgts[i]+'</font></center></layer>');
+}
+for (i=0; i < M.length; i++){
+document.write('<layer name=ny'+i+' top=0 left=0 bgcolor='+mCol+' clip="0,0,2,2"></layer>');
+}
+for (i=0; i < H.length; i++){
+document.write('<layer name=nz'+i+' top=0 left=0 bgcolor='+hCol+' clip="0,0,2,2"></layer>');
+}
+for (i=0; i < S.length; i++){
+document.write('<layer name=nx'+i+' top=0 left=0 bgcolor='+sCol+' clip="0,0,2,2"></layer>');
+}
+}
+else{
+document.write('<div style="position:absolute;top:0px;left:0px"><div style="position:relative">');
+for (i=1; i < dots+1; i++){
+document.write('<div id="ieDigits" style="position:absolute;top:0px;left:0px;width:30px;height:30px;font-family:Arial,Verdana;font-size:10px;color:'+fCol+';text-align:center;padding-top:10px">'+i+'</div>');
+}
+document.write('</div></div>')
+document.write('<div style="position:absolute;top:0px;left:0px"><div style="position:relative">');
+for (i=0; i < M.length; i++){
+document.write('<div id=y style="position:absolute;width:2px;height:2px;font-size:2px;background:'+mCol+'"></div>');
+}
+document.write('</div></div>')
+document.write('</div></div>')
+document.write('<div style="position:absolute;top:0px;left:0px"><div style="position:relative">');
+for (i=0; i < H.length; i++){
+document.write('<div id=z style="position:absolute;width:2px;height:2px;font-size:2px;background:'+hCol+'"></div>');
+}
+document.write('</div></div>')
+document.write('<div style="position:absolute;top:0px;left:0px"><div style="position:relative">');
+for (i=0; i < S.length; i++){
+document.write('<div id=x style="position:absolute;width:2px;height:2px;font-size:2px;background:'+sCol+'"></div>');
+}
+document.write('</div></div>')
+}
+function clock(){
+time = new Date ();
+secs = time.getSeconds();
+sec = -1.57 + Math.PI * secs/30;
+mins = time.getMinutes();
+min = -1.57 + Math.PI * mins/30;
+hr = time.getHours();
+hrs = -1.57 + Math.PI * hr/6 + Math.PI*parseInt(time.getMinutes())/360;
+if (ns){
+Ypos=window.pageYOffset+window.innerHeight-60;
+Xpos=window.pageXOffset+window.innerWidth-80;
+}
+else{
+Ypos=document.body.scrollTop+window.document.body.clientHeight-60;
+Xpos=document.body.scrollLeft+window.document.body.clientWidth-60;
+}
+if (ns){
+for (i=0; i < dots; ++i){
+ document.layers["nsDigits"+i].top=Ypos-5+40*Math.sin(-0.49+dots+i/1.9);
+ document.layers["nsDigits"+i].left=Xpos-15+40*Math.cos(-0.49+dots+i/1.9);
+ }
+for (i=0; i < S.length; i++){
+ document.layers["nx"+i].top=Ypos+i*Ybase*Math.sin(sec);
+ document.layers["nx"+i].left=Xpos+i*Xbase*Math.cos(sec);
+ }
+for (i=0; i < M.length; i++){
+ document.layers["ny"+i].top=Ypos+i*Ybase*Math.sin(min);
+ document.layers["ny"+i].left=Xpos+i*Xbase*Math.cos(min);
+ }
+for (i=0; i < H.length; i++){
+ document.layers["nz"+i].top=Ypos+i*Ybase*Math.sin(hrs);
+ document.layers["nz"+i].left=Xpos+i*Xbase*Math.cos(hrs);
+ }
+}
+else{
+for (i=0; i < dots; ++i){
+ ieDigits[i].style.pixelTop=Ypos-15+40*Math.sin(-0.49+dots+i/1.9);
+ ieDigits[i].style.pixelLeft=Xpos-14+40*Math.cos(-0.49+dots+i/1.9);
+ }
+for (i=0; i < S.length; i++){
+ x[i].style.pixelTop =Ypos+i*Ybase*Math.sin(sec);
+ x[i].style.pixelLeft=Xpos+i*Xbase*Math.cos(sec);
+ }
+for (i=0; i < M.length; i++){
+ y[i].style.pixelTop =Ypos+i*Ybase*Math.sin(min);
+ y[i].style.pixelLeft=Xpos+i*Xbase*Math.cos(min);
+ }
+for (i=0; i < H.length; i++){
+ z[i].style.pixelTop =Ypos+i*Ybase*Math.sin(hrs);
+ z[i].style.pixelLeft=Xpos+i*Xbase*Math.cos(hrs);
+ }
+}
+setTimeout('clock()',50);
+}
+if (document.layers || document.all) window.onload=clock;
+//-->
+</script>
+
+
+
+
+</p></body>
+</html>

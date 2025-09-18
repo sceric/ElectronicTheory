@@ -1,0 +1,215 @@
+<html>
+<head>
+<title>INDEX</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<STYLE type="text/css">
+<!--
+BODY {
+scrollbar-face-color:#0000FF;
+scrollbar-highlight-color:#C0C0C0;
+scrollbar-3dlight-color:#C0C0C0;
+scrollbar-darkshadow-color:#000000;
+scrollbar-shadow-color:#00FF00;
+scrollbar-arrow-color:#FFFF80;
+scrollbar-track-color:#000000;
+}
+-->
+</STYLE>
+
+
+<!--Skripta za sat-->
+<SCRIPT LANGUAGE="JavaScript">
+
+
+<!-- Begin
+function MakeArrayday(size) {
+this.length = size;
+for(var i = 1; i <= size; i++) {
+this[i] = "";
+}
+return this;
+}
+function MakeArraymonth(size) {
+this.length = size;
+for(var i = 1; i <= size; i++) {
+this[i] = "";
+}
+return this;
+}
+function funClock() {
+if (!document.layers && !document.all)
+return;
+var runTime = new Date();
+var hours = runTime.getHours();
+var minutes = runTime.getMinutes();
+var seconds = runTime.getSeconds();
+var dn = "AM";
+if (hours > 12) {
+dn = "PM";
+hours = hours - 12;
+}
+if (hours == 0) {
+hours = 12;
+}
+if (minutes <= 9) {
+minutes = "0" + minutes;
+}
+if (seconds <= 9) {
+seconds = "0" + seconds;
+}
+movingtime = "<b>"+ hours + ":" + minutes + ":" + seconds + " " + dn + "</b>";
+if (document.layers) {
+document.layers.clock.document.write(movingtime);
+document.layers.clock.document.close();
+}
+else if (document.all) {
+clock.innerHTML = movingtime;
+}
+setTimeout("funClock()", 1000)
+}
+window.onload = funClock;
+//  End --->
+
+
+</script>
+
+
+
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Original:  Eric King (eric_andrew_king@hotmail.com) -->
+<!-- Web Site:  http://redrival.com/eak/ -->
+
+<!-- This script and many more are available free online at -->
+<!-- The JavaScript Source!! http://javascript.internet.com -->
+
+<!-- Begin
+function NewWindow(mypage, myname, w, h, scroll) {
+var winl = (screen.width - w) / 2;
+var wint = (screen.height - h) / 2;
+winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars='+scroll+',resizable'
+win= window.open(mypage, myname, winprops)
+if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
+}
+
+function NewWindow1(mypage1, myname1, w1, h1, scroll) {
+var winl1 = (screen.width - w1) / 2;
+var wint1 = (screen.height - h1-50) / 2;
+winprops1 = 'height='+h1+',width='+w1+',top='+wint1+',left='+winl1+',scrollbars='+scroll+',resizable'
+win= window.open(mypage1, myname1, winprops1)
+if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
+}
+//  End -->
+</script>
+
+
+
+
+
+</head>
+<body bgcolor="#FFFFFF" text="#FFFFFF"  background="Bilder/Index1/bg1a.gif" BGPROPERTIES="FIXED" link="white" vlink="white" alink="blue"  onLoad="funClock()"><font color="white" size="4"><I><B><center>
+   
+
+
+
+<!--skripta za datum-->
+<script language="Javascript">
+<!--begin
+var mydate=new Date()
+var year=mydate.getYear()
+if (year < 1000)
+year+=1900
+var day=mydate.getDay()
+var month=mydate.getMonth()+1
+if (month<10)
+month="0"+month
+var daym=mydate.getDate()
+if (daym<10)
+daym="0"+daym
+document.write(daym+"."+month+"."+year+".") 
+
+var dayName = new Array("Nedelja","Ponedeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota")
+
+var now = new Date
+
+document.write("  "+dayName[now.getDay()])
+//-->
+</script>
+
+</center></B></I></font>
+
+
+
+
+
+
+
+
+<TABLE  border=0 height=100  width=130 style="HEIGHT:247px; LEFT: 3px; POSITION: absolute; top: 42px; width: 131px">
+  <tr> 
+    <td > 
+      <!--skripta za sat-->
+      <FONT COLOR="#ffffff" size="4"><b><i><span id=clock style="position:absolute;top:15px;left:15px;"></span></i></b></FONT> 
+      
+      
+<img src="Bilder/Index1/pd_logo.gif" width="123" height="173"></td>
+  </tr>
+</TABLE>
+
+
+
+
+
+<TABLE border=0 height=100 onmouseout="bgColor=''" onmouseover="bgColor=''" width=123 style="HEIGHT:200px; LEFT: 2px; POSITION: absolute; top: 253px" vlink="red">
+  <tr> 
+    <td onmouseout="bgColor=''" onmouseover="bgColor='white'"><a href="BiHsida.html" target="mainFrame"><img src="Bilder/Index1/kn_bih_an.gif" width="123" height="28" border="0" alt="Republika Bosna i Hercegovina"></a></td>
+  </tr>
+  <tr> 
+    <td onmouseout="bgColor=''" onmouseover="bgColor='white'"><a href="SWsida.html" target="mainFrame"><img src="Bilder/Index1/kn_SW.gif" width="123" height="28" border="0" alt="Sweden"></a></td>
+  </tr>
+  <tr> 
+    <td onmouseout="bgColor=''" onmouseover="bgColor='white'"><a href="world.html" target="mainFrame"><img src="Bilder/Index1/kn_World.gif" width="123" height="28" border="0" alt="World"></a></td>
+  </tr>
+  <tr> 
+    <td onmouseout="bgColor=''" onmouseover="bgColor='white'"><a href="News/News_frame.html" target="mainFrame"><img src="Bilder/Index1/kn_news.gif" width="123" height="28" border="0" alt="Last news"></a></td>
+  </tr>
+  <tr> 
+    <td onmouseout="bgColor=''" onmouseover="bgColor='white'"><a href="Webcamera/Webcamera.html" target="mainFrame"><img src="Bilder/Index1/kn_webcamera.gif" width="123" height="28" border="0" alt="WEBCameras"></a></td>
+  </tr>
+  <tr> 
+    <td onmouseout="bgColor=''" onmouseover="bgColor='white'"><a href="Calendar.html" onClick="NewWindow(this.href,'name','205','410','no');return false;"><img src="Bilder/Index1/kn_calendar.gif" width="123" height="28" border="0"></a></td>
+  </tr>
+  <tr> 
+    <td onmouseout="bgColor=''" onmouseover="bgColor='white'"><a href="SendLink.html" onClick="NewWindow1(this.href,'name1','445','545','no');return false;"><img src="Bilder/Index1/kn_link.gif" width="123" height="28" border="0"></a></td>
+  </tr>
+  <tr> 
+    <td onmouseout="bgColor=''" onmouseover="bgColor='white'"><a HREF="http://www.free-service.de/gaestebuch/cgi-bin/gaestebuch.pl?id=2401-08010033&la=ba" target="mainFrame"><img src="Bilder/Index1/kn_mes.gif" width="123" height="28" border="0"></a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="white" onmouseout="bgColor='white'" onmouseover="bgColor='white'"><a href="mailto:sefikceric@hotmail.com"><img src="Bilder/Index1/mail.gif" width="123" height="28" border="0"></a></td>
+  </tr>
+  
+  <tr> 
+    <td><font color="white" face="Arial Black, monospace" size="1">&nbsp;&nbsp;&nbsp;&nbsp;<b>My ICQ status 
+      :</b></font></td>
+  </tr>
+  <tr> 
+    <td background="Bilder/Index1/bg_icg.gif" width="123" height="28">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="http://wwp.icq.com/scripts/online.dll?icq=106974919&img=2" align="middle"></td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

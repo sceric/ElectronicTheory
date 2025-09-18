@@ -1,0 +1,10 @@
+
+Värderna på komponenter har tagis enligt tillverkarens rekomendation
+
+
+20070618
+
+Stycklista C01-20070618-RS232-USB box har registtreras under nummer 14000005
+
+C02-20070620-RS232_USB_box (Eagle CAD)
+har registreras i databas under nummer 1000 0009

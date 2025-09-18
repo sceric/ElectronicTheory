@@ -1,0 +1,69 @@
+BODY {
+	MARGIN-TOP: 0px; SCROLLBAR-FACE-COLOR: #94bade; FONT-SIZE: 11px; SCROLLBAR-HIGHLIGHT-COLOR: white; MARGIN-LEFT: 25px; SCROLLBAR-SHADOW-COLOR: white; COLOR: #202020; SCROLLBAR-3DLIGHT-COLOR: white; LINE-HEIGHT: 150%; MARGIN-RIGHT: 20px; SCROLLBAR-ARROW-COLOR: white; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; SCROLLBAR-DARKSHADOW-COLOR: #94bade; BACKGROUND-COLOR: white; scrollbar-trackcolor-color: white
+}
+TD {
+	FONT-SIZE: 11px; COLOR: #202020; LINE-HEIGHT: 150%; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H1 {
+	FONT-SIZE: 13px; LINE-HEIGHT: 250%; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H2 {
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H4 {
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H3 {
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+ADDRESS {
+	FONT-SIZE: 11px; COLOR: #202020; FONT-STYLE: normal; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+HR {
+	COLOR: #94bade; HEIGHT: 7px
+}
+SELECT {
+	FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+A {
+	FONT-SIZE: 11px; COLOR: #397dbb; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-SIZE: 11px; COLOR: #397dbb; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+A:visited {
+	FONT-SIZE: 11px; COLOR: #ff9900; FONT-FAMILY: verdana, arial; TEXT-DECORATION: none
+}
+UL {
+	MARGIN-LEFT: 20px
+}
+LI {
+	MARGIN-LEFT: 30px; LIST-STYLE-TYPE: disc
+}
+.blarubrik {
+	FONT-WEIGHT: bold; FONT-SIZE: 24px; COLOR: #94bade; LINE-HEIGHT: 120%; FONT-FAMILY: verdana, arial; LETTER-SPACING: 2px
+}
+.ingress {
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; FONT-FAMILY: verdana, arial
+}
+.grprub {
+	FONT-SIZE: 13px; COLOR: #397dbb; LINE-HEIGHT: 120%; FONT-FAMILY: verdana, arial; TEXT-DECORATION: none
+}
+.rub {
+	FONT-WEIGHT: bold; FONT-SIZE: 13px; FONT-FAMILY: verdana, arial
+}
+.underrub {
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; FONT-FAMILY: verdana, arial
+}
+.fakta {
+	MARGIN-LEFT: 20px; MARGIN-RIGHT: 40px
+}
+.indrag {
+	MARGIN-LEFT: 20px
+}
+.bildtext {
+	FONT-SIZE: 10px; WORD-SPACING: 1px; LINE-HEIGHT: 120%; FONT-FAMILY: Geneva, Arial, Helvetica, san-serif; LETTER-SPACING: 1px
+}
+.text {
+	FONT-SIZE: 11px; LINE-HEIGHT: 150%; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}

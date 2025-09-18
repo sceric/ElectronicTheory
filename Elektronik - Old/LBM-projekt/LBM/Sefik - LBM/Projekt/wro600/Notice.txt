@@ -1,0 +1,22 @@
+
+20070620
+
+C07-20070620-Komponentforslag_gambro_nr_arm9 stycklista som är aktuelt. Komponenterna
+har inte laggts in i LBM databas med lbm nummer. Alla komponenter har gambronummer.
+
+Avkopplings kondensatorer har laggts in enligt
+tillverkarens rekomendation. Titta i map: 
+L:\sefik\Projekt\wro600\NS9360 - Documentation från tillverkare\NS9360 - Design rules - 061305 [1].pdf
+Inge har fått den och har gjort korigeringar.
+
+
+20070627
+
+C06-20070627-wro600 sista registrering av Eagle CAD filer. 
+
+
+
+
+
+
+

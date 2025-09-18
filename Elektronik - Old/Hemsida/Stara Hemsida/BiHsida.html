@@ -1,0 +1,436 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+<STYLE type="text/css">
+<!--
+BODY {
+scrollbar-face-color:#0000FF;
+scrollbar-highlight-color:#C0C0C0;
+scrollbar-3dlight-color:#C0C0C0;
+scrollbar-darkshadow-color:#000000;
+scrollbar-shadow-color:#00FF00;
+scrollbar-arrow-color:#FFFF80;
+scrollbar-track-color:#000000;
+}
+-->
+</STYLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Original:  Eric King (eric_andrew_king@hotmail.com) -->
+<!-- Web Site:  http://redrival.com/eak/ -->
+
+<!-- This script and many more are available free online at -->
+<!-- The JavaScript Source!! http://javascript.internet.com -->
+
+<!-- Begin
+function NewWindow2(mypage2, myname2, w2, h2, scroll) {
+var winl2 = (screen.width - w2) / 2;
+var wint2 = (screen.height - h2) / 2;
+winprops2 = 'height='+h2+',width='+w2+',top='+wint2+',left='+winl2+',scrollbars='+scroll+',resizable'
+win = window.open(mypage2, myname2, winprops2)
+if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
+}
+
+function NewWindow3(mypage3, myname3, w3, h3, scroll) {
+var winl3 = (screen.width - w3) / 2;
+var wint3 = (screen.height - h3) / 2;
+winprops3 = 'height='+h3+',width='+w3+',top='+wint3+',left='+winl3+',scrollbars='+scroll+',resizable'
+win = window.open(mypage3, myname3, winprops3)
+if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
+}
+//  End -->
+</script>
+
+
+
+<script language=javaScript>
+<!-- Beginning of JavaScript -
+
+var thissize=30
+var textfont="Arial"
+var i_color=0
+var i_message=0
+
+var textcolor= new Array()
+textcolor[0] ="000000 "
+textcolor[1] ="021100 "
+textcolor[2] ="032101"
+textcolor[3] ="042E01"
+textcolor[4] ="053801"
+textcolor[5] ="064002"
+textcolor[6] ="074802"
+textcolor[7] ="075002"
+textcolor[8] ="085A02"
+textcolor[9] ="096202"
+textcolor[10] ="096802"
+textcolor[11] ="0A6E03"
+textcolor[12] ="0B7703"
+textcolor[13] ="0C7E03"
+textcolor[14] ="0C8403"
+textcolor[15] ="0D8C03"
+textcolor[16] ="0D9403"
+textcolor[17] ="0E9B04"
+textcolor[18] ="0FA404"
+textcolor[19] ="0FAE03"
+textcolor[20] ="11B704"
+textcolor[21] ="12BF04"
+textcolor[22] ="13C905"
+textcolor[23] ="14D006"
+textcolor[24] ="15D906"
+textcolor[25] ="15E405"
+textcolor[26] ="15EE05"
+textcolor[27] ="17F606"
+textcolor[28] ="16FC05"
+textcolor[29] ="16FC05"
+textcolor[30] ="16FC05"
+
+
+var message = new Array()
+message[0]="Welcome Welcome Welcome Welcome"
+message[1]="Dobrodosli Dobrodosli Dobrodosli Dobrodosli"
+
+
+
+function morecolor() {		
+	if (i_color <= textcolor.length-1) {
+		if(document.all) {
+			zoomer.innerHTML="<span style='font-family:"+textfont+";font-size:"+thissize+"px;color:"+textcolor[i_color]+"'>"+message[i_message]+"</span>"
+		}
+	
+		if(document.layers) {
+			document.zoomer.document.write("<span style='font-family:"+textfont+";font-size:"+thissize+"px;color:"+textcolor[i_color]+"'>"+message[i_message]+"</span>")
+			document.close()
+		}
+		i_color++
+		var timer=setTimeout("morecolor()",50)
+	}
+	else {
+		i_color--
+		clearTimeout(timer)
+		var intermezzo=setTimeout("lesscolor()",1000)
+	}
+}
+
+function lesscolor() {	
+	if (i_color >= 0) {
+		if(document.all) {
+			zoomer.innerHTML="<span style='font-family:"+textfont+";font-size:"+thissize+"px;color:"+textcolor[i_color]+"'>"+message[i_message]+"</span>"
+		}
+	
+		if(document.layers) {
+			document.zoomer.document.write("<span style='font-family:"+textfont+";font-size:"+thissize+"px;color:"+textcolor[i_color]+"'>"+message[i_message]+"</span>")
+			document.close()
+		}
+		
+		i_color--
+		var timer=setTimeout("lesscolor()",50)
+	}
+	else {
+		i_message++
+		if (i_message >= message.length) {i_message=0}
+		i_color=0
+		clearTimeout(timer)																				
+		var intermezzo=setTimeout("morecolor()",1000)
+	}
+}
+
+// - End of JavaScript - -->
+</script>
+
+
+
+
+
+
+</head>
+
+<body bgcolor="#000000" text="#ffffff" onLoad="morecolor()" link="#00FFFF" vlink="#00FFFF" alink="#00FFFF">
+<div align="center" valign="top"> 
+
+
+  <table width="600" border="1" cellpadding="0"  background="Bilder/BiHsida/traka1.gif" height="92" align="center">
+    <div align="center" valign="top">
+      <div id="zoomer" style="top:52px;left=14% ; width: 600; height: 19px"></div></div>
+
+<!----begin----->
+<script language="JavaScript">
+<!-- Script added by Chille // -->
+<!--
+function snapIn(jumpSpaces,position) {
+  var msg = "start" 
+  var out = ""
+  if (killScroll) {return false}
+  for (var goc=0; goc<position; goc++)
+    {out += msg.charAt(goc)}
+  for (goc=1;goc<jumpSpaces;goc++)
+    {out += " "}
+  out += msg.charAt(position)
+  window.status = out
+  if (jumpSpaces <= 1) {
+    position++
+    if (msg.charAt(position) == ' ')
+      {position++ }
+    jumpSpaces = 100-position
+  } else if (jumpSpaces >  3)
+       {jumpSpaces *= .75}
+  else
+    {jumpSpaces--}
+  if (position != msg.length) {
+    var cmd = "snapIn(" + jumpSpaces + "," + position + ")";
+    scrollID = window.setTimeout(cmd,5);
+  } else {
+    scrolling = false
+    return false
+  }
+  return true
+}
+function snapSetup() {
+ if (scrolling)
+  if (!confirm('Re-initialize snapIn?'))
+   return false
+   killScroll = true
+   scrolling = true
+   var killID = window.setTimeout('killScroll=false',6)
+   scrollID = window.setTimeout('snapIn(100,0)',10)
+   return true
+}
+var scrollID = Object
+var scrolling = false
+var killScroll = false
+// -->
+</script>
+<! -----kraj --- >
+
+
+
+
+<tr >
+<td ><Center><marquee bgcolor="#1A339A" width="600px" border=3 style="font-family: Verdana, Arial; color:rgb(255,255,255); font-weight: bold: italic: font-size: smaller" scrollamount="4"><B>PRIJEDOR 
+                je moj rodni grad i dio mene ce uvijek ostati u njemu.Ja ga nikada 
+                necu niti mogu zaboraviti, kao sto nitko ne moze zaboraviti svoj.<i>&nbsp;&nbsp;&nbsp;Sefik 
+                Ceric...&nbsp;&nbsp;&nbsp;ALISICI &nbsp; BISCANI &nbsp; BRDJANI &nbsp; BREZICANI &nbsp; BRISEVO &nbsp; CARAKOVO &nbsp; CEJRECI &nbsp; CELA &nbsp; GOMJENICA &nbsp; GORNJA PUHARSKA &nbsp; HAMBARINE &nbsp; HRNICI &nbsp; KAMICANI &nbsp; KEVLJANI &nbsp; KOZARAC &nbsp; KOZARUSA &nbsp; LJUBIJA &nbsp; MILJAKOVCI &nbsp; RIZVANOVICI &nbsp; SURKOVAC &nbsp; STARI GRAD &nbsp; URIJE &nbsp; TRNOPOLJE &nbsp; ZECOVI &nbsp</B></marquee></Center></td></tr>
+
+
+
+
+    <tr > 
+      <td valign="top">&nbsp;</td>
+    </tr>
+  </table>
+
+  <table width="600" border="0" cellpadding="0" height="337" align="center">
+    <tr> 
+      <td width="185"> 
+        <div align="center"> 
+          <table width="55%" border="0" cellpadding="0" align="left">
+            <tr> 
+              <td>&nbsp;</td>
+            </tr>
+            <tr> 
+              <td><a href="BiHGradovi.html" onClick="NewWindow2(this.href,'name2','400','400','yes');return false;"><img src="Bilder/BiHsida/BIHhttp.gif" width="102" height="104" align="left"></a></td>
+            </tr>
+            <tr> 
+              <td>&nbsp;</td>
+            </tr>
+            <tr> 
+              <td> <a href="BiHLinkovi.html" onclick="NewWindow3(this.href,'name3','400','400','yes');return false;"><img src="Bilder/BiHsida/BIHhttpLink.gif" width="102" height="104" align="left"></a></td>
+            </tr>
+          </table>
+        </div>
+      </td>
+      <td width="212" align="center" valign="middle"> 
+        <table width="95%" border="0" cellpadding="0" height="280" align="left">
+          <tr> 
+            <td> 
+              <p align="center"><h><b><i><font face="Arial, Helvetica, sans-serif" size="2">KOLIKA 
+                JE U PR'JEDORU CARSIJA</font></i> </b></h></p>
+              <p align="center"> <font face="Arial, Helvetica, sans-serif" size="2"><i>Kolika 
+                je u Pr'jedoru carsija, jos je veca u mog babe avlija! Po njoj 
+                sece lijepa Djula majcina, u ruci joj zlatna casa serbeta. "Daj 
+                mi Djulo zlatnu casu serbeta, ja cu tebi zlatan prsten s imenom! 
+                Neka znada sva pr'jedorska carsija, da te ljubim lijepa Djulo 
+                majcina!" </i></font></p>
+            </td>
+          </tr>
+        </table>
+        <p align="center"><h></h></p>
+      </td>
+      <td width="273"> 
+        <table width="75%" border="0" cellpadding="0" height="280" align="right">
+          <tr> 
+            <td> 
+              <p align="center"><h><b><i><font face="Arial, Helvetica, sans-serif" size="2">BOLUJE 
+                HANKA <BR>
+                PRIJEDORKA</font></i></b></h></p>
+              <p align="center"> <font face="Arial, Helvetica, sans-serif" size="2"><i>Boluje 
+                Hanka Prijedorka, na krilu kara-Zaima: "Zaime, bolan Zaime, ti 
+                prodaj selo Krnete! Kupi mi, bolan, Zaime, kupi mi saren-kocije, 
+                upregni konja zekana! Vodi me, bolan, Zaime, vodi me ravnom Pr’jedoru. 
+                Vodi me Zajko, ljubi me, za svoju ljubu uzmi me!" </i></font></p>
+            </td>
+          </tr>
+        </table>
+        <p align="center"><h></h></p>
+      </td>
+    </tr>
+  </table>
+</div>
+ <center>
+  <Hr width="600" align="center">
+  <table width="600" border="0" cellpadding="0" height="158" background="Bilder/BiHsida/traka2.gif" align="center">
+    <tr>
+      <td width="207"> 
+        <table width="63%" border="0" cellpadding="0" height="100%" align="left">
+          <tr>
+            <td><a href="http://www.bhdani.com/" target="mainFrame"
+   onMouseOver="document.image1.src='Bilder/BiHsida/kn_bih_dani1.gif'"
+   onMouseOut="document.image1.src='Bilder/BiHsida/kn_bih_dani.gif'">
+   <img src="Bilder/BiHsida/kn_bih_dani.gif" width="123" height="28" border="1" alt="BiH Dani" name="image1">
+
+  </a>
+
+</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.go.to/bhmedia" target="mainFrame" 
+   onMouseOver="document.image2.src='Bilder/BiHsida/kn_bih_medija1.gif'"
+   onMouseOut="document.image2.src='Bilder/BiHsida/kn_bih_medija.gif'"><img src="Bilder/BiHsida/kn_bih_medija.gif" width="123" height="28" border="1" alt="BiH Medija" name="image2"></a></td>
+          </tr>
+          <tr>
+            <td><a href="http://www.oslobodjenje.com.ba/" target="mainFrame"       onMouseOver="document.image3.src='Bilder/BiHsida/kn_oslobodzenje1.gif'"
+   onMouseOut="document.image3.src='Bilder/BiHsida/kn_oslobodzenje.gif'"><img src="Bilder/BiHsida/kn_oslobodzenje.gif" width="123" height="28" border="1" alt="Oslobodzenje" name="image3"></a></td>
+          </tr>
+        </table>
+      </td>
+      <td width="243"> 
+        <table width="52%" border="0" cellpadding="0" align="center" height="100%">
+          <tr>
+            <td><a href="http://www.prijedor.ba/bosanski/index.html" target="mainFrame"            onMouseOver="document.image4.src='Bilder/BiHsida/kn_prijedor_ba1.gif'"
+   onMouseOut="document.image4.src='Bilder/BiHsida/kn_prijedor_ba.gif'"><img src="Bilder/BiHsida/kn_prijedor_ba.gif" width="123" height="28" border="1" alt="www.prijedor.ba" name="image4"></a></td>
+          </tr>
+          <tr>
+            <td><a href="http://www.kozarac.com" target="mainFrame"       onMouseOver="document.image5.src='Bilder/BiHsida/kn_kozarac_com1.gif'"
+   onMouseOut="document.image5.src='Bilder/BiHsida/kn_kozarac_com.gif'"><img src="Bilder/BiHsida/kn_kozarac_com.gif" width="123" height="28" border="1" alt="www.kozarac.com" name="image5"></a></td>
+          </tr>
+          <tr>
+            <td><a href="http://www.ljubija.f2s.com" target="mainFrame"    onMouseOver="document.image6.src='Bilder/BiHsida/kn_ljubija_com1.gif'"
+   onMouseOut="document.image6.src='Bilder/BiHsida/kn_ljubija_com.gif'"><img src="Bilder/BiHsida/kn_ljubija_com.gif" width="123" height="28" border="1" alt="www.ljubija.com" name="image6"></a></td>
+          </tr>
+        </table>
+      </td>
+      <td width="219"> 
+        <table width="58%" border="0" cellpadding="0" align="right" height="100%">
+          <tr>
+            <td><a href="http://www3.ewebcity.com/bospos/" target="mainFrame"    onMouseOver="document.image7.src='Bilder/BiHsida/kn_bosanska_posta1.gif'"
+   onMouseOut="document.image7.src='Bilder/BiHsida/kn_bosanska_posta.gif'"><img src="Bilder/BiHsida/kn_bosanska_posta.gif" width="123" height="28" border="1" alt="Bosanska Posta" name="image7"></a></td>
+          </tr>
+          <tr>
+            <td><a href="http://www.novoogledalo.com.ba/" target="mainFrame"    onMouseOver="document.image8.src='Bilder/BiHsida/kn_novo_ogledalo1.gif'"
+   onMouseOut="document.image8.src='Bilder/BiHsida/kn_novo_ogledalo.gif'"><img src="Bilder/BiHsida/kn_novo_ogledalo.gif" width="123" height="28" border="1" alt="Novo Ogledalo" name="image8"></a></td>
+          </tr>
+          <tr>
+            <td><a href="http://www.slobodna-bosna.ba/default.asp/" target="mainFrame"       onMouseOver="document.image9.src='Bilder/BiHsida/kn_slobodna_bosna1.gif'"
+   onMouseOut="document.image9.src='Bilder/BiHsida/kn_slobodna_bosna.gif'"><img src="Bilder/BiHsida/kn_slobodna_bosna.gif" width="123" height="28" border="1" alt="Slobodna Posta" name="image9"></a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <hr width="600" align="center">
+  <table width="600" border="1" cellpadding="0" height="88" bordercolor="#666666" align="center">
+    <tr> 
+      <td height="92"> 
+        <p><font face="Arial, Helvetica, sans-serif" size="2">Ako zelite da saznate 
+          kakvo je vrijeme u Prijedoru ili vremensku prognozu za prijedorsku regiju,<br>
+          <a href="http://www.mediaproline.net/vrijeme/index.htm" target="mainFrame"><b>udjite 
+          ovdje</b></a><b>.</b> Sto se tice naseg najtiraznijeg dnevnog lista 
+          <a href="http://www.avaz.ba/" target="mainFrame"><b> &quot; Dnevni Avaz 
+          &quot;</b></a> . Ja nisam ponekad mogao da udzem na njihov homepage 
+          iz meni do sada nepoznatih razloga ali ipak ako ste znatizeljni <b>mozete 
+          pokusati</b>.</font></p>
+      </td>
+    </tr>
+  </table>
+  <hr width="600" align="center">
+  <table width="600" border="2" cellpadding="0" height="127" align="center">
+    <tr>
+      <td width="130" background="Bilder/BiHsida/foto1.gif" align="center" height="98"> 
+        <Center>
+          <input type="button" value="Enter Here" style="BACKGROUND-COLOR: rgb(255,0,0); COLOR: rgb(255,255,255)" onClick="gateKeeper()" name="Button"
+>
+          <script language="JavaScript">
+                <!--- Hide from tired old browsers
+                var nifty_little_window = null;
+                function gateKeeper() {
+                nifty_little_window = window.open('gatekeep.html', 'theKeeper',
+                'width=400,height=270,resizable=1');
+                }
+                // End hiding --->
+                </script>
+          <form>
+          </form></center></td>
+      <td width="456" height="98"> 
+        <table width="100%" border="1" cellpadding="0" height="100%" background="Bilder/BiHsida/traka3.gif"  >
+          <tr>
+            <td >&nbsp;</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <hr width="600" align="center">
+  <table width="600" border="0" cellpadding="0" align="center">
+    <tr>
+      <td width="392"> 
+        <p><b><font face="Arial, Helvetica, sans-serif" size="2">PRIJEDOR 1992...</font></b><font face="Arial, Helvetica, sans-serif" size="2"><br>
+          Sta bi covjek mogao da napise jos nesto u vezi onog sto se desilo u 
+          Prijedoru 1992 godine?! Ja mislim da je svima nama i svima njima poznato 
+          kao i argumentovano (materijalno i pismeno) dokazano sta se to desilo 
+          nasem Prijedoru i zasto. Ta desavanja su potakla Savjet Bezbijednosti 
+          UN da osnuje 1993. <b><a href="http://www.un.org/icty/index-b.html" target="mainFrame">Medzunarodni 
+          krivicni sud za podrucje bivse Jugoslavije u Den Hagu</a></b>. Posjetite 
+          homepage ovog suda i procitajte aktuelnosti u vezi optuznica,sudzenja,svjedocenja..</font><font face="Arial, Helvetica, sans-serif">.</font></p>
+        </td>
+      <td width="280"><img src="Bilder/BiHsida/Camp.gif" width="283" height="183"></td>
+    </tr>
+  </table>
+  <hr width="600" align="center">
+  <table width="600" border="2" cellpadding="0" height="185" background="Bilder/BiHsida/prijedor_bild.gif" align="center">
+    <tr>
+      <td height="109">&nbsp;</td>
+    </tr>
+  </table>
+  <hr width="600" align="center">
+  <p><a href="http://www.bhsavez.org/" target="mainFrame"><font size="3"><b><font size="2">BiH 
+    savez u Svedskoj</font></b></font></a><font size="2"><b> | <a href="http://www.studenti.de" target="mainFrame">BiH 
+    studenti</a> |<a href="http://www.bihgsm.com/index1.htm" target="mainFrame">BiH 
+    GSM</a></b> <b> | <a href="http://members1.chello.nl/%7Eajdin.alisic/statistika.htm" target="mainFrame">Statistika 
+    stanovnistva prijedorske opstine 1991</a></b></font></p>
+  <p><font size="2"><b> <a href="http://www.bhsport.com/" target="mainFrame">BiH 
+    sportske strane </a>| <a href="http://fudbalbih.cjb.net/" target="mainFrame">BiH 
+    nogomet</a> | <a href="http://www.astrolook.com/" target="mainFrame">Astrolook</a> 
+    | <a href="http://www.imenik.ptt.ba/" target="mainFrame">Telefonski imenik 
+    BiH</a> , <a href="http://imenik.tel.hr/imenik-asp/index.asp" target="mainFrame">Hrvatske</a> 
+    i <a href="http://tis.telekom.si/" target="mainFrame">Slovenije</a> </b></font></p>
+  <p><font size="2"><b><a href="http://www.bhsearch.com/" target="mainFrame">BiH 
+    Tragac</a> |<a href="http://kljuc.prijedor.ba/" target="mainFrame">Bosna Klub</a> 
+    | <a href="http://www.modrica.com/bihrock/" target="mainFrame">BiH Rock</a> 
+    | <a href="http://www.rtvbih.ba/" target="mainFrame">Radio Televizija BiH</a> 
+    | <a href="http://castra.net/kuhinja/" target="mainFrame">Tradicionalno Kulinarstvo 
+    u BiH</a></b></font></p>
+  <p><b><font size="2"><a href="Chat.html" target="mainFrame"><font color="#FFFFFF">Chat 
+    room! &nbsp;&nbsp;&nbsp;server: irc.dal.net &nbsp;&nbsp;&nbsp;channel: #bosnia</font></a></font></b></p>
+  <hr width="600" align="center">
+  <table width="600" border="0" cellpadding="0" align="center">
+    <tr> 
+      <td><font color="#FFFFFF"><b>&copy; Ceric </b></font></td>
+    </tr>
+  </table>
+  
+</center>
+
+</body>
+</html>

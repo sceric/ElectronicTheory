@@ -1,0 +1,40 @@
+Photoplotter Info File: C:/Program/EAGLE-4.15/projects/Conductivity/conductivity.gpi
+
+ Date              : 2007-06-28 08:09:46 
+ Plotfile          : C:/Program/EAGLE-4.15/projects/Conductivity/conductivity.sts
+ Apertures         : generated: 
+ Device            : Gerber photoplotter with RS-274-X aperture generation
+
+Parameter settings:
+
+ Emulate Apertures : no
+ Emulate Thermal   : no
+ Emulate Annulus   : no
+ Tolerance Draw  + :  0.00 %
+ Tolerance Draw  - :  0.00 %
+ Tolerance Flash + :  0.00 %
+ Tolerance Flash - :  0.00 %
+ Rotate            : no
+ Mirror            : no
+ Optimize          : yes
+ Auto fit          : yes
+ OffsetX           : 0inch
+ OffsetY           : 0inch
+
+Plotfile Info:
+
+ Coordinate Format : 2.4
+ Coordinate Units  : Inch
+ Data Mode         : Absolute
+ Zero Suppression  : None
+ End Of Block      : *
+
+Apertures used:
+
+ Code     Shape     Size                  used
+
+ D10      oval      0.0680inch x 0.1280inch    10
+ D11      round     0.0476inch               4
+ D12      round     0.0437inch               4
+ D13      round     0.0480inch               1
+

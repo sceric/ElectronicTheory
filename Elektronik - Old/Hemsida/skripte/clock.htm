@@ -1,0 +1,62 @@
+  
+
+  
+  <html>
+<head>
+<!--
+This file retrieved from the Javascript Archives
+http://javascript.js-x.com
+1000s of free ready to use scripts, tutorials, forums.
+Author: Jeffrey Nieuwenburg - http://www.bestscripts.nl
+-->
+
+
+</head>
+<body>
+<script type="text/javascript">
+// Made by Jeffrey Nieuwenburg - jeffman@dolfijn.nl
+// Check out more javascripts at http://www.bestscripts.nl
+
+for (i=0;i<60;i++){
+var angle = i * 6;
+var piangle = Math.PI - Math.PI / 180 * angle;
+var fromleft = 85 + Math.round(80 * Math.sin(piangle));
+var fromtop = 85 + Math.round(80 * Math.cos(piangle));
+document.write('<div style="position:absolute;left:'+fromleft+';top:'+fromtop+';cursor:default"><font face="Times New Roman" size="'+(i%5?3:4)+'">.<\/font><\/div>');
+if(i < 26){ // The pointers
+document.write('<div id="dot'+i+'" style="position:absolute;left:-10;top:-10;cursor:default;z-index:50"><font face="Arial" size="4">.<\/font><\/div>');
+}
+}
+
+if (!window.opera) document.write('<div id="Digi" style="position:absolute;left:57px;top:0px;width:60px;height:15px;border:1px solid #DDDDDD;font:12px Arial;cursor:default;text-align:center"><\/div>');
+function tick(){
+var now = new Date();
+var min = now.getMinutes();
+var hour = now.getHours();
+var sec = now.getSeconds();
+
+for(i=0;i<26;i++){
+var angle = (i < 10) ? Math.round(sec*6):(i<19)?Math.round(min*6):Math.round((hour*30)+((min/2)));
+var minus = (i<10)?0:(i<19)?10:19;
+var piangle = Math.PI - Math.PI / 180 * angle;
+var fromleft = 85 + Math.round(((i-minus)*8) * Math.sin(piangle));
+var fromtop = 85 + Math.round(((i-minus)*8) * Math.cos(piangle));
+with(document.getElementById("dot"+i).style){
+color = (i < 10) ? "green" : (i < 19) ? "blue" : "red";
+left = fromleft+"px";
+top = fromtop+"px";
+}
+}
+if (!window.opera) document.getElementById("Digi").innerHTML = (hour<10?"0"+hour:hour)+":"+(min<10?"0"+min:min)+":"+(sec<10?"0"+sec:sec);
+setTimeout("tick()",1000);
+}
+
+window.onload = tick;
+</script>
+<BR><center><a title='Javascript' href='http://javascript.js-x.com'>javascript.js-x.com</a></center> 
+</body>
+</html>
+ 
+ 
+
+© 2005 JS-X.com All rights Reserved | User Agreement | Privacy Policy 

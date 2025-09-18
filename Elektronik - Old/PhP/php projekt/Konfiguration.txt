@@ -1,0 +1,11 @@
+
+1. Installera Appache server från fil "apache_2.2.4-win32-x86-no_ssl"
+
+	-Network Domain: localhost
+	-Server Name: localhost
+	-Administrators Email: admin@localhost.com
+	- Aktivera : for Alla Users
+
+	-Testa:
+		Oppna Explorer: knappa http://localhost eller
+				       http://127.0.0.1

@@ -1,0 +1,11 @@
+
+20070525, Hörby
+
+Den variant av schema är skickat till Gambro (Inge Sjöholm) 20070524.
+Avkopplings konduktans har lagt in enligt tillverkarens rekomendation.
+
+Tillverkarens rekomendation:
+Titta på dokument "NS9360 - Design rules - 061305 [1].pdf" i mapen:
+"L:\sefik\Projekt\wro600\NS9360 - Documentation från tillverkare"
+
+MVH/Sefik

@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>CERIC-PRIJEDOR FOR EVER</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<!---ZASTITA---DESNO DUGME JOK BA --->
+
+<script language="Javascript1.2">
+
+// (C) 2000 www.CodeLifter.com
+// http://www.codelifter.com
+// Free for all users, but leave in this  header
+
+// Set the message for the alert box
+am = "POKUSAJ SA LIJEVIM DUGMETOM!!!! ";
+
+// do not edit below this line
+// ===========================
+bV  = parseInt(navigator.appVersion)
+bNS = navigator.appName=="Netscape"
+bIE = navigator.appName=="Microsoft Internet Explorer"
+
+function nrc(e) {
+   if (bNS && e.which > 1){
+      alert(am)
+      return false
+   } else if (bIE && (event.button >1)) {
+     alert(am)
+     return false;
+   }
+}
+
+document.onmousedown = nrc;
+if (document.layers) window.captureEvents(Event.MOUSEDOWN);
+if (bNS && bV<5) window.onmousedown = nrc;
+
+</script>
+
+
+
+
+
+<!--- SKRIPTA ZA POPUP-VISITOR-------->
+<script>
+
+
+var tistoolbar="no"
+var tislocation="no"
+var tisdirectories="no"
+var tisstatus="no"
+var tismenubar="no"
+var tisscrollbars="no"
+var tisresizable="no"
+var tisurl="popupwindow.html"
+var tiswidth="200"
+var tisheight="160"
+var tisdirection="vertiright"
+
+</script>
+
+<script src="utilpopupfly2.js"></script>
+
+
+
+
+</head>
+
+<body text="#FFFFFF" background="Bilder/popup/bg_pop.gif">
+<table width="500" border="4" cellpadding="0" height="125" align="left" cellspacing="4" bordercolor="#999999">
+  <tr>
+    <td><img src="Bilder/popup/prijedor.gif" width="500" height="125"></td>
+  </tr>
+</table>
+</body>
+</html>

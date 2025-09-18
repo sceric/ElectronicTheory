@@ -1,0 +1,238 @@
+
+<HTML><HEAD><TITLE>Sefik Ceric</TITLE>
+<META NAME="Title" CONTENT="Sefik Ceric">
+<META NAME="Revisit" CONTENT="After 7 days">
+<META NAME="Keywords" CONTENT="webbsida, sefik ceric, sefik, ceric, prijedor, puharska, gornja puharska, hambarine, kozarac, cejreci, miljakovci, omarska, keraterm, 1992, universitet, fakultet, e-mail, mladost, prijatelji, linkovi, vijesti, znanost, bosna, hercegovina, bosna i hercegovina, elektrotehnika, kompjuteri, komponente">
+<META NAME="Description" CONTENT="Jedna HOMPAGE koji je uradzen na bazi likova... Autor ovog hompage je SEFIK CERIC.">
+<STYLE type="text/css">
+<!--
+BODY {
+scrollbar-face-color:#0000FF;
+scrollbar-highlight-color:#C0C0C0;
+scrollbar-3dlight-color:#C0C0C0;
+scrollbar-darkshadow-color:#000000;
+scrollbar-shadow-color:#00FF00;
+scrollbar-arrow-color:#FFFF80;
+scrollbar-track-color:#000000;
+}
+-->
+</STYLE>
+
+
+
+<!--ime i prezime-->
+
+
+<STYLE>.spanstyle {
+	COLOR: #00FFFF; FONT-FAMILY: Verdana; FONT-SIZE: 10pt; FONT-WEIGHT: bold; POSITION: absolute; TOP: -50px; VISIBILITY: visible
+}
+</STYLE>
+
+
+<script>
+var x,y
+var step=20
+var flag=0
+
+// Your snappy message. Important: the space at the end of the sentence!!!
+var message="Sefik Ceric "
+message=message.split("")
+
+var xpos=new Array()
+for (i=0;i<=message.length-1;i++) {
+	xpos[i]=-50
+}
+
+var ypos=new Array()
+for (i=0;i<=message.length-1;i++) {
+	ypos[i]=-50
+}
+
+function handlerMM(e){
+	x = (document.layers) ? e.pageX : document.body.scrollLeft+event.clientX
+	y = (document.layers) ? e.pageY : document.body.scrollTop+event.clientY
+	flag=1
+}
+
+function makesnake()
+        
+        {
+	if (flag==1 && document.all) {
+    	for (i=message.length-1; i>=1; i--) {
+   			xpos[i]=xpos[i-1]+step
+			ypos[i]=ypos[i-1]
+    	}
+		xpos[0]=x+step
+		ypos[0]=y
+	
+		for (i=0; i<message.length-1; i++) {
+    		var thisspan = eval("span"+(i)+".style")
+    		thisspan.posLeft=xpos[i]
+			thisspan.posTop=ypos[i]
+    	}
+	}
+	
+	else if (flag==1 && document.layers) {
+    	for (i=message.length-1; i>=1; i--) {
+   			xpos[i]=xpos[i-1]+step
+			ypos[i]=ypos[i-1]
+    	}
+		xpos[0]=x+step
+		ypos[0]=y
+	
+		for (i=0; i<message.length-1; i++) {
+    		var thisspan = eval("document.span"+i)
+    		thisspan.left=xpos[i]
+			thisspan.top=ypos[i]
+    	}
+	}
+		var timer=setTimeout("makesnake()",30)
+}
+
+</SCRIPT>
+
+</HEAD>
+
+
+
+
+
+
+
+
+
+
+
+
+<BODY  aLink=#00bcde onload=makesnake() 
+style="OVERFLOW-X: hidden; OVERFLOW-Y: scroll; WIDTH: 100%" text=#ffffff 
+vLink=red bgcolor="#000000"  scrolling="NO">
+
+
+<table width="426" border="0" cellpadding="0" align="center" height="100%">
+  <tr>
+    <td height="65"><!--Meny-->
+        <script language="JavaScript">
+<!--
+
+function TripodShowPopup() 
+{
+   var bName=navigator.appName;
+   var bVer=parseInt(navigator.appVersion);
+   var now = new Date();
+   var popupURL = "PopUp.html";
+   var popupName = "TripodPopup";
+
+   if (bName=="Netscape" && bVer<=3) 
+   {
+      var popup = window.open("", popupName,'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,width=500,height=198,top=0,left=0');
+   } 
+   else 
+   {
+      var popup = window.open("", popupName,'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,width=540,height=170,top=0,left=0');
+   }
+   popup.location = popupURL;
+}
+
+if(window.parent==window)
+{
+   TripodShowPopup();
+}
+
+// -->
+</script>
+        <script language="JavaScript1.2">
+<!--
+
+function changeOpenFunction()
+{
+   var original_window_open = window.open;
+   function new_open_function(url, name, features, replace)
+   {
+      if(name != "TripodPopup")
+         return original_window_open(url, name, features, replace);
+   }
+   window.open = new_open_function;
+}
+var bName = navigator.appName;
+
+if(bName != "Netscape")
+   changeOpenFunction();
+
+// -->
+</script>
+        <!--End inserted JavaScript code.-->
+      
+
+
+
+
+
+
+
+ 
+      &nbsp;&nbsp;&nbsp;<!--IME-->
+      <script>
+<!-- Beginning of JavaScript -
+
+for (i=0;i<=message.length-1;i++) {
+    document.write("<span id='span"+i+"' class='spanstyle'>")
+	document.write(message[i])
+    document.write("</span>")
+}
+
+if (document.layers){
+	document.captureEvents(Event.MOUSEMOVE);
+}
+document.onmousemove = handlerMM;
+
+// - End of JavaScript - -->
+
+
+</script>
+      <font color="#03A7FC"><b><font color="#FFD89F" size="6"> 
+      <!--pozdrav posjetiocu-->
+      <script language="JavaScript">
+      <!-- Begin
+       datetoday = new Date();
+       timenow=datetoday.getTime();
+       datetoday.setTime(timenow);
+       thehour = datetoday.getHours();
+       if (thehour > 18) display = "Evening";
+       else if (thehour >12) display = "Afternoon";
+       else display = "Morning";
+       var greeting = ("Good " + display + "!");
+       document.write(greeting);
+
+        
+       //  End -->
+       </script>
+      </font><font color="#03A7FC"><b><font color="#FFD89F" size="2"> 
+      <script language = "JavaScript">
+<!--
+
+// Sträng med veckodagarna
+
+var dayNames = new Array("Söndag","Måndag","Tisdag","Onsdag","Torsdag","Fredag","Lördag");
+
+var monthNames = new Array("januari","februari","mars","april","maj","juni","juli","augusti","september","oktober","november","december");
+
+var dt = new Date();
+
+var y = dt.getYear();
+
+// Y2K compliant
+
+if (y < 1000) y +=1900; 
+document.write(dayNames[dt.getDay()] + ", " + monthNames[dt.getMonth()] + " " + dt.getDate() + ", " + y);
+
+// -->
+
+</script>
+      </font></b></font></b></font> 
+      <p><font color="#03A7FC"><b><font color="#FFD89F" size="2"><a href="Index_A.html"><img src="Bilder/Index/blue1.gif"  border="0" width="400" height="300" align="middle"></a> 
+        </font></b></font></p>
+    </td>
+  </tr>
+</table>
+</BODY></HTML>

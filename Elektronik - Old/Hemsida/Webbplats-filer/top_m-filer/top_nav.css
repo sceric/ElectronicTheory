@@ -1,0 +1,15 @@
+A {
+	FONT-SIZE: 11px; COLOR: #003366; LINE-HEIGHT: 120%; FONT-FAMILY: verdana, arial; LETTER-SPACING: 1px; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-SIZE: 11px; COLOR: #003366; LINE-HEIGHT: 120%; FONT-FAMILY: verdana, arial; LETTER-SPACING: 1px; TEXT-DECORATION: underline
+}
+A:visited {
+	FONT-SIZE: 11px; COLOR: #003366; LINE-HEIGHT: 120%; FONT-FAMILY: verdana, arial; LETTER-SPACING: 1px; TEXT-DECORATION: none
+}
+.sokknapp {
+	BORDER-RIGHT: #333333 1px solid; BORDER-TOP: #333333 1px solid; FONT-WEIGHT: normal; FONT-SIZE: 10px; BORDER-LEFT: #333333 1px solid; BORDER-BOTTOM: #333333 1px solid; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+INPUT.sok {
+	BORDER-RIGHT: #333333 1px solid; BORDER-TOP: #333333 1px solid; FONT-SIZE: 11px; MARGIN-LEFT: 10px; BORDER-LEFT: #333333 1px solid; WIDTH: 125px; BORDER-BOTTOM: #333333 1px solid; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}

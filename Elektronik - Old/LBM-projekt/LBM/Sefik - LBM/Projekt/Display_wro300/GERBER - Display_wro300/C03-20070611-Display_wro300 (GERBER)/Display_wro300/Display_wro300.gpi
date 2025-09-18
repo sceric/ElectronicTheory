@@ -1,0 +1,71 @@
+Photoplotter Info File: C:/Program/EAGLE-4.15/projects/C03-20070611-Display_wro300/Display_wro300.gpi
+
+ Date              : 2007-06-27 11:45:48 
+ Plotfile          : C:/Program/EAGLE-4.15/projects/C03-20070611-Display_wro300/Display_wro300.sts
+ Apertures         : generated: 
+ Device            : Gerber photoplotter with RS-274-X aperture generation
+
+Parameter settings:
+
+ Emulate Apertures : no
+ Emulate Thermal   : no
+ Emulate Annulus   : no
+ Tolerance Draw  + :  0.00 %
+ Tolerance Draw  - :  0.00 %
+ Tolerance Flash + :  0.00 %
+ Tolerance Flash - :  0.00 %
+ Rotate            : no
+ Mirror            : no
+ Optimize          : yes
+ Auto fit          : yes
+ OffsetX           : 0inch
+ OffsetY           : 0inch
+
+Plotfile Info:
+
+ Coordinate Format : 2.4
+ Coordinate Units  : Inch
+ Data Mode         : Absolute
+ Zero Suppression  : None
+ End Of Block      : *
+
+Emulated Apertures:
+
+ -------- Requested Aperture --------  ------ Used Aperture ------
+
+ Shape     Size                  used  Code     Shape     Size
+
+ oval      0.1280inch x 0.0680inch     4  D24      draw      0.0136inch
+
+Apertures used:
+
+ Code     Shape     Size                  used
+
+ D10      round     0.1064inch               2
+ D11      rectangle 0.0277inch x 0.0671inch    22
+ D12      rectangle 0.0671inch x 0.0277inch    22
+ D13      rectangle 0.0880inch x 0.0340inch    16
+ D14      rectangle 0.0710inch x 0.0592inch    60
+ D15      rectangle 0.0592inch x 0.0710inch    26
+ D16      round     0.0680inch               1
+ D17      octagon   0.0680inch               5
+ D18      rectangle 0.0710inch x 0.1143inch     2
+ D19      rectangle 0.0631inch x 0.1576inch     2
+ D20      rectangle 0.0631inch x 0.1261inch     4
+ D21      square    0.1025inch               2
+ D22      octagon   0.0930inch               4
+ D23      rectangle 0.0631inch x 0.0474inch     3
+ D24      draw      0.0136inch               4
+ D25      rectangle 0.0474inch x 0.0631inch     9
+ D26      rectangle 0.0474inch x 0.0867inch     8
+ D27      rectangle 0.0552inch x 0.0316inch     5
+ D28      draw      0.0158inch               8
+ D29      rectangle 0.0474inch x 0.0671inch     2
+ D30      rectangle 0.0946inch x 0.0631inch     4
+ D31      rectangle 0.0316inch x 0.0671inch    28
+ D32      rectangle 0.0395inch x 0.0671inch     4
+ D33      round     0.0474inch               4
+ D34      rectangle 0.0946inch x 0.0316inch    14
+ D35      round     0.0476inch             131
+ D36      round     0.0440inch               1
+

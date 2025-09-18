@@ -1,0 +1,62 @@
+<SCRIPT LANGUAGE="JavaScript">
+	
+<!-- Original:  David Sosnowski (support@codebelly.com) -->
+<!-- Web Site:  http://www.codebelly.com -->
+
+<!-- Begin
+var message = new Array();
+// Set your messages below -- follow the pattern.
+// To add more messages, just add more elements to the array.
+message[0] = "JavaFile.com";
+message[1] = "Free JavaScripts";
+message[2] = "ALL Free";
+message[3] = "For Your Picking";
+message[4] = "Add as many messages as you want";
+message[5] = "IE and NN6";
+message[6] = "";
+
+// Set the number of repetitions (how many times the arrow
+// cycle repeats with each message).
+var reps = 2;
+var speed = 200;  // Set the overall speed (larger number = slower action).
+
+// DO NOT EDIT BELOW THIS LINE.
+var p = message.length;
+var T = "";
+var C = 0;
+var mC = 0;
+var s = 0;
+var sT = null;
+if (reps < 1) reps = 1;
+function doTheThing() {
+T = message[mC];
+A();
+}
+function A() {
+s++;
+if (s > 8) { s = 1;}
+// you can fiddle with the patterns here...
+if (s == 1) { document.title = '||||||====||| '+T+' -----'; }
+if (s == 2) { document.title = '|||=|||===||| '+T+' -----'; }
+if (s == 3) { document.title = '|||==|||==||| '+T+' -----'; }
+if (s == 4) { document.title = '|||===|||=||| '+T+' -----'; }
+if (s == 5) { document.title = '|||====|||||| '+T+' -----'; }
+if (s == 6) { document.title = '|||===|||=||| '+T+' -----'; }
+if (s == 7) { document.title = '|||==|||==||| '+T+' -----'; }
+if (s == 8) { document.title = '|||=|||===||| '+T+' -----'; }
+if (C < (8 * reps)) {
+sT = setTimeout("A()", speed);
+C++;
+}
+else {
+C = 0;
+s = 0;
+mC++;
+if(mC > p - 1) mC = 0;
+sT = null;
+doTheThing();
+   }
+}
+doTheThing();
+//  End -->
+</script>

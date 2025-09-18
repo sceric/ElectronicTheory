@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>Bilder</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#000000" text="#FFFFFF" link="#00FFFF" vlink="#00FFFF" alink="#00FFFF">
+<table width="600" border="0" cellpadding="0" align="center" height="180">
+  <tr>
+    <td width="311">
+<script language="javascript">
+<!--
+
+// Alien Alchemy Javascript Picture Gallery
+// http://alienalchemy.com
+
+// Create all your images as *.gif files or *.jpg files
+// and crop them all to the same width and height
+// then set these variables below:
+
+$IMAGE_PREFIX = "image";
+$IMAGE_SUFFIX = ".jpg";
+$IMAGE_WIDTH = 300;
+$IMAGE_HEIGHT = 200;
+$TOTAL_IMAGES = 10;
+$PATH_TO_IMAGES = "";
+
+// ::::::::::::::::::::::::: Do not edit below this line
+
+$CURRENT_IMAGE = 1;
+
+function nextImage(){
+	if(document.images){
+		if($CURRENT_IMAGE + 1 <= $TOTAL_IMAGES){
+			$CURRENT_IMAGE++;
+		}else{
+			$CURRENT_IMAGE = 1;
+		}
+		document.images.gallerypic.src=$PATH_TO_IMAGES+$IMAGE_PREFIX+$CURRENT_IMAGE+$IMAGE_SUFFIX;
+	}
+}
+
+function backImage(){
+	if(document.images){
+		if($CURRENT_IMAGE - 1 != 0){
+			$CURRENT_IMAGE--;
+		}else{
+			$CURRENT_IMAGE = $TOTAL_IMAGES;
+		}
+		document.images.gallerypic.src=$PATH_TO_IMAGES+$IMAGE_PREFIX+$CURRENT_IMAGE+$IMAGE_SUFFIX;
+	}
+}
+
+document.writeln("<img border='0' src='"+$PATH_TO_IMAGES+$IMAGE_PREFIX+1+$IMAGE_SUFFIX+"' width="+$IMAGE_WIDTH+" height="+$IMAGE_HEIGHT+" name='gallerypic'>");
+document.writeln("<p>[ <a href='javascript:backImage();'>Back</a> | <a href='javascript:nextImage();'>Next</a> ]</p>");
+
+// -->
+</script></td>
+    <TD width="283">
+      <table width="100%" border="0" cellpadding="0" height="173%">
+        <tr>
+          <td><font size="2" face="Arial, Helvetica, sans-serif">Neznam zaista 
+            sta bi ovdje mogao napisati u vezi slika sem da sam stavio par slika 
+            eto cisto radi nekakvog reda.Inace slike sam poredao onako redoslijedom.po 
+            starosti tako da su zadnje slike ustvari zadnje koje su i slikane.</font></td>
+        </tr>
+        <tr>
+          <td>
+   

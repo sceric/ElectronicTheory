@@ -1,0 +1,39 @@
+
+20070611
+
+BOM lista C01-20070611-Dispolay_wro300.xl med komponent datablad, 
+Schema C03-20070611-Display_wro300 som ligger i mapp "Eagle CAD - dISPLAY_WRO300"
+har skickat till Anette Lilja (anette.lilja@gambro.com)
+(återkomer med datablad till connector FPC28V, P1)
+
+
+20070613
+
+Datablad till connector FPC28V, P1 har skickat till Anette Lilja
+
+
+20070619
+
+Sycklista som laddes i databas (Unit_components)
+C02-20070619-Display_ wro300 och fick nummer 14000007
+
+20070621
+
+C03-20070611-Display_wro300 (Eagle CAD)
+har registreras i databas under nummer 1000 0011
+
+20070627
+
+C04-20070627-Display_wro300 (Eagle CAD), har lagt in tespunkterna i schema,
+Layout har inte korigerat så testpunkterna skall sättas på plac i layout.
+
+C03-20070611-Display_wro300 (GERBER) ska skickas till Lars Olsson ( pga krävs dimension
+till kretskort
+
+20070628
+
+Isället MAX323A (Vcc=+5V) kommer att användas ST3232CD (Vcc=+3,3V). Resistor R18,2k2
+utgår. HT1 och HT2 bytter namn till SP1 och SP2
+Titta i BOM stycklista:C03-20070628-Display_ wro300.
+
+Schema och layout med ändrigar uppdateras och registrerades om:C04-20070627-Display_wro300 (Eagle CAD)
