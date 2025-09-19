@@ -1,0 +1,16 @@
+labb4a
+H:\Datorteknik-Labb4\labb4a\
+Objects\
+1
+H:\Datorteknik-Labb4\labb4a\ass4a.s
+0
+0
+1
+minic
+0
+0
+0
+0
+1
+objcopy.exe -O srec labb4a.out labb4a.srec
+80020000 start

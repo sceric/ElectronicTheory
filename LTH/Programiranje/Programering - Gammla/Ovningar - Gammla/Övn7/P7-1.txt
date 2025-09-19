@@ -1,0 +1,130 @@
+
+
+
+RandomGenerator rng = new RandomGenerator();
+SimpleWindow w = new SimpleWindow (600,600);
+
+Turtle t1 = new Turtle(w, 250,250);
+Turtle t1 = new Turtle(w, 250,250);
+
+Clock clock = new Clock();
+
+  while(avst>50){
+
+    slumtal=rng.randInt(1,5);
+    slumtalsvinkel=rng.randInt(-179,180);
+    t1.penDown();                        //t1.penDown kan vi också flita utanför while sats
+    t1.forward(slumtal);
+    t1.left(slumtalsvinkel);
+    x1=t1.getX();
+    y1=t1.getY();
+
+    t2.penDown();                         //t2.penDown kan vi också flita utanför while sats
+    t2.forward(slumtal);
+    t2.left(slumtalsvinkel);
+    x2=t2.getX();
+    y2=t2.getY();
+    
+    clock.pause(10);
+
+    //att beräkna avståndet mellan de två skölpador
+
+   a = x1-x2;
+   b = y1-y2;
+
+   x = Math.pow(a,2);
+   y = Math.pow(b,2);
+   
+   avst= Math.sgrt(x+y);
+
+  
+ }
+
+
+ ETT FÖRSLAG TILL:
+
+RandomGenerator rng = new RandomGenerator();
+SimpleWindow w = new SimpleWindow (600,600);
+
+Turtle t1 = new Turtle(w, 250,250);
+Turtle t1 = new Turtle(w, 250,250);
+
+Clock clock = new Clock();
+
+t1.penDown();
+t2.penDown(); 
+
+
+ do{
+
+   slumtal=rng.randInt(1,5);
+   slumtalsvinkel=rng.randInt(-179,180);
+                  
+    t1.forward(slumtal);
+    t1.left(slumtalsvinkel);
+    x1=t1.getX();
+    y1=t1.getY();
+
+    t2.forward(slumtal);
+    t2.left(slumtalsvinkel);
+    x2=t2.getX();
+    y2=t2.getY();
+
+    clock.pause(10);
+ 
+    //att beräkna avståndet mellan de två skölpador
+
+   a = x1-x2;
+   b = y1-y2;
+
+   x = Math.pow(a,2);
+   y = Math.pow(b,2);
+   
+   avst= Math.sgrt(x+y);
+
+   }while(avst>50);
+
+     
+
+ FÖRSLAG TILL:
+
+RandomGenerator rng = new RandomGenerator();
+SimpleWindow w = new SimpleWindow (600,600);
+
+Turtle t1 = new Turtle(w, 250,250);
+Turtle t1 = new Turtle(w, 250,250);
+
+Clock clock = new Clock();
+
+t1.penDown();
+t2.penDown(); 
+
+
+ do{
+
+   slumtal=rng.randInt(1,5);
+   slumtalsvinkel=rng.randInt(-179,180);
+                  
+    t1.forward(slumtal);
+    t1.left(slumtalsvinkel);
+    t1.getX();
+    t1.getY();
+
+    t2.forward(slumtal);
+    t2.left(slumtalsvinkel);
+    t2.getX();
+    t2.getY();
+
+    clock.pause(10);
+ 
+    //att beräkna avståndet mellan de två skölpador
+
+   a = t1.getX()-t2.getX();
+   b = t1.getY()-t2.getY();
+
+   x = Math.pow(a,2);
+   y = Math.pow(b,2);
+   
+   avst= Math.sgrt(x+y);
+
+   }while(avst>50);

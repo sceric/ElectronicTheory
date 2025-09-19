@@ -1,0 +1,531 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0060)http://www.cs.lth.se/Education/Courses/PT/E/lect/regler.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Anteckningar till föreläsning 5 och 6</H1>Under de första två veckorna har 
+vi stiftat en första bekantskap med programspråket Java, vi har diskuterat några 
+viktiga grunder såsom variabler, tilldelningar, objekt, klasser, referenser, 
+<CODE>if</CODE>-, <CODE>for</CODE>- och <CODE>while</CODE>satserna. Vi kommer 
+idag att tala om en del av de regler som gäller för Java-program. 
+<H2>Om grundläggande programuppbyggnad</H2>
+<H3>Kommentarer i programkoden</H3>Det är viktigt att de program vi skriver är 
+lätta att läsa och förstå för andra, ett sätt att öka läsbarheten hos ett 
+program är att skriva lämpliga kommentarer så snart något icke-trivialt skall 
+göras.
+<P>Det finns i Java tre sorters kommentarer: 
+<OL>
+  <LI>Enradskommentarer, allt som skrivs på en rad efter <CODE>//</CODE>. <PRE>    int a;  // Detta är en kommentar
+    // Hela denna rad är en kommentar
+      </PRE>
+  <LI>Flerradskommmentarer, allt som skrivs mellan <CODE>/*</CODE> och 
+  <CODE>*/</CODE>, exempelvis: <PRE>    int a = 1;
+    /* Här inleds en längre kommentar
+       som fortsätter på nästa rad. */
+    int b = 2;
+      </PRE>
+  <LI>Javadoc-kommentarer, en speciell sorts kommentar som används för att 
+  automatiskt generera klass-specifikationer, vi kommer att behandla denna sorts 
+  kommentarer när vi börjar implementera egna klasser, senare i kursen. 
+</LI></OL>Gör det gärna till en god vana att skriva kommentarer i era program, 
+tänk även på att ni själva kan behöva kommentarerna när ni skall läsa igenom era 
+program några dagar efter att ni skrev dem!
+<P>
+<H3>Block</H3>De satser som skrivs innanför klamrar, <CODE>{</CODE> och 
+<CODE>}</CODE>, utgör ett <EM>block</EM>. Huvudprogrammet, <CODE>public static 
+void main(String[] args)</CODE>, består av ett yttre block, men även inne i 
+<CODE>if</CODE>-, <CODE>for</CODE>- och <CODE>while</CODE>-satser har vi block 
+(om vi sätter ut <CODE>{</CODE> och <CODE>}</CODE>, som vi skall göra!).
+<P><B>Exempel</B>: I nedanstående programavsnitt har vi fyra block: <PRE>    public static void main(String[] args) {
+        // Vi är nu inne i huvudprogrammets yttre block.
+        int i,n;
+        n = Keyboard.readInt("Skriv in ett heltal: ");
+        if (n &lt;= 0) {
+            // Detta block ligger innnanför det yttre blocket
+            System.out.println("Det tal du angav var inte positivt");
+        } else {
+            // Även detta block ligger innanför det yttre blocket
+            for (i = 1; i &lt;= n; i = i + 1) {
+                // Detta block ligger inne i blocket som börjar efter else.
+                System.out.println(i);
+            }
+        }
+    }
+</PRE>I ett block kan vi deklarera <EM>lokala variabler</EM>. De variabler vi 
+hittills använt har varit deklarerade som lokala variabler i det yttre blocket i 
+<CODE>public static void main(...)</CODE>, men vi kan även deklarera lokala 
+variabler inuti inre block.
+<P>I exemplet ovan använder vi bara räknaren <CODE>i</CODE> inne i 
+<CODE>else</CODE>-satsen, vi kan därför deklarera <CODE>i</CODE> inne i 
+<CODE>else</CODE>-satsen: <PRE>    public static void main(String[] args) {
+        int n;
+        n = Keyboard.readInt("Skriv in ett heltal: ");
+        if (n &lt;= 0) {
+            System.out.println("Det tal du angav var inte positivt");
+        } else {
+            int i;
+            for (i = 1; i &lt;= n; i = i + 1) {
+                System.out.println(i);
+            }
+        }
+        // Här är inte variablen i deklarerad.
+    }
+</PRE>En variabels räckvidd (eng. scope) är det block den är deklarerad i, den 
+existerar inte utanför. Vi kan alltså inte använda <CODE>i</CODE> i exemplet 
+ovan efter att <CODE>else</CODE>-satsen är avslutad. Däremot kan vi alltid 
+använda variabler som är deklarerade i omgivande block.
+<P><B>Exempel</B>: Om vi vill låta två variabler byta värden med varandra måste 
+vi lagra ett av värdena i en <EM>mellanlagringsvariabel</EM>. Om vi vill läsa in 
+två heltal, <CODE>a</CODE> och <CODE>b</CODE>, och låta <CODE>a</CODE> bli det 
+största av dem, kan vi skriva: <PRE>    int a,b;
+    a = Keyboard.readInt("a: ");
+    b = Keyboard.readInt("b: ");
+    if (b &gt; a) {
+        // Variablerna a och b måste byta värde,
+        // värdet på a mellanlagras i variabeln temp.
+        int temp;
+        temp = a;
+        a = b;
+        b = temp;
+    }
+    // Här behöver vi inte längre variabeln temp.
+</PRE>Variabeln <CODE>temp</CODE> är bara deklarerad inne i 
+<CODE>if</CODE>-satsen.
+<P>I slutet av följande avsnitt kommer vi att visa en särskild regel för 
+räckvidden för räknarvariabler i <CODE>for</CODE>-satser. 
+<H3>Deklarationer och startvärden</H3>När vi deklarerar våra lokala variabler 
+blir de oinitierade, men vi kan även ge dem startvärden. Vi ger dem startvärden 
+genom vanliga tilldelningar:
+<P><B>Exempel</B>: Deklarationerna <PRE>    int a=0, b=a+1, c;
+</PRE>ger oss tre heltalsvariabler, <CODE>a</CODE>, <CODE>b</CODE> och 
+<CODE>c</CODE>, där två av variablerna tilldelas värden (<CODE>a</CODE>=0 och 
+<CODE>b</CODE>=1) medan <CODE>c</CODE> är oinitierad. Lägg märke till att vi kan 
+använda värdet av <CODE>a</CODE> när vi initierar <CODE>b</CODE>, initieringen 
+går från vänster till höger.
+<P>I Java har vi i princip fri layout (fast vi kommer strax att allvarligt 
+inskränka era friheter, se avsnittet om kodkonventioner!), så deklarationerna 
+ovan kan även skrivas: <PRE>    int a=0,
+        b=a+1,
+        c;
+</PRE>Denna form är bra om vi vill förklara vad variablerna används för: <PRE>    int nbrOfValues = 0,    // antal inlästa värden
+        value = 0,          // aktuellt värde
+        maxValue = 0;       // största värde
+</PRE>I många programspråk skall alla deklarationer göras först i programkoden, 
+i Java kan man deklarera variabler var som helst. Var man placerar sina 
+deklarationer är ofta en fråga om tycke och smak, vissa föredrar att alla 
+variabler deklareras överst i programkoden (så att de snabbt kan hitta 
+deklarationen), andra deklarerar sina variabler först när de behövs (så att man 
+slipper hoppa med blicken när man läser programkoden).
+<P>Ett särskilt fall är deklarationer i <CODE>for</CODE>-loopar, om vi 
+deklarerar och initierar en variabel i <CODE>for</CODE>-satsens huvud så anses 
+den deklarerad inne i <CODE>for</CODE>-satsens block: <PRE>    for (int i = 1; i &lt;= 10; i = i + 1) {
+        // i är deklarerad bara inne i detta block
+    }
+    // här är inte i deklarerad längre!
+</PRE>
+<H4>Kontrollfrågor</H4>
+<OL>
+  <LI>Vilka variabler är deklarerade på de markerade raderna nedan? <PRE>    int a = 1,
+        b = 2;
+    for (int i = 1; i &lt;= 10; i = i+1) {
+        int c = 3;
+        // vilka variabler är tillgängliga här?
+    }
+    // vilka variabler är tillgängliga här?
+</PRE></LI></OL>
+<H3>Några varianter på tilldelningssatsen</H3>Den allmäna formen för en 
+tilldelningssats är: <PRE>    value = <I>uttryck</I>;
+</PRE>Det finns några speciella tilldelningar som fått en förenklad form i Java. 
+Om vi vill öka en variabel <CODE>value</CODE> med ett givet värde, exempelvis 
+<CODE>increment</CODE>, kan vi skriva <PRE>    value = value + increment;
+</PRE>Eftersom det är så vanligt att man vill öka värdet på en variabel på detta 
+vis finns en speciell kortform: <PRE>    value += increment;
+</PRE>På samma sätt finns en uppdateringstilldelning för de andra räknesätten, 
+vi kan skriva <PRE>    value -= change;   // istället för value = value - change;
+    value *= factor;   // istället för value = value * factor;
+    value /= divisor;  // istället för value = value / divisor;
+</PRE>Det finns ytterligare en förenkling, eftersom man ofta ökar en variabels 
+värde med 1 (exempelvis i <CODE>for</CODE>-loopar!), så kan vi istället för <PRE>    i += 1;
+</PRE>skriva <PRE>    i++;
+</PRE>På samma sätt kan vi minska värdet på en variabel med 1 genom att skriva <PRE>    i--;
+</PRE>Det finns två former av <CODE>++</CODE> och <CODE>--</CODE>, en prefix- 
+och en posfix-form (den ovan). Vi kommer att beskriva prefix-formen senare i 
+kursen.
+<P>Med hjälp av <CODE>++</CODE> kan vi skriva <CODE>for</CODE>-satsen på ett 
+enkelt sätt: <PRE>    for (int i = 1; i &lt;= n; i++) {
+        // dessa satser upprepas n gånger
+    }
+</PRE>Denna form av <CODE>for</CODE>-sats, med en lokal räknarvariabel och 
+uppdatering med <CODE>++</CODE>-operatorn, kommer vi att använda väldigt ofta i 
+kursen. 
+<H2>Olika typer</H2>Java är ett <EM>starkt typat</EM> språk, vilket innebär att 
+alla variabler och uttryck måste ha en bestämd typ. När ett program kompileras 
+kontrollerar kompilatorn att typerna i alla uttryck överensstämmer, och ger 
+felutskrifter om något uttryck är feltypat. På detta vis undviker man många 
+onödiga programmeringsfel.
+<P>I Java skiljer man mellan <EM>primitiva typer</EM> och 
+<EM>referenstyper</EM>. De primitiva typerna är de som ryms i en variabel 
+(heltal, reella tal, tecken etc), referenstyperna är referenser till objekt (och 
+vektorer, som vi skall behandla om någon vecka).
+<P>
+<CENTER><IMG src="regler_files/typer.gif"></CENTER>
+<P>
+<H3>Primitiva typer</H3>Bland de primitiva typerna skiljer man mellan 
+<EM>numeriska typer</EM> och typen <CODE>boolean</CODE>, som används för att 
+hantera logiska värden (typen är uppkallad efter den engelske 1800-talslogikern 
+George Boole).
+<P>
+<H4>Heltalstyper</H4>Det finns inte mindre än fyra vanliga heltalstyper (samt 
+<CODE>char</CODE>, som rent tekniskt är en heltalstyp, men som används för att 
+lagra tecken). De fyra typerna är 
+<UL>
+  <LI><CODE>byte</CODE>, som kan anta värden i intervallet -128 .. 127, dessa 
+  tal rymms i 8 bitar 
+  <LI><CODE>short</CODE>, som kan anta värden i intervallet -32 768 .. 32 767 
+  (16 bitar) 
+  <LI><CODE>int</CODE>, som kan anta värden i intervallet -2 147 483 648 .. 2 
+  147 483 647 (32 bitar) 
+  <LI><CODE>long</CODE>, som kan anta värden i intervallet -9 223 372 036 854 
+  775 808 .. 9 223 372 036 854 775 807 (64 bitar) </LI></UL>Det är dock inte alls 
+säkert att Java-systemet använder 8, 16, 32 respektive 64 bitar för att lagra 
+tal av de olika typerna.
+<P>När vi vet storleksordningen på våra variabler kan vi välja vilken av 
+heltalstyperna vi skall använda, i kursen kommer vi mestadels att använda heltal 
+av typen <CODE>int</CODE>, eftersom de räcker i de flesta sammanhang.
+<P>
+<H5>Operationer på heltal</H5>För heltal har vi bland annat följande operationer 
+(det finns fler, men vi använder dem inte i denna kurs): 
+<UL>
+  <LI>'Unärt' plus och minus, dvs vi kan skriva -4 eller +3
+  <P></P>
+  <LI>'Multiplikativa operationer': *, /, %:
+  <P>Om vi dividerar två heltal får vi som resultat ett heltal, avrundat nedåt 
+  (mot 0). Uttrycket <CODE>3/2</CODE> får alltså värdet <CODE>1</CODE>, även 
+  <CODE>-3/2</CODE> får värdet <CODE>1</CODE>.
+  <P>Operatorn <CODE>%</CODE> ger resten vid division, <CODE>7 % 4</CODE> ger 
+  värdet <CODE>3</CODE>, <CODE>-7 % 4</CODE> ger värdet <CODE>-3</CODE>.
+  <P></P>
+  <LI>'Additiva operationer': + och -.
+  <P></P>
+  <LI>'Öknings-operationen': ++ (se avsnittet om alternativa tilldelningar).
+  <P></P>
+  <LI>Omvandling till sträng: när vi skall skriva ut ett heltal omvandlas talet 
+  till en sträng. Vi kommer att diskutera detta mer senare i kursen. 
+</LI></UL>Prioritetsordningen för heltalsoperationerna är 
+<OL>
+  <LI>unärt + och - 
+  <LI>*, /, % 
+  <LI>+, - </LI></OL>(Även ökningsoperationen ger ett värde, och skulle egentligen 
+placeras in i prioritetsordningslistan ovan, men vi väntar med det till senare i 
+kursen).
+<P>Multiplikation, division och rest går alltså före addition och subtraktion, 
+precis som vi är vana. Med hjälp av parenteser kan vi kringgå 
+prioritetsreglerna. Om vi vill att 1+2*3 skall bli 9 måste vi skriva uttrycket 
+som (1+2)*3.
+<P>När prioriteten för operatorerna är lika räknas uttrycken från vänster till 
+höger, det innebär att man måste vara lite försiktig, se exemplen nedan: <PRE>    a = 1/2*3;
+</PRE>Här har / och * samma prioritet, så vi räknar från vänster till höger. 
+Eftersom vi dividerar två heltal, <CODE>1</CODE> och <CODE>2</CODE>, så får vi 
+heltalsdivision, vilket ger resultatet 0. Multiplikationen med <CODE>3</CODE> 
+ger inget, alltså får <CODE>a</CODE> värdet 0.
+<P>Även om variabeln till vänster om tilldelningstecknet är av reell typ kommer 
+beräkningarna att utföras med heltalsdivision om argumenten är heltal: <PRE>    double x = 1/2*3.141592653589793;
+</PRE>kommer att ge värdet 0, eftersom den inledande divisionen blir en 
+heltalsdivision. Det räcker dock att göra om endera av täljaren eller nämnaren 
+till ett reellt värde för att få en reell division: <PRE>    double x = 1.0/2*3.141592653589793;
+</PRE>ger värdet &#960;/2.
+<P>
+<H4>Reella typer</H4>Det finns två reella typer, en med ungefär 9 och en med 
+ungefär 18 siffrors upplösning. 
+<UL>
+  <LI><CODE>float</CODE>: det till beloppet minsta värdet vi kan lagra i en 
+  <CODE>float</CODE>-variabel är 1.4E-45, det största värdet vi kan lagra är 
+  3.4028235* 10^38. 
+  <LI><CODE>double</CODE>: det till beloppet minsta värdet vi kan lagra i en 
+  <CODE>double</CODE>-variabel är 4.9E-324, det största värdet vi kan lagra är 
+  1.7976931348623157*10^308. </LI></UL>Vi kan ange reella tal med eller utan 
+10-potenser: <PRE>    double x = 2.54e-6,
+           y = 0.4e9,
+           z = 1.5,
+           t = 1;
+</PRE>betyder att <CODE>x</CODE> blir 2.54*10^(-6) (dvs 0.00000254) och 
+<CODE>y</CODE> blir 400 000 000. Variablerna <CODE>z</CODE> och <CODE>t</CODE> 
+blir 1.5 respektive 1.0.
+<P>Att ge en variabel ett <CODE>float</CODE>-värde är lite knepigare: <PRE>    float f = 1.2;
+</PRE>är inte tillåtet eftersom Javasystemet betraktar 1.2 som ett 
+<CODE>double</CODE>-värde (se mer om detta nedan, i avsnittet om 
+typkonverteringar). Istället får vi skriva: <PRE>    float f = 1.2f;
+</PRE>där <CODE>f</CODE>-et betyder att talet skall tolkas som ett 
+<CODE>float</CODE>-tal (märkligt nog får vi inte detta problem när vi försöker 
+lagra talet 1 i en <CODE>byte</CODE>-variabel).
+<P>
+<H5>Operationer på reella tal</H5>För de reella talen har vi samma operationer 
+som vi ovan beskrev för heltalen (det finns dock några heltalsoperationer som 
+man inte kan utföra på reella tal, men dessa faller utanför kursen). 
+Rest-operationen är definierad även för reella tal, men vi kommer bara att 
+använda den för heltal.
+<P>Division med reella tal ger reella värden, så om vi skriver <PRE>    double x = 1.0/2.0;
+</PRE>så får vi naturligtvis värdet 0.5 (eller, åtminstone ett tal som ligger 
+väldigt nära 0.5). Det räcker att den ena av operanderna är reell för att vi 
+skall få reell division. Vi kommer att diskutera aritmetik med reella tal även 
+under rubriken "Konvertering mellan olika typer" nedan.
+<P>
+<H4>Typen <CODE>char</CODE></H4>Rent tekniskt definieras typen <CODE>char</CODE> 
+som en numerisk typ, den kan anta värden som numeriskt kan tolkas som 0..65535 
+(ett två bytes Unicode-tecken).
+<P>De första 128 värdena (0..127) i motsvarar de ASCII-tecken som används i 
+många andra programspråk. Det innebär att vanliga bokstäver har en speciell kod, 
+några värden:
+<P>
+<CENTER>
+<TABLE border=1>
+  <TBODY>
+  <TR>
+    <TD>kod</TD>
+    <TD>tecken</TD></TR>
+  <TR>
+    <TD>32</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR>
+    <TD>..</TD>
+    <TD>..</TD></TR>
+  <TR>
+    <TD>48</TD>
+    <TD>'0'</TD></TR>
+  <TR>
+    <TD>49</TD>
+    <TD>'1'</TD></TR>
+  <TR>
+    <TD>..</TD>
+    <TD>..</TD></TR>
+  <TR>
+    <TD>65</TD>
+    <TD>'A'</TD></TR>
+  <TR>
+    <TD>66</TD>
+    <TD>'B'</TD></TR>
+  <TR>
+    <TD>..</TD>
+    <TD>..</TD></TR>
+  <TR>
+    <TD>97</TD>
+    <TD>'a'</TD></TR>
+  <TR>
+    <TD>98</TD>
+    <TD>'b'</TD></TR></TBODY></TABLE></CENTER>
+<P>En <CODE>char</CODE>-variabel kan ges teckenvärden med hjälp av apostrofer: <PRE>    char ch = 'a',        // ch får det numeriska värdet 97
+         digitOne = '1',  // digitOne får det numeriska värdet 49
+         space = ' ';     // space får det numeriska värdet 32
+</PRE>Vi kan använda de vanliga heltalsoperationerna på tecken, eftersom 
+bokstäverna ligger efter varandra i Unicode-ordning, så vi kan exempelvis skriva 
+ut bokstäverna 'a'..'z' med: <PRE>    for (char ch = 'a'; ch &lt;= 'z'; ch++) {
+        System.out.print(ch);
+    }
+</PRE>
+<H4>Boolean</H4>Vi kan lagra logiska värden i variabler av typen 
+<CODE>boolean</CODE>. Det finns två olika logiska konstanter, <CODE>true</CODE> 
+och <CODE>false</CODE>, och vi kan deklarera två logiska variabler, 
+<CODE>found</CODE> och <CODE>ok</CODE>, genom att skriva: <PRE>    boolean found = false,
+            ok;
+</PRE>där <CODE>found</CODE> får startvärdet <CODE>false</CODE>, medan 
+<CODE>ok</CODE> blir oinitierad.
+<P>De villkor vi använt i <CODE>if</CODE>-satser, <CODE>for</CODE>-satser och 
+<CODE>while</CODE>-satser har alla typen <CODE>boolean</CODE>. Vi kan därför 
+skriva <PRE>    int a = Keyboard.readInt("a: "),
+        b = Keyboard.readInt("b: ");
+    boolean aIsBiggest;
+    aIsBiggest = a &gt; b;
+</PRE>där jämförelsen <CODE>a &gt; b</CODE> är antingen <CODE>true</CODE> eller 
+<CODE>false</CODE>, och värdet lagras i den logiska variabeln 
+<CODE>aIsBiggest</CODE>.
+<P>Vi kommer att utnyttja logiska variabler senare i kursen, bland annat i 
+samband med sökning i vektorer (som vi kommer att behandla nästa vecka).
+<P>För sammansatta villkor kan vi använda följande tre logiska operatorer: 
+<UL>
+  <LI>logiskt och, skrivs <CODE>&amp;&amp;</CODE>,
+  <P></P>
+  <LI>logiskt eller, skrivs <CODE>||</CODE>, och
+  <P></P>
+  <LI>logisk negation, skrivs <CODE>!</CODE>. </LI></UL>där prioritetsordningen är 
+
+<OL>
+  <LI><CODE>!</CODE> 
+  <LI><CODE>&amp;&amp;</CODE> 
+  <LI><CODE>||</CODE> </LI></OL>De logiska operatorerna förklarars enklast med 
+exempel: 
+<UL>
+  <LI>Uttrycket <CODE>a &gt; b &amp;&amp; a &gt; c</CODE> är sant när både 
+  <CODE>a &gt; b</CODE> och <CODE>a &gt; c</CODE>, dvs när <CODE>a</CODE> är 
+  större än både <CODE>b</CODE> och <CODE>c</CODE>.
+  <P></P>
+  <LI>Uttrycket <CODE>a &gt; b || a &gt; c</CODE> är sant när antingen <CODE>a 
+  &gt; b</CODE> eller <CODE>a &gt; c</CODE>, dvs när <CODE>a</CODE> är större än 
+  någon av <CODE>b</CODE> och <CODE>c</CODE>.
+  <P></P>
+  <LI>Uttrycket <CODE>!(a &gt; b)</CODE> är sant när <EM>inte</EM> <CODE>a &gt; 
+  b</CODE>, dvs när <CODE>a &lt;= b</CODE>. </LI></UL><B>Exempel</B>: Om vi vill 
+se att <I>1 &#8804; n &#8804; 10</I> måste vi testa både att <I>1 &#8804; n</I> och att <I>n &#8804; 
+10</I>. Med hjälp av <CODE>&amp;&amp;</CODE>-operatorn kan vi skriva: <PRE>    if (1 &lt;= n &amp;&amp; n &lt;= 10) {
+        System.out.println("n ligger i intervallet 1..10");
+    }
+</PRE>Vi kan formulera villkoret ovan lite annorlunda med hjälp av 
+eller-operatorn: <PRE>    if (n &lt; 1 || n &gt; 10) {
+        System.out.println("n ligger inte i intervallet 1..10");
+    }
+</PRE>Villkoret ovan kan skrivas om med negationsoperatorn: <PRE>    if (!(1 &lt;= n &amp;&amp; n &lt;= 10)) {
+        System.out.println("n ligger inte i intervallet 1..10");
+    }
+</PRE>Lägg märke till att vi måste har en parentes i uttrycket ovan, annars hade 
+negationen inte opererat på hela och-uttrycket (i själva verket hade vi fått ett 
+kompileringsfel, eftersom prioriteten för negationen går före även jämförelsen). 
+
+<H3>Konvertering mellan olika typer</H3>Eftersom typen <CODE>long</CODE> 
+innehåller alla de värden som finns i typen <CODE>int</CODE> (och dessutom många 
+fler), så är det inga problem med att lagra värdet av en 
+<CODE>int</CODE>-variabel i en <CODE>long</CODE>-variabel - vi säger att 
+<CODE>long</CODE> är en <EM>större</EM> typ än <CODE>int</CODE>. <PRE>    int n = 12;
+    long m = n;   // denna tilldelning ger inga problem.
+</PRE>Vid tilldelningen på den andra raden omvandlas värdet <CODE>n</CODE> till 
+ett <CODE>long</CODE>-värde innan det lagras i variabeln <CODE>m</CODE>.
+<P>Om vi försöker göra tvärtom, tilldela variabeln <CODE>n</CODE> värdet av 
+variabeln <CODE>m</CODE> kan vi däremot få problem - ett <CODE>long</CODE>-tal 
+kan vara för stort för att rymmas i en <CODE>int</CODE>-variabel. 
+Programraderna: <PRE>    long m = 12;
+    int n = m;
+</PRE>ger ett kompileringsfel som säger att vi inte får lagra ett 
+<CODE>long</CODE>-värde i en <CODE>int</CODE>-variabel. 
+<P>Om vi vet att värdet i <CODE>long</CODE>-variabeln inte är större än att det 
+skulle rymmas i en <CODE>int</CODE>-variabel, så kan vi <EM>typkonvertera</EM> 
+(eng. type cast) värdet av <CODE>m</CODE> till ett <CODE>int</CODE> innan vi gör 
+tilldelningen. Det gör vi genom att skriva <PRE>    long m = 12;
+    int n = (int) m;
+</PRE>Allmänt typkonverterar man genom att skriva ett typnamn inom parentes före 
+ett uttryck:
+<P>
+<CENTER>(&lt;typnamn&gt;) <I>uttryck</I>; </CENTER>
+<P>Tilldelningen <PRE>    double x = 1;
+</PRE>går fint, <CODE>double</CODE> är en större typ än <CODE>int</CODE>, så 
+1:an omvandlas till det reella värdet 1 innan det lagras i <CODE>x</CODE>.
+<P>Vi kan använda typkonvertering för att lösa problemet vi hade med 
+heltalsdivision ovan: <PRE>    double x = (double)1/2*3;
+</PRE>konverterar värdet 1 till ett <CODE>double</CODE>-värde (1.000...) innan 
+divisionen utförs. Eftersom detta uttryck är reellt kommer reell division att 
+utföras, och uttryckets värde blir 1.5.
+<P>Viss försiktighet bör iakttagas: <PRE>    double x = (double)(1/2*3);
+</PRE>ger <CODE>x</CODE> värdet 0.0, typkonverteringen appliceras inte förrän 
+uttrycket inom parentesen beräknats (och blivit 0, precis som ovan). 
+<H2>Anrop av standardfunktioner</H2>Det finns ett enkelt sätt att beräkna värdet 
+av olika standardfunktioner, vi har funktionerna 
+<UL>
+  <LI><CODE>long Math.round(double x)</CODE> som ger värdet på <CODE>x</CODE> 
+  avrundat till närmaste heltal (att det står <CODE>long</CODE> framför 
+  <CODE>Math.round...</CODE> beror på att operationen returnerar ett 
+  <CODE>long</CODE>-värde)
+  <P></P>
+  <LI><CODE>long Math.floor(double x)</CODE> som ger värdet på <CODE>x</CODE> 
+  trunkerat till närmaste heltal, dvs decimalerna stryks
+  <P></P>
+  <LI><CODE>double Math.sqrt(double x)</CODE> som ger kvadratroten ur 
+  <CODE>x</CODE>
+  <P></P>
+  <LI><CODE>double Math.exp(double x)</CODE> som ger exponentialfunktionens 
+  värde i <CODE>x</CODE> (som ett <CODE>double</CODE>-värde)
+  <P></P>
+  <LI><CODE>double Math.log(double x)</CODE> som ger naturliga logaritmen för 
+  <CODE>x</CODE>
+  <P></P>
+  <LI><CODE>double Math.sin(double x)</CODE> som ger <I>sin(x)</I>, där 
+  <CODE>x</CODE> mäts i radianer
+  <P></P>
+  <LI><CODE>double Math.cos(double x)</CODE> som ger <I>cos(x)</I>, där 
+  <CODE>x</CODE> mäts i radianer
+  <P></P>
+  <LI><CODE>double Math.tan(double x)</CODE> som ger <I>tan(x)</I>, där 
+  <CODE>x</CODE> mäts i radianer
+  <P></P></LI></UL>Den matematiska konstanten pi (&#960;) skrivs <CODE>Math.PI</CODE> 
+(utan parenteser!).
+<P><B>Exempel</B>: För att beräkna kvadratroten ur ett inläst värde kan vi 
+skriva: <PRE>    double x = Keyboard.readDouble("Ange x: ");
+    double rot = Math.sqrt(x);
+    System.out.println("Kvadratroten ur " + x + " är " + rot);
+</PRE>Att <CODE>Math</CODE>-operationerna returnerar <CODE>double</CODE>- eller 
+<CODE>long</CODE>-värden, beror på att man vill kunna arbeta med maximal 
+upplösning och maximalt stora heltal.
+<P>Om vi själva använder vanliga heltal (<CODE>int</CODE>) kan vi få vissa 
+problem, när vi anropar exempelvis <CODE>Math.round(...)</CODE>-operationen får 
+vi tillbaka ett <CODE>long</CODE>-värde. Detta värde kan inte lagras i en 
+<CODE>int</CODE>-variabel utan konvertering: <PRE>    double x = Keyboard.readDouble("Ange x: ");
+    int n = (int) Math.round(x);
+</PRE>Skulle det inlästa värdet på <CODE>x</CODE> vara för stort för att rymmas 
+i en <CODE>int</CODE> så kommer vi att få ett konstigt värde i <CODE>n</CODE>, 
+dock får vi inget exekveringsfel (dvs programmet bryts inte). 
+<H2>Kodkonventioner</H2>Företaget Sun (som ligger bakom språket Java) har gett 
+ut 'kodkonventioner', en uppsättning regler för hur man bör skriva sina 
+Javaprogram. Bland anledningarna att ha en kodkonvention nämner de: 
+<UL>
+  <LI>80% av livstidskostnaden för datorprogram går till underhåll av 
+  programkoden. 
+  <LI>Nästan inga program underhålls hela sin livstid av den ursprunglige 
+  programmeraren. 
+  <LI>Kodkonventioner ökar läsbarheten och gör det möjligt för programmerare att 
+  förstå ett program snabbare och bättre. </LI></UL>Vi vill att ni i denna kurs 
+försöker följa denna standard, inte minst för er egen skull. Genom att följa den 
+kommer ni förmodligen att slippa många timmars onödigt felsökande (det kan 
+säkerligen bli en hel del felsökning ändå!). Det är framförallt följande punkter 
+vi vill att ni skall följa i början av kursen: 
+<UL>
+  <LI>Enheten för indragningar i programkoden är 4 mellanslag. 
+  <LI>Använd förklarande variabelnamn. 
+  <LI>Använd <EM>alltid</EM> klamrar, <CODE>{</CODE> och <CODE>}</CODE> i 
+  <CODE>if</CODE>-, <CODE>for</CODE>- och <CODE>while</CODE>-satser. 
+  <LI>Följ indragningsanvisningarna nedan. </LI></UL>Lägg dessutom gärna in tomma 
+rader för att öka läsbarheten hos era program. Tom rad kan vara lämpligt före en 
+kommentar eller före programrader som löser en avgränsad deluppgift. 
+<H3>Indragningsanvisningar</H3>När vi börjar ett nytt block skall vänsterkantens 
+indragning ökas med 4 mellanslag. Den klammer som "öppnar" blocket skall stå på 
+samma rad som den <CODE>if</CODE>-, <CODE>else</CODE>-, <CODE>for</CODE>- eller 
+<CODE>while</CODE>-sats som den hör till. Reglerna för hur den avslutande 
+klammern skall sättas framgår av nedanstående exempel (lägg märke till att den 
+alltid hamnar rakt under <CODE>if</CODE>, <CODE>else</CODE>, <CODE>for</CODE> 
+eller <CODE>while</CODE>): 
+<H4>if-satsen</H4><PRE>    if (villkor) {
+        satser;
+    }
+
+    if (villkor) {
+        satser;
+    } else {
+        satser;
+    }
+
+    if (villkor) {
+        satser;
+    } else if (villkor) {
+        satser;
+    } else if (villkor) {
+        satser;
+    } else {
+        satser;
+    }
+</PRE>
+<H4>for-satsen</H4><PRE>    for (initiering; villkor; uppdatering) {
+        satser;
+    }
+</PRE>
+<H4>while-satsen</H4><PRE>    while (villkor) {
+        satser;
+    }
+</PRE>Om vi skriver ett block inuti ett annat skall det inre blocket dras in 
+enligt samma regler som det yttre blocket: <PRE>    for (int i = 1; i &lt;= 100; i++) {
+        System.out.print(i + " ");
+        if (i % 10 == 0) {
+            System.out.println();
+        }
+    }
+</PRE>
+<H2>Om kompileringsfel</H2>Under föreläsningen kommer vi att tala om hur man 
+tolkar kompilatorns felutskrifter. 
+<HR>
+
+<ADDRESS></ADDRESS></BODY></HTML>

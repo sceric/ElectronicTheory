@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+</head>
+
+<body>
+<h1>Lösningsförslag till tentamen i augusti 1999</h1>
+
+<h2>Uppgift 1</h2>
+
+<pre>
+    public static void main(String[] args) {
+        System.out.println("Erathostenes såll: ");
+        int n = Keyboard.readInt("Ange n: ");
+        boolean[] prime = new boolean[n+1];
+        for (int i = 0; i <= n; i++) {
+            prime[i] = true;
+        }
+        int k = 2;
+        do {
+            for (int i = 2*k; i <= n; i += k) {
+                prime[i] = false;
+            }
+            do {
+                k++;
+            } while (k <= n && !prime[k]);
+        } while (k <= n);
+        for (int i = 2; i <= n; i++) {
+            if (prime[i]) {
+                System.out.print(i + " ");
+            }
+        }
+    }
+</pre>
+
+<h2>Uppgift 2</h2>
+
+<pre>
+    class Room {
+    
+        private int size;
+        private String name;
+    
+        public Room(String name, int size) {
+            this.name = name;
+            this.size = size;
+        }
+    
+        public String getName() {
+            return this.name;
+        }
+    
+        public int getSize() {
+            return this.size;
+        }
+    }
+
+    class RoomRegister {
+    
+        private Room[] room;
+        private int nbrOfRooms;
+    
+        public RoomRegister(int maxNbrOfRooms) {
+            this.room = new Room[maxNbrOfRooms];
+            this.nbrOfRooms = 0;
+        }
+        
+        public void add(Room room) {
+            this.room[this.nbrOfRooms++] = room;
+        }
+    
+        public Room getRoom(int nbr) {
+            return this.room[nbr];
+        }
+    
+        public int getNbrOfRooms() {
+            return this.nbrOfRooms;
+        }
+    }
+</pre>
+
+<h2>Uppgift 3</h2>
+
+<pre>
+    class TimeInterval {
+    
+        private int date, startHour, finishHour;
+    
+        public TimeInterval(int date, int startHour, int finishHour) {
+            this.date = date;
+            this.startHour = startHour;
+            this.finishHour = finishHour;
+        }
+    
+        public int getDate() {
+            return this.date;
+        }
+    
+        public int getStartHour() {
+            return this.startHour;
+        }
+    
+        public int getFinishHour() {
+            return this.finishHour;
+        }
+    
+        public boolean overlaps(TimeInterval other) {
+            return
+                !(this.date != other.date ||
+                  this.startHour > other.finishHour ||
+                  other.startHour > this.finishHour);
+        }
+    }
+</pre>
+
+<pre>
+    class Booking extends Link {
+    
+        private int roomNbr;
+        private TimeInterval time;
+        private String course;
+    
+        public Booking(int roomNbr, TimeInterval time, String course) {
+            this.roomNbr = roomNbr;
+            this.time = time;
+            this.course = course;
+        }
+    
+        public int getRoomNbr() {
+            return this.roomNbr;
+        }
+    
+        public TimeInterval getTime() {
+            return this.time;
+        }
+    
+        public String getCourse() {
+            return this.course;
+        }
+    }
+    
+</pre>
+
+<pre>
+    class BookingRegister {
+    
+        private RoomRegister roomRegister;
+        private Head bookings;
+    
+        public BookingRegister(RoomRegister roomRegister) {
+            this.roomRegister = roomRegister;
+            this.bookings = new Head();
+        }
+    
+        public int getFreeRoom(TimeInterval time, int size) {
+            boolean[] booked = new boolean[this.roomRegister.getNbrOfRooms()];
+            for (Booking b = (Booking) bookings.first(); b != null; b = (Booking) b.suc()) {
+                if (b.getTime().overlaps(time)) {
+                    booked[b.getRoomNbr()] = true;
+                }
+            }
+            int bestRoom = -1,
+                bestSize = Integer.MAX_VALUE;
+            for (int roomNbr = 0; roomNbr < roomRegister.getNbrOfRooms(); roomNbr++) {
+                if (!booked[roomNbr]) {
+                    int foundSize = roomRegister.getRoom(roomNbr).getSize();
+                    if (foundSize >= size && foundSize < bestSize) {
+                        bestRoom = roomNbr;
+                        bestSize = foundSize;
+                    }
+                }
+            }
+            return bestRoom;
+        }
+    
+        public void makeBooking(int roomNbr, TimeInterval time, String course) {
+            new Booking(roomNbr, time, course).into(this.bookings);
+        }
+    }
+</pre>
+</body>
+</html>

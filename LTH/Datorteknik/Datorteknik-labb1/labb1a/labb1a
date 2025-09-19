@@ -1,0 +1,17 @@
+
+
+     .set noreorder
+      .text
+      .globl start
+      .ent start
+   
+   start: lui $9,0xbf90
+ 
+   repeat: lbu $8,0x0($9)
+           nop
+           sb $8,0x0($9)
+           b repeat
+           nop
+           li $8,0
+ 
+         .end start

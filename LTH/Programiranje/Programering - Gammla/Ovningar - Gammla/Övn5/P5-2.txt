@@ -1,0 +1,45 @@
+
+ConsoleReader reader = new  ConsoleReader();
+ConsoleWriter writer = new ConsoleWriter();
+
+Acount [] acc= new _Account[100]
+int accNo, amount, index;
+String name;
+
+writer.println("Ange kontonummer och Belopp:");
+accNo = reader.redInt();
+amount=reader.readerInt();
+
+
+ while( accNo[index].getAccNo()!=0 && accNo[index].getAccNo!=accNo){
+
+        index++;  //leta upp accNo i vektorn
+ }
+
+ if(amount>=0){
+
+            if(acc[index]!=0){
+
+                acc[index].deposit(amount);
+    
+            }else{
+ 
+                  writer.println("Ange innehavare:");
+                  name=reader.readLine();
+               
+                 acc[index] = new Account(accNo , name);
+                 acc[index]=acc[index].deposit(amount);
+            }
+ 
+ }else if(acc[index]!=0 &&  acc[index].getBalance()>= -amount){
+
+        acc[index].getBalance()=acc[index].getBalance()-amount;
+   
+         }
+
+      writer.println("Det finns inga tillräckliga pengar på detta kontonummer");
+
+ }
+
+
+         

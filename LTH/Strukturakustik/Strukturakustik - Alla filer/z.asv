@@ -1,0 +1,44 @@
+%kl=1:0.1:13;
+kl=1;
+l=0.85;
+m=0.37;
+m0=0.85;
+w=2*pi*kl;
+E=200; %Elasticiteten för stål i N/m^2
+D=7800; %Densitet för stål i kg/m^3
+c=sqrt(E/D);
+
+z11=(m0*c)*cot(kl)/j+j*w*m;
+z22=(m0*c)*cot(kl)/j+j*w*m;
+
+z12=(m0*c)./j*sin(kl);
+z21=(m0*c)./j*sin(kl);
+
+T= [z11./z21 (z11.*z22)./(z21)-z12; 1./z21   z22./z21];
+
+Fn(1)=1
+%for i=2:10
+Tn=T^(2-1); 
+Vn=1/Tn(3);%Beräknar randvillkor
+V1=Tn(4)*Vn;
+
+Fn(i)=(Fn(1)-Tn(3)*Vn)/Tn(1);
+%end
+plot(Fn)
+
+
+
+
+
+
+
+    
+
+
+% F1=1;
+% V1=0;
+% VL=[F1; V1];
+% HL=T4\VL
+% F5=HL(1,1);
+% V5=HL(2,1);
+% g=log((1/F5)^0.2);

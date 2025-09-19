@@ -1,0 +1,408 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://www.cs.lth.se/Education/Courses/PT/E/lect/f18.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Anteckningar till föreläsning 18</H1>Idag kommer vi att tala om listor, 
+först introducerar vi begreppet lista, därefter studerar vi ett färdigt 
+klasspaket för listhantering - <CODE>jlist</CODE>.
+<P>Först skall vi dock diskutera 
+<UL>
+  <LI>Övning 16, och
+  <P></P>
+  <LI>Inlämningsuppgift 2. </LI></UL>
+<H2>Något om attribut</H2>Vi har i hittills i kursen låtit alla attribut vara 
+privata, det gör att objektens tillstånd kapslas in. För många av våra attribut 
+har vi haft <CODE>get...</CODE>- och <CODE>set...</CODE>-operationer, något som 
+är så vanligt att det kan kallas ett mönster (<EM>pattern</EM>). I veckans 
+övning, och i inlämningsuppgift 2 skall ni använda detta mönster, mer om det på 
+föreläsningen.
+<P>I vissa sammanhang kan vi dock låta våra attribut vara publika, i exemplen 
+nedan gör vi det för att göra programkoden kortare - ofta gör man det bara med 
+klasser som inte skall användas av andra programmerare. 
+<H2>Introduktion till listor</H2>För att lagra flera värden av samma slag har vi 
+hittills använt vektorer, följande programavsnitt läser in en följd av positiva 
+heltal, lagrar dem i en vektor, och skriver ut dem baklänges: <PRE>        int[] v = new int[100];
+        int n = 0;
+        int nbr = Keyboard.readInt();
+        while (nbr &gt; 0) {
+            v[n++] = nbr;
+            nbr = Keyboard.readInt();
+        }
+        for (int i = n-1; i &gt;= 0; i--) {
+            System.out.println(v[i]);
+        }
+</PRE>(Här har vi utnyttjat en standardkonstruktion för insättning i vektorn, 
+<CODE>v[n++] = nbr</CODE>, vi ökar värdet på <CODE>n</CODE> på samma rad som vi 
+lägger in värden. Uppdateringen av <CODE>n</CODE> sker inte förrän efter att 
+satsen exekverats - hade <CODE>n</CODE> uppdaterats innan satsen exekverats hade 
+vi aldrig lagrat något värde i index 0.)
+<P>Vi har stött på två problem med vektorer: 
+<UL>
+  <LI>vi måste i förväg gissa hur många element som kan tänkas behövas, och
+  <P></P>
+  <LI>det är besvärligt att stoppa in ett element i början av eller mitt i en 
+  vektor (de element som finns efter måste alla flyttas ett steg).
+  <P></P></LI></UL>Som alternativ till vektorer kan vi använda en annan 
+datastruktur - <EM>listor</EM>.
+<P>Vi inför följande klass: <PRE>    class IntElement {
+    
+        public int value;
+        public IntElement next;
+    
+        public IntElement(int value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
+</PRE>I denna klass har jag av bekvämlighetsskäl låtit attributen vara publika, 
+se ovan.
+<P>Objekt av klassen <CODE>IntElement</CODE> innehåller ett heltalsvärde, och en 
+referens till ett annat <CODE>IntElement</CODE>-objekt. Vi kan på så vis låta 
+varje <CODE>IntElement</CODE> hålla reda på sin egen efterföljare, vilket 
+innebär att vi kan binda ihop ett antal <CODE>IntElement</CODE> i en lista (i 
+omvänd ordning!) på följande sätt:
+<P><PRE>    IntElement list = null;
+    int nbr = Keyboard.readInt();
+    while (nbr &gt; 0) {
+        IntElement e = new IntElement(nbr);
+        e.next = list;   // låt efterföljaren till det nya elementet
+                         // vara det element som tidigare var listans
+                         // första element
+        list = e;        // listans första element är nu e
+        nbr = Keyboard.readInt();
+    }
+    IntElement e = list;
+    while (e != null) {
+        System.out.println(e.value);
+        e = e.next;
+    }
+</PRE>Om vi läser in talen <CODE>1 2 3</CODE> får vi följande lista: 
+<P>
+<CENTER><IMG src="f18_files/list1.gif"></CENTER>
+<P>I denna lösning stoppar vi upprepade gånger in ett element först i listan, 
+att göra samma sak med en vektor skulle bli väldigt klumpigt eftersom alla 
+element måste flyttas ner ett steg: <PRE>    int[] v = new int[100];
+    int n = 0;
+    int nbr = Keyboard.readInt();
+    while (nbr &gt; 0) {
+        for (int i = n; i &gt; 0; i--) {   // här flyttar vi ner
+            v[i] = v[i-1];              // elementen ett steg
+        }
+        v[0] = nbr;                     // och stoppar in det nya
+        n++;                            // elementet först i vektorn
+        nbr = Keyboard.readInt();
+    }
+    for (int i = 0; i &lt; n; i++) {
+        System.out.println(v[i]);
+    }
+</PRE>Listor är i detta exempel smidigare än vektorer på flera sätt, vi behöver 
+inte i förväg skapa utrymme för ett bestämt antal element, och det är enkelt att 
+infoga element före andra element i listan.
+<P>Det finns naturligtvis även nackdelar med listor, exempelvis: 
+<UL>
+  <LI>vi kan inte direkt komma åt ett element inne i listan (i en vektor kan vi 
+  direkt hämta element nummer 5, i en lista måste vi stega oss fram), och
+  <P></P>
+  <LI>det är inte alltid så lätt att lägga in element som i exemplet ovan, i 
+  själva verket är lagring i omvänd ordning det enklaste sättet att stoppa in 
+  element i en lista!
+  <P></P></LI></UL>I rätt sammanhang är dock listor en mycket användbar 
+datastruktur, och vi kommer att ägna resten av föreläsningen åt den.
+<P>
+<H4>Kontrolluppgifter (överkurs)</H4>
+<OL>
+  <LI>(Överkurs): Skriv om list-exemplet ovan så att vi lägger in heltalen i 
+  samma ordning som vi läser in dem istället.
+  <P></P>
+  <LI>(Överkurs): Skriv programrader för att lägga in ett element näst sist i en 
+  lista med <CODE>IntElement</CODE> (om listan är tom från början skall 
+  elementet läggas in först). </LI></OL>
+<H2>Olika typer av listor</H2>Eftersom listan är en så vanlig datastruktur är 
+den noga studerad och klassificerad. I exemplet ovan höll varje element reda 
+bara på sin efterföljare, sådana listor kallas <EM>enkellänkade</EM>. Listor i 
+vilka elementen har referenser till både föregångare och efterföljare kallas 
+<EM>dubbellänkade</EM>.
+<P>
+<P>
+<CENTER><IMG src="f18_files/simpleList.gif"> </CENTER>
+<P>Många operationer blir enklare att implementera med dubbellänkade listor 
+eftersom vi alltid kan stega tillbaks ett eller flera steg.
+<P>Man skiljer även mellan <EM>listor med huvud</EM> (listor som har ett 
+särskilt element för att hålla reda på listan i sin helhet) och <EM>listor utan 
+huvud</EM>.
+<P>Man kan även klassificera listpaket på andra sätt: 
+<UL>
+  <LI>Listor i vilka objekten själva håller reda på sina efterföljare (och 
+  eventuellt föregångare), elementen måste då vara skräddarsydda för att 
+  placeras i listor (som ovan): 
+  <P>
+  <CENTER><IMG src="f18_files/simpleList.gif"> </CENTER>
+  <P></P>
+  <LI>Listor i vilka vi kan ha generella element - elementen känner då själva 
+  inte till vilka element som ligger före och efter, utan en (gömd) lista håller 
+  reda på ordningen mellan objekten: 
+  <P>
+  <CENTER><IMG src="f18_files/jdkList.gif"> </CENTER>
+  <P>Bland poängerna med den senare typen av lista kan nämnas att elementen 
+  slipper att släpa med sig referenser till föregångare och efterföljare själva, 
+  och att de dessutom kan ligga i flera olika listor samtidigt (det finns fler 
+  fördelar med denna typ av lista). </P></LI></UL>För att använda den andra typen 
+av listor behövs en lite mer komplicerad begreppsapparat (iteratorer etc), så i 
+kursen kommer vi bara att använda oss av den första typen ovan. Det finns i Java 
+ett standardpaket för listor av den andra typen, och de som läser 
+fortsättningskursen <EM>Algoritmer och datastrukturer</EM> kommer att stöta på 
+ett liknande listpaket.
+<P>
+<H3>Listpaketet <CODE>jlist</CODE></H3>I kursen kommer vi att använda paketet 
+<CODE>se.lth.cs.jlist</CODE>, som är inspirerat av ett klassiskt listpaket, 
+<EM>simset</EM>, som fanns som standardpaket i det första objektorienterade 
+programspråket - Simula. Ett av de huvudsakliga användningsområdena för Simula 
+var från början olika typer av simulering, och man behövde sätt att lägga 
+simulerade objekt i listor, därav Simset.
+<P>Paketet <CODE>jlist</CODE>, liksom Simset, beskriver <EM>dubbellänkade listor 
+med huvud</EM> enligt figuren nedan: 
+<P>
+<CENTER><IMG src="f18_files/jlist1.gif"> </CENTER>
+<P>Paketet exporterar två klasser: 
+<UL>
+  <LI><CODE>Head</CODE>, som beskriver ett listhuvud (<A 
+  href="http://www.cs.lth.se/Education/Courses/PT/E/lect/pict/f20/Head.html">specifikation</A>), 
+  och 
+  <LI><CODE>Link</CODE>, som beskriver ett listelement (<A 
+  href="http://www.cs.lth.se/Education/Courses/PT/E/lect/pict/f20/Link.html">specifikation</A>). 
+  </LI></UL>En lista består av ett <CODE>Head</CODE>-objekt och ett antal (0 eller 
+flera) <CODE>Link</CODE>-objekt. De vanligaste list-operationerna fungerar på 
+följande sätt: 
+<UL>
+  <LI><B>Att skapa en lista:</B>
+  <P>Vi skapar en tom lista genom att skapa ett nytt <CODE>Head</CODE>-objekt: <PRE>    Head list = new Head();
+      </PRE>
+  <LI><B>Att skapa listelement och stoppa dem i en lista:</B>
+  <P>Listelementen skapas som vanligt med <CODE>new</CODE>-anrop: <PRE>    Link element = new Link();
+      </PRE>och de stoppas in sist i en lista med hjälp av 
+  <CODE>into(Head)</CODE>-operationen: <PRE>    element.into(list);
+      </PRE>Lägg märke till att operationen för att lägga ett element i en 
+  lista alltså är en operation på elementet, inte på listan! En anledning till 
+  detta är att det annars hade varit knepigt att infoga ett element inne i 
+  listan.
+  <P>Ofta lägger man in sina element i en lista samtidigt som man skapar dem: <PRE>    new Link().into(list);
+      </PRE>
+  <LI><B>Att hämta första elementet i en lista:</B>
+  <P>Första elementet i en lista håller listhuvudet reda på, i klassen 
+  <CODE>Head</CODE> finns en operation <CODE>first()</CODE>: <PRE>    element = list.first();
+      </PRE>
+  <LI><B>Att hämta efterföljaren till ett listelement:</B>
+  <P>För att få efterföljaren till ett element använder vi operationen 
+  <CODE>suc()</CODE> i klassen <CODE>Link</CODE>: <PRE>    Link nextElement = element.suc();
+      </PRE>När <CODE>element</CODE> är listans sista element returneras 
+  <CODE>null</CODE> när vi anropar <CODE>suc()</CODE>.
+  <P></P>
+  <LI><B>Att hämta efterföljaren till ett listelement:</B>
+  <P>För att få föregångaren till ett element använder vi operationen 
+  <CODE>pred()</CODE> i klassen <CODE>Link</CODE>: <PRE>    Link previousElement = element.pred();
+      </PRE>När <CODE>element</CODE> är listans första element returneras 
+  <CODE>null</CODE> när vi anropar <CODE>pred()</CODE>.
+  <P></P>
+  <LI><B>Att gå igenom en lista:</B>
+  <P>För att gå igenom en lista från första till sista element kan vi skriva: <PRE>    Link e = list.first();
+    while (e != null) {
+        // gör något med elementet e
+        e = e.suc();
+    }
+      </PRE>Detta idiom kommer vi att använda många gånger i kursen. </LI></UL>
+<H3>Att göra något användbart med <CODE>jlist</CODE></H3>Klassen 
+<CODE>Link</CODE> är i sig rätt oanvändbar, den innehåller inga intressanta 
+attribut eller operationer (förutom referenser till föregångare och 
+efterföljare). Man måste därför ärva klassen <CODE>Link</CODE> för att få något 
+intressant: 
+<P>
+<CENTER><IMG src="f18_files/jlist2.gif"> </CENTER>
+<P><B>Exempel:</B> Vi vill använda listor istället för vektorer när vi skall 
+lagra våra konton i övning 16 (Bankomat-övningen). Eftersom våra konton skall 
+bli listelement låter vi dem ärva klassen <CODE>Link</CODE>: <PRE>    class Account extends Link {
+     
+        private int
+            accountNo,
+            amount;
+     
+        /**
+         * Skapar ett konto med givet kontonummer.
+         *
+         * @param accountNo Kontonummer.
+         */
+        public Account(int accountNo) {
+            super();
+            // implementation som i övning 16
+        }
+     
+        /**
+         * Ger kontonumret.
+         *
+         * @return Kontonumret.
+         */
+        public int getAccountNo() {
+            // implementation som i övning 16
+        }
+     
+        /**
+         * Ger saldot på kontot.
+         *
+         * @return Saldot på kontot.
+         */
+        public int getBalance() {
+            // implementation som i övning 16
+        }
+     
+        /**
+         * Sätter in ett givet belopp på kontot.
+         *
+         * @param amount Det belopp vi vill sätta in.
+         */
+        public void deposit(int amount) {
+            // implementation som i övning 16
+        }
+     
+        /**
+         * Tar ut ett givet belopp från kontot.
+         *
+         * @param amount Det belopp vi vill ta ut.
+         */
+        public void withdraw(int amount) {
+            // implementation som i övning 16
+        }
+    }
+</PRE>Vi kan skriva klassen <CODE>Account</CODE> precis som vi gjort tidigare, 
+med det lilla tillägget att vi utökar klassen <CODE>Link</CODE> (<CODE>extends 
+Link</CODE> på första raden), samt att vi anropar faderklassens konstruktor, 
+<CODE>super()</CODE>, i konstruktorn.
+<P>Konton kan nu läggas i en lista (<CODE>Head</CODE>) på följande sätt: <PRE>    Head accountList = new Head();   // skapar tom lista
+    for (int accountNo = 100; accountNo &lt;= 1000; accountNo += 100) {
+        new Account(accountNo).into(accountList);
+    }
+</PRE>Ett litet problem (eller snarare irritationsmoment) som uppstår när man 
+ärver ner klassen <CODE>Link</CODE> är att man måste kvalificera om referenser 
+på många ställen. Eftersom operationerna <CODE>first()</CODE> i klassen 
+<CODE>Head</CODE> och <CODE>suc()</CODE> i klassen <CODE>Link</CODE> båda har 
+den statiska kvalifikationen <CODE>Link</CODE> så kommer vi att tvingas typa när 
+vi använder dessa operationer. För att skriva ut saldot på samtliga konton 
+skulle vi få skriva: <PRE>    Account acc = (Account) accountList.first();
+    while (acc != null) {
+        writer.println("Konto nummer: " + acc.getAccountNo() +
+                       " har saldot " + acc.getBalance());
+        acc = (Account) acc.suc();
+    }
+</PRE>Vi diskuterade reglerna för kvalifikation häromveckan, en referensvariabel 
+får referera till <EM>"objekt av den egna klassen och subklasser till den"</EM>, 
+men inte till klasser ovanför i klasshierarkin (klassen <CODE>Link</CODE> är ju 
+faderklass till <CODE>Account</CODE>) - det är därför vi måste "typa om".
+<P>
+<H3>Att utvidga list-klassen</H3>Ibland vill man utvidga även klassen 
+<CODE>Head</CODE>, exempelvis ville vi i Bank-uppgiften kunna söka efter ett 
+konto med givet kontonummer, denna operation hade lämpligen kunnat lägga i 
+list-klassen. Dessutom kan vi här lägga operationer för att undersöka om ett 
+givet kontonummer finns, samt operationer för saldobesked, insättning och uttag.
+<P>Innan vi implementerar klassen <CODE>AccountList</CODE> några ord om sökning:
+<P>Vi har tidigare i kursen sökt i vektorer, att söka efter ett heltalsvärde 
+<CODE>value</CODE> i en heltalsvektor <CODE>v</CODE> med <CODE>n</CODE> element 
+gjorde vi på följande sätt: <PRE>    int pos = 0;    // första index
+    while (pos &lt; n &amp;&amp; v[pos] != value) {
+        pos++;
+    }
+</PRE>Motsvarande konstruktion för sökning efter kontonummer 
+<CODE>accountNo</CODE> i en kontolista <CODE>accountList</CODE> blir: <PRE>    Account account = (Account) accountList.first();   // första element
+    while (account != null &amp;&amp; account.getAccountNo() != accountNo) {
+        account = (Account) account.suc();
+    }
+</PRE>I båda fallen börjar vi på det första elementet, kontrollerar i varje steg 
+att vi fortfarande befinner oss i vektorn respektive listan, och stegar vidare 
+om vi inte hittat det sökta värdet.
+<P>Vi kan nu implementera klassen <CODE>AccountList</CODE>, i implementationen 
+nedan har vi ingen lista <CODE>accountList</CODE>, istället söker vi i 
+<CODE>this</CODE> (eftersom <CODE>this</CODE> är den kontolista vi söker i), det 
+första elementet blir därför <CODE>this.first()</CODE>: <PRE>    class AccountList extends Head {
+    
+        /**
+         * Skapar en tom kontolista.
+         */
+        public AccountList() {
+            super();
+        }
+    
+        /**
+         * Letar upp ett konto med givet kontonummer.
+         *
+         * @param accountNo Det kontonummer vi söker.
+         * @return Kontot med det givna kontonumret, <CODE>null</CODE> om
+         * inget sådant konto finns.
+         */
+        private Account find(int accountNo) {
+            Account account = (Account) this.first();
+            while (account != null &amp;&amp; account.getAccountNo() != accountNo) {
+                account = (Account) account.suc();
+            }
+            return account;
+        }
+    
+        /**
+         * Avgör om ett konto med givet kontonummer finns.
+         *
+         * @param accountNo Kontonummer.
+         * @return 
+         */
+        public boolean exists(int accountNo) {
+            return this.find(accountNo) != null;
+        }
+        
+        /**
+         * Ger innestående belopp på ett konto med givet kontonummer,
+         * förutsätter att kontot verkligen finns.
+         *
+         * @param accountNo Kontonummer
+         */
+        public void getBalance(int accountNo) {
+            return this.find(accountNo).getBalance();
+        }
+    
+        /**
+         * Sätter in belopp på konto med givet kontonummer, förutsätter
+         * att kontot verkligen finns.
+         *
+         * @param accountNo Kontonummer.
+         * @param amount Belopp som skall sättas in.
+         */
+        public void deposit(int accountNo, int amount) {
+            this.find(accountNo).deposit(amount);
+        }
+    
+        /**
+         * Tar ut givet belopp från konto med givet kontonummer,
+         * förutsätter att kontot verkligen finns.
+         *
+         * @param accountNo Kontonummer.
+         * @param amount Belopp som skall tas ut.
+         */
+        public void withdraw(int accountNo, int amount) {
+            this.find(accountNo).withdraw(amount);
+        }
+    }
+</PRE>
+<H4>Kontrolluppgift</H4>
+<OL>
+  <LI>Skriv två klasser, <CODE>IntList</CODE> och <CODE>IntElement</CODE> för 
+  att lagra heltal i en lista. Klasserna skall ha följande specifikationer: <PRE>    class IntElement ... {
+
+        public IntElement(int nbr);
+
+        public void setValue(int nbr);
+
+        public int getValue();
+    }
+
+    class IntList ... {
+
+        public int nbrOfOddValues();
+    }
+      </PRE>där <CODE>nbrOfOddValues()</CODE> i klassen <CODE>IntList</CODE> 
+  skall returnera antalet udda värden i listan. </LI></OL></BODY></HTML>

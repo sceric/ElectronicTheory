@@ -1,0 +1,20 @@
+
+
+int a=1;
+int b=2;
+
+   if(a>b){
+     
+     int c=a+b;
+     int d=b+c;
+     System.out.println(d);   //rad 1
+}
+
+int e=3;                     //rad 2
+
+
+
+
+I rad 1 åtekomliga variabler är a,b,c,d.
+
+I rad 2 åtekomliga variabler är a,b,e.

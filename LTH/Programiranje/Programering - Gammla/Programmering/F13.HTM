@@ -1,0 +1,435 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://www.cs.lth.se/Education/Courses/PT/E/lect/f13.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY background="">
+<H1></H1>
+<H1>Anteckningar till föreläsning 13</H1>Förra veckan introducerade vi ärvning, 
+ett sätt att utvidga befintliga klasser. Vi kommer idag att fortsätta tala om 
+ärvning, och då framförallt två saker: 
+<UL>
+  <LI>Hur man modifierar en befintlig klass (förra veckan utökade vi den bara). 
+  <LI>Hur man skapar klasshierarkier (vi tittade på detta som hastigast under 
+  slutet av förra föreläsningen och kommer denna vecka att behandla det under 
+  genomgången av ett större exempel). </LI></UL>Veckans övning är en pappersövning 
+som skall ge er träning i att utvidga klasser, vi kommer att inleda 
+föreläsningen med att gå igenom övningen.
+<P>Vi kommer även att diskutera inlämningsuppgift 1.
+<P>
+<H2>Att modifiera ärvda operation, 'overriding'</H2>När vi utvidgade klasser 
+förra veckan lade vi till nya operationer (exempelvis fick klassen 
+<CODE>Turtle</CODE> i sin utökade variant några nya operationer).
+<P>Man kan även låta den nya klassen modifiera någon eller några av de ärvda 
+operationerna. Om vi exempelvis vill ha en sköldpadda som räknar det antal steg 
+den tar kan vi införa en klass <CODE>TripmeterTurtle</CODE> som ärver från 
+klassen <CODE>Turtle</CODE> och göra de tillägg och ändringar som behövs.
+<P>För att räkna antalet steg behövs ett attribut, <CODE>nbrOfSteps</CODE>, och 
+en operation, <CODE>getNbrOfSteps()</CODE>, som ger värdet på attributet.
+<P>Vi får alltså: <PRE>    class TripmeterTurtle extends Turtle {
+
+        private int nbrOfSteps;
+
+        public TripmeterTurtle(SimpleWindow w, int x, int y) {
+            super(w,x,y);
+            this.nbrOfSteps = 0;
+        }
+
+        public int getNbrOfSteps() {
+            return this.nbrOfSteps;
+        }
+
+        // ...eventuellt övrigt...
+    }
+</PRE>Hur skall vi då få sköldpaddan att räkna sina steg? Vi vill kunna använda 
+vår nya sköldpadda på ungefär samma sätt som den gamla, dvs vi skall kunna 
+skriva: <PRE>    SimpleWindow w = new SimpleWindow(500,500);
+    TripmeterTurtle t = new TripmeterTurtle(w,250,250);
+    RandomNumberGenerator rng = new RandomNumberGenerator();
+    t.penDown();
+    for (int i = 1; i &lt;= 10; i++) {
+        t.left(rng.randInt(0,359));
+        t.forward(rng.randInt(1,10));
+    }
+    System.out.println("Sköldpaddan har gått " + t.getNbrOfSteps() + " steg.");
+</PRE>Den enda gång sköldpaddan går framåt är operationen 
+<CODE>forward(int)</CODE>, så det är när vi kör den som vi kan räkna antalet 
+steg. Vi modifierar därför <CODE>forward(int)</CODE>-operationen genom att i vår 
+nya klass deklarera en ny <CODE>forward(int)</CODE>-operation.
+<P>Vi sade förra veckan att vi kunde ha flera operationer med samma namn, men 
+olika signatur, i en klass och kallade det <EM>overloading</EM> (överlagring på 
+svenska). Det vi gör nu är att i en subklass införa en ny operation med 
+<EM>samma</EM> signatur som en ärvd operation, det kallas för 
+<EM>overriding</EM>. Lägg dock märke till att vi i varje klass fortfarande bara 
+kan ha en operation med en given signatur.
+<P>I klassen <CODE>TripmeterTurtle</CODE> får vi en operation 
+<CODE>forward(int)</CODE> som skall fungera nästan precis som den i klassen 
+<CODE>Turtle</CODE> gör, men som dessutom skall räkna upp antalet steg. Vi kan 
+göra det enkelt för oss genom att anropa den <CODE>forward(int)</CODE>-operation 
+vi ärvt från superklassen, och därefter räkna upp antalet steg: <PRE>    public void forward(int nbrOfSteps) {
+        super.forward(nbrOfSteps);
+        this.nbrOfSteps += nbrOfSteps;
+    }
+</PRE>Här har vi använt det reserverade ordet <CODE>super</CODE> för att markera 
+att vi vill använda operationen <CODE>forward(int)</CODE> i faderklassen, 
+analogt med hur vi anropade konstruktorn i faderklassen. <EM>Lägg märke till att 
+vi bara behöver skriva <CODE>super</CODE> när den nya operationen har samma 
+signatur som den gamla</EM>, och alltså inte när vi anropar andra operationer.
+<P>När vi nu anropar <CODE>forward(int)</CODE> på en 
+<CODE>TripmeterTurtle</CODE> så är det den nya operationen som anropas och 
+alltså kommer vår sköldpadda att hålla reda på sina steg. 
+<H4>Kontrollfrågor</H4>
+<OL>
+  <LI>Vad tror du hade hänt om vi skrivit <CODE>this.forward(nbrOfSteps);</CODE> 
+  istället för <CODE>super.forward(nbrOfSteps);</CODE> i exemplet ovan?
+  <P></P>
+  <LI>Hur skall vi göra om vi vill att vår <CODE>TripmeterTurtle</CODE> skall 
+  kunna avgöra om den befinner sig innanför sitt fönster, och dessutom skall 
+  kunna bestämma avståndet till en annan <CODE>Turtle</CODE>? (Dvs vad måste 
+  ändras i exemplet ovan?) </LI></OL>
+<H2>Ett lite större exempel, (uppbyggnad av klasshierarki)</H2>Vi kommer att gå 
+igenom följande, ganska långa, exempel på tavlan under föreläsningen:
+<P>Under ransoneringen under andra världskriget började en statistiker fatta 
+misstankar mot sin bagare, när han köpte 200-grams formbröd tyckte han att 
+bröden var anmärkningsvärt små. Han vägde därför sina bröd under 100 dagar och 
+fick följande värden (i gram): <PRE>  191.5  193.0  192.9  201.0  190.5  198.3  203.7  193.7  195.6  193.1
+  187.7  195.0  187.9  183.2  193.3  178.7  193.0  194.8  189.2  200.3
+  200.0  195.3  190.0  183.5  206.5  183.8  210.5  189.7  206.3  195.7
+  185.1  186.0  183.1  190.0  196.1  194.5  190.1  178.4  206.7  197.3
+  198.9  190.5  185.4  195.7  189.1  207.6  202.8  190.8  187.2  197.9
+  184.5  201.0  196.8  198.6  211.6  196.7  187.6  195.4  184.5  197.5
+  184.6  192.7  197.4  199.4  186.4  187.7  185.8  184.1  199.6  194.0
+  192.8  195.9  198.9  210.1  205.7  186.9  193.3  186.9  185.8  194.9
+  197.4  188.4  192.5  197.5  197.6  194.3  184.2  205.9  190.7  192.3
+  181.6  199.1  198.0  194.6  186.6  189.2  186.6  197.0  196.2  192.4
+</PRE>Eftersom bröden uppenbarligen varit för små gick statistikern till bagaren 
+och hotade att anmäla honom om ha inte bytte till en större form.
+<P>Bagaren lovade vid allt han höll heligt att byta form, och under de följande 
+100 dagarna fick statistikern följande resultat när han vägde sina bröd: <PRE>  202.5  200.4  203.8  213.7  201.3  202.2  205.1  200.5  206.3  201.2
+  203.9  200.5  205.8  205.2  202.9  200.4  200.1  200.2  205.8  205.9
+  200.9  202.9  205.9  201.4  203.8  207.3  207.5  211.6  214.8  201.7
+  200.3  207.7  212.7  212.6  207.1  202.7  200.1  200.0  204.1  201.9
+  201.4  200.5  201.6  208.5  204.8  201.2  212.3  204.9  200.3  207.2
+  201.6  203.5  206.5  201.4  200.8  205.4  202.0  212.9  203.1  202.8
+  200.2  200.4  200.6  203.8  200.5  202.0  202.0  207.0  211.6  201.7
+  205.4  200.2  202.3  200.5  205.6  207.4  200.2  203.5  218.3  212.3
+  202.3  202.6  200.6  205.5  210.5  200.3  200.1  204.0  200.5  200.0
+  207.1  205.4  202.7  205.3  200.4  201.6  203.0  201.2  206.1  206.6
+</PRE>Kan statistikern nöja sig med bagarens försäkran att han bytt form?
+<P>Om man bara beräknar medelvärden och standardavvikelser får man lätt 
+intrycket att bagaren verkligen bytt form (dessutom till en form som är större 
+än 200 gram), men det finns bättre metoder att testa vikterna på dessa bröd.
+<P>Ni skall läsa sannolikhetsteori senare under er utbildning, just nu behöver 
+vi bara känna till några enkla fakta. När vi kastar en liksidig tärning är 
+sannolikheten för varje utfall lika stort (1/6), vi säger att 
+<EM>frekvensfunktionen</EM> för tärningskastet är konstant och kallar sådana 
+händelser rektangelfördelade, på grund av formen på frekvensfunktionen. 
+<CENTER><IMG src="f13_files/rectangled.gif"></CENTER>Inte alla händelser är dock 
+rektangelfördelade, i många fall är utfall nära ett medelvärde mer sannolika än 
+utfall längre ifrån medelvärdet. Om vi bakar bröd i en 200-gramsform så kommer 
+de flesta bröd att väga runt 200 gram, säg mellan 195 och 205 gram, några kommer 
+att väga mellan 190 och 195, och bara några få kommer att väga mindre än 190 
+gram. En vanlig modell för sådana utfall är normalfördelningsfunktionen, som har 
+följande frekvensfunktion (eftersom vi har reella utfall är tolkningen inte helt 
+självklar, vi kommer att tala mer om detta vid föreläsningen): 
+<CENTER><IMG src="f13_files/normald.gif"></CENTER>Om vi delar in de bröd vi får 
+i grupper, exempelvis 10 grupper med vikterna 180..184, 184..188, 188..192 etc, 
+och räknar antalet bröd i varje grupp, så borde de flesta bröd hamna i grupperna 
+närmast 200 gram enligt figuren ovan.
+<P>För att gruppera och räkna våra bröd utvecklar vi en ganska allmän 
+histogramklass, men börjar med helt elementära histogram och bygger på denna 
+klass i flera steg.
+<P>Det mest grundläggande histogramklass man kan tänka sig har följande 
+specifikation: <PRE>    specification Histogram {
+    
+        /**
+         * Skapar ett nytt primitivt histogram, med ett givet antal klasser.
+         */
+        public Histogram(int nbrOfClasses) {
+        }
+    
+        /**
+         * Tar reda på antalet klasser
+         */
+        public int getNbrOfClasses() {
+        }
+    
+        /**
+         * Tar reda på antal värden i en given klass.
+         */
+        public int getCount(int classNbr) {
+        }
+    
+        /**
+         * Registrerar ett nytt värde i en given klass.
+         */
+        public add(int classNbr) {
+        }
+    }
+</PRE>Denna klass kan användas för att registrera värden mellan 0 och 
+<I>nbrOfClasses-1</I>, precis som vi använde vanliga heltalsvektorer för 
+registrering i början av kursen.
+<P>Klassen innehåller ett attribut motsvarande vår registreringsvektor, och 
+enkla operationer för att hantera vektorn: <PRE>    class Histogram {
+    
+        private int count[];
+        private int nbrOfClasses; // kan vi faktiskt undvara, (count.length)
+    
+        public Histogram(int nbrOfClasses) {
+            this.count = new int[nbrOfClasses];
+            this.nbrOfClasses = nbrOfClasses;
+        }
+    
+        public int getNbrOfClasses() {
+            return this.nbrOfClasses;   // eller return this.count.length;
+        }
+    
+        public int getCount(int classNbr) {
+            return this.count[classNbr];
+        }
+    
+        public void add(int classNbr) {
+            this.count[classNbr]++;
+        }
+    }
+</PRE>Denna klass kan användas exempelvis för att testa en slumptalsgenerator 
+(<CODE>randInt(int,int)</CODE>-operationen skall ju ge rektangelfördelade 
+värden): <PRE>    Histogram h = new Histogram(10);
+    RandomNumberGenerator rng = new RandomNumberGenerator();
+    for (int i = 1; i &lt;= 100000; i++) {
+        h.add(rng.randInt(0,9));
+    }
+    for (int i = 0; i &lt; 10; i++) {
+        System.out.println(i + ": " + h.getCount(i));
+    }
+</PRE>Om slumptalsgeneratorn genererar rektangelfördelade tal borde vi få 
+ungefär lika många av varje värden. Följande körning antyder att generatorn 
+fungerar bra: <PRE>    0: 10027
+    1: 10018
+    2: 9956
+    3: 10145
+    4: 9991
+    5: 9873
+    6: 9903
+    7: 9923
+    8: 10060
+    9: 10104
+</PRE>Det är inte alltid vi kan vara helt säkra på att de värden vi vill 
+registrera alltid ligger inom givna gränser, om vi skickar ett otillåtet värde 
+till <CODE>h</CODE> ovan får vi ett exekveringsfel (felaktigt index i vektorn).
+<P>Det är därför naturligt att införa en subklass till <CODE>Histogram</CODE> 
+som ser till att alla värden ligger i rätt intervall, och håller reda på hur 
+många värden som varit för stora eller för små:
+<P><PRE>    class RangeCheckingHistogram extends Histogram {
+    
+        private int
+            nbrOfTooSmallValues,
+            nbrOfTooBigValues;
+    
+        /**
+         * Skapar ett enkelt histogram som kontrollerar att alla värden
+         * ligger inom givna ramar.
+         */
+        public RangeCheckingHistogram(int nbrOfClasses) {
+            super(nbrOfClasses);
+            this.nbrOfTooSmallValues = 0;   // egentligen onödigt
+            this.nbrOfTooBigValues = 0;     //       -"-
+        }
+    
+        /**
+         * Ger antalet värden som varit för små.
+         */
+        public int getNbrOfTooSmallValues() {
+            return this.nbrOfTooSmallValues;
+        }
+    
+        /**
+         * Ger antalet värden som varit för stora.
+         */
+        public int getNbrOfTooBigValues() {
+            return this.nbrOfTooBigValues;
+        }
+    
+        /**
+         * Registrerar ett nytt värde i en given klass, kontrollerar att
+         * klassen är i rätt intervall.
+         */
+        public void add(int classNbr) {
+            if (classNbr &lt; 0) {
+                this.nbrOfTooSmallValues++;
+            } else if (classNbr &gt;= this.getNbrOfClasses()) {
+                this.nbrOfTooBigValues++;
+            } else {
+                super.add(classNbr);
+            }
+        }
+    }
+</PRE>Lägg märke till operationen <CODE>add(int)</CODE>, den modifierar den 
+<CODE>add(int)</CODE>-operation som fanns i superklassen, och testar att det 
+givna värdet faller inom givna gränser.
+<P>Att läsa in och registrera 100 tal mellan 0 och 9 från tangentbordet kan 
+göras med: <PRE>    RangeCheckingHistogram h = new RangeCheckingHistogram(10);
+    for (int i = 1; i &lt;= 100; i++) {
+        int value = Keyboard.readInt();
+        h.add(value);
+    }
+    if (h.getNbrOfTooSmallValues() &gt; 0) {
+        System.out.println("Det förekom " +
+                           h.getNbrOfTooSmallValues() +
+                           " för små värden.");
+    }
+    for (int i = 0; i &lt; 10; i++) {
+        System.out.println(i + ": " + h.getCount(i));
+    }
+    if (h.getNbrOfTooBigValues() &gt; 0) {
+        System.out.println("Det förekom " +
+                           h.getNbrOfTooBigValues() +
+                           " för stora värden.");
+    }
+</PRE>Vi har nu två klasser för att skapa histogram, men fortfarande ingen klass 
+som är riktigt lämplig för uppgiften att registrera vikterna på bröden. Det är 
+egentligen två saker vi saknar, dels vill vi kunna registrera reella värden, 
+dessutom vill vi inte alltid använda den undre gränsen 0.
+<P>Vi inför den nya klassen <CODE>RealHistogram</CODE>, med vars hjälp vi kan 
+registrera värden mellan givna reella gränser, indelade i ett givet antal 
+<EM>klasser</EM> (det är lite olyckligt att man kallar de olika intervallerna 
+just klasser, men så är det). För att fånga upp de värden som ligger utanför 
+våra gränser låter vi den nya klassen ärva från klassen 
+<CODE>RangeCheckingHistogram</CODE>. <PRE>    class RealHistogram extends RangeCheckingHistogram {
+        
+        private double
+            lowLimit,
+            highLimit,
+            classWidth;
+        
+        /**
+         * Skapar ett histogram för att registrera reella värden i ett
+         * givet intervall i ett givet antal klasser.
+         */
+        public RealHistogram(double lowLimit, double highLimit, int nbrOfClasses) {
+            super(nbrOfClasses);
+            this.lowLimit = lowLimit;
+            this.highLimit = highLimit;
+            this.classWidth = (this.highLimit - this.lowLimit)/nbrOfClasses;
+        }
+    
+        /**
+         * Registrerar ett nytt värde.
+         */
+        public void add(double value) {
+            super.add(this.classify(value));
+        }
+    
+        /**
+         * Klassbestämmer ett givet värde (ger ett heltal).
+         */
+        protected int classify(double value) {
+            return (int) Math.floor((value-this.getLowLimit())/this.getClassWidth());
+        }
+    
+        /**
+         * Ger histogrammets undre gräns.
+         */
+        public double getLowLimit() {
+            return this.lowLimit;
+        }
+    
+        /**
+         * Ger undre gränsen för en given klass (0..).
+         */
+        public double getLowLimit(int classNbr) {
+            return this.lowLimit + classNbr*this.getClassWidth()
+        }
+    
+        /**
+         * Ger histogrammets övre gräns.
+         */
+        public double getHighLimit() {
+            return this.highLimit;
+        }
+    
+        /**
+         * Ger övre gräns för en given klass (0..).
+         */
+        public double getHighLimit(int classNbr) {
+            return this.getLowLimit(classNbr+1);
+        }
+    
+        /**
+         * Ger bredden på klasserna i histogrammet.
+         */
+        public double getClassWidth() {
+            return this.classWidth;
+        }
+    }
+</PRE>(Det finns ett subtilt problem med denna klass, se nedan.)
+<P>Genom vårt sätt att dela upp problemet har vi nu fått följande klasshierarki: 
+
+<P>
+<CENTER><IMG src="f13_files/Histogram.gif"></CENTER>
+<P>där de olika klasserna har olika användningsområden (alla tre är användbara 
+var för sig).
+<P>För att nu testa bröden i vårt ursprungliga problem kan vi skriva följande 
+testprogram: <PRE>    RealHistogram h = new RealHistogram(180,220,10);
+    FileReader reader = new FileReader("breadBefore");
+    for (int i = 1; i &lt;= 100; i++) {
+        h.add(reader.readDouble());
+    }
+    System.out.println("&lt; " + h.getLowLimit() +
+                       ": " + h.getNbrOfTooSmallValues());
+    for (int i = 0; i &lt; h.getNbrOfClasses(); i++) {
+        System.out.println("&lt; " + h.getHighLimit(i) + ": " +
+                           h.getCount(i));
+    }
+    System.out.println("&gt; " + h.getHighLimit() +
+                       ": " + h.getNbrOfTooBigValues());
+</PRE>och när vi kör får vi dessa värden får vi: <PRE>    &lt; 180.0: 2
+    &lt; 184.0: 5
+    &lt; 188.0: 20
+    &lt; 192.0: 13
+    &lt; 196.0: 25
+    &lt; 200.0: 20
+    &lt; 204.0: 6
+    &lt; 208.0: 6
+    &lt; 212.0: 3
+    &lt; 216.0: 0
+    &lt; 220.0: 0
+    &gt; 220.0: 0
+</PRE>dvs det förefaller som om bröden är ungefär normalfördelade med ett 
+medelvärde runt 195 gram.
+<P>Om vi istället testar vikterna efter tillsägelsen får vi: <PRE>    RealHistogram h = new RealHistogram(180,220,10);
+    FileReader reader = new FileReader("breadAfter");
+    // resten som tidigare...
+</PRE>och resultatet blir: <PRE>    &lt; 180.0: 0
+    &lt; 184.0: 0
+    &lt; 188.0: 0
+    &lt; 192.0: 0
+    &lt; 196.0: 0
+    &lt; 200.0: 0
+    &lt; 204.0: 60
+    &lt; 208.0: 28
+    &lt; 212.0: 4
+    &lt; 216.0: 7
+    &lt; 220.0: 1
+    &gt; 220.0: 0
+</PRE>Det är ganska uppenbart att bagaren har använt samma form, men 
+kontrollmätt statistikerns bröd varje gång (och valt nya bröd tills han fick ett 
+bröd som vägde minst 200 gram). Formen på frekvensfunktionen avslöjar honom.
+<P>
+<H3>Ett tråkigt problem</H3>Om vi skriver programraderna <PRE>    RealHistogram h = new RealHistogram(180,220,10);
+    h.add(201);
+</PRE>så kommer vi att få ett annat resultat än vi tänkt oss. När vi skriver 
+anropet <CODE>h.add(201)</CODE> anropas nämligen inte den 
+<CODE>add(double)</CODE>-operation vi implementerat i klassen 
+<CODE>RealHistogram</CODE>, istället anropas den <CODE>add(int)</CODE>-operation 
+som ärvts ned från <CODE>RangeCheckingHistogram</CODE>-klassen, dvs vi får 
+overloading istället för overriding. Histogrammet försöker räkna upp värdet i 
+klassen med index 201, och eftersom vi inte har någon sådan kommer antalet för 
+stora värden att räknas upp.
+<P>Ett enkelt sätt att slippa detta problem är att i klassen 
+<CODE>RangeCheckingHistogram</CODE> infoga följande operation: <PRE>    public void add(int value) {
+        this.add((double)value);
+    }
+</PRE>Denna operation omvandlar heltalet till ett <CODE>double</CODE>-värde 
+varpå 'rätt' <CODE>add</CODE>-operation anropas. 
+<ADDRESS></ADDRESS></BODY></HTML>

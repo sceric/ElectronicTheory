@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+</head>
+
+<body>
+<h1>Lösningsförslag till tentamen den 6 mars 2000</h1>
+
+<h2>Uppgift 1</h2>
+
+<pre>
+    class Clock {
+    
+        private int time;
+    
+        public Clock() {
+            this.reset();
+        }
+    
+        public void reset() {
+            this.time = 0;
+        }
+    
+        public void tick() {
+            this.time++;
+        }
+    
+        public int getTime() {
+            return this.time;
+        }
+    }
+    
+    class Statistician {
+    
+        private int sum, sqrSum;
+        private int n;
+    
+        public Statistician() {
+            this.reset();
+        }
+    
+        public void reset() {
+            this.sum = 0;
+            this.sqrSum = 0;
+            this.n = 0;
+        }
+    
+        public void addSample(int x) {
+            this.sum += x;
+            this.sqrSum += x*x;
+            this.n++;
+        }
+    
+        public int getNbr() {
+            return this.n;
+        }
+    
+        public double getAverage() {
+            return this.sum/this.n;
+        }
+    
+        public double getStdDev() {
+            double avg = this.getAverage();
+            return Math.sqrt(this.sqrSum - n*avg*avg)/(this.n-1);
+        }
+    }
+</pre>
+
+<h2>Uppgift 2</h2>
+
+<pre>
+    class Counter {
+    
+        private Store store;
+        private Queue queue;
+        private int freeTime;
+    
+        public Counter(Store store) {
+            this.store = store;
+            this.queue = new Queue();
+            this.freeTime = 0;
+        }
+    
+        public int queueLength() {
+            return this.queue.getLength();
+        }
+    
+        public void intoQueue(int time) {
+            this.queue.putInLast(time);
+        }
+    
+        public boolean free() {
+            return this.freeTime <= this.store.getClockTime();
+        }
+    
+        public int waitingTimeForFirst() {
+            return this.store.getClockTime() - this.queue.getFirst();
+        }
+    
+        public void serveFirst(int timeToServe) {
+            this.freeTime = this.store.getClockTime() + timeToServe;
+            this.queue.removeFirst();
+        }
+    }
+</pre>
+
+<h2>Uppgift 3</h2>
+
+<pre>
+    class Store {
+    
+        private Counter[] counter;
+        private int nbrOfCounters;
+        private Clock clock;
+    
+        public Store(int nbrOfCounters) {
+            this.nbrOfCounters = nbrOfCounters;
+            this.counter = new Counter[nbrOfCounters];
+            for (int i = 0; i < this.nbrOfCounters; i++) {
+                this.counter[i] = new Counter(this);
+            }
+            this.clock = new Clock();
+        }
+    
+        public int getClockTime() {
+            return this.clock.getTime();
+        }
+    
+        private Counter findShortest() {
+            // Vi förutsätter att det finns minst en kassa.
+            int shortest = 0;
+            for (int i = 1; i < this.nbrOfCounters; i++) {
+                if (this.counter[i].queueLength() < this.counter[shortest].queueLength()) {
+                    shortest = i;
+                }
+            }
+            return this.counter[shortest];
+        }
+    
+        public void simulate(int nbrMinutes, double mv, int maxServingTime) {
+            Statistician stat = new Statistician();
+            RandomNumberGenerator rng = new RandomNumberGenerator();
+            this.clock.reset();
+            while (this.clock.getTime() <= nbrMinutes) {
+                int s = rng.randPoisson(mv);
+                for (int i = 1; i <= s; i++) {
+                    this.findShortest().intoQueue(clock.getTime());
+                }
+                for (int i = 0; i < this.nbrOfCounters; i++) {
+                    if (this.counter[i].free() && this.counter[i].queueLength() > 0) {
+                        stat.addSample(this.counter[i].waitingTimeForFirst());
+                        this.counter[i].serveFirst(rng.randInt(1,maxServingTime));
+                    }
+                }
+                this.clock.tick();
+            }
+            System.out.println("Antal betjänade kunder: " + stat.getNbr());
+            System.out.println("         Medelväntetid: " + stat.getAverage());
+            System.out.println("     Standardavvikelse: " + stat.getStdDev());
+            int nbrsLeft = 0;
+            for (int i = 0; i < this.nbrOfCounters; i++) {
+                nbrsLeft += this.counter[i].queueLength();
+            }
+            System.out.println("Dessutom finns det " + nbrsLeft + " kunder kvar.");
+        }
+    }
+</pre>
+
+<h2>Uppgift 4</h2>
+
+<pre>
+    class Queue extends Head {
+    
+        public Queue() {
+            super();
+        }
+    
+        public int getLength() {
+            return this.cardinal();
+        }
+    
+        public int getFirst() {
+            return ((IntElement) this.first()).getValue();
+        }
+    
+        public void removeFirst() {
+            this.first().out();
+        }
+    
+        public void putInLast(int time) {
+            new IntElement(time).into(this);
+        }
+    }
+</pre>
+
+</body>
+</html>

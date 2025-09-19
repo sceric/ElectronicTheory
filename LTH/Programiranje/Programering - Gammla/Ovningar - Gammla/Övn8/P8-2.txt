@@ -1,0 +1,46 @@
+
+
+class LifePlayer{
+
+    
+   public LifePlayer(){
+
+         private int getNeighbours(Board board, int row, int col){
+              int nbrNeighbours=0;
+              for(int i=row-1; i<=row+1; row++){
+                 for(int k=col-1; k<=col+1; col++){
+
+                   if(board.getValue(i,k)){
+
+                    nbrNeighbours++;
+                    }
+                  }
+              }
+          }
+
+
+    // Varför board.getValue(int row, int col), i class Board implements LifeBoard ger att         man kan använda operation getValue p g a det finns det operation som anges i               grenssnittet LifeBoard Samma sak med operation getSize(): 
+                
+
+      public Board nextGeneraton(Board board){
+ 
+                 Board board1 = new Board(board.getSize());
+
+                for(int i=0; i<=board.getSize(); i++){
+                   for(int k=0; k<=row; k++){
+                       int Neighbours=this.getNeighbours(board,i,k);
+                           if(Neighbours==3){
+                             board1.setValue(i,k,true);
+                           } 
+			   if(Neighbours==2 && board1.setValue(i,k,true){
+            		     baard1.setValue(i,k,true);  //setValue()-tillhör klassen Board
+			   }
+                     }
+                 }
+      
+                 return board1;
+ }
+                           
+
+           
+                 

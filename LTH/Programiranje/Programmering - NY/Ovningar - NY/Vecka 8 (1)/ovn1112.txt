@@ -1,0 +1,24 @@
+
+Uppgift:
+
+Fundera  över vilka tillstånsvariaabler som behövs för att beskriva ett Turtle-objekt,
+och deklarera dem i ett ebryo till klassdeklaration.
+
+Lösning:
+
+1. vi behöver x och y att ta reda på kordinater
+2. vi behöver ta reda på riktningen
+3. vi behöver ta reda på att penna är näre eller uppe
+4. vi behöver ta reda på att objekt ska vissas i fönstret
+
+vi för däreftör deklaration:
+
+	class Tourtle {
+
+          private int x,y;     
+ 	  private int dir;
+	  private boolean penLowered;
+	  private TurtleWindow w;
+ 
+
+        }

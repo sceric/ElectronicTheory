@@ -1,0 +1,13 @@
+lasbb3_4
+H:\Datorteknik-labb3\lasbb3_4\
+Objects\
+0
+1
+minic
+0
+0
+0
+0
+1
+objcopy.exe -O srec lasbb3_4.out lasbb3_4.srec
+80020000 start

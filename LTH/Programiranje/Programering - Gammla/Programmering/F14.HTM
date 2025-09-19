@@ -1,0 +1,364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://www.cs.lth.se/Education/Courses/PT/E/lect/f14.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1></H1>
+<H1>Anteckningar till föreläsning 14</H1>Vi kommer idag att tala om 
+<UL>
+  <LI>Inlämningsuppgift 1 
+  <LI>Referenser och parametrar 
+  <LI>Om <CODE>static</CODE> - klassoperationer och klassattribut 
+  <LI>Klasserna <CODE>String</CODE> och <CODE>StringBuffer</CODE> </LI></UL>Vi har 
+faktiskt behandlat det mesta av teorin i kursen redan, under resten av kursen 
+skall ni under övningarna framförallt fördjupa er förståelse för sådant som vi 
+redan diskuterat. Eventuellt kommer jag därför inte att gå igenom någon ny teori 
+nästa vecka, utan bara gå igenom exempel och beskriva de kommande veckornas 
+övningar. Mer information på kurshemsidan under slutet av veckan.
+<P>
+<H2>Inlämningsuppgift 1</H2>Vi inleder föreläsningen med en genomgång av 
+inlämningsuppgift 1. 
+<H2>Angående förra veckans övning</H2>Många har i övning 10 använt det 
+reserverade ordet <CODE>super</CODE> för att referera till operationer på det 
+aktuella objektet, exempelvis i operationen <CODE>walk()</CODE> i klassen 
+<CODE>MazeTurtle</CODE>: <PRE>    public void walk() {
+        ...
+        super.forward(1);
+        ...
+        super.left(90);
+        ...
+    }
+</PRE>Operationerna <CODE>forward(int)</CODE> och <CODE>left(int)</CODE> ligger 
+mycket riktigt i superklassen till klassen <CODE>MazeTurtle</CODE>, men det är 
+inte nödvändigt att skriva <CODE>super</CODE>. Om vi skriver 
+<CODE>this.forward(1)</CODE>, eller bara <CODE>forward(1)</CODE>, anropas den 
+<CODE>forward(int)</CODE>-operation som ligger närmast (eftersom det inte finns 
+någon i <CODE>MazeTurtle</CODE> anropas automatiskt den i faderklassen).
+<P>Normalt skriver man bara ut <CODE>super</CODE> när det verkligen behövs (i 
+regel när man "överrider", dvs skriver en operation med samma signatur som en 
+ärvd operation, och vill anropa den ärvda operationen).
+<P>Om vi i klassen <CODE>MazeTurtle</CODE> skriver en modifierad version av 
+<CODE>forward</CODE>-operationen (exempelvis för att räkna antalet steg), och 
+anropar <CODE>super.forward(1)</CODE>, så kommer vi inte att utnyttja den 
+utvidgade klassens fulla kapacitet (dvs den kommer inte att räkna stegen).
+<P>Ett fel som många gör är att deklarera lokala variabler som 
+<CODE>private</CODE> eller <CODE>protected</CODE>: <PRE>    public void sample() {
+        private int a;    // Fel, a är en lokal variabel.
+        // ...
+    }
+</PRE>Alla lokala variabler är oåtkomliga utifrån, de är inte ens åtkomliga inom 
+klassen, bara inne i den operation de är deklarerade i. De kan därför inte 
+deklareras som <CODE>private</CODE>, <CODE>protected</CODE> eller 
+<CODE>public</CODE>. 
+<H2>Referenser och parametrar</H2>Vi har tidigare sagt att parametrarna till en 
+operation väsentligen fungerar som lokala variabler, men att de vid anrop av 
+operationen får de startvärden som anges vid anropet (övriga lokala variabler 
+får inget startvärde).
+<P>Detta innebär att en ändring av värdet på en parameter inte påverkar något 
+annat än värdet på parametern inne i operationen. Med klassen 
+<CODE>Sample</CODE>: <PRE>    class Sample {
+     
+        public void op(int a) {
+            // ...
+            a = 1;       // ändrar värdet på parametern a för resten av operationen
+            // ...
+        }
+    }
+</PRE>skulle vi i huvudprogrammet: <PRE>    public static void main(String[] args) {
+        Sample s = new Sample();
+        int b = 3;
+        s.op(b);
+        System.out.println(b);
+    }
+</PRE>få utskriften <CODE>3</CODE>, den variabel vi skickar in som parameter 
+ändras inte.
+<P>Om vi däremot skickar in en referensvariabel som parameter, så kan vi ändra 
+det värde som den refererar till. I följande exempel kommer sköldpaddan som 
+<CODE>t</CODE> refererar till att ändra tillstånd, <EM>däremot kommer 
+referensvariabeln <CODE>t</CODE> inte att ändras</EM> (regeln är alltså 
+fortfarande att den variabel vi skickar in inte ändras!).
+<P><PRE>    class TurtleTaxi {
+
+        public void drive(Turtle t, int x, int y) {
+            t.jumpTo(x,y);      // ändrar objektet som t refererar till,
+                                // denna ändring märks även efter att
+                                // operationen avslutats
+            t = null;           // ändrar värdet på parametern, denna
+                                // ändring märks inte efter att operationen
+                                // avslutats (denna sats finns med bara
+                                // som exempel, den är totalt meningslös!)
+        }
+    }
+</PRE>När vi anropar <CODE>drive</CODE> i programmet <PRE>    Turtle t = new Turtle(w,100,100);
+    TurtleTaxi taxi = new TurtleTaxi();
+    taxi.drive(t,250,250);
+</PRE>så flyttas den sköldpadda som variablen <CODE>t</CODE> refererar till, men 
+referensvariablen referar fortfarande till samma sköldpadda.
+<P>Eftersom vektor-variabler väsentligen är referenser till vektorobjekt kan 
+värdet på en vektor ändras i en operation, vektorvariabeln kommer dock även 
+efteråt att referera till samma vektor (som dock kan innehålla ändrade värden).
+<P>Om vi har klassen <CODE>Sample</CODE> som nedan: <PRE>    class Sample {
+     
+        public void assign(int[] a, int value) {
+            for (int i = 0; i &lt; a.length; i++) {
+                a[i] = value;
+            }
+        }
+    }
+</PRE>och huvudprogrammet <PRE>    public static void main(String[] args) {
+        Sample s = new Sample();
+        int[] v = {1,2,3,4,5};
+        s.assign(v,2);
+    }
+</PRE>så kommer samtliga element i vektorn <CODE>v</CODE> att sättas till 
+<CODE>2</CODE>. 
+<H4>Kontrollfråga</H4>
+<OL>
+  <LI>(Denna fråga kommer att besvaras under föreläsningen.) Vad är det för fel 
+  på följande metod för att öka storleken på en vektor: <PRE>    class ArrayExtender {
+          
+        public void extendArray(int[] v, int nbrOfNewElements) {
+            int[] newV = new int[v.length + nbrOfNewElements];
+            for (int i = 0; i &lt; v.length; i++) {
+                newV[i] = v[i];
+            }
+            v = newV;
+        }
+    }
+      </PRE>där vi vill kunna skriva <PRE>    ArrayExtender extender = new ArrayExtender();
+    int[] v = new int[100];
+    // ...
+    extender.extendArray(v,50);
+      </PRE>för att utöka storleken på <CODE>v</CODE> med 50 element.
+  <P>Rätt knepig följdfråga: Hur kan man göra för att operationen skall fungera? 
+  </P></LI></OL>
+<H2>Om <CODE>static</CODE> - klassattribut och klassoperationer</H2>Redan från 
+första övningen har ni använt ordet <CODE>static</CODE>, det är nu dags att 
+förklara vad det betyder.
+<P>När vi skriver våra klasser deklarerar vi de attribut och operationer som 
+skall finnas <EM>för varje objekt</EM> av klassen, dvs 
+<UL>
+  <LI>varje objekt (instans av klassen) har en egen uppsättning av de attribut 
+  vi deklarerar (attributen kallas därför ibland instansvariabler), och
+  <P></P>
+  <LI>alla operationer utförs på ett givet objekt (vid anropet referar 
+  <CODE>this</CODE> till detta objekt) </LI></UL>Vi har dock använt attribut och 
+operationer som inte följer detta mönster (utan att då gå närmare in på det): 
+<UL>
+  <LI>När vi skall beräkna <I>sin(x)</I> skriver vi <CODE>Math.sin(x)</CODE>. På 
+  vilket objekt utför vi operationen <CODE>sin(double)</CODE>?
+  <P></P>
+  <LI>När vi skriver ut skriver vi <CODE>System.out.println("Hello")</CODE>. På 
+  vilket objekt utförs operationen <CODE>println(String)</CODE>? </LI></UL>Svaret 
+på den första frågan är att <CODE>sin(double)</CODE>-operationen utförs på 
+<CODE>Math</CODE>-klassen i sin helhet, dvs det är inte en operation på ett 
+objekt utan på <EM>klassen</EM> <CODE>Math</CODE>.
+<P>Man gör en operation till <EM>klassoperation</EM> genom att skriva det 
+reserverade ordet <CODE>static</CODE> i deklarationen: <PRE>class Math {
+
+    public <B>static</B> double sin(double x) {
+        // ...
+    }
+</PRE>Vi kan nu anropa <CODE>sin(double)</CODE>-operationen direkt på klassen 
+<CODE>Math</CODE>, utan att skapa något <CODE>Math</CODE>-objekt.
+<P>Svaret på den andra frågan är lite knepigare, 
+<CODE>println(String)</CODE>-operationen utförs där på ett objekt som heter 
+<CODE>out</CODE>, och är ett publikt <EM>klassattribut</EM> (eller 
+<EM>klassvariabel</EM>) i klassen <CODE>System</CODE>!
+<P>I klassen <CODE>System</CODE> är detta attribut deklarerat (ungefär): <PRE>class System {
+
+    public static PrintStream out;
+
+    // ...
+}
+</PRE>Detta innebär att attributet <CODE>out</CODE> ägs av hela klassen 
+<CODE>System</CODE>, inte av de enskilda <CODE>System</CODE>-objekten. På detta 
+<CODE>PrintStream</CODE>-objekt utförs <CODE>println</CODE>-operationen. Det 
+hela är dubbelt förvirrande första gången man ser det, attributet är inte 
+skyddat, och det tillhör inget specifkt objekt.
+<P><EM>Överkurs:</EM> Båda klasserna <CODE>Math</CODE> och <CODE>System</CODE> 
+är speciella. Klassen <CODE>Math</CODE> fungerar som ett 'paket' för ett antal 
+matematiska funktioner, man skapar aldrig något <CODE>Math</CODE>-objekt. Man 
+skapar heller aldrig något objekt av klassen <CODE>System</CODE>, den används i 
+princip som ett färdigt objekt. Man kan dock mycket väl ha statiska attribut och 
+statiska operationer i klasser som används på vanligt sätt. 
+<H3>Om attribut i klassoperationer</H3>Eftersom en klassoperation inte utförs på 
+ett enstaka objekt, är de vanliga attributen inte tillgängliga - bara 
+klassattributen kan användas. På samma sätt är bara klassoperationer 
+tillgängliga, det finns ju inget <CODE>this</CODE> som vi utför operationen på: <PRE>class Sample {
+
+    public static int a;    // klassattribut
+    public int b;           // vanligt attribut (instansvariabel)
+
+    public void op1() {
+        a = 1;      // OK, klassvariabeln a får ett värde
+        b = 2;      // OK, instansvariabeln b i objektet this får ett värde
+        op2();      // OK, anropar klassoperationen op2()
+    }
+
+    public static void op2() {
+        a = 1;      // OK, klassvariabeln a får ett värde
+        b = 2;      // Fel, instansattributet b finns bara i instansoperationerna
+        op1();      // Fel, op1() är en operation på ett objekt, men när vi
+                    // kör denna operation finns det inget this att anropa
+                    // den på
+    }
+}
+</PRE>För att tydligt markera vad som är instansvariabler (vanliga attribut) och 
+vad som är klassvariabler kan man i sina operationer i klassen 
+<CODE>Sample</CODE> ovan markera instansvariabler med <CODE>this.b</CODE> och 
+klassvariabler med <CODE>Sample.a</CODE>.
+<P>När man i klassoperationen <CODE>op2()</CODE> ovan skriver <CODE>this.b = 
+2</CODE> blir det uppenbart att operationen är felaktig, det finns ju inget 
+<CODE>this</CODE> eftersom operationen utförs på klassen själv. 
+<H3>Om att dela upp sina huvudprogram</H3>Med hjälp av klassoperationer kan man 
+dela upp sina huvudprogram utan att skapa nya objekt.
+<P>Om vi på flera ställen i ett program vill skriva ut en hel vektor kan vi 
+skriva: <PRE>    public class f14 {
+    
+        public static void main(String[] args) {
+            int[] v = {5,2,3,5,6,1,2,3};
+            System.out.println("Före sortering:");
+            print(v);
+            sort(v);
+            System.out.println("Efter sortering:");
+            print(v);
+        }
+    
+        private static void sort(int[] v) {
+            for (int i = 1; i &lt; v.length; i++) {
+                int pos = i;
+                int value = v[pos];
+                while (pos &gt; 0 &amp;&amp; v[pos-1] &gt; value) {
+                    v[pos] = v[pos-1];
+                    pos--;
+                }
+                v[pos] = value;
+            }
+        }
+    
+        private static void print(int[] array) {
+            for (int i = 0; i &lt; array.length; i++) {
+                System.out.println(i + ": " + array[i]);
+            }
+        }
+    }
+</PRE>
+<H4>Kontrollfråga</H4>
+<OL>
+  <LI>Vad hade hänt om operationerna <CODE>sort</CODE> och <CODE>print</CODE> 
+  ovan inte hade varit deklarerade som <CODE>static</CODE>?
+  <P>Hur kan vi skriva om programmet för att få det att fungera även om 
+  <CODE>sort</CODE> och <CODE>print</CODE> inte är klassoperationer? 
+</P></LI></OL>
+<H3>Vad betyder då deklarationen av huvudprogrammet?</H3>Vi kan nu äntligen 
+förklara vad deklarationen <PRE>    class Sample {
+    
+        public static void main(String[] args) {
+            // ....
+        }
+    }
+</PRE>egentligen betyder. Den säger att <CODE>main</CODE> är en publik operation 
+på klassen <CODE>Sample</CODE> (när vi startar programmet har vi ju inte skapat 
+något objekt av klassen), och att den: 
+<UL>
+  <LI>inte returnerar något värde (den är av typen <CODE>void</CODE>), och 
+  <LI>den har en parameter, en vektor med strängar. </LI></UL>Vektorn med strängar 
+är de eventuella argument som gavs när programmet startades.
+<P>Om vi startar programmet <CODE>Sample</CODE> genom att skriva <PRE>    java Sample Hej och hå
+</PRE>så kommer vektorn <CODE>args</CODE> att ha längden tre och innehålla 
+strängarna "Hej", "och" och "hå". 
+<H2>Om variabler som inte kan ändra värde</H2>Ibland vill man att variabler inte 
+skall kunna ändra värde, man kan då deklarera dem <CODE>final</CODE>. Ett 
+exempel på en sådan variabel är det publika attributet <CODE>PI</CODE> i klassen 
+<CODE>Math</CODE>, det är deklarerat som <PRE>    class Math {
+    
+        public static final double PI = 3.1415926535897932385;
+    
+        // ...
+    }
+</PRE>Om det inte hade varit deklarerat som <CODE>final</CODE> hade vi i ett 
+program kunnat skriva <PRE>    Math.PI = 4;
+</PRE>och därmed ändrat värdet på pi!
+<P>Även lokala variabler kan <CODE>final</CODE>-deklareras: <PRE>    public static void main(String[] args) {
+        final int nbrOfGames = 13;
+        // ...
+    }
+</PRE>
+<H2>Klasserna <CODE>String</CODE> och <CODE>StringBuffer</CODE></H2>I språket 
+Java finns två klasser för att hantera strängar: <CODE>String</CODE> och 
+<CODE>StringBuffer</CODE>, dessa båda klasser beskrivs på ett utmärkt sätt i Per 
+Holms bok, kapitel 12.
+<P>Strängar är objekt, men det finns i Java några väldigt bekväma sätt att skapa 
+dem, exempelvis kan vi skriva: <PRE>    String firstName = "Adam";
+    String lastName = "Scott";
+</PRE>Strängobjekt är "<EM>immutables</EM>", dvs oföränderliga, men vi kan 
+skriva: <PRE>    String wholeName = firstName + " " + lastName;
+</PRE>för att slå samman flera strängar till en ny sträng. Denna typ av 
+<EM>strängkonkatenering</EM> har vi utnyttjat oräkneliga gånger i kursen i 
+samband med utskrifter: <PRE>    System.out.println("Värdet på n är " + n);
+</PRE>När vi konkatenerar en sträng med något annat än en sträng (som i 
+utskriften ovan), så konverteras automatiskt det andra värdet till en sträng.
+<P>Det finns ganska många operationer i klassen <CODE>String</CODE>, vi kommer 
+framförallt att använda: 
+<UL>
+  <LI><CODE>public int length()</CODE>, som ger strängens längd, 
+  <LI><CODE>public char charAt(int pos)</CODE>, som ger tecknet i position 
+  <CODE>pos</CODE> (som räknas från 0, precis som för vektorer), 
+  <LI><CODE>public int compareTo(String other)</CODE>, som jämför två strängar 
+  med varandra (värdet är &lt; 0 om <CODE>this</CODE> kommer före 
+  <CODE>other</CODE> i bokstavsordning, &gt; 0 om <CODE>this</CODE> kommer efter 
+  <CODE>other</CODE>, och 0 om de båda strängarna är lika, 
+  <LI><CODE>public boolean equals(String other)</CODE>, som är sann om de båda 
+  strängarna är lika, 
+  <LI><CODE>public String toLowerCase()</CODE>, som ger samma sträng, men med 
+  små bokstäver, och 
+  <LI><CODE>public String toUpperCase()</CODE>, som ger samma sträng, men med 
+  stora bokstäver. </LI></UL><B>Exempel:</B><BR>För att lagra bokstäverna i en 
+sträng i en vektor kan vi skriva: <PRE>    String str = Keyboard.readLine();   // läser en rad från tangentbordet
+    char[] ch = new char[str.length()];
+    for (int i = 0; i &lt; str.length(); i++) {
+        ch[i] = str.charAt(i);
+    }
+</PRE>
+<H4>Kontrollfrågor</H4>
+<OL>
+  <LI>Antag att vi har följande deklarationer: <PRE>    String str1, str2;
+    // ...
+      </PRE>Vad är det för skillnad mellan <PRE>    if (str1 != str2) ...
+      </PRE>och <PRE>    if (str1.compareTo(str2) == 0) ...
+      </PRE>
+  <LI>Skriv ett program <CODE>FindSmallest</CODE> som skriver ut den av 
+  'kommandoradsparametrarna' som kommer först i alfabetisk ordning, dvs <PRE>    java FindSmallest these are the command line parameters
+      </PRE>skall ge utskriften <PRE>    are
+      </PRE>Om det inte finns några kommandoradsparametrar skall texten 
+  <CODE>Det finns inga kommandoradsparametrar</CODE> skrivas ut. 
+  (Kommandoradsparametrarna finns i <CODE>String[] args</CODE> i <CODE>public 
+  static void main(...)</CODE>). </LI></OL>
+<H2>Sådant som blivit över</H2>
+<H3>Om deklaration av attribut</H3>När vi deklarerar ett attribut kan vi, precis 
+som när vi deklarerar en lokal variabel, ge variabeln ett startvärde.
+<P><PRE>class A {
+
+    private int n = 3;
+
+    public A() {
+        // här har attributet n redan värdet 3
+    }
+}
+</PRE>Om vi väljer att initiera sina attribut redan vid deklarationen eller i 
+konstruktorn är en fråga om tycke och smak.
+<P>
+<H3>En villkorskonstruktion</H3>Det finns i exempel 3 på sidan 196 en 
+konstruktion som vi inte behandlat i kursen: <PRE>    &lt;villkor&gt; ? &lt;värde om villkoret sant&gt; : &lt;värde om villkoret falskt&gt;
+</PRE>som är en typ av villkorssats. Om vi vill bestämma det minsta av två 
+värden <CODE>a</CODE> och <CODE>b</CODE> kan vi skriva: <PRE>    int smallest = a &lt; b ? a : b;
+</PRE>istället för det lite klumpigare: <PRE>    int smallest;
+    if (a &lt; b) {
+        smallest = a;
+    } else {
+        smallest = b;
+    }
+</PRE>Denna konstruktion behöver ni inte behärska, men den kan vara bra att 
+känna till. </BODY></HTML>

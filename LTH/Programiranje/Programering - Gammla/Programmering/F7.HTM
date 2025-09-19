@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0056)http://www.cs.lth.se/Education/Courses/PT/E/lect/f7.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1></H1>
+<H2>Föreläsning 7</H2>Under denna föreläsning (som äger rum på tisdag) kommer vi 
+i huvudsak att tala om vektorer och slumptal.
+<P>Veckans övning är den första datorövningen och innehåller ingen ny teori, den 
+skall bara ge er övning i att skriva in, kompilera och köra program. Det som 
+behandlas under veckans föreläsning kommer att tas upp på övningen i nästa 
+vecka.
+<P>
+<H2>Vektorer</H2>Ofta vill man lagra många sammanhörande värden i sina program, 
+under övning 2 skulle ni exempelvis beräkna medelvärde och standardavvikelse för 
+ett antal tal som lästes in från tangentbordet. I uppgiften räckte det att läsa 
+varje tal en gång och öka på två olika summor, ibland måste man dock spara 
+samtliga värden för att bearbeta dem senare.
+<P>Fundera exempelvis på hur man skulle lösa följande två problem med bara 
+vanliga variabler: 
+<OL>
+  <LI>Läs in 20 heltal och skriv ut dem i omvänd ordning.
+  <P></P>
+  <LI>Läs in en följd av positiva heltal, avslutade med en 0:a, och skriv ut dem 
+  i omvänd ordning (här vet vi inte i förväg hur många tal vi skall läsa in och 
+  lagra). </LI></OL>Det finns i Java, och i alla andra vanliga programspråk, ett 
+sätt att lagra flera värden i 'indexerade' variabler - de kallas 
+<EM>vektorer</EM>. I en vektor kan vi lagra i princip hur många värden som 
+helst, och nå dem med hjälp av index. I Java räknas index från 0 och uppåt.
+<P>I figuren nedan har vi en vektor (variabeln <CODE>v</CODE> refererar till 
+vektorn) med 8 heltalselement, indexerade från 0 till 7.
+<P>
+<CENTER><IMG src="f7_files/array1.gif"></CENTER>
+<P>Elementet med index 2 skrivs <CODE>v[2]</CODE> och har värdet 4. Om vi vill 
+lagra värdet 16 i detta element skriver vi: <PRE>    v[2] = 16;
+</PRE>Vi kan beräkna summan av samtliga element i vektorn <CODE>v</CODE> genom 
+att skriva <PRE>    int sum = 0;
+    for (int i = 0; i &lt; 8; i++) {
+        sum += v[i];
+    }
+    System.out.println("Summan är " + sum);
+</PRE>Lägg märke till utformningen av <CODE>for</CODE>-satsen, tidigare har vi 
+skrivit <PRE>    for (int i = 1; i &lt;= n; i++) {
+        // ...
+    }
+</PRE>för att gå <CODE>n</CODE> steg, men eftersom index i vektorer räknas från 
+0 skriver vi istället <CODE>for</CODE>-satser som skall gå igenom vektorer som <PRE>    for (int i = 0; i &lt; n; i++) {
+        // här använder vi v[i]
+    }
+</PRE>
+<H3>Att deklarera och skapa en vektor</H3>Först ett klargörande: Som figuren 
+ovan visar är <CODE>v</CODE> egentligen en referens till en vektor, vi kommer 
+dock i det följande att tala om <CODE>v</CODE> som om den själv vore en vektor 
+(först senare i kursen kommer vi att märka skillnaden).
+<P>Vi deklarerar en vektor genom att ange vilken typ elementen skall ha. För att 
+deklarera en vektor med heltal, och en med referenser till Turtles skriver vi: <PRE>    int[] v;
+    Turtle[] t;
+</PRE>På detta vis skapar vi inga vektorer (och definitivt inga Turtles!). 
+Istället har vi skapat två variabler som kan referera till vektorer, 
+<CODE>v</CODE> kan referera till en vektor med heltal, och <CODE>t</CODE> till 
+en vektor med referenser till <CODE>Turtle</CODE>.
+<P>
+<CENTER><IMG src="f7_files/arrayVar.gif"></CENTER>
+<P>Vektorerna skapar vi med <CODE>new</CODE>-satser, ungefär som vi skapar 
+objekt. Skillnaden är att vi nu skapar en vektor med ett givet antal element, 
+och att vi använder hakparenteser i new-anropet - några vanliga objekt skapas 
+inte.
+<P>Att skapa två vektorer, en med 8 heltal, och en med 5 referenser till 
+<CODE>Turtle</CODE> gör vi på följande sätt: <PRE>    v = new int[8];    // skapar en vektor med 8 heltal
+    t = new Turtle[5]; // skapar en vektor med 5 referenser till Turtles
+</PRE>Precis som när vi deklarerade referenser till vanliga objekt kan vi ge 
+våra vektorvariabler startvärden genom att deklarera och tilldela på en gång (vi 
+kommer ofta att använda denna form): <PRE>    int[] v = new int[8];       
+    Turtle[] t = new Turtle[5]; 
+</PRE>Vi får följande minnesutseende:
+<P>
+<CENTER><IMG src="f7_files/arrayCreated.gif"></CENTER>
+<P>Till skillnad från vanliga lokala variabler får elementen i vektorerna 
+automatiskt startvärden, elementen i en heltalsvektor får värdet 0 och elementen 
+i en vektor med referenser blir automatiskt <CODE>null</CODE>.
+<P>Vi kan avgöra hur stor vektorn <CODE>v</CODE> är (om vi har glömt hur många 
+element vi angav när vi skapade den!) genom att skriva <CODE>v.length</CODE>. Vi 
+kan alltså alltid skriva ut samtliga element i en heltalsvektor <CODE>v</CODE> 
+på följande sätt: <PRE>    for (int i = 0; i &lt; v.length; i++) {
+        System.out.println(v[i]);
+    }
+</PRE>Sköldpaddsvektorn <CODE>t</CODE> innehåller från början 5 
+<CODE>null</CODE>-referenser, vi har alltså inga sköldpaddor än. För att skapa 
+en sköldpadda och låta det första vektorelementet referera till den skriver vi: <PRE>    t[0] = new Turtle(w,100,100);
+</PRE>Vi får då följande innehåll i minnet: 
+<CENTER><IMG src="f7_files/arrayCreated2.gif"></CENTER>
+<P>Ett program som skapar en vektor med fem vektorelement, och därefter fem 
+sköldpaddor skulle kunna skrivas: <PRE>    SimpleWindow w = new SimpleWindow(600,300);
+    Turtle[] t = new Turtle[5];       // Deklarerar och skapar en
+                                      // vektor med 5 null-referenser
+    for (int i = 0; i &lt; t.length; i++) {
+        t[i] = new Turtle(w,i*100 + 50, 200);
+    }
+</PRE>Vi kommer att tala betydligt mer om vektorer under kommande veckor, bland 
+annat om registrering, sökning, insättning och sortering. 
+<H4>Kontrolluppgifter</H4>Lös nu följande uppgifter, med hjälp av vektorer: 
+<OL>
+  <LI>Läs in 20 heltal och skriv ut dem i omvänd ordning.
+  <P></P>
+  <LI>Läs in en följd av positiva heltal, avslutade med en 0:a, och skriv ut dem 
+  i omvänd ordning (här vet vi inte i förväg hur många tal vi skall läsa in och 
+  lagra, vi kan dock förutsätta att inte mer än 100 tal läses in). </LI></OL>
+<H2>Slumptal</H2>Man kan i många sammanhang vilja använda slumptal, exempelvis 
+för att simulera olika företeelser, eller för att skriva spelprogram.
+<P>Vi kan dra slumptal med hjälp av en slumptalsgenerator, i kursen har vi 
+klassen <CODE>RandomNumberGenerator</CODE> som har följande <A 
+href="http://www.cs.lth.se/Education/Courses/PT/E/lect/RandomNumberGenerator.html">specifikation</A>.
+<P>Under föreläsningen kommer vi att diskutera hur man läser klasspecifikationer 
+på detta format, försök förstå den så gott du kan.
+<P>Som exempel på hur man använder en slumptalsgenerator kan vi simulera ett 
+tärningskast genom att skriva: <PRE>    RandomNumberGenerator rng = new RandomNumberGenerator();
+    int dieValue = rng.randInt(1,6);
+</PRE>Om vi vill ha ett reellt värde mellan 0 och 1 kan vi skriva <PRE>    double x = rng.randDouble();
+</PRE>eller <PRE>    double x = rng.randDouble(0,1);
+</PRE>
+<H3>Kontrolluppgifter</H3>
+<OL>
+  <LI>Skriv programrader för att bestämma summan av 10 rektangelfördelade 
+  slumptal mellan 0 och 1. Ungefär hur stor borde summan bli?
+  <P></P>
+  <LI>Skriv programrader för att bestämma det största av 10 slumpmässiga 
+  rektangelfördelade värden mellan 0 och 1.
+  <P></P>
+  <LI><I>(Denna uppgift kommer vi att lösa vid tavlan under föreläsningen):</I> 
+  Kasta en tärning upprepade gånger (se ovan), räkna hur många slag som behövs 
+  för att summan av tärningskasten skall överstiga 100.
+  <P></P>
+  <LI>Svenska män är i genomsnitt 178.2 cm långa (SCB 1989), vi antar längden är 
+  normalfördelad och att standardavvikelsen är ca 10 cm. Skriv ut 10 
+  slumpmässiga personlängder (för män).
+  <P></P>
+  <LI>Simulera presidentvalet i Florida genom att anta att 6 000 000 röstare var 
+  och en röstar på antingen Gore eller Bush med exakt 50 % sannolikhet. Skriv ut 
+  hur stor skillnaden i antalet röster blir under var och en av 10 simuleringar 
+  (under den första manuella efterkontrollen var skillnaden mindre än 300 
+  röster).
+  <P></P>
+  <LI>Skriv ett program som med hjälp av att dra slumpmässiga reella tal i 
+  intervallet [0..1[ approximerar ett värde på pi.
+  <P><I>Ledning:</I> Drag två tal åt gången, och tolka dem som koordinater i 
+  första kvadranten. Hur stor är sannolikheten att en punkt ligger innanför 
+  enhetscirkeln i första kvadranten?
+  <P></P>
+  <LI><I>(Denna uppgift kommer vi att lösa vid tavlan under föreläsningen):</I> 
+  Skriv ett program som läser in ett heltal <I>n</I>, och därefter kör ett 
+  "Turtle Race", dvs en tävling mellan <I>n</I> sköldpaddor som springer 
+  slumpmässigt uppför skärmen. Sköldpaddorna skall vara jämnt utspridda i 
+  fönstret.
+  <P>När tävlingen är slut skall vinnarens nummer skrivas ut (om flera 
+  sköldpaddor når mållinjen samtidigt, räknas de alla som vinnare).
+  <P></P>
+  <LI>Skriv ett program som skapar fem sköldpaddor, utspridda längs fönstrets 
+  diagonal, som ritar liksidiga trianglar 'samtidigt' (varje sköldpadda skall 
+  rita en sida åt gången).
+  <P></P>
+  <LI><I>(Denna uppgift kommer vi att lösa vid tavlan under föreläsningen):</I> 
+  Vi har i ett program en reell vektor <CODE>v</CODE>, med värden som vi 
+  tidigare läst in. Vi vill nu skapa en ny vektor i vilken vi lägger alla 
+  positiva värden från vektorn <CODE>v</CODE>, den nya vektorn skall inte 
+  innehålla några onödiga element. </LI></OL>
+<HR>
+
+<ADDRESS></ADDRESS></BODY></HTML>

@@ -1,0 +1,572 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://www.cs.lth.se/Education/Courses/PT/E/lect/f10.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Anteckningar till föreläsning 10</H1>Detta är den första föreläsningen i 
+läsperiod 3, och den förbereder övning 7, som äger rum redan vecka 1. Det har 
+gått några veckor sedan förra föreläsningen, om du inte känner dig helt säker på 
+det som tidigare behandlats i kursen är det lämpligt att repetera, särskilt 
+följande grundläggande begrepp är viktiga denna vecka: 
+<UL>
+  <LI>variabler 
+  <LI>objekt 
+  <LI>referenser 
+  <LI>tillstånd 
+  <LI>operationer 
+  <LI>klasspecifikationer </LI></UL>
+<H1>Implementation av egna klasser</H1>Vi har under läsperiod 2 använt 
+färdigskrivna klasser vid många tillfällen, vi skall nu lära oss att skriva egna 
+(vi säger att vi <EM>implementerar</EM> egna klasser).
+<P>En klass beskriver hur ett en viss sorts objekt fungerar, vi deklarerar den 
+genom att skriva: <PRE>    class <I>Klassnamn</I> {
+
+        <I>deklarationer</I>
+    }
+</PRE>där vi har två typer av deklarationer: 
+<UL>
+  <LI><EM>attribut</EM>, och 
+  <LI><EM>operationer (metoder)</EM>. </LI></UL>Klassnamn skall normalt inledas 
+med stor bokstav (detta är ingen regel, men en allmänt vedertagen konvention - 
+vi kommer att följa den i kursen), vi skriver därför <CODE>Turtle</CODE>, 
+<CODE>SimpleWindow</CODE>, <CODE>Account</CODE> etc. 
+<H2>Attribut (tillståndsvariabler)</H2>Vi har sagt att objekt kan ha olika 
+<EM>tillstånd</EM>, tillståndet för en sköldpadda (<CODE>Turtle</CODE>) beskrivs 
+bland annat av: 
+<UL>
+  <LI>dess x- och y-koordinater, 
+  <LI>dess riktning, och 
+  <LI>pennans läge (uppe/nere). </LI></UL>För att hålla reda på sitt tillstånd 
+måste varje sköldpadda lagra ovanstående värden i lämpliga variabler. Den gör 
+det i så kallade <EM>tillståndsvariabler</EM> (vi kallar ofta 
+tillståndsvariablerna för <EM>attribut</EM>, eftersom de beskriver objekten).
+<P>Tillståndsvariablerna deklareras inne i klassdeklarationen, i en klass 
+<CODE>A</CODE> skulle ett heltalsattribut <CODE>a</CODE> och ett reellt attribut 
+<CODE>b</CODE> deklarerats på följande sätt: <PRE>    class A {
+    
+        int a;
+        double b;
+    
+        // resten av klassen
+    }
+</PRE>Under övningen denna vecka skall ni själva implementera klassen 
+<CODE>Turtle</CODE>, så för att inte förstöra övningen introducerar vi en ny 
+klass som exempel.
+<P>Antag att vi i våra program vill kunna kasta med tärningar. Det finns ingen 
+standardklass för tärningar i Java, men vi kan själva skriva en. Vi får då först 
+fundera över vad vi vill kunna göra med objekten, dvs vilken klasspecifikation 
+klassen skall ha. Vi kan exempelvis välja: <PRE>    class Die {
+
+        /**
+         * Skapar en sex-sidig tärning (konstruktor).
+         */
+        Die();
+
+        /**
+         * Kastar tärningen.
+         */
+        void roll();
+
+        /**
+         * Returnerar det antal prickar som tärningen visar efter
+         * det senaste kastet.
+         */
+        int getValue();
+    }
+</PRE>Vi kan tyvärr inte använda namnet <CODE>throw</CODE> för operationen som 
+skall kasta tärningen, <CODE>throw</CODE> är ett reserverat ord i Java (det 
+används för felhantering, mer om det senare i kursen).
+<P>Ett program som skapar en tärning och räknar hur många gånger tärningen måste 
+kastas innan summan av antalet prickar överstiger 100 kan då skrivas: <PRE>    public static void main(String[] args) {
+        Die die = new Die();
+        int sum = 0,
+            count = 0;
+        while (sum &lt; 100) {
+            die.roll();
+            sum += die.getValue();
+            count++;
+        }
+        System.out.println("Jag behövde " + count + " kast.");
+    }
+</PRE>Hur kan vi då beskriva tillståndet hos vår tärning? Vi kan naturligtvis 
+hålla reda på vilken färg tärningen har, vilken storlek den har, var den 
+befinner sig (x-, y- och z-koordinater i rummet), etc, men det enda vi 
+egentligen intresserar oss för är hur många prickar den visar efter senaste 
+kastet (dvs hur många prickar som är vända uppåt!). I vår modell av en tärning 
+skalar vi alltså bort all för uppgiften ovidkommande information.
+<P>Antalet prickar kan beskrivas med en heltalsvariabel, så vi inför attributet 
+(tillståndsvariablen) <CODE>value</CODE>. Vi gör det genom att inne i 
+klassdeklarationen skriva: <PRE>    class Die {
+
+        int value;    // deklaration av tillståndsvariabeln 'value'
+
+        // övriga deklarationer
+    }
+</PRE>Denna variabel skiljer sig på flera punkter från de variabler vi använt 
+tidigare. I ett program som <PRE>    public class Sample {
+    
+        public static void main(String[] args) {
+            int n;
+            n = Keyboard.readInt("Ange n: ");
+            // ...
+        }
+    }
+</PRE>är <CODE>n</CODE> en <EM>lokal variabel</EM>, deklarerad inne i 
+huvudprogrammet. Den lokala variabeln <CODE>n</CODE> är inte knuten till något 
+objekt, och försvinner så snart operationen <CODE>main</CODE> nått sin sista rad 
+(mer om detta nedan).
+<P>Attributet <CODE>value</CODE> är deklarerat ute i klassen <CODE>Die</CODE>, 
+det innebär att varje tärningsobjekt får en egen tillståndsvariabel 
+<CODE>value</CODE>, och att denna variabel finns kvar så länge objektet finns 
+kvar.
+<P>När vi skapar nya tärningar får vi följande objekt och variabler i minnet: <PRE>    public static void main(String[] args) {
+        Die d1 = new Die(),
+            d2 = new Die(),
+            d3 = new Die();
+        // ...
+    }
+</PRE>
+<CENTER><IMG src="f10_files/die1.gif"> </CENTER>
+<P>Varje tärning har sina egna tillståndsvariabler.
+<P>Det finns ingen gräns för hur många attribut vi kan ha i en klass, och för 
+vilka typer attributen kan ha. Vi kan ha heltalsattribut, logiska attribut, 
+vektorer och vanliga referenser etc.
+<P>Attribut, till skillnad från lokala variabler, får automatiskt startvärden. 
+Heltalsattribut får värdet 0, reella variabler värdet 0.0, logiska variabler 
+värdet <CODE>false</CODE> och vektorer och referenser värdet <CODE>null</CODE>.
+<P>
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Klassen <CODE>Turtle</CODE> har flera olika attribut, av flera olika 
+  typer. Försök fundera ut vilka attribut som behövs (tjuvkika inte längre upp 
+  på sidan!), och vilka typer de har.
+  <P>Deklarera dem sedan inne i en i övrigt tom klass <CODE>Turtle</CODE>. 
+  </P></LI></OL>
+<H2>Operationer (metoder)</H2>Vi har tidigare sagt att vi kan betrakta 
+operationerna som anges i klasspecifikationen som sätt att manipulera 
+tillståndet hos ett givet objekt, vi skall nu se hur vi skriver programkod för 
+att göra just detta.
+<P>Vi delar upp operationerna i tre olika kategorier: 
+<UL>
+  <LI>konstruktorer, som ger objekten väldefinierade starttillstånd, 
+  <LI>operationer som bara ändrar objektens tillstånd, och 
+  <LI>operationer som returnerar information om objektens tillstånd. 
+</LI></UL>Genmensamt för dem alla är att de består av vanliga programrader, 
+precis som de program ni skrivit tidigare i kursen. Vi skriver operationerna 
+mellan ett omgivande par klamrar (<CODE>{</CODE> och <CODE>}</CODE>, på samma 
+sätt som i era huvudprogram), och vi använder lokala variabler, tilldelningar, 
+<CODE>if</CODE>-, <CODE>for</CODE>- och <CODE>while</CODE>-satser som vanligt. 
+Skillnaden nu är att vi förutom våra lokala variabler även har 
+tillståndsvariabler (attribut) att arbeta med.
+<P>Operationer kallas med ett annat ord för <EM>metoder</EM>. 
+<H3>Konstruktorer</H3>När vi skapar nya objekt anropas en <EM>konstruktor</EM> i 
+klassen. Meningen med konstruktorn är att ge ett objekt ett lämpligt 
+<EM>initialtillstånd</EM>. Vi har redan nämnt att attributen automatiskt får 
+startvärden (0, 0.0, <CODE>false</CODE>, eller <CODE>null</CODE>) - om vi vill 
+ge dem andra startvärden kan vi göra det i konstruktorn. Konstruktorerna har 
+alltid samma namn som klassen själv, och är i regel de enda operationer som 
+skrivs med stor begynnelsebokstav.
+<P>I klassen <CODE>Die</CODE> var konstruktorn deklarerad som 
+<CODE>Die()</CODE>, dvs utan några <EM>parametrar</EM> (mer om parametrar till 
+operationer nedan). Vi skriver den därför på följande sätt:
+<P><PRE>    class Die {
+    
+        int value;
+        
+        public Die() {
+            // här ger vi objektet lämpligt starttillstånd
+        }
+    }
+</PRE>Programkoden i konstruktorn anropas precis efter att ett nytt objekt har 
+skapats: <PRE>    Die die = new Die();  // en tärning skapas, och konstruktorn anropas
+</PRE>När konstruktorn anropas har attributen redan fått sina automatiska 
+startvärden (i detta fall har attributet <CODE>value</CODE> fått värdet 0).
+<P>Eftersom <CODE>0</CODE> inte är ett giltigt värde för en tärning kan vi i 
+konstruktorn sätta ett lämpligt giltigt värde på attributet <CODE>value</CODE> i 
+denna (den nyskapade) tärningen, exempelvis <CODE>1</CODE>, genom att skriva: <PRE>        public Die() {
+            this.value = 1;
+        }
+</PRE>Man behöver inte skriva ut <CODE>this</CODE>, de flesta skriver istället 
+bara <PRE>        public Die() {
+            value = 1;
+        }
+</PRE>där det underförstått är objektet '<CODE>this</CODE>' vars attribut 
+<CODE>value</CODE> får värdet 1.
+<P>Jag kommer i denna kurs att skriva ut <CODE>this</CODE> överallt, för att 
+tydligt markera vad som är ett attribut. (Denna egenhet är jag ganska ensam om, 
+Javas kodningsstandard säger ingenting om huruvida man skall skriva ut 
+<CODE>this</CODE> eller inte - i vissa fall måste man göra det, jag gör det 
+alltid. Jag tycker även att det finns en pedagogisk poäng med att skriva ut 
+<CODE>this</CODE>, många förvirras av att klassen på en gång beskriver ett 
+objekt och samtidigt samtliga objekt av den aktuella klassen, genom att markera 
+<CODE>this</CODE> framgår att vi utför något på ett enstaka objekt.)
+<P>
+<H3>void-operationer och lokala variabler</H3>Vi har tidigare sett att en del 
+operationer bara ändrar på ett objekts tillstånd, operationen 
+<CODE>roll()</CODE> i klassen <CODE>Die</CODE> är ett exempel på detta. När vi 
+kastar tärningen ändrar den tillstånd, vill vi veta något om det nya tillståndet 
+får vi använda operationen <CODE>getValue()</CODE> som returnerar ett heltal 
+(antalet prickar).
+<P>En operation som bara ändrar tillståndet hos ett objekt deklareras som 
+<CODE>void</CODE>, så <CODE>roll()</CODE>-operationen skrivs: <PRE>    void roll() {
+        // här skriver vi programrader för att rulla tärningen
+    }
+</PRE>Alla operationer (utom konstruktorerna) deklareras i regel med liten 
+begynnelsebokstav.
+<P>Om vi vill få slumpmässiga värden när vi kastar tärningen (och det vill vi!) 
+kan vi använda en slumptalsgenerator inne i operationen <CODE>roll()</CODE>. 
+Precis som vanligt, när vi använder slumptalsgeneratorer, deklarerar vi en 
+referens till generatorn och använder den sedan för att dra ett slumptal i 
+intervallet <I>1..6</I> som vi lagrar i attributet <CODE>value</CODE>: <PRE>    void roll() {
+        RandomNumberGenerator rng = new RandomNumberGenerator();
+        this.value = rng.randInt(1,6);
+    }
+</PRE>Här är <CODE>rng</CODE> en <I>lokal variabel</I> som fungerar precis som 
+de variabler ni använt tidigare - alla variabler som använts hittills i kursen 
+har varit lokala variabler i huvudprogrammet.
+<P>Lokala variabler finns tillgängliga så länge det block de deklarerats i körs, 
+sedan 'försvinner' de. Referensvariabeln <CODE>rng</CODE> ovan finns alltså bara 
+medan <CODE>roll()</CODE>-operationen körs, därefter försvinner den och därmed 
+det objekt den refererar till (eftersom <CODE>rng</CODE> var den enda referensen 
+till denna slumptalsgenerator). Lägg dock märke till att attributet 
+<CODE>value</CODE> i tärningen finns kvar även efter att 
+<CODE>roll()</CODE>-operationen körts färdigt, attributen finns kvar så länge 
+objekten de tillhör finns kvar.
+<P>Man kan ha lokala variabler i alla operationer, även i konstruktorer (även om 
+vi inte hade något i exemplet ovan).
+<P>Man får ge en lokal variabel samma namn som ett attribut i samma klass (man 
+bör dock vara försiktig med detta eftersom det är en potentiell felkälla!). Om 
+det finns både lokala variabler och attribut med samma namn används normalt den 
+'närmast deklarerade' variabeln, dvs den lokala variabeln, såvida man inte 
+markerar med <CODE>this</CODE> att det är attributet som avses (eftersom jag 
+alltid sätter ut <CODE>this</CODE> får jag inga problem med detta).
+<P><B>Exempel</B><BR>I operationen <CODE>op()</CODE> nedan finns fyra variabler: 
+<PRE>class A {
+
+    int a,b;
+
+    void op() {
+        int b, c;    // vi har nu fyra variabler:
+                     // * attributen a och b (tillståndsvariabler)
+                     // * de lokala variablerna b och c
+
+        a = 1;       // attributet a får värdet 1
+        b = 2;       // den lokala variabeln b får värdet 2,
+                     // attributet b påverkas inte
+        this.b = 3;  // attributet b får värdet 3
+        c = 4;       // den lokala variabeln c får värdet 4
+    }
+}
+</PRE>För att undvika missförstånd kommer jag att skriva: <PRE>class A {
+
+    int a,b;
+
+    void op() {
+        int b, c;    // vi har nu fyra variabler:
+                     // * attributen a och b (tillståndsvariabler)
+                     // * de lokala variablerna b och c
+
+        this.a = 1;  // attributet a får värdet 1
+        b = 2;       // den lokala variabeln b får värdet 2
+        this.b = 3;  // attributet b får värdet 3
+        c = 4;       // den lokala variabeln c får värdet 4
+    }
+}
+</PRE>dvs jag markerar alltid med <CODE>this</CODE> när jag vill använda ett 
+attribut (dvs i fallet ovan hade jag inte behövt skriva <CODE>this.a</CODE>, men 
+gjorde det ändå).. 
+<H4>Om att anropa andra operationer</H4>I en operation kan vi även anropa andra 
+operationer på det aktuella objektet, om vi i konstruktorn vill ge tärningen ett 
+slumpmässigt startvärde kan vi göra det genom att kasta tärningen: <PRE>    Die() {
+        this.roll();
+    }
+</PRE>vilket innebär att vi utför operationen <CODE>roll()</CODE> på det objekt 
+som vi håller på att initiera. Även här kan man utelämna ordet 
+<CODE>this</CODE>, dvs vi hade kunnat skriva: <PRE>    Die() {
+        roll();
+    }
+</PRE>Vi har tidigare i kursen sagt att alla operationer måste utföras på givna 
+objekt, i det första fallet ovan är det uppenbart att <CODE>roll()</CODE> utförs 
+på ett objekt (<CODE>this</CODE>), i det andra fallet är det kanske inte lika 
+uppenbart. Ni får själva välja om ni vill skriva ut <CODE>this</CODE> eller 
+inte, Javas officiella kodstandard säger inte något om hur man bör göra.
+<P>Att anropa andra operationer är ett bra sätt att strukturera sin programkod, 
+vi kommer att diskutera detta mer senare i kursen. 
+<H4>Något om klasser i sin helhet och 'this'</H4>Operationen <CODE>roll()</CODE> 
+är deklarerad i klassen <CODE>Die</CODE>, men den utförs bara för ett givet 
+<CODE>Die</CODE>-objekt åt gången (<CODE>this</CODE>). När vi skriver <PRE>    Die die = new Die();
+    die.roll();
+</PRE>är det tärningen som <CODE>die</CODE> refererar till som manipuleras 
+(<CODE>this</CODE> kommer alltså att referera till samma objekt som 
+<CODE>die</CODE>). Vi kommer att diskutera detta ganska ingående under 
+föreläsningen.
+<P><EM>Referensen <CODE>this</CODE> är alltså alltid det objekt vi utför aktuell 
+operation på!</EM> (det finns därför inget <CODE>this</CODE> i ett huvudprogram, 
+mer om detta senare i kursen)
+<P>
+<H4>Kontrollfrågor</H4>
+<OL>
+  <LI>Rita en figur över variablerna och objekten (med tillhörande attribut) i 
+  följande programavsnitt. Vilket objekt är '<CODE>this</CODE>' när 
+  <CODE>roll()</CODE> anropas för första gången? <PRE>    Die d1 = new Die(),
+        d2 = new Die();
+    d2.roll();   // här anropas roll() för första gången
+      </PRE>
+  <LI>Vilka variabler finns tillgängliga när programmet når den andra raden i 
+  <CODE>roll()</CODE>-operationen inne i klassen <CODE>Die</CODE>? </LI></OL>
+<H3>Operationer som returnerar värden</H3>När vi anropar operationen 
+<CODE>getValue()</CODE> vill vi få tillbaka ett heltal, exempelvis: <PRE>    Die die = new Die();
+    die.roll();
+    int nbrOfDots = die.getValue();
+</PRE>Vi deklarerar därför <CODE>getValue()</CODE> som en heltalsoperation. Det 
+blir den om vi skriver: <PRE>    int getValue() {
+        // rader som behövs för att returnera värdet...
+    }
+</PRE>Vi får operationen <CODE>getValue()</CODE> att returnera ett värde genom 
+att inne i operationen skriva '<CODE>return</CODE> <I>värde</I>'. Eftersom det 
+värde <CODE>getValue()</CODE> skall returnera helt enkelt är värdet på 
+attributet <CODE>value</CODE> blir implementationen väldigt enkel: <PRE>    int getValue() {
+        return this.value;
+    }
+</PRE>Det är viktigt att det värde som returneras har samma typ som den vi givit 
+operationen, i detta fall är attributet <CODE>value</CODE> deklarerat som ett 
+<CODE>int</CODE>, precis som operationen <CODE>getValue()</CODE>. Man kan i Java 
+returnera vilken typ av värden som helst, både primitiva värde (heltal, reella 
+tal, logiska variabler, tecken etc) och referenser (referenser till objekt eller 
+vanliga vektorer).
+<P>När programmet når en <CODE>return</CODE>-sats avbryts den aktuella 
+operationer, eventuella satser efter kommer inte att exekveras: <PRE>    int getValue() {
+        return this.value;
+        System.out.printlnt("Här kan jag skriva vad som helst...");
+    }
+</PRE>Utskriften efter <CODE>return</CODE>-satsen ovan kommer alltså inte att 
+utföras (kompilatorn kommer att se detta och ge ett felmeddelande). 
+<H2>Parametrar till operationer</H2>Om vi, av någon anledning, vill ha en 
+operation som vänder tärningen så att ett givet antal prickar vänds uppåt, så 
+måste vi på något sätt tala om för tärningen hur många prickar som skall visas.
+<P>Vi kan göra det genom att införa en operation <CODE>setValue</CODE>, där vi 
+har en <EM>parameter</EM> <CODE>newValue</CODE> som talar om hur många prickar 
+som skall visas. Operationen kan implementeras på följande vis: <PRE>    void setValue(int newValue) {
+        this.value = newValue;
+    }
+</PRE>eller, om vi är misstänksama: <PRE>    void setValue(int newValue) {
+        if (newValue &lt; 1) {
+            this.value = 1;
+        } else if (newValue &gt; 6) {
+            this.value = 6;
+        } else {
+            this.value = newValue;
+        }
+    }
+</PRE>En parameter är alltså ett värde som skickas in till en operation, om 
+någon skriver <PRE>    Die die = new Die();
+    // ...
+    die.setValue(4);
+</PRE>så kommer operationen <CODE>setValue</CODE> att anropas för tärningen 
+<CODE>die</CODE>, parametern <CODE>newValue</CODE> får värdet <CODE>4</CODE>.
+<P>Parametrarna fungerar precis som vanliga lokala variabler, men de får ett 
+startvärde när operationen anropas. Det är tillåtet att ändra värdet på en 
+parameter, dess värde ändras precis som värdet på en lokal variabel skulle 
+ändrats, och när operationen kört färdigt försvinner dess värde. Vi skulle 
+kunnat skriva den misstänksamma varianten av <CODE>setValue</CODE> ovan på 
+följande sätt: <PRE>    void setValue(int newValue) {
+        if (newValue &lt; 1) {
+            newValue = 1;
+        } else if (newValue &gt; 6) {
+            newValue = 6;
+        }
+        this.value = newValue;
+    }
+</PRE>På sista raden lagras det nya värdet på <CODE>newValue</CODE> i attributet 
+<CODE>value</CODE>, sedan avslutas operationen och variabeln 
+<CODE>newValue</CODE> försvinner. Det är ganska vanligt att parametrar får samma 
+namn som attribut, exempelvis hade det varit naturligt att kalla parametern till 
+<CODE>setValue</CODE> för <CODE>value</CODE>: <PRE>    void setValue(int value) {
+        this.value = value;
+    }
+</PRE>I detta fall måste vi skriva ut <CODE>this.</CODE> när vi skall ge 
+attributet <CODE>value</CODE> sitt nya värde, om vi skriver <PRE>    void setValue(int value) {
+        value = value;          // fel!!
+    }
+</PRE>så är det parametern <CODE>value</CODE> som får värdet <CODE>value</CODE>, 
+ingenting händer med attributet <CODE>value</CODE>.
+<P>Vi har alltså hittills stött på tre sorters variabler: 
+<UL>
+  <LI><EM>lokala variabler</EM>, deklareras inne i operationer (även 
+  huvudprogrammet betraktas som en operation) och existerar bara inne i den 
+  operation de är deklarerade, 
+  <LI><EM>parametrar</EM>, fungerar precis som lokala variabler, men får 
+  startvärden när operationen startas (startvärdet får de vid anropet), och 
+  <LI><EM>attribut</EM> (tillståndsvariabler), som deklareras inne i en klass 
+  och finns i 'sitt' objekt så länge objekten finns kvar. </LI></UL>Vi kommer att 
+träffa på några andra sorters variabler senare i kursen. 
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Vilka variabler finns på de markerade raderna i programkoden nedan? <PRE>    class A {
+
+        int a, b;
+
+        void op1() {
+            int n;
+            // vilka variabler finns här?
+        }
+
+        void op2(int m) {
+            int k;
+            // vilka variabler finns här?
+        }
+
+        void op3(int a) {
+            int b, n;
+            // vilka variabler finns här?
+        }
+    }
+      </PRE>
+  <LI>Om vi hade velat ha möjlighet att skapa tärningar med godtyckligt många 
+  sidor 
+  <OL>
+    <LI>vilka attribut behövs, och 
+    <LI>hur borde konstruktorn deklareras? </LI></OL></LI></OL>
+<H2>Inkapsling</H2>Ett känt faktum är att en normal människa inte kan hålla mer 
+än ett ganska begränsat antal detaljer åt gången i huvudet. Ju fler detaljer man 
+får att hålla reda på, ju större är risken att man gör fel.
+<P>En av finesserna med objektorientering är att vi kan bespara en användare 
+från många bekymmer genom att dölja detaljer i implementationen av en klass (med 
+användare menar jag en annan programmerare som skall använda någon av våra 
+klasser). På samma sätt som de flesta av oss struntar i exakt hur TV-n fungerar, 
+bara den fungerar, vill en programmerare inte veta mer om hur ett objekt 
+fungerar än vad som anges i klasspecifikationen.
+<P>För en användare av tärningsklassen räcker det att veta precis det som står i 
+klasspecifikationen. Hon behöver inte veta att vi har ett heltalsattribut 
+<CODE>value</CODE>, däremot måste hon veta hur man gör för att skapa, kasta och 
+ta reda på utfallet av ett kast.
+<P>Att gömma detaljer för användaren kallas med ett finare ord för 
+<EM>inkapsling</EM>, och det är en mycket viktig princip. <EM>Även om de exempel 
+vi använder i kursen är väldigt små, är det viktigt att ni redan från början lär 
+er att kapsla in på ett bra sätt!</EM> 
+<H3>Publika deklarationer - public</H3>De attribut och operationer vi vill att 
+användaren skall kunna se och använda deklarerar vi som <CODE>public</CODE>, dvs 
+när vi deklarerar dem skriver vi det reserverade ordet <CODE>public</CODE> 
+först:
+<P><PRE>    public void roll() {
+        // ...
+    }
+</PRE>I tärningsexemplet vill vi att 
+<UL>
+  <LI>konstruktorn, 
+  <LI><CODE>roll()</CODE>, och 
+  <LI><CODE>getValue()</CODE> </LI></UL>skall vara tillgängliga, vi skriver därför 
+<CODE>public</CODE> i deklarationerna av var och en av dem.
+<P>När vi sedan genererar klasspecifikationen (i Java kan man göra det 
+halvautomatiskt) kan vi välja att bara visa de publika deklarationerna. 
+<H3>Hemliga deklarationer - private</H3>För att dölja våra attribut (och 
+eventuellt några operationer) skriver vi det reserverade ordet 
+<CODE>private</CODE> före dem i deklarationen: <PRE>    class Die {
+    
+        private int value;
+        
+        public Die() {
+            this.value = 1;
+        }
+
+        // ...resten av klassen...
+</PRE>Eftersom vi i regel deklarerar våra attribut som <CODE>private</CODE> 
+kommer vi inte att se några attribut i klasspecifikationerna.
+<P>Vår (halv-) färdiga klass <CODE>Die</CODE> får följande utseende: <PRE>    class Die {
+    
+        private int value;      // attribut, skyddat från omvärden
+        
+        public Die() {          // konstruktor, tillgänglig för alla
+            this.roll();
+        }
+    
+        public void roll() {    // kastar tärningen, tillgänglig för alla
+            RandomNumberGenerator rng = new RandomNumberGenerator();
+            this.value = rng.randInt(1,6);
+        }
+    
+        public int getValue() { // ger antalet prickar, tillgänglig för alla
+            return this.value;
+        }
+    }</PRE>
+<H2>Kort återkoppling och reflektion</H2>Det kan, som repetition, vara nyttigt 
+att i detalj studera det program vi skrev ovan, för att upprepade gånger kasta 
+en tärning tills tärningssumman överskred 100. Fundera särskilt över hur 
+exekveringen hoppar från huvudprogrammet in i operationerna på 
+<CODE>Die</CODE>-objektet.
+<P>Huvudprogrammet hade följande utseende: <PRE>    public static void main(String[] args) {
+        Die die = new Die();
+        int sum = 0,
+            count = 0;
+        while (sum &lt; 100) {
+            die.roll();
+            sum += die.getValue();
+            count++;
+        }
+        System.out.println("Jag behövde " + count + " kast.");
+    }
+</PRE>och de programrader som kommer att exekveras blir: <PRE>    Die die = new Die();  // konstruktorn i den nya tärningen startar:
+               // inne i det nya objektet, konstruktorn: {
+                      // 'this' refererar till det nya objektet:
+                      this.value = 1;
+                  }
+    int sum = 0,
+        count = 0;
+    while (sum &lt; 100) {
+        die.roll();       // operationen roll i tärningen die anropas:
+               // inne i die.roll() {
+                      // 'this' refererar till tärningen die.
+                      // 'rng' är en lokal variabel.
+                      RandomNumberGenerator rng = new RandomNumberGenerator();
+                      this.value = rng.randInt(1,6);
+                  }
+        sum += die.getValue();  // operationen getValue() i tärningen die anropas:
+               // inne i die.getValue() {
+                      // 'this' refererar till tärningen die:
+                      return this.value;
+                  }
+        count++;
+    }
+    System.out.println("Jag behövde " + count + " kast.");
+</PRE>
+<H3>En liten förenkling</H3>Det är lite klumpigt att skapa en ny 
+slumptalsgenerator varje gång vi skall kasta tärningen, istället kan vi låta 
+varje tärning ha en egen slumptalsgenerator (som lever kvar så länge tärningen 
+lever kvar): <PRE>    class Die {
+    
+        private int value;
+        private RandomNumberGenerator rng;
+        
+        public Die() {
+            this.rng = new RandomNumberGenerator();
+            this.roll();
+        }
+    
+        public void roll() {
+            this.value = this.rng.randInt(1,6);
+        }
+    
+        public int getValue() {
+            return this.value;
+        }
+    }
+</PRE>Eftersom slumptalsgeneratorn är deklarerad som <CODE>private</CODE> så 
+kommer ingen att se att den finns (annars skulle kanske någon börja fundera över 
+varför den var deklarerad).
+<P>
+<H4>Kontrollfrågor</H4>
+<OL>
+  <LI>Kontrollera att du förstår följande begrepp: 
+  <UL>
+    <LI>objekt 
+    <LI>referens 
+    <LI>lokal variabel 
+    <LI>parameter 
+    <LI>attribut 
+    <LI>operation 
+    <LI><CODE>return</CODE>-sats 
+    <LI><CODE>this</CODE> </LI></UL>Är det något av dessa begrepp du är tveksam 
+  över är det viktigt att du frågar! Ni kommer att få massor av övning under 
+  resten av kursen, men det kommer att bli betydligt enklare för er om ni redan 
+  nu gör helt klart för er vad de innebär. </LI></OL></BODY></HTML>

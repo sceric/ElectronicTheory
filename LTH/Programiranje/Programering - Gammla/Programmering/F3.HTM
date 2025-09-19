@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0056)http://www.cs.lth.se/Education/Courses/PT/E/lect/f3.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Fortsättning av introduktion till programmering...</H1>
+<H2>Introduktion till klasser, objekt och referenser</H2>I Java kan vi, förutom 
+de primitiva typer vi redan sett, även hantera så kallade <EM>objekt</EM>. Java 
+är ett <EM>objektorienterat programspråk</EM> och objekt och klasser en 
+fundamental del av språket.
+<P>Under kursens andra halva kommer vi att skriva egna klasser, för att beskriva 
+egna objekt. Fram till dess använder vi färdigskrivna klasser.
+<P>Vi kan använda objekt för att beskriva både konkreta saker, som bilar, 
+personer och bankkonton, såväl som abstrakta företeelser som tangenttryckningar 
+och musrörelser. Vi kommer i kursen huvudsakligen att använda konkreta exempel, 
+under första läsperioden kommer vi att stöta på bland andra följande typer av 
+objekt: 
+<UL>
+  <LI>fönsterobjekt, fönster som vi kan rita i, 
+  <LI>sköldpaddsobjekt, små krabater som rör sig i ett fönster (se ovan) och 
+  ritar figurer (mer om sköldpaddor nedan), 
+  <LI>inläsnings- och utskriftsobjekt, objekt med vars hjälp vi kan läsa data 
+  från tangentbord eller filer och skriva till terminalfönster eller filer, 
+  <LI>bankkonto-objekt, objekt som beskriver konton på en bank, med saldon och 
+  kontonummer. </LI></UL>
+<H3>Grundläggande begrepp</H3>Det är några viktiga begrepp som måste klargöras 
+(under föreläsningarna kommer vi att ägna mycket tid åt nedanstående begrepp): 
+<UL>
+  <LI>Ett <EM>objekt</EM> är en slags inkapslad storhet i minnet, med ett 
+  <EM>tillstånd</EM> som vi kan ändra och undersöka med hjälp av olika 
+  <EM>operationer</EM>.
+  <P></P>
+  <LI>Vi kan ha olika typer av objekt, en <EM>klass</EM> beskriver hur alla 
+  objekt av en given typ fungerar, vi säger att objekten 'tillhör en klass', 
+  eller 'är av en klass'.
+  <P>Vi har en klass för varje slags objekt vi vill använda, men vi kan ha många 
+  objekt av varje klass. Ibland säger vi att ett objekt är en <EM>instans</EM> 
+  av en klass, dvs att klassen är en mall för de objekt vi skapar.
+  <P></P>
+  <LI>En <EM>klass-specifikation</EM> är en beskrivning av vad vi kan göra med 
+  objekt av en given klass, ett slags bruksanvisning för objekten.
+  <P></P>
+  <LI>Objekt lagras inte i vanliga variabler, de läggs på ett annat ställe i 
+  datorns minne. Vi kan bara komma åt objekt med hjälp av <EM>referenser</EM> 
+  till dem, referenserna lagras i <EM>referensvariabler</EM>. </LI></UL>Som 
+exempel nedan (och under föreläsningan) använder vi så kallade "turtles", ett 
+slags sköldpaddor som kryper omkring i fönster på datorskärmen och ritar 
+figurer.
+<P>Med sköldpaddorna kan vi bland annat: 
+<UL>
+  <LI>Lyfta och sänka en penna. När pennan är lyft rör sig sköldpaddan spårlöst 
+  över skärmen, när pennan är sänkt lämnar sköldpaddan ett spår efter sig när 
+  den går framåt (se nedan). 
+  <LI>Gå framåt ett givet antal steg. Om pennan är sänkt syns förflyttningen, 
+  annars sker förflyttningen spårlöst. 
+  <LI>Vrida kroppen åt vänster eller höger. 
+  <LI>Ta reda på var i fönstret sköldpaddan befinner sig. </LI></UL>Tyvärr ser man 
+aldrig själva sköldpaddorna, bara deras spår.
+<P>
+<P>
+<CENTER><IMG src="f3_files/window1.gif"></CENTER>
+<P>I figuren ovan har vi ett fönster med två sköldpaddor, vi har alltså tre 
+objekt som tillhör två olika klasser: 
+<UL>
+  <LI>ett fönsterobjekt, av klassen <CODE>SimpleWindow</CODE>, och 
+  <LI>två sköldpaddsobjekt, av klassen <CODE>Turtle</CODE>. </LI></UL>
+<H3>Hur man skapar objekt</H3>Objekt skapas <EM>alltid</EM> med hjälp av 
+<CODE>new</CODE>-anrop. Om vi i ett program vill ha ett fönster och en 
+sköldpadda måste vi ha ett <CODE>new</CODE>-anrop för vardera objektet.
+<P>I klass-specifikationerna beskrivs hur <CODE>new</CODE>-anropen skall se ut, 
+det beskrivs i den så kallade <EM>konstruktorn</EM>. För klassen 
+<CODE>SimpleWindow</CODE> (fönsterklassen) ser konstruktorn ut så här:
+<P><PRE>    <CODE>SimpleWindow(int width, int height)</CODE>
+</PRE>Det betyder att vi i <CODE>new</CODE>-anropet måste tala om vilken bredd 
+och höjd fönstret skall ha (två heltal). Vi skulle kunna skapa ett nytt fönster 
+med 400*400-punkters storlek genom att skriva <PRE>    new SimpleWindow(400,400);
+</PRE>
+<P>
+<CENTER><IMG src="f3_files/window2.gif"></CENTER>
+<P>Här skapas ett nytt fönster någonstans i minnet, men vi kommer inte att kunna 
+använda fönstret eftersom vi inte har något sätt att referera till det.
+<P>Vi deklarerar därför en <EM>referensvariabel</EM>, en variabel som kan 
+referera till fönster av klassen <CODE>SimpleWindow</CODE>. Vi kan kalla den 
+<CODE>w</CODE> och deklarerar den genom att skriva: <PRE>    SimpleWindow w;
+</PRE>dvs vi deklarerar den på samma sätt som vi deklarerade heltal och reella 
+tal. Precis som för variabler av primitiva typer gäller att referensvariabler 
+inte har något startvärde. Vi får alltså:
+<P>
+<P>
+<CENTER><IMG src="f3_files/refvar.gif"></CENTER>
+<P>Därefter låter vi vår referensvariabel referera till ett nytt fönster: <PRE>    w = new SimpleWindow(400,400);
+</PRE>
+<P>
+<CENTER><IMG src="f3_files/window3.gif"></CENTER>
+<P>Denna sats gör alltså två saker, den skapar ett nytt fönster, och den lagrar 
+en referens till det nya fönstret i referensvariabeln <CODE>w</CODE>.
+<P>Det är på detta vis vi kommer att skapa nästan alla våra objekt i denna kurs, 
+lägg dock märke till att det är <CODE>new</CODE>-anropet och inget annat som 
+skapar fönstret.
+<P>I sköldpaddsklassen har vi följande konstruktor: <PRE>    <CODE>Turtle(SimpleWindow w, int x, int y)</CODE>
+</PRE>vilket betyder att vi när vi skapar en ny sköldpadda skall ange: 
+<UL>
+  <LI>ett fönster - det är i det här fallet det fönster sköldpaddan skall rita 
+  i, och 
+  <LI>två heltal, som är x- och y-koordinaten för sköldpaddans startposition i 
+  fönstret. </LI></UL>För att skapa två nya sköldpaddor med koordinaterna 
+(100,100) respektive (200,200) i fönstret <CODE>w</CODE>, och låta två 
+referensvariabler <CODE>t1</CODE> och <CODE>t2</CODE> referera till dem, skriver 
+vi alltså: <PRE>    Turtle t1, t2;
+    t1 = new Turtle(w,100,100);
+    t2 = new Turtle(w,200,200);
+</PRE>
+<P>
+<CENTER><IMG src="f3_files/window4.gif"></CENTER>
+<P>När sköldpaddorna skapas har de den startposition vi anger, pennan lyft och 
+nosen riktad uppåt på skärmen. Vi säger att detta beskriver sköldpaddans 
+starttillstånd.
+<P>Referensvariabler kan tilldelas värden på olika sätt: 
+<UL>
+  <LI>vi kan låta dem referera till nya objekt, som ovan, 
+  <LI>vi kan låta dem referera till samma objekt som någon annan 
+  referensvariabel, om vi har referensvariablerna <CODE>t1</CODE> och 
+  <CODE>t2</CODE> kan vi låta <CODE>t2</CODE> referera till samma objekt som 
+  <CODE>t1</CODE> genom att skriva <PRE>    t2 = t1;
+      </PRE>
+  <LI>vi kan ge dem värdet <CODE>null</CODE> </LI></UL>Värdet <CODE>null</CODE> är 
+ett speciellt referensvärde och används för referenser som inte skall referera 
+till någonting.
+<P>Vanliga missuppfattningar är: 
+<UL>
+  <LI>Att det finns en sköldpadda i variabeln <CODE>t</CODE>. Det är fel, 
+  variabeln <CODE>t</CODE> <EM>refererar</EM> till en sköldpadda (som ligger 
+  någon annanstans i minnet). Denna distinktion kan verka petig, men strax skall 
+  vi se varför det är viktigt att göra den.
+  <P></P>
+  <LI>Att det skapas en sköldpadda automagiskt när vi deklarerar 
+  referensvariabeln <CODE>t</CODE>. Även detta är fel, <CODE>t</CODE> är 
+  oinitierad tills den tilldelas ett värde. Det skapas inga sköldpaddor förrän 
+  vi gör <CODE>new Turtle(...)</CODE>. </LI></UL>
+<H4>Kontrollfrågor</H4>
+<OL>
+  <LI>Hur många referensvariabler och hur många objekt finns det efter att 
+  raderna nedan körts: <PRE>    SimpleWindow w;
+    Turtle t1, t2;
+    w = new SimpleWindow(500,500);
+    t1 = new Turtle(w,100,200);
+      </PRE></LI></OL>
+<H3>Att använda objekt</H3>Vi kan nu använda vårt sköldpaddsobjekt genom att via 
+referensvariabeln <CODE>t</CODE> ge den kommandon, eller, med ett annat 
+språkbruk, utföra operationer på den.
+<P>I klass-specifikationen för klassen <CODE>Turtle</CODE> anges vilka 
+operationer vi kan utföra. Där finns bland andra:
+<P>
+<TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#efe0d8 border=0>
+  <TBODY>
+  <TR>
+    <TD width="100%">
+      <H3>Utdrag ur klass-specifikation för klassen Turtle</H3>
+      <UL>
+        <LI><CODE>void penDown()</CODE>
+        <P>Sänker pennan, så att sköldpaddan lämnar ett spår efter sig när den 
+        går framåt.
+        <P></P>
+        <LI><CODE>void penUp()</CODE>
+        <P>Lyfter pennan, så att förflyttningar sker spårlöst.
+        <P></P>
+        <LI><CODE>void forward(int nbrOfSteps)</CODE>
+        <P>Får sköldpaddan att gå framåt <CODE>nbrOfSteps</CODE> steg, om pennan 
+        är sänkt kommer vi att se ett streck där sköldpaddan går.
+        <P></P>
+        <LI><CODE>void left(int nbrOfDegrees)</CODE>
+        <P>Vrider sköldpaddan <CODE>nbrOfDegrees</CODE> grader åt vänster.
+        <P></P>
+        <LI><CODE>int getX()</CODE>
+        <P>Talar om vilken x-koordinat sköldpaddan har.
+        <P></P>
+        <LI><CODE>int getY()</CODE>
+        <P>Talar om vilken y-koordinat sköldpaddan har. </P></LI></UL>
+    <TD></TD></TR></TBODY></TABLE>
+<P>Operationerna ovan är deklarerade ungefär som vi deklarerar variabler, först 
+en typ, sedan ett namn.
+<P>De operationer som är deklarerade som <CODE>void</CODE> ändrar sköldpaddans 
+tillstånd på något sätt, men vi får inget värde tillbaka. Operationerna 
+<CODE>getX()</CODE> och <CODE>getY()</CODE> ger däremot ett heltal tillbaka, så 
+de säger något om sköldpaddans tillstånd.
+<P>Några av operationerna, <CODE>forward(..)</CODE> och <CODE>left(..)</CODE>, 
+har <EM>parametrar</EM> som preciserar vad vi skall göra. När sköldpaddan skall 
+gå framåt måste den veta hur många steg den skall ta, deklarationen ovan visar 
+att antalet steg anges med ett heltal.
+<P>På varje sköldpadda kan vi utföra operationerna ovan, vi gör det genom att 
+använda en referens till en sköldpadda och använda <EM>punktnotation</EM>. Om vi 
+har en sköldpaddsreferens <CODE>t</CODE> och vill sänka sköldpaddans penna kan 
+vi skriva: <PRE>    t.penDown();
+</PRE>Vi har ändrat sköldpaddans tillstånd genom att sänka dess penna. Vill vi 
+gå den att gå framåt 100 steg, vrida 90 grader åt vänster och sedan gå framåt 
+ytterligare 50 steg skriver vi: <PRE>    t.forward(100);
+    t.left(90);
+    f.forward(50);
+</PRE>Om vi efter denna vådliga utflykt vill veta var sköldpaddan befinner sig 
+kan vi hämta dess x- och y-koordinater med hjälp av <CODE>getX()</CODE>- och 
+<CODE>getY()</CODE>-operationerna: <PRE>    int x, y;
+    x = t.getX();
+    y = t.getY();
+    System.out.println("Paddan befinner sig i (" + x + ", " + y + ")");
+</PRE>
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Vad ritas upp på skärmen av följande program: <PRE>    SimpleWindow w;
+    Turtle t;
+    int i;
+    w = new SimpleWindow(400,400);
+    t = new Turtle(w,100,100);
+    t.penDown();
+    for (i = 1; i &lt;= 4; i++) {
+        t.right(90);
+        t.forward(100);
+    }
+      </PRE>
+  <LI>Vi kan låta flera referensvariabler referera till samma objekt, om vi gör 
+  det måste vi dock vara försiktiga!
+  <P>Studera följande programrader: <PRE>    SimpleWindow w;
+    Turtle t1,t2;
+    w = new SimpleWindow(400,400);
+    t1 = new Turtle(w,100,100);
+    t2 = t1;
+    
+    t1.penDown();
+    t1.right(90);
+    t1.forward(100);
+
+    t2.right(90);
+    t2.forward(100);
+    t2.penUp();
+      </PRE>
+  <OL>
+    <LI>Hur många sköldpaddsreferenser har vi? 
+    <LI>Hur många sköldpaddsobjekt har vi? 
+    <LI>Kommer operationen <CODE>t2.forward(100)</CODE> (näst sista raden) att 
+    lämna något spår efter sig? 
+    <LI>Var befinner sig sköldpaddan som <CODE>t1</CODE> refererar till efter 
+    sista raden? 
+    <LI>Har sköldpaddan som <CODE>t1</CODE> refererar till pennan uppe eller 
+    nere efter sista raden? </LI></OL></LI></OL>
+<HR>
+
+<ADDRESS></ADDRESS></BODY></HTML>

@@ -1,0 +1,10 @@
+import se.lth.cs.pt.io.*;
+
+public class Px{
+
+public static void main(String[] args){
+
+ConsoleReader r = new ConsoleReader();
+ConsoleWriter w = new ConsoleWriter();
+
+}

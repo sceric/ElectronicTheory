@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0068)http://www.cs.lth.se/Education/Courses/EDA011/e/inl/inl2/output.html -->
+<HTML><HEAD>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+<META content="MSHTML 5.00.2314.1000" name=GENERATOR></HEAD><HEADER>
+<BODY>Utskrifter med Writer-klasserna</HEADER> 
+<H1>Utskrifter med <CODE>Writer</CODE>-klasserna</H1>Följande program 
+illustrerar hur man kan göra för att formatera utskrifter med hjälp av 
+<CODE>Writer</CODE>-klasserna i <CODE>se.lth.cs.pt.io</CODE>-paketet.
+<P>Lägg märke till att det bara är print-operationen som kan använda 
+formateringssträngar, men att man genom att infoga <CODE>\n</CODE> får en 
+radbrytning (så println-operationen är egentligen onödig).
+<P><PRE>    import se.lth.cs.pt.io.*;
+    import se.lth.cs.pt.random.*;
+    
+    public class Output {
+    
+    	public static void main(String[] args) {
+    	    Writer writer = new ConsoleWriter();
+    
+    	    double x = Math.PI;
+    	    writer.print("x = %.5f\n", x);
+    	    writer.print("x = %5.2f\n", x);
+    
+    	    double[] v = {4.25, 14.154, 133,1, 0.4, -2.4};
+    	    writer.println("Högerjusterat:");
+    	    for (int k = 0; k &lt; v.length; k++) {
+    		writer.print(" v[%i] = ", k);
+    		writer.print("%6.2f\n", v[k]);
+    	    }
+    	    writer.println("Vänsterjusterat:");
+    	    for (int k = 0; k &lt; v.length; k++) {
+    		writer.print(" v[%i] = ", k);
+    		writer.print("%-6.2f\n", v[k]);
+    	    }
+    	    writer.println("Vänsterjusterat, med tecken utskrivet:");
+    	    for (int k = 0; k &lt; v.length; k++) {
+    		writer.print(" v[%i] = ", k);
+    		writer.print("%+6.2f\n", v[k]);
+    	    }
+    
+    	    v = new double[15];
+    	    RandomNumberGenerator rng = new RandomNumberGenerator();
+    	    for (int k = 0; k &lt; v.length; k++) {
+    		v[k] = rng.randDouble(-100,100);
+    	    }
+    	    writer.println("Högerjusterat index och högerjusterade värden:");
+    	    for (int k = 0; k &lt; v.length; k++) {
+    		writer.print(" v[%2i] = ", k);
+    		writer.print("%6.2f\n", v[k]);
+    	    }
+    	}
+    }
+</PRE>som ger följande utskrift: <PRE>
+    x = 3.14159
+    x =  3.14
+    Högerjusterat:
+     v[0] =   4.25
+     v[1] =  14.15
+     v[2] = 133.00
+     v[3] =   1.00
+     v[4] =   0.40
+     v[5] =  -2.40
+    Vänsterjusterat:
+     v[0] = 4.25  
+     v[1] = 14.15 
+     v[2] = 133.00
+     v[3] = 1.00  
+     v[4] = 0.40  
+     v[5] = -2.40 
+    Vänsterjusterat, med tecken utskrivet:
+     v[0] =  +4.25
+     v[1] = +14.15
+     v[2] = +133.00
+     v[3] =  +1.00
+     v[4] =  +0.40
+     v[5] =  -2.40
+    Högerjusterat index och högerjusterade värden:
+     v[ 0] = -14.09
+     v[ 1] = -91.54
+     v[ 2] = -83.80
+     v[ 3] =  42.15
+     v[ 4] =  53.88
+     v[ 5] =  64.24
+     v[ 6] = -21.54
+     v[ 7] =  37.27
+     v[ 8] = -92.95
+     v[ 9] = -37.10
+     v[10] =  45.07
+     v[11] =  44.26
+     v[12] = -25.40
+     v[13] =  63.88
+     v[14] =  -2.56
+</PRE></BODY></HTML>

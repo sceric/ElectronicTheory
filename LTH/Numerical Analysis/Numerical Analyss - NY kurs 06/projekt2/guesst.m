@@ -1,0 +1,11 @@
+function v = guesst(x)   
+        k = length (x); 
+        y1=sin(2*pi*0);
+        y2=cos(2*pi*0);
+        v = [y1 y2];
+
+   for (i=2 : 1 : k)        
+        y1 = sin(2*pi*x(i));
+        y2 = cos(2*pi*x(i));
+        v = [v ; [y1 y2]];
+   end

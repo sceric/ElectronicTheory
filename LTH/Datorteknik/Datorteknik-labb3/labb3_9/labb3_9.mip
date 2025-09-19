@@ -1,0 +1,19 @@
+labb3_9
+H:\Datorteknik-labb3\labb3_9\
+Objects\
+2
+H:\Datorteknik-labb3\labb3_9\labb3_9.s
+0
+0
+H:\Datorteknik-labb3\labb3_9\max.s
+0
+0
+1
+minic
+0
+0
+0
+0
+1
+objcopy.exe -O srec labb3_9.out labb3_9.srec
+80020000 start

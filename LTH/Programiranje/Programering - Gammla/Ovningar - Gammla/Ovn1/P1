@@ -1,0 +1,6 @@
+P1-1.java:3: '{' expected
+public class P1-1 {
+               ^
+P1-1.java:16: '}' expected
+^
+2 errors

@@ -1,0 +1,19 @@
+labb3_9_cmin
+H:\Datorteknik-labb3\labb3_9_cmin\
+Objects\
+0
+2
+gcc
+minic
+2
+nostdinc
+msoft-float
+2
+N
+nostdlib
+1
+crt0.o
+0
+1
+objcopy.exe -O srec labb3_9_cmin.out labb3_9_cmin.srec
+80020000 start

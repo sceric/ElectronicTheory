@@ -1,0 +1,13 @@
+
+
+      .set noreorder
+      .text
+      .globl start
+      .ent start
+  
+   start: li $8,0x1
+          li $9,0x1
+          add $10,$8,$9
+          b start 
+          nop
+         .end start

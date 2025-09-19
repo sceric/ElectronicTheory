@@ -1,0 +1,35 @@
+P1-4
+
+import se.lth.cs.pt.io.*;
+
+pablic class P1-4{
+
+   pablic static void main(String[] args){
+
+    ConsoleReader r = new ConsoleReader();
+    ConsoleWriter w = new ConsoleWriter();
+
+    int i ,nextBiggest=0, biggest=0, carrent;
+
+    w.println("Ange 100 tal!!!");
+ 
+      for(i=1;i<=100;i++){
+      carrent= r.readInt();
+   
+     if(carrent>bigger){
+
+      nextBigger=bigger; 
+      carrent=bigger;
+
+      }else{
+  
+       nextBigger=carrent
+      }
+
+    }
+
+    difference=bigger-nextBigger;
+    w.println("Skillnaden är:"+difference);
+  
+  }
+}

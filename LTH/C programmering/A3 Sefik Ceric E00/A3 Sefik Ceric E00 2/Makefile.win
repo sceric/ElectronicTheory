@@ -1,0 +1,63 @@
+# Project: a3
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = a3.o adt/list/free_list.o adt/list/insert_first.o adt/list/insert_last.o adt/list/length.o adt/list/print_list.o adt/list/remove_data.o adt/list/remove_data_with_compare.o adt/list/reverse.o adt/list/take_out_first.o adt/list/transfer.o adt/error/error.o $(RES)
+LINKOBJ  = a3.o adt/list/free_list.o adt/list/insert_first.o adt/list/insert_last.o adt/list/length.o adt/list/print_list.o adt/list/remove_data.o adt/list/remove_data_with_compare.o adt/list/reverse.o adt/list/take_out_first.o adt/list/transfer.o adt/error/error.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib"  
+INCS =  -I"C:/Dev-Cpp/include"  -I"D:/Skola/C programmering/A3 Sefik Ceric E00/A3 Sefik Ceric E00 2/adt/list" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+BIN  = a3.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS)  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before a3.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "a3.exe" $(LIBS)
+
+a3.o: a3.c
+	$(CC) -c a3.c -o a3.o $(CFLAGS)
+
+adt/list/free_list.o: adt/list/free_list.c
+	$(CC) -c adt/list/free_list.c -o adt/list/free_list.o $(CFLAGS)
+
+adt/list/insert_first.o: adt/list/insert_first.c
+	$(CC) -c adt/list/insert_first.c -o adt/list/insert_first.o $(CFLAGS)
+
+adt/list/insert_last.o: adt/list/insert_last.c
+	$(CC) -c adt/list/insert_last.c -o adt/list/insert_last.o $(CFLAGS)
+
+adt/list/length.o: adt/list/length.c
+	$(CC) -c adt/list/length.c -o adt/list/length.o $(CFLAGS)
+
+adt/list/print_list.o: adt/list/print_list.c
+	$(CC) -c adt/list/print_list.c -o adt/list/print_list.o $(CFLAGS)
+
+adt/list/remove_data.o: adt/list/remove_data.c
+	$(CC) -c adt/list/remove_data.c -o adt/list/remove_data.o $(CFLAGS)
+
+adt/list/remove_data_with_compare.o: adt/list/remove_data_with_compare.c
+	$(CC) -c adt/list/remove_data_with_compare.c -o adt/list/remove_data_with_compare.o $(CFLAGS)
+
+adt/list/reverse.o: adt/list/reverse.c
+	$(CC) -c adt/list/reverse.c -o adt/list/reverse.o $(CFLAGS)
+
+adt/list/take_out_first.o: adt/list/take_out_first.c
+	$(CC) -c adt/list/take_out_first.c -o adt/list/take_out_first.o $(CFLAGS)
+
+adt/list/transfer.o: adt/list/transfer.c
+	$(CC) -c adt/list/transfer.c -o adt/list/transfer.o $(CFLAGS)
+
+adt/error/error.o: adt/error/error.c
+	$(CC) -c adt/error/error.c -o adt/error/error.o $(CFLAGS)

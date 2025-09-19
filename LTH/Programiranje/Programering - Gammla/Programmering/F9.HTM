@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0056)http://www.cs.lth.se/Education/Courses/PT/E/lect/f9.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Anteckningar till föreläsning 9</H1>Detta är den sista föreläsningen i 
+läsperiod 2, vi har ingen föreläsning i vecka 7, däremot har vi en övning. Denna 
+föreläsning skall därför förbereda två övningar, både övning 5 och övning 6. Vi 
+kommer i slutet av föreläsningen att gå igenom uppgifterna till båda övningarna.
+<P>Vi hann förra gången inte riktigt färdigt när vi diskuterade sökning, vi hann 
+gå igenom sökning i en osorterad vektor, linjärsökning, men hann aldrig 
+diskutera sökning i en sorterad vektor. Vi kommer därför att börja med detta.
+<P>Därefter kommer vi att diskutera hur man gör för att få en vektor sorterad, 
+det är förmodligen kursens algoritmmässigt svåraste avsnitt, men inte alls så 
+svårt som många tror.
+<P>Under den första övningen i läsperiod 3 skall ni själva implementera klasser, 
+vi väntar dock med genomgången av detta till måndagsföreläsningen i första 
+veckan i läsperiod 3. Jag kommer att lägga ut anteckningar till denna 
+föreläsning lång tid i förväg, så de som vill kan förbereda sig inför övning 7 
+över jullovet.
+<P>
+<H3>Insättning i sorterad vektor</H3>Om vi har en vektor <CODE>v</CODE> med 
+<CODE>n</CODE> element kan vi lägga till ett nytt värde, <CODE>value</CODE>, 
+sist i vektorn genom att skriva: <PRE>    v[n] = value;
+    n++;
+</PRE>(man kan även skriva <CODE>v[n++] = value</CODE>, dvs öka <CODE>n</CODE> 
+samtidigt som vi använder den som index, vi kommer att diskutera detta lite 
+senare i kursen.)
+<P>På detta vis kommer de inlagda elementen att hamna i kronologisk ordning, om 
+vi vill ha dem sorterade måste vi vara lite mer omsorgsfulla när vi stoppar in 
+elementen.
+<P>Om vi antar att vi har en vektor <CODE>v</CODE> med <CODE>n</CODE> 
+<EM>sorterade</EM> element och vill lägga in ett nytt värde <CODE>value</CODE> i 
+rätt ordning i vektorn kan vi resonera på föjande vis (vi förutsätter i det 
+följande att det finns plats för ytterligare element i vektorn, dvs att <CODE>n 
+&lt; v.length</CODE>): <PRE>    låt pos vara platsen efter det hittills sista elementet, det är
+    den sista plats det nya elementet kan hamna på;
+
+    så länge vi inte kommit till vektorns början, och elementet på
+    platsen före pos är större än det nya värdet:
+
+        flytta elementet som låg före pos till platsen pos, och
+        minska pos ett steg;
+
+    vi kan nu stoppa in det nya elementet i index pos;
+
+    notera att antalet element i vektorn har ökat med 1;
+</PRE>Om vi skriver detta i Java får vi: <PRE>    int value = <I>...det nya värdet...</I>;
+    int pos = n;    // sista element tidigare ligger i n-1
+    while (pos &gt; 0 &amp;&amp; v[pos-1] &gt; value) {
+        v[pos] = v[pos-1];
+        pos--;
+    }
+    v[pos] = value;
+    n++;
+</PRE>Några saker som är värda att kommentera (under föreläsningen kommer vi att 
+diskutera denna algoritm utförligt): 
+<UL>
+  <LI>Vi låter <CODE>pos</CODE> få värdet <CODE>n</CODE> från början. Det finns 
+  ju tidigare <CODE>n</CODE> element i vektorn, från index 0 till 
+  <CODE>n-1</CODE>, så index <CODE>n</CODE> är platsen direkt efter det hittills 
+  sista elementet.
+  <P>Om det nya elementet visar sig vara större än de andra elementen i vektorn 
+  skall det läggas här.
+  <P></P>
+  <LI>I villkoret i <CODE>while</CODE>-satsen testar vi först att <CODE>pos &gt; 
+  0</CODE>, det gör vi för att inte få indexfel när vi hamnar först i vektorn. 
+  När <CODE>pos == 0</CODE> har vi redan flyttat upp samtliga element i vektorn 
+  ett steg, och skall därför stoppa in det nya värdet först i vektorn.
+  <P>Precis som vid sökning är det alltså viktigt att testa <CODE>pos</CODE> 
+  innan vi ser vad som finns i <CODE>v[pos-1]</CODE> - om vi gör testen i omvänd 
+  ordning skulle vi få indexfel när vi hittar ett element som är det hittills 
+  minsta.
+  <P></P>
+  <LI>Vi kan efter <CODE>while</CODE>-satsen lägga <CODE>value</CODE> i index 
+  <CODE>pos</CODE>, oavsett om vi bröt för att vi hamnat på index 
+  <CODE>0</CODE>, eller för att vi hittade ett värde som var mindre än 
+  <CODE>value</CODE> i index <CODE>pos-1</CODE>.
+  <P></P>
+  <LI>Det är viktigt att räkna upp <CODE>n</CODE> efteråt, annars skulle det nya 
+  elementet skrivas över när vi försökte lägga in ett nytt element. </LI></UL>Den 
+inledande testen i <CODE>while</CODE>-villkoret, <CODE>pos &gt; 0</CODE>, kan vi 
+slippa om vi först i vektorn (på index 0) lägger en så kallad <EM>vaktpost</EM>. 
+En vaktpost är ett värde som garanterat är större än eller mindre än alla andra 
+värden i vektorn. I detta fall vill vi ha ett värde som är mindre än alla 
+tänkbara värden, eftersom inget värde skall kunna hamna före vaktposten.
+<P>Vi kan få det största respektive minsta tänkbara heltalet genom att skriva 
+<CODE>Integer.MAX_VALUE</CODE> eller <CODE>Integer.MIN_VALUE</CODE>. Med en 
+vaktpost med värdet <CODE>Integer.MIN_VALUE</CODE> i index <CODE>0</CODE> skulle 
+insättningen kunna skrivas: <PRE>    v[0] = Integer.MIN_VALUE;  // detta görs en gång, inte vid
+                               // varje insättning!
+    // ...
+    int value = <I>...det nya värdet...</I>;
+    int pos = n;
+    while (v[pos-1] &gt; value) {
+        v[pos] = v[pos-1];
+        pos--;
+    }
+    v[pos] = value;
+    n++;
+</PRE>När vi denna gång kommer till <CODE>pos == 1</CODE> kommer garanterat inte 
+<CODE>value</CODE> att vara mindre än <CODE>v[pos-1]</CODE>, som ju är 
+vaktposten. Sökningen bryts och vi riskerar därför inte att få indexfel.
+<P>
+<H4>Kontrollfrågor</H4>
+<OL>
+  <LI>Vad händer om <CODE>n == v.length</CODE> innan vi försöker sortera in ett 
+  nytt värde?
+  <P></P>
+  <LI>Vi skall skriva programrader för att stoppa in ett heltal 
+  <CODE>value</CODE> i en redan sorterad vektor <CODE>v</CODE> med 
+  <CODE>n</CODE> heltal, vektorn hålls sorterad i <EM>avtagande</EM> ordning 
+  (störst värde först).
+  <P>
+  <OL>
+    <LI>Lös uppgiften utan vaktpost.
+    <P></P>
+    <LI>Lös uppgiften med vaktpost. Vilket värde skall vaktposten ha?
+    <P></P></LI></OL>
+  <LI>Skriv programrader för att sortera in ett bankkonto på rätt plats i en 
+  vektor <CODE>acc</CODE> med <CODE>n</CODE> konton. Kontona hålls sorterade i 
+  växande kontonummerordning.
+  <P>Klasspecifikation för klassen <CODE>Account</CODE> finns <A 
+  href="http://www.cs.lth.se/Education/Courses/PT/E/lect/Account.html">här</A>. 
+  </P></LI></OL>
+<H3>Sortering av vektorer</H3>I många sammanhang är det fördelaktigt att hålla 
+vektorer sorterade, inte minst om vi ofta skall söka i dem. Man har därför lagt 
+ner mycken möda på att utveckla effektiva metoder för sortering, vi kommer idag 
+att diskutera två enkla metoder, nämligen <EM>insättningssortering</EM> och 
+<EM>bubbelsortering</EM>. Det kan tyckas onödigt att lära sig två olika sätt att 
+göra samma sak, men meningen är att det skall ge er lite mer övning i att förstå 
+algoritmer.
+<P>
+<H4>Insättningssortering</H4>Med hjälp av insättningsalgoritmen ovan kan vi 
+enkelt sortera en från början osorterad vektor genom att 'sortera in' element 
+för element i vektorns början.
+<P>Vi börjar med att säga att det första elementet i vektorn kan betraktas som 
+en sorterad delvektor med ett element. Därefter sorterar vi in element nummer 
+två på, och får en delvektor med två element som är rätt sorterad. Vi fortsätter 
+sedan på samma sätt genom hela vektorn.
+<P>En grov skiss skulle bli: <PRE>    för varje element från det andra till det sista:
+
+        sortera in elementet bland de första, sorterade, elementen
+        i vektorn
+</PRE>och i Java får vi: <PRE>    for (int i = 1; i &lt; n; i++) {
+        int value = v[i];
+        int pos = i;
+        while (pos &gt; 0 &amp;&amp; v[pos] &gt; value) {
+            v[pos] = v[pos-1];
+            pos--;
+        }
+        v[pos] = value;
+    }
+</PRE>Under föreläsningen kommer vi att gå igenom algoritmen i detalj.
+<P>
+<H4>Kontrolluppgift</H4>
+<OL>
+  <LI>Skriv programrader för att sortera en vektor <CODE>acc</CODE> med 
+  <CODE>n</CODE> bankkonton i kontonummerordning.
+  <P></P>
+  <LI>Skriv programrader för att sortera vektorn ovan i saldo-ordning istället 
+  (så att kontot med det största saldot kommer först!).
+  <P></P>
+  <LI>(<I>Överkurs</I>) Antag att vi har en vektor med <I>n</I> element och 
+  sorterar den med insättningssortering. Ungefär hur många operationer behöver 
+  vi utföra om
+  <P>
+  <OL>
+    <LI>Vektorn är helt slumpmässigt ordnad.
+    <P></P>
+    <LI>Vektorn är sorterad från början.
+    <P></P></LI></OL></LI></OL>
+<H4>Bubbelsortering (<I>överkurs</I>)</H4>En annan populär sorteringsmetod är 
+att låta element i vektorn "bubbla upp" genom vektorn, tills de hamnar på rätt 
+plats. Det kan vi göra genom att upprepade gånger starta från det sista 
+elementet i vektorn och jämföra med elementet före, om elementen är i fel 
+ordning låter vi dem byta plats. Därefter jämför vi elementen med ett steg lägre 
+index och fortsätter så tills vi kommer till vektorns första element. Denna 
+första genomgång kommer att bubbla det minsta element till den första platsen. 
+Därefter börjar vi en ny genomgång från det sista elementet, och fortsätter 
+tills alla element bubblat upp till rätt plats. I varje steg kan vi bubbla ett 
+steg mindre, eftersom vi redan bubblat upp vektorns minsta element. Om vi under 
+någon genomgång från det sista elementet uppåt inte behöver byta plats på två 
+element, så måste vektorn vara sorterad, och vi kan avbryta.
+<P>I Java-kod får vi något i stil med (man kan uttrycka den på många olika 
+sätt): <PRE>    int nbrOfSorted = 0;
+    boolean haveSwapped;
+    do {
+        haveSwapped = false;
+        for (int pos = n-1; pos &gt; nbrOfSorted; pos--) {
+            if (v[pos-1] &gt; v[pos]) {
+                int temp = v[pos-1];
+                v[pos-1] = v[pos];
+                v[pos] = temp;
+                haveSwapped = true;
+            }
+        }
+        nbrOfSorted++;
+    } while (haveSwapped);
+</PRE>
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Man kan bubbla även åt andra hållet, dvs genom att låta det största 
+  elementet bubbla ner i första varvet, och därefter bubbla <EM>ner</EM> element 
+  efter element. Implementera denna variant av bubbelsortering.
+  <P></P>
+  <LI>(<I>Överkurs</I>) Om vi har en vektor med <I>n</I> element, ungefär hur 
+  många operationer behövs för att sortera vektorn med bubbelsortering om:
+  <P>
+  <OL>
+    <LI>vektorn är sorterad från början
+    <P></P>
+    <LI>vektorn är helt i oordning från början.
+    <P></P></LI></OL>
+  <LI>(<I>Överkurs</I>) Antag att vi har en vektor med bara ett enda felsorterat 
+  element, och antag att detta element är för stort (dvs att det skulle ha legat 
+  på ett högre index).
+  <P>
+  <OL>
+    <LI>Ungefär hur många operationer skulle behövas för att få elementet på 
+    rätt plats om vi
+    <P>
+    <OL>
+      <LI>bubblade uppåt (mot lägre index)? 
+      <LI>bubblade nedåt (mot högre index)? </LI></OL>
+    <P></P>
+    <LI>Skriv programrader för att omväxlande bubbla uppåt och nedåt (för att 
+    snabbt sortera in felaktiga element, oavsett om de är för stora eller för 
+    små). </LI></OL>
+  <P></P></LI></OL>
+<H3>Om effektiv sortering</H3>De båda sorteringsalgoritmer vi diskuterat ovan 
+har fördelen att de är lätta att förstå och implementera, de är dock inte 
+särskilt effektiva. Det är inga problem att sortera några 1&nbsp;000 element med 
+de givna metoderna, men så fort antalet element som skall sorteras blir lite 
+större måste vi använda bättre metoder.
+<P>I våra fortsättningskurser kan ni lära er sorteringsmetoder som är väldigt 
+mycket snabbare (så att ni kan sortera även 1&nbsp;000&nbsp;000-tals element på 
+rimlig tid). Ni kommer även att lära er om datastrukturer som är väsentligt 
+bättre än vektorer för att hålla reda på sorterade värden. 
+<HR>
+
+<ADDRESS></ADDRESS></BODY></HTML>

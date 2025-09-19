@@ -1,0 +1,90 @@
+
+
+P5-3A
+
+
+ConsoleWriter writer = new ConsoleWriter();
+
+Account[] acc =new Account[1000];
+int index=1;
+
+
+while{acc[index].getAccNo<123456)){   //här man testa vektor om vektor hitta 123456 så 
+                                        avbriter omedelbart och vi for index av vektor 
+   index++;                             som inehåller kontonummer 123456!
+}
+
+ if(acc[index].getAccNo==123456){
+
+    writer.println("Vi hittade konto med index" +index);
+
+
+ }else{
+    writer.println("Vi inte hittade någon konto!");
+
+ }
+   
+     
+
+
+
+// här är problem med for satsen derför for sats kan man köra bestämt antal gånger
+   i vår fal det är 1000 gånger så det göller ej att använda p g a det fungerar inte
+   om vi öka antal platser i en vektor:
+
+for{int i=1; i<1000 ; i++){
+
+ if(acc[index].getAccNo==123456){
+
+    writer.println("Vi hittade konto med index" +index);
+
+
+ }else{
+    writer.println("Vi inte hittade någon konto!");
+
+ }
+   
+     index++;
+ }
+
+  
+
+
+
+
+
+P5-3B
+ 
+
+int index= n+2  // vi hoppar över 2 p g a vi har 2 vaktposter
+                // n = antal platser i en vektor.
+
+
+  while(acc[index-1].gerAccNo > newAcc.getAccNo()){
+
+       acc[index]==acc[index-1];
+  }
+
+   acc[index]=newAcc;
+   n++;               //här man måset öka antal platcer för vektor med 1
+ }
+
+
+
+P5-4
+
+
+int index= n+1  // vi hoppar över 1 p g a vi har  vaktposter på plats 0
+                // n = antal platser i en vektor.
+
+
+  while(acc[index-1].gerAccNo > newAcc.getAccNo()){
+
+       acc[index]==acc[index-1];
+ }
+
+   acc[index]=newAcc;
+   n++;               //här man måset öka antal platcer för vektor med 1
+}
+
+

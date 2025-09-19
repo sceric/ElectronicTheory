@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://www.cs.lth.se/Education/Courses/PT/cd/install.html -->
+<HTML><HEAD><TITLE>Installationsanvisningar</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY background=install_files/install.htm>
+<H1>Att installera ett Java-system hemma.</H1>För att få ett fungerande system 
+hemma behövs 
+<UL>
+  <LI>Java 2 - dvs javakompilatorer och standardbibliotek 
+  <LI>Java-biblioteket <CODE>se.lth.cs.pt</CODE> 
+  <LI>Dessutom måste du ha en texteditor, man kan använda i princip vilken som 
+  helst men vi kan varmt rekommendera XEmacs, som finns för nedladdning nedan. 
+  </LI></UL>
+<P>Anvisningarna gäller för dig som kör Windows 98, men kan säkert hjälpa även 
+dig som kör Windows NT eller Windows 2000. 
+<P><EM>Jag kommer inte att ge någon annan hjälp än den text som följer.</EM> 
+<H2>Förslag på katalogstruktur för den icke datorvane</H2>Om du är ovan vid att 
+installera program föreslår vi att du börjar med att skapa följande 
+katalogstruktur någonstans på din dator (exempelvis direkt under 
+<CODE>c:\</CODE>):
+<P>
+<CENTER><IMG src="install_files/dev-kat.jpg"> </CENTER>
+<P>Välj sedan hela tiden de rekommenderade filnamnen nedan. 
+<H2>Att installera Java 2</H2>Börja med att installera kompilatorer och 
+standardbibliotek i lämplig katalog på din dator, exempelvis i den 
+<CODE>c:\java\jdk1.3</CODE> du skapade ovan. Du startar installationen genom att 
+köra <A href="http://www.cs.lth.se/Education/Courses/p/cd/j2sdk1_3_0-win.exe" 
+<a>j2sdk1_3_0-win.exe</A>, som är ett självinstallerande program. Programmet 
+kommer att fråga var du vill installera jdk. 
+<H2>Att installera kursbiblioteket</H2>Kursbiblioteket är under uppdatering, du 
+kan ladda hem en preliminär version <A 
+href="http://www.cs.lth.se/Education/Courses/PT/cd/se.zip">här</A>.
+<P>Ladda hem zip-filen och packa upp den i katalogen <CODE>packages</CODE> (som 
+du skapade tidigare, se figur ovan).
+<P>När du packat upp <CODE>se.lth.cs.pt</CODE>-paketet skall du ha följande 
+katalogstruktur i <CODE>packages</CODE>:
+<P>
+<CENTER><IMG src="install_files/se.jpg">
+<P></CENTER>Observera att övningspaketet är färskvara, det kommer att uppdateras 
+under kursens gång och då finnas tillgängligt här (för nedladdning med ftp, 
+paketet är bara 200-300kB stort). 
+<H2>Att knyta samman Java 2 och de nya paketen</H2>Man kör Java-systemet från 
+ett kommandofönster (en DOS-prompt). Ett enkelt sätt att få ett kommandofönster 
+är att först skapa en <CODE>.bat</CODE>-fil, förslagsvis med namnet 
+<CODE>initjdk.bat</CODE> i katalogen <CODE>c:\java\bin</CODE>, med ungefär 
+följande innehåll (filen kan se lite krånglig ut, den är gjord för att det skall 
+vara lätt att uppgradera till nya jdk-versioner): <PRE>@echo off
+set javaHome=c:\java
+set jdkHome=%javaHome%\jdk1.3
+set javaBin=%javaHome%\bin
+set jdkBin=%jdkHome%\bin
+set path=%jdkBin%;%javaBin%;%path%
+set classpath=.;%javaHome%\packages;%jdkHome%\lib\tools.jar;%jdkHome%\jre\lib\rt.jar
+@echo "JDK1.3 installerat"
+</PRE>Skapa sedan en genväg till <CODE>C:\WINDOWS\COMMAND.COM</CODE> och öppna 
+"Egenskaper/Properties", gå till "Program"-fliken och skriv in namnet på 
+<CODE>.bat</CODE>-filen ovan på raden <CODE>Batch file:</CODE>
+<P>
+<P>
+<CENTER><IMG src="install_files/javaProp.jpg"> </CENTER>
+<P>Gå sedan till fliken "Minne/Memory" och ange <CODE>Initial environment</CODE> 
+till minst 512.
+<P>
+<CENTER><IMG src="install_files/propMem.jpg"> </CENTER>
+<P>Stäng fönstret genom att klicka i <CODE>OK</CODE>-knappen.
+<P>Du kan nu starta ett Java-fönster genom att dubbelklicka på den genväg du 
+skapat. <A name=jde-install>
+<H2>Att installera XEmacs</H2>För att installera <CODE>XEmacs</CODE> kör du 
+programmet <A 
+href="http://www.cs.lth.se/Education/Courses/p/cd/xemacs-21.1.9-i586-pc-win32.EXE"><CODE>xemacs-21.1.9-i586-pc-win32.EXE</CODE></A>. 
+
+<P>Om du vill ha Java-stöd (och det vill du!) måste du installera två speciella 
+paket, <CODE>jde</CODE> och <CODE>speedbar</CODE>. Det gör du genom att när du 
+under installationen får upp följande fönster:
+<P>
+<CENTER><IMG src="install_files/selectPackages1.jpg"> </CENTER>
+<P>klicka på knappen "<CODE>Options</CODE>" vid <CODE>Programming</CODE>.
+<P>Du får då upp följande fönster:
+<P>
+<CENTER><IMG src="install_files/programmingPackages.jpg"> </CENTER>
+<P>Klicka i rutan för <CODE>jde</CODE> (den skall vara markerad när du är 
+färdig).
+<P>Klicka i <CODE>OK</CODE>-knappen och klicka sedan i 
+"<CODE>Options</CODE>"-knappen för <CODE>Productivity</CODE>.
+<P>
+<CENTER><IMG src="install_files/selectPackages2.jpg"> </CENTER>
+<P>Markera <CODE>speedbar</CODE>: 
+<CENTER><IMG src="install_files/productivityPackages.jpg"> </CENTER>
+<P>Klicka <CODE>OK</CODE> och gör färdigt installationen. 
+<P><!<hr><!<address>
+<ADDRESS></ADDRESS></BODY></HTML>

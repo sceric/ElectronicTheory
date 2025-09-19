@@ -1,0 +1,39 @@
+
+int nbr;
+int nbr=(char)ch ----------------char till int
+
+int sum;
+char ch;
+int sum += ch - 'a' + 1 ---------skrivs int
+
+char k;
+char p;
+char ch;
+char k = (char)(p+ch -10)-------------om vi har bara en int och resten av char
+
+char p;
+int c;
+char p = (int)67 eller char p = (char)c----------------int till char 
+
+int k10;
+int k10=(int)Math.floor(k9);..........gå bra också
+int k10=(int)Math.round(k9); ---------omvandling 1,7777 omvandlas till 2 (double till int)
+
+double s;
+double s= (int)k-----------------omvandla int till double
+
+int s;
+int s=(double)s------------------omvandla duble till int
+
+Double k11=Math.floor(k9); ------omvandling 1.7777 omvandlas till 1 
+	                         dvs decimaler strycks! */
+
+
+long c;
+int d= (int)c;
+
+int a= 'A' ----------- som int a=65;
+char c=65 ------------ char c= 'A';
+
+
+String line=Keyboard.nextLine("Skriv in rad: ") Matta en string !

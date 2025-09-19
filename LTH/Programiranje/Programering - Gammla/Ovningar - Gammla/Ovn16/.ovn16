@@ -1,0 +1,70 @@
+
+class Account {
+        
+    private int accountNo;	// kontonummer
+    private int balance;	// saldo
+        
+    /** skapa ett konto med numret accNo och saldot noll */
+    public Account(int accNo) {
+        // ...
+    }
+    
+    /** tag reda på kontonumret */
+    public int getAccountNo() {
+        // ...
+    }
+    
+    /** tag reda på saldot */
+    public int getBalance() {
+        // ...
+    }
+    
+    /** sätt in amount kronor på kontot */
+    public void deposit(int amount) {
+        // ...
+    }
+    
+    /** tag ut amount kronor från kontot */
+    public void withdraw(int amount) {
+        // ...
+    }
+}
+
+class Bank {
+    
+    private Account[] accounts;
+    /** skapa en bank med 10 konton med numren 100,...1000, 
+        alla med saldot noll */
+    public Bank() {
+        // ...
+    }
+    /** tag reda på kontot med numret accNo
+        ger null om kontot inte existerar */
+    private Account find(int accNo) {	
+        // ...
+    }
+    
+    /** tag reda på om kontot med numret accNo existerar */
+    public boolean exists(int accNo) {	
+        // ...
+    }
+    
+    /** tag reda på saldot på kontot med numret accNo
+        kontot förutsätts existera */
+    public int getBalance(int accNo) {
+        // ...
+    }
+    
+    /** sätt in amount kronor på kontot med numret accNo
+        kontot förutsätts existera */
+    public void deposit(int amount, int accNo) {
+        // ...
+    }
+    
+    /** tag ut amount kronor från kontot med numret accNo
+        kontot förutsätts existera och ha ett saldo >= amount */
+    public void withdraw(int amount, int accNo) {
+        // ...
+    }
+}
+

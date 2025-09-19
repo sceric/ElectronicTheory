@@ -1,0 +1,39 @@
+P2-3
+
+
+import se.lth.se.writer.*;
+import se.lth.se.reader.*;
+
+
+public class P2-3{
+
+   public static void main(String[] args){
+
+      ConsoleReader r= new ConsoleReader();
+      ConsoleWriter w= new ConsoleWriter();
+
+
+      int indata, preData=-1,nbr=1;
+
+
+      w.println("Ange en antal siffror i vexlande ordning och sluta med "0"");
+      indata= r.readInt();
+  
+        while(indata!=0){
+
+           if(indata<preData){
+              w.println("Tal nbr:" +nbr "är fel, dess värde är" +preData);
+
+           }
+
+         preData=indata;
+         indata=r.readInt();
+         nbr++;
+
+
+         }
+
+    }
+
+
+   

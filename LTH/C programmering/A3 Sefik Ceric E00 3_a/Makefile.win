@@ -1,0 +1,63 @@
+# Project: a3
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = a3.o error.o free_list.o insert_first.o insert_last.o length.o print_list.o remove_data.o remove_data_with_compare.o reverse.o take_out_first.o transfer.o $(RES)
+LINKOBJ  = a3.o error.o free_list.o insert_first.o insert_last.o length.o print_list.o remove_data.o remove_data_with_compare.o reverse.o take_out_first.o transfer.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib"  
+INCS =  -I"C:/Dev-Cpp/include" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+BIN  = a3.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS)  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before a3.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "a3.exe" $(LIBS)
+
+a3.o: a3.c
+	$(CC) -c a3.c -o a3.o $(CFLAGS)
+
+error.o: error.c
+	$(CC) -c error.c -o error.o $(CFLAGS)
+
+free_list.o: free_list.c
+	$(CC) -c free_list.c -o free_list.o $(CFLAGS)
+
+insert_first.o: insert_first.c
+	$(CC) -c insert_first.c -o insert_first.o $(CFLAGS)
+
+insert_last.o: insert_last.c
+	$(CC) -c insert_last.c -o insert_last.o $(CFLAGS)
+
+length.o: length.c
+	$(CC) -c length.c -o length.o $(CFLAGS)
+
+print_list.o: print_list.c
+	$(CC) -c print_list.c -o print_list.o $(CFLAGS)
+
+remove_data.o: remove_data.c
+	$(CC) -c remove_data.c -o remove_data.o $(CFLAGS)
+
+remove_data_with_compare.o: remove_data_with_compare.c
+	$(CC) -c remove_data_with_compare.c -o remove_data_with_compare.o $(CFLAGS)
+
+reverse.o: reverse.c
+	$(CC) -c reverse.c -o reverse.o $(CFLAGS)
+
+take_out_first.o: take_out_first.c
+	$(CC) -c take_out_first.c -o take_out_first.o $(CFLAGS)
+
+transfer.o: transfer.c
+	$(CC) -c transfer.c -o transfer.o $(CFLAGS)

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0064)http://www.cs.lth.se/Education/Courses/EDA011/e/lect/switch.html -->
+<HTML><HEAD><TITLE>switch-satsen</TITLE>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+<META content="MSHTML 5.00.2314.1000" name=GENERATOR></HEAD>
+<BODY>
+<H1>switch-satsen</H1>Det finns, förutom <CODE>if</CODE>-satsen, ett annat sätt 
+att låta ett program välja väg, nämligen <CODE>switch</CODE>-satsen.
+<P>Den har följande utseende: <PRE>    switch (<I>uttryck</I>) {
+    case <I>värde1</I>:
+       <I>satser som utförs om uttryck har värdet värde1</I>
+       break;
+    case <I>värde2</I>:
+       <I>satser som utförs om uttryck har värdet värde2</I>
+       break;
+    case <I>värde3</I>:
+       <I>satser som utförs om uttryck har värdet värde3</I>
+       break;
+    default:
+       <I>satser som utförs om uttryck inte har något av de</I>
+       <I>värden som räknas upp ovan.</I>
+    }
+</PRE>Vi behöver inte använda <CODE>default</CODE>-alternativet.
+<P>Satsen ovan motsvarar <CODE>if</CODE>-konstruktionen <PRE>    if (<I>uttryck == värde1</I>) {
+       <I>satser som utförs om uttryck har värdet värde1</I>
+    } else if (<I>uttryck == värde2</I>) {
+       <I>satser som utförs om uttryck har värdet värde2</I>
+    } else if (<I>uttryck == värde3</I>) {
+       <I>satser som utförs om uttryck har värdet värde3</I>
+    } else {
+       <I>satser som utförs om uttryck inte har något av de</I>
+       <I>värden som räknas upp ovan.</I>
+    }
+</PRE>Om man inte skriver <CODE>break</CODE> kommer programmet att 'ramla 
+igenom' nästa <CODE>case</CODE>-sats, vilket gör att satserna fram till nästa 
+<CODE>break</CODE> utförs.
+<P><B>Exempel:</B> För att skriva ut ett litet heltal med bokstäver kan vi 
+skriva: <PRE>    int nbr = Keyboard.readInt("Skriv ett tal: ");
+    switch (nbr) {
+    case 0:
+        System.out.println("noll");
+        break;
+    case 1:
+        System.out.println("ett");
+        break;
+    case 2:
+        System.out.println("två");
+        break;
+    case 3:
+        System.out.println("tre");
+        break;
+    case 4:
+        System.out.println("fyra");
+        break;
+    default:
+        System.out.println("ett tal större än 4");
+    }
+</PRE>Observera att vi måste skriva <CODE>break</CODE> efter varje fall här, 
+skulle vi ta bort <CODE>break</CODE>-satsen före <CODE>case 4:</CODE> skulle vi 
+för värdet <CODE>3</CODE> få både utskriften <CODE>tre</CODE> och 
+<CODE>fyra</CODE>.
+<P>Detta kan utnyttjas i vissa sammanhang, antag att vi vill skriva ut om en 
+vokal är hård eller mjuk. Vi kan skriva: <PRE>    System.out.print(ch + " är ");
+    switch (ch) {
+    case 'a':
+    case 'o':
+    case 'u':
+    case 'å':
+        System.out.print("en hård");
+        break;
+    case 'e':
+    case 'i':
+    case 'y':
+    case 'ä':
+    case 'ö':
+        System.out.print("en mjuk");
+        break;
+    default:
+        System.out.print("ingen");
+    }
+    System.out.println(" vokal");
+</PRE>
+<H3>Övning 16</H3>I övning 16 skall operationen <CODE>mainLoop()</CODE> i 
+klassen <CODE>TerminalController</CODE> innehålla en <CODE>switch</CODE>-sats, 
+den kan få följande utseende: <PRE>    while (true) {
+        terminal.displayText(...);
+        int fcn = terminal.getFunction();
+        ...
+        if (bank.exists(accNo)) {
+            switch (fcn) {
+            case 1:
+                ... satser som utförs om fcn == 1, dvs insättning ...
+                break;
+            case 2:
+                ... satser som utförs om fcn == 2 dvs uttag ...
+                break;
+            case 3:
+                ... satser som utförs om fcn == 3 dvs saldobesked...
+                break;
+            }
+        } else {
+            ...
+        }
+    }
+</PRE></BODY></HTML>

@@ -1,0 +1,55 @@
+
+
+public MazeTurtle extens Turtle {
+
+
+  private Maze maze;
+  private SimpleWindow w;
+
+    public MazeTurtle (w, maze) {
+
+        super(w, maze.getXEntry(), maze.getYEntry())
+
+        this.maze = maze;
+
+        this.penDown();
+
+      }
+
+ // eler vi kan också skriva;
+
+          { super(w,0,0);
+
+           this.jumpTo(maze.getXEntry(),maze.getYEntry());
+
+           this.pen.Down();
+
+          }
+
+ 
+P 10-2
+
+
+
+   pablic void wolk(){
+
+        while(maze.atExit(maze.getX(),maze.getY())){ 
+   
+          if(!maze.wallLeft(dir,maze.getX(),maze.getY()){
+
+              left(90);
+
+          }else if(maze.wallInForward(dir,getX(),getY())){
+
+                 right(90);
+        
+          } else if(!maze.wallRight(dir, getX(), getY())){
+
+                 right(90);
+
+          } 
+
+          this.forward(1);
+
+          }
+ 

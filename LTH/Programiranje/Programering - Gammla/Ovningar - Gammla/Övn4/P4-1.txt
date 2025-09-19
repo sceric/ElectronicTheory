@@ -1,0 +1,42 @@
+P4-1
+
+import se.lth.se.writer.*;
+import se.lth.se.reader.*;
+
+public class Vikt{
+
+  public static void main(String[] args){
+
+   ConsoleReader r = new ConsoleReader();
+   ConsoleWriter w = new ConsoleWriter();
+   RandomNumberGenerator rng=new RandomNumberGenerator();
+
+   hiddeNbr= rng.randInt(1,100);
+
+   w.println("Ange ett tal mellan 1 och 100:")
+   guess=r.readint();
+
+   
+   while(guss!=hiddNbr){
+
+         if(guss< hiddNbr){
+
+          w.println("För stort, gissa mer!")
+
+         }
+
+         if (guss<hiddNbr){
+
+           w.println("För litet, gissa mer!")
+
+         }
+        guess=r.readint();
+
+        count++;
+
+    }
+
+    w.println("Rätt med" +count +"gissningar!");
+
+ }
+

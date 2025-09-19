@@ -1,0 +1,114 @@
+import se.lth.cs.pt.ovn.shapes.Shape;
+import se.lth.cs.pt.window.SimpleWindow;
+import se.lth.cs.pt.ovn.shapes.Shape;
+import se.lth.cs.pt.ovn.shapes.ShapeList;
+
+public class ShapeTest {
+    
+    public static void main(String[] args) {
+        SimpleWindow w = new SimpleWindow(600,600,"ShapeTest");
+        ShapeList theShapes = new ShapeList();
+	CommandDispatcher comD = new CommandDispatcher(w,theShapes);
+        new Square(w,100,300,100).into(theShapes);
+        new Triangle(w,400,200,100).into(theShapes);
+        new Circle(w,400,400,50).into(theShapes);
+	
+        theShapes.drawAll();
+	comD.mainloop();
+    }
+}
+
+class CommandDispatcher {
+    private SimpleWindow w;
+    private ShapeList theShapes;
+    
+    public CommandDispatcher(SimpleWindow w, ShapeList ShapeL) {
+	this.theShapes=ShapeL;
+	this.w=w;
+    }
+    public void mainloop() {
+	while(true) {
+	    w.waitForMouseClick();
+	    int x= w.getMouseX();
+	    int y= w.getMouseY();
+	    Shape sh = theShapes.findHit(x,y);
+	    System.out.println(x+" "+y);
+	    if(sh !=null) {
+		System.out.println("check");
+		w.waitForMouseClick();
+		x=w.getMouseX();
+		y=w.getMouseY();
+		sh.moveToAndDraw((int)x,(int)y);
+		
+	    }else{
+	    }
+	}
+    }
+}
+
+class Square extends Shape {
+    
+    private int side;
+    
+    public Square(SimpleWindow w, int x,int y, int side) {
+	
+	super(w,x,y);
+	this.side=side;
+    }
+    public void draw() { 
+	w.moveTo(x,y);
+	w.lineTo(x+side,y);
+	w.lineTo(x+side,y+side);
+	w.lineTo(x,y+side);
+	w.lineTo(x,y);
+    }
+}
+class Triangle extends Shape {
+    private int side;
+    public Triangle(SimpleWindow w, int x, int y, int side) {
+	super(w,x,y);
+	this.side=side;
+    }	
+    public void draw() {
+	w.moveTo(x,y);
+	double height=Math.sqrt(3)/2*side;
+	w.lineTo(x+side,y);
+	w.lineTo(x+side/2,(int)Math.round(y-height));
+	w.lineTo(x,y);
+	
+    }
+}
+class Circle extends Shape {
+    private int radie;
+    public Circle(SimpleWindow w, int x, int y, int radie) {
+	super(w,x,y);
+	this.radie=radie;
+    }
+    public void draw() {
+	w.moveTo(x+radie,y);
+	for(int k=0; k<=90; k++) {
+	    w.lineTo(x+(int)Math.round(Math.cos((4*k*Math.PI)/180)*radie),y+(int)Math.
+round(Math.sin((4*k*Math.PI)/180)*radie));
+	}                                                                     								
+
+    }
+    
+    
+    public boolean near(int xc, int yc) {
+	return (Math.abs((xc-x)*(xc-x)+(yc-y)*(yc-y)-(radie*radie))<100);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

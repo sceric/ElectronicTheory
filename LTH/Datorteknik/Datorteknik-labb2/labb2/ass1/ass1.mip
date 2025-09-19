@@ -1,0 +1,13 @@
+ass1
+H:\Datorteknik-labb2\labb2\ass1\
+Objects\
+0
+1
+minic
+0
+0
+0
+0
+1
+objcopy.exe -O srec ass1.out ass1.srec
+80020000 start

@@ -1,0 +1,66 @@
+;; Init file for Emacs
+;; Use ';' in the beginning of a line to "comment out" that line
+;;
+;; Log:
+;; 2000-09-21 Created - efo@nada.kth.se
+
+;; Color settings
+;(set-background-color "DarkOliveGreen")
+;(set-background-color "Black")
+;; Dark gray
+(set-background-color "#333333")
+(set-face-background 'default' "#333333")
+
+(set-foreground-color "White")
+(set-cursor-color "White")
+(set-face-foreground 'default' "White")
+
+;; Set DOS printer
+;(setq printer-name "LPT1")
+;(setq lpr-command "")
+
+;; Use visible bell instead of beeping
+(setq visible-bell t)
+
+;; Scroll one line at a time, not half a page!
+(setq scroll-step 1)
+
+;; Show matching parenthesis
+(setq show-paren-mode 1)
+
+;; Make sure to highlight code when mode is loaded
+(add-hook 'c-mode-hook (function (lambda ()
+				   (font-lock-mode)
+				   (font-lock-fontify-buffer))))
+
+;; Make sure to highlight code when mode is loaded
+(add-hook 'java-mode-hook (function (lambda ()
+				      (font-lock-mode)
+				      (font-lock-fontify-buffer))))
+
+;; Make sure to highlight code when mode is loaded
+(add-hook 'latex-mode-hook (function (lambda ()
+				       (font-lock-mode)
+				       (font-lock-fontify-buffer))))
+;; Use PC selections (shift-arrow mark etc)
+(pc-selection-mode)
+
+;; Make sure to have an extra empty line last
+(setq next-line-add-newlines t)
+
+;; Some handy key bindings
+(global-set-key [ insert  ] 'overwrite-mode)
+(global-set-key [ delete  ] 'delete-char)
+(global-set-key [ backspace ] 'delete-backward-char)
+(global-set-key [ home    ] 'beginning-of-line)
+(global-set-key [ end     ] 'end-of-line)
+(global-set-key [ C-left  ] 'backward-word)
+(global-set-key [ C-right ] 'forward-word)
+(global-set-key [ C-home  ] 'beginning-of-buffer)
+(global-set-key [ C-end   ] 'end-of-buffer)
+(global-set-key [ C-delete ] 'undo)
+(global-set-key [ C-backspace ] 'undo)
+(global-set-key [ C-return  ] 'goto-line)
+(global-set-key "\C-x\C-g" 'goto-line)
+
+(put 'downcase-region 'disabled nil)

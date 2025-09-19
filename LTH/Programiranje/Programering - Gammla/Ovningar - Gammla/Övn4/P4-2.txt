@@ -1,0 +1,41 @@
+P4-2
+
+import se.lth.se.writer.*;
+import se.lth.se.reader.*;
+
+public class Vikt{
+
+  public static void main(String[] args){
+
+   ConsoleReader r = new ConsoleReader();
+   ConsoleWriter w = new ConsoleWriter();
+   RandomNumberGenerator rng=new RandomNumberGenerator();
+
+   
+   
+   w.printl("Ange antal tal:")
+   n=r.redint();
+   int []= new v[n];
+
+   for(int i=0; i<n; i++){      //tilldela elementen i vektorn slumtal mellan -10 och 10
+       tal=rng.randint(-10,10);
+       v[i]=tal;
+   }
+  
+
+  int index=v.lenght-1;
+
+   while( index>0 && v[index]>=0){   //bestäm index för sista negativa talet i vektorn
+        index--;
+
+   }
+
+  if(index>=0){
+
+     w.println("Index för sista negativa tal är:" +index)
+
+   }else{
+
+     w.println("Det finns inte någon negativ talet i vektorn")
+
+   }

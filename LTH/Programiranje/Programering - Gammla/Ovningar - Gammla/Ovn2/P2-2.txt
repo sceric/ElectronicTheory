@@ -1,0 +1,48 @@
+P2-2
+
+import se.lth.se.writer.*;
+import se.lth.se.reader.*;  
+
+
+   public class P2-2{
+
+   public static void main(String[] args){
+
+    int i, n;
+    double Xn, m1=0, m2=0, m, s, s1;
+   
+    ConsoleReader r = new ConsoleReader();
+    ConsoleWriter w = new ConsoleWriter();
+
+    w.println("Skriv indata n:");
+    n=r.readInt();
+
+    w.println("Skriv indata Xn:");
+
+    for( i=1; i<=n ; i++){
+
+       Xn=r.readInt();
+       m1=m1+Xn;
+       m2=m2+Math.pow(Xn,2);
+  
+    }
+
+    m=m1/n;
+
+    if(n>5){
+
+       s1=(m2-n*Math.pow(m1,2))/(n-1);
+       s=Math.sqrt(s1);
+       w.println("Standard avvikelsen är;"+s);
+       
+    }
+
+    w.println("Medlevärdet är;"+m);
+
+   }else{
+
+        w.println("För få tal för standardavvikelse!!!");
+
+   }
+
+}

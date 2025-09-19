@@ -1,0 +1,569 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://www.cs.lth.se/Education/Courses/PT/E/lect/f12.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Anteckningar till föreläsning 12</H1>Dessa anteckningar är (liksom flera av 
+de tidigare) skrivna under ganska stor tidspress, det är därför mycket möjligt 
+att de innehåller skrivfel och konstiga formuleringar.
+<P>
+<H2>Dagens program</H2>Veckans föreläsning skall förbereda övning 9 och övning 
+10. Övning 9 (som äger rum denna vecka) är en fortsättning av övning 8, men 
+innehåller ett viktigt nytt begrepp, ett sätt att strukturera program. Övning 10 
+kommer att ge övning i ärvning, så vi kommer att börja diskutera ärvning under 
+denna föreläsning.
+<P>Sammanfattningsvis kommer vi att diskutera följande saker idag: 
+<UL>
+  <LI>'överlagring' av operationer, dvs när flera operationer i en klass har 
+  samma namn men olika typer av inparametrar, 
+  <LI>nyttan av att kapsla in våra attribut, och hur vi kan göra våra klasser 
+  okänsliga(-re) för byte av tillståndsvariabler, 
+  <LI>introduktion till ärvning (utvidgning av klasser), ett av kursens 
+  viktigaste avsnitt, och 
+  <LI>MVC-modellen, ett sätt att strukturera program. </LI></UL>Under lunchen på 
+tisdag, klockan 12.20 i E:B, kommer vi att ha en ny extragenomgång, se 
+kurshemsidan för uppgifter som kommer att behandlas under denna genomgång. 
+<H2>Begreppet signatur, och överlagring av operationer</H2>När vi skall skapa 
+ett nytt <CODE>SimpleWindow</CODE> kan vi välja om vi vill ge fönstret ett namn 
+eller inte, klassen har två konstruktorer: <PRE>    specification SimpleWindow {
+
+        /**
+         * Skapar ett fönster med given storlek och rubriken "SimpleWindow".
+         */
+        public SimpleWindow(int width, int height);
+
+        /**
+         * Skapar ett fönster med given storlek och given rubrik.
+         */
+        public SimpleWindow(int width, int height, String name);
+
+        // ...
+    }
+</PRE>Vi kan alltså skriva <PRE>    SimpleWindow w = new SimpleWindow(600,600);
+</PRE>för att få ett fönster med rubriken "SimpleWindow", eller <PRE>    SimpleWindow w = new SimpleWindow(600,600,"Sköldpaddsfönster");
+</PRE>för att få ett fönster med rubriken "Sköldpaddsfönster".
+<P>I klassen <CODE>RandomNumberGenerator</CODE> finns det bland annat två 
+operationer med följande specifikation: <PRE>    specification RandomNumberGenerator {
+
+        /**
+         * Ger ett reellt slumptal mellan 0 och 1.
+         */
+        double randDouble();
+
+        /**
+         * Ger ett reellt slumptal mellan low och max.
+         */
+        double randDouble(double low, double max);
+    }
+</PRE>För att få ett reellt slumptal mellan 0 och 1 och ett mellan 10 och 20 kan 
+vi skriva <PRE>    RandomNumberGenerator rng = new RandomNumberGenerator();
+    double
+        rnd1 = rng.randDouble(),
+        rnd2 = rng.randDouble(10,20);
+</PRE>Vi kan alltså ha flera operationer i samma klass som har samma namn, det 
+gäller både konstruktorer och vanliga operationer.
+<P>Ur Javas synvinkel är det som betyder något operationernas <EM>signatur</EM>, 
+dvs deras namn plus typerna på deras parametrar. Den första 
+<CODE>randDouble</CODE>-operationen ovan har inga parametrar alls, den har 
+därför signaturen <CODE>randDouble()</CODE>. Den andra operationen har två 
+reella parametrar, och har därför signaturen 
+<CODE>randDouble(double,double)</CODE>. Namnen på parametrarna saknar betydelse 
+för signaturen, och anges därför inte.
+<P>Om två operationer har samma namn, men olika signatur, säger vi att vi har 
+två <EM>överlagrade</EM> operationer (<EM>overloaded</EM> på engelska). Vi får i 
+en klass ha hur många operationer som helst med samma namn, så länge 
+operationerna har olika signaturer.
+<P>Ofta är det enkelt att implementera överlagrade operationer med hjälp av 
+varandra, om vi exempelvis vill införa en operation <CODE>void left()</CODE> i 
+klassen <CODE>Turtle</CODE>, för att vrida sköldpaddan precis 90 grader åt 
+vänster, kan vi skriva: <PRE>    class Turtle {
+
+        private int direction;
+
+        // ...resten av attributen...
+
+        public void left(int angle) {
+            this.direction += angle;     // som tidigare
+        }
+
+        public void left() {
+            this.left(90);
+        }
+
+        // ...resten av klassen...
+    }
+</PRE>dvs vi anropar operationen <CODE>left(int)</CODE> på samma sköldpadda, med 
+inparametern 90.
+<P>Även överlagrade konstruktorer är ofta enkla att implementera, om vi vill ha 
+en konstruktor som skapar en sköldpadda mitt i ett fönster (då behöver vi inte 
+skicka in x- och y-koordinater), så kan vi skriva (observera att denna 
+konstruktor inte finns i den <CODE>Turtle</CODE>-klass som finns i kurspaketet): 
+<PRE>    class Turtle {
+
+        /**
+         * Skapar en sköldpadda i en given position i ett givet fönster.
+         */
+        public Turtle(SimpleWindow w, int x, int y) {
+            this.w = w;
+            this.jumpTo(x,y);
+            this.penUp();
+            this.turnNorth();
+        }
+
+        /**
+         * Skapar en sköldpadda mitt i ett givet fönster.
+         */
+        public Turtle(SimpleWindow w) {
+            this(w,w.getWidth()/2,w.getHeight()/2);
+        }
+
+        // ...övriga operationer...
+    }
+</PRE>Därefter kan vi skapa en sköldpadda mitt i ett fönster genom att skriva: <PRE>    SimpleWindow w = new SimpleWindow(600,600);
+    Turtle t = new Turtle(w);
+</PRE>Lägg märke till att man inne i den andra konstruktorn skriver 
+<CODE>this(...)</CODE> för att anropa den första konstruktorn, den med 
+signaturen <CODE>this(SimpleWindow,int,int)</CODE>. Vi skriver inte 
+<CODE>Turtle(...)</CODE>, som många tror. Vi kommer senare idag att se en annan 
+konstruktion som liknar denna.
+<P>Vi hade naturligtvis kunnat implementera konstruktorerna oberoende av 
+varandra: <PRE>    class Turtle {
+
+        /**
+         * Skapar en sköldpadda i en given position i ett givet fönster.
+         */
+        public Turtle(SimpleWindow w, int x, int y) {
+            this.w = w;
+            this.jumpTo(x,y);
+            this.penUp();
+            this.turnNorth();
+        }
+
+        /**
+         * Skapar en sköldpadda mitt i ett givet fönster.
+         */
+        public Turtle(SimpleWindow w) {
+            this.w = w;
+            this.x = w.getWidth()/2;
+            this.y = w.getHeight()/2;
+            this.jumpTo(x,y);
+            this.penUp();
+            this.turnNorth();
+        }
+
+        // ...övriga operationer...
+    }
+</PRE>men det vore klumpigt, i synnerhet som det är lätt hänt att man glömmer 
+att uppdatera någon av konstruktorerna om vi ändrar starttillståndet lite (om vi 
+istället vill att sköldpaddan skall starta med pennan nere måste vi ändra i båda 
+konstruktorerna om vi inte anropar den ena från den andra). 
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Skriv en egen slumptalsgenerator på följande sätt: Låt slumptalsgeneratorn 
+  ha ett reellt <EM>frö</EM>, ett tal mellan 0 och 1. Varje gång ett nytt 
+  slumptal skall dras räknas fröet om enligt:
+  <P>
+  <CENTER><I>frö = [147*frö]</I> </CENTER>
+  <P>dvs vi multiplicerar fröet med 147 och kastar bort heltalssiffrorna.
+  <P>Utgående från fröet är det sedan enkelt att generera rektangelfördelade tal 
+  i olika intervaller.
+  <P>Exempel på specifikation: <PRE>    specification RNG {
+
+        /**
+         * Skapar en slumptalsgenerator med givet frö.
+         */
+        RNG(double seed);
+
+        /**
+         * Skapar en slumptalsgenerator med slumpmässigt frö.
+         */
+        RNG();
+
+        /**
+         * Ger ett rektangelfördelat reellt värde mellan 0 och 1.
+         */
+        double randDouble();
+      
+        /**
+         * Ger ett rektangelfördelat reellt värde mellan low och high.
+         */
+        double randDouble(double low, double high);
+
+        /**
+         * Ger ett rektangelfördelat heltal mellan 0 och high.
+         */
+        int randInt(int high);
+      
+        /**
+         * Ger ett rektangelfördelat heltal mellan low och high.
+         */
+        int randInt(int low, int high);
+    }
+      </PRE>Det slumpmässiga fröet i den andra konstruktorn kan du hämta med 
+  hjälp av operationen <CODE>double Math.random()</CODE>, dvs du får ett 
+  slumpmässigt <CODE>double</CODE>-värde genom att skriva <PRE>    x = Math.random();
+      </PRE>Tips: 
+  <UL>
+    <LI>Försök utnyttja de andra operationerna i klassen så mycket som möjligt 
+    (detta gäller även den ena konstruktorn).
+    <P></P>
+    <LI>För att ta bort heltalsdelen av ett reellt tal kan du subtrahera med 
+    <CODE>Math.floor(...)</CODE>. </LI></UL></LI></OL>
+<H2>Byte av tillståndsvariabler</H2>Vi har tidigare sagt att det är lämpligt att 
+skydda våra tillståndsvariabler med det reserverade ordet <CODE>private</CODE>. 
+En anledning var att vi ville avlasta användaren från detaljer, en annan att vi 
+ville se till att objektens tillstånd alltid hölls under kontroll (om ett 
+attribut är publikt kan det ändras utifrån, och vi kan inte hindra användaren 
+från att ge det vilket värde som helst). 
+<P>Det finns emellertid fler skäl att skydda sina attribut, ibland är det till 
+exempel inte helt självklart vilka tillståndsvariabler vi skall använda. Om vi 
+kapslar in våra attribut på ett lämpligt sätt kan vi faktiskt ofta byta 
+tillståndsrepresentation utan att användaren märker något, så länge 
+klasspecifikationen inte ändras.
+<P>Antag exempelvis att vi vill representera komplexa tal i våra program. Java 
+innehåller i sig själv ingen typ för komplexa tal (bara för heltal och reella 
+tal), så vi får skriva en egen klass.
+<P>En enkel klasspecifikation kunde vara: <PRE>    specification Complex {
+    
+        public Complex(double re, double im);
+    
+        public double getRe();
+    
+        public double getIm();
+    
+        public double getMagnitude();
+    
+        public double getArgument();
+    
+        public void setCartesian(double re, double im);
+    
+        public void setPolar(double magnitude, double argument);
+    
+        public Complex add(Complex other);
+    
+        public Complex subtract(Complex other);
+    
+        public Complex multiply(Complex other);
+    
+        public Complex divide(Complex other);
+
+        public Complex exp(double x);
+    
+    }
+</PRE>Vi kan med hjälp av denna klass skriva: <PRE>    Complex
+        zero = new Complex(0,0),
+        i = new Complex(0,1),
+        z1 = new Complex(1,1),
+        z2 = new Complex(-1,3),
+        z3, z4, z5;
+    z3 = z1.multiply(z2);
+    z4 = z3.add(z1.multiply(i));
+    System.out.println("Realdelen av z4 är " + z4.getRe());
+</PRE>Frågan är vilka tillståndsvariabler vi skall välja när vi implementerar 
+klassen. Det finns åtminstone två naturliga val, antingen representerar vi våra 
+komplexa tal på cartesisk form (med real- och imaginärdelar), eller på polär 
+form (med belopp och argument). Vilket som är bäst beror på vilka operationer 
+som kommer att användas mest, om användaren kommer att addera och subtrahera mer 
+än hon multiplicerar och dividerar är det lämpligt att använda cartesisk form, 
+om det är vanligare med multiplikation, division och exponentiering är den 
+polära formen effektivare.
+<P>Konstruktorn i exemplet antyder att vi använder cartesisk form internt, 
+tyvärr kan vi inte ha de båda konstruktorerna <PRE>    public Complex(double re, double im);
+
+    public Complex(double magnitude, double argument);
+</PRE>eftersom de har samma signatur (<CODE>Complex(double, double)</CODE>). Om 
+några veckor skall vi se hur vi kan skapa alternativ till dessa två 
+konstruktorer och göra klassen betydligt elegantare.
+<P>Men att konstruktorn antyder det innebär inte att vi måste använda cartesisk 
+form internt, vi kan välja vilken form vi vill, och eftersom användaren aldrig 
+ser attributen (de är privata) så kommer hon aldrig att märka ens om vi byter 
+representation. Programraderna ovan fungerar precis lika bra oavsett om vi 
+väljer att internt arbeta i cartesisk eller polär form.
+<P>Hade vi däremot gjort real- och imaginärdel till publika attribut hade 
+klassen blivit svår att underhålla om vi bestämmer oss för att använda polär 
+form i den interna representationen.
+<P>
+<H4>Överkurs</H4>Det är ofta en god idé att även inne i klasser använda 
+operationer för att hämta värdet på attribut, om vi implementerar operationen 
+<CODE>add(Complex)</CODE> i klassen <CODE>Complex</CODE> som: <PRE>    public Complex add(Complex other) {
+        return new Complex(this.getRe() + other.getRe(), this.getIm() + other.getIm());
+    }
+</PRE>så behöver vi inte skriva om operationen ens om vi byter mellan cartesisk 
+och polär form. Hade vi däremot skrivit <PRE>    public Complex add(Complex other) {
+        return new Complex(this.re + other.re, this.im + other.im);
+    }
+</PRE>hade vi varit tvungna att skriva om operationen vid byte av 
+tillståndsvariabler till polär form.
+<P>Detta är naturligtvis ingen stor sak i detta lilla exempel, men i ett större 
+exempel kan det vara betydelsefullt. (I detta lilla exempel medför de extra 
+anropen ett visst merarbete för datorn, men det är ofta försumbart.) 
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Implementera klassen <CODE>Complex</CODE> med attributen på cartesisk 
+  form, dvs
+  <P><PRE>    private double re, im;
+      </PRE>
+  <LI>Implementera klassen <CODE>Complex</CODE> med attributen på polär form, 
+dvs
+  <P><PRE>    private double magnitude, argument;
+      </PRE></LI></OL>
+<OL></OL>
+<H2>Ärvning - utvidgning av klasser</H2>Vi såg förra gången att vi kunde göra 
+programmen bättre strukturerade genom att införa fler operationer i våra 
+klasser, i klassen <CODE>Turtle</CODE> kan vi till exempel lägga till 
+operationer för: 
+<UL>
+  <LI>att kontrollera att sköldpaddan fortfarande befinner sig innanför sitt 
+  fönster, 
+  <LI>att bestämma avståndet till en annan sköldpadda, och 
+  <LI>att ta ett slumpsteg. </LI></UL>Vi kan dessutom lägga till operationer för 
+att få en <CODE>Turtle</CODE> att: 
+<UL>
+  <LI>rita polygoner, 
+  <LI>gå i labyrinter, 
+  <LI>räkna antal steg den gått, 
+  <LI>vrida sig mot en given punkt, 
+  <LI>vrida sig mot en annan sköldpadda, 
+  <LI>ha ett namn, 
+  <LI>etc... </LI></UL>Problemet är att vår sköldpaddsklass blir oöverskådlig och 
+ohanterlig om vi lägger till alla tänkbara operationer i den.
+<P>I Java (och alla andra riktiga objektorienterade språk) finns en mekanism med 
+vars hjälp vi kan strukturera våra klasser, och dela upp dem så att de inte blir 
+för klumpiga. Denna mekanism kallas <EM>utvidgning av klasser</EM> eller 
+<EM>ärvning</EM>, och är jämte inkapsling ett av de viktigaste begreppen inom 
+den objektorienterade programmeringen.
+<P>Vi kan konstatera att den ursprungliga klassen <CODE>Turtle</CODE> fungerade 
+bra för våra program under läsperiod 2, vi kan därför behålla den som den är 
+(den räcker i många sammanhang). När vi sedan vill ha en smartare sköldpadda, 
+som exempelvis kan avgöra om den befinner sig innanför sitt fönster och bestämma 
+avståndet till andra sköldpaddor, så skapar vi en ny, något utvidgad klass, 
+<CODE>SmarterTurtle</CODE>, som har alla egenskaper som klassen 
+<CODE>Turtle</CODE> hade, och några till:
+<P><PRE>    class SmarterTurtle <B>extends</B> Turtle {
+
+        // här deklarerar vi utvidgningarna av Turtle-klassen
+
+    }
+</PRE>Vi får på så vis en ny klass, <CODE>SmarterTurtle</CODE>, som har alla 
+attribut och operationer som fanns i klassen <CODE>Turtle</CODE>, dessutom kan 
+vi lägga till nya attribut och operationer.
+<P>Vi säger att klassen <CODE>SmarterTurtle</CODE> är en <EM>subklass</EM> till 
+klassen <CODE>Turtle</CODE>, som i sin tur sägs vara <EM>superklass</EM>, eller 
+<EM>faderklass</EM> till klassen <CODE>SmarterTurtle</CODE>.
+<P>Schematiskt ritas klasserna ofta på följande sätt (UML):
+<P>
+<CENTER><IMG src="f12_files/Turtle1.gif">
+<P></CENTER>Om vi exempelvis vill lägga till de tre första operationerna i 
+listan ovan behöver vi inga nya attribut, så det räcker att vi deklarerar en 
+konstruktor och våra operationer: <PRE>    class SmarterTurtle extends Turtle {
+
+        public SmarterTurtle(SimpleWindow w, int x, int y) {
+            super(w,x,y);
+        }
+
+        public boolean insideWindow() {
+            return
+                1 &lt;= this.getX() &amp;&amp; this.getX() &lt;= this.getWindow().getWidth() &amp;&amp;
+                1 &lt;= this.getY() &amp;&amp; this.getY() &lt;= this.getWindow().getHeight();
+        }
+    
+        public double distanceTo(Turtle otherTurtle) {
+            int dx = this.getX() - otherTurtle.getX(),
+                dy = this.getY() - otherTurtle.getY();
+            return Math.sqrt(dx*dx + dy*dy);
+        }
+    
+        public void randomStep(int minStep, int maxStep) {
+            RandomNumberGenerator rng = new RandomNumberGenerator();
+            this.left(rng.randInt(0,359));
+            this.forward(rng.randInt(minStep,maxStep));
+        }
+    }
+</PRE>(Här har jag fuskat lite, och till klassen <CODE>Turtle</CODE> lagt 
+operationen <CODE>getWindow()</CODE> som ger en referens till det fönster 
+sköldpaddan ritar i.)
+<P>Konstruktorn är lite speciell, vi vill bara skapa en sköldpadda på samma sätt 
+som vi skapade en vanlig <CODE>Turtle</CODE>, så vi anropar konstruktorn i 
+superklassen genom att skriva <CODE>super</CODE> och ange parametrar i samma 
+ordning som vi gjorde när vi anropade konstruktorn till <CODE>Turtle</CODE> 
+utifrån - jämför detta med hur vi anropade en överlagrad konstruktor i samma 
+klass genom att skriva <CODE>this(...)</CODE>.
+<P>Inne i klassen <CODE>SmarterTurtle</CODE> har vi tillgång till allt som är 
+deklarerat som <CODE>public</CODE> inne i klassen <CODE>Turtle</CODE>, däremot 
+kan vi inte använda de attribut och operationer som är deklarerade som 
+<CODE>private</CODE> (se dock nedan).
+<P>När vi i operationen <CODE>insideWindow()</CODE> skriver 
+<CODE>this.getX()</CODE> anropar vi operationen <CODE>getX()</CODE> som denna 
+<CODE>SmarterTurtle</CODE> 'ärvt' från klassen <CODE>Turtle</CODE> - den nya 
+klassen har alltså alla de operationer som finns i faderklassen, och vi kommer 
+åt dem på samma sätt som tidigare.
+<P>Ett program som löser uppgift <B>P7-1</B> kan med hjälp av klassen 
+<CODE>SmarterTurtle</CODE> skrivas: <PRE>    SimpleWindow w = new SimpleWindow(600,600);
+    SmarterTurtle
+        t1 = new SmarterTurtle(w,250,250),
+        t2 = new SmarterTurtle(w,350,350);
+    t1.penDown();
+    t2.penDown();
+    while (t1.insideWindow() &amp;&amp; t2.insideWindow() &amp;&amp; t1.distanceTo(t2) &gt; 50) {
+        t1.randomStep(1,5);
+        t2.randomStep(1,5);
+    }
+</PRE>Som framgår kan vi använda både de operationer vi ärvt ned 
+(<CODE>penDown()</CODE>) och de som vi lagt till (<CODE>insideWindow()</CODE> 
+etc).
+<P>Det finns flera viktiga fördelar med ärvning, bland dem: 
+<UL>
+  <LI><EM>Vi kan få klasser som är precis så stora som de behöver vara</EM>, vi 
+  behöver inte lägga alla tänkbara operationer i dem från början utan kan 
+  utvidga dem till nya subklasser när vi behöver nya operationer.
+  <P></P>
+  <LI><EM>Vi kan utvidga även sådana klasser som vi inte själva skrivit.</EM> 
+  För att lägga till operationer i en befintlig klass måste vi själva ha 
+  tillgång till implementationen av klassen, när vi ärver räcker det att vi kan 
+  importera klassen. </LI></UL>
+<H3>Det reserverade ordet <CODE>protected</CODE></H3>Vi har hittills använt två 
+reserverade ord för att skydda/visa attribut och operationer, 
+<UL>
+  <LI><CODE>private</CODE>, som gömmer attribut och operationer för alla, utom 
+  för operationerna i den egna klassen, och
+  <P></P>
+  <LI><CODE>public</CODE>, som gör attribut och operationer allmänt 
+  tillgängliga. </LI></UL>Det finns ytterligare en (egentligen två, men den andra 
+tar vi senare) grad av skydd: 
+<UL>
+  <LI><CODE>protected</CODE>, som gömmer attribut och operationer för alla, utom 
+  för operationerna i den egna klassen, <EM>och dess subklasser</EM>. 
+</LI></UL>Attribut och operationer som är deklarerade <CODE>protected</CODE> kan 
+alltså användas från den egna klassen och dess subklasser, men inte någon 
+annanstans ifrån.
+<P>I klassen <CODE>Turtle</CODE> hade det varit bekvämt att ha samtliga attribut 
+deklarerade som <CODE>protected</CODE> (så är de deklarerade i 
+<CODE>se.lth.cs.pt.turtle.Turtle</CODE>), så att vi i våra subklasser direkt 
+hade kunnat använda attributen.
+<P>(Det är dock inte alldeles självklart att alla attribut skall vara 
+deklarerade som <CODE>protected</CODE>, genom att skydda dem med 
+<CODE>private</CODE> och låta även subklasserna använda 
+<CODE>get...</CODE>-operationer för att komma åt dem gör vi klasserna något 
+flexiblare - se avsnittet om byte av tillståndsvariabler.) 
+<H3>Klasshierarkier</H3>Som vi såg ovan finns det många tänkbara utvidgningar av 
+klassen <CODE>Turtle</CODE>, vi skulle kunna ha 
+<UL>
+  <LI><CODE>PolyTurtle</CODE> för att rita polygoner (se nästa veckas övning), 
+  <LI><CODE>MazeTurtle</CODE> för att gå i labyrinter (se nästa veckas övning), 
+  <LI>etc... </LI></UL>Vi får på så vis ett träd av klasser (trädet är ritat 
+upp-och-ner, men man kallar det ett träd):
+<P>
+<CENTER><IMG src="f12_files/Turtle2.gif">
+<P></CENTER>Dessutom hade det kanske varit snyggare att flytta ut 
+slumpstegsoperationen från klassen <CODE>SmarterTurtle</CODE> till en klass 
+<CODE>RandomTurtle</CODE>. För att <CODE>RandomTurtle</CODE> skall få tillgång 
+till <CODE>insideWindow()</CODE> och 
+<CODE>distanceTo(Turtle)</CODE>-operationerna bör denna klass ärva från 
+<CODE>SmarterTurtle</CODE>, alltså:
+<P>
+<CENTER><IMG src="f12_files/Turtle3.gif">
+<P></CENTER>Det är alltså tillåtet att ärva i flera steg.
+<P>Vi gör det genom att skriva: <PRE>    class SmarterTurtle extends Turtle {
+    
+        public SmarterTurtle(SimpleWindow w, int x, int y) {
+            super(w,x,y);
+        }
+        
+        public boolean insideWindow() {
+            return
+                1 &lt;= this.getX() &amp;&amp; this.getX() &lt;= this.getWindow().getWidth() &amp;&amp;
+                1 &lt;= this.getY() &amp;&amp; this.getY() &lt;= this.getWindow().getHeight();
+        }
+    
+        public double distanceTo(Turtle otherTurtle) {
+            int dx = this.getX() - otherTurtle.getX(),
+                dy = this.getY() - otherTurtle.getY();
+            return Math.sqrt(dx*dx + dy*dy);
+        }
+    }
+    
+    class RandomTurtle extends SmarterTurtle {
+    
+        private RandomNumberGenerator rng;
+        
+        public RandomTurtle(SimpleWindow w, int x, int y) {
+            super(w,x,y);
+            this.rng = new RandomNumberGenerator();
+        }
+        
+        public void randomStep(int minStep, int maxStep) {
+            this.left(this.rng.randInt(0,359));
+            this.forward(this.rng.randInt(minStep,maxStep));
+        }
+    }
+</PRE>där vi samtidigt gör slumptalsgeneratorn i <CODE>randomStep()</CODE> till 
+ett attribut (så slipper vi skapa en ny vid varje steg).
+<P>Slumptalsgeneratorn måste initieras i konstruktorn, och det måste göras efter 
+att vi anropat <CODE>super(...)</CODE>. Om vi gör ett anrop av en konstruktor i 
+faderklassen (om vi inte själva gör ett anrop anropas automatiskt en konstruktor 
+som gör att faderklassens alla attribut nollställs) så måste anropet alltid 
+göras först i vår egen konstruktor. Anledningen till detta är att alla ärvda 
+attribut måste få lämpliga startvärden innan vi kan initiera vårt objekt.
+<P>Med klassen <CODE>RandomTurtle</CODE> given blir huvudprogrammet ovan nu 
+istället: <PRE>    SimpleWindow w = new SimpleWindow(600,600);
+    RandomTurtle
+        t1 = new RandomTurtle(w,250,250),
+        t2 = new RandomTurtle(w,350,350);
+    t1.penDown();
+    t2.penDown();
+    while (t1.insideWindow() &amp;&amp; t2.insideWindow() &amp;&amp; t1.distanceTo(t2) &gt; 50) {
+        t1.randomStep(1,5);
+        t2.randomStep(1,5);
+    }
+</PRE>Nu skulle inte en <CODE>SmarterTurtle</CODE> kunna göra 
+<CODE>randomStep</CODE> eftersom denna operation är deklarerad först nere i 
+<CODE>RandomTurtle</CODE>.
+<P>Vi kommer under resten av kursen att se många fler exempel på klasshierarkier 
+av detta slag. Nästa vecka fortsätter vi diskutera ärvning, bland annat hur man 
+kan göra för att modifiera operationer som ärvs ner. 
+<H2>MVC - ett vanligt mönster för programstrukturering</H2>De senaste åren har 
+begreppet <EM>"pattern"</EM> (mönster) blivit populärt inom 
+programvaruindustrin, man försöker dokumentera sina lyckade program för att man 
+skall kunna återanvända deras struktur i andra, liknande program. Vi har i 
+kursen hittills stött på några väldigt enkla idiom, bland annat: 
+<UL>
+  <LI>lineärsökning efter element i (osorterad) vektor 
+  <LI>binärsökning i sorterad vektor 
+  <LI>insättning i sorterad lista 
+  <LI>insättningssortering 
+  <LI>sättet att dölja attribut med hjälp av <CODE>private</CODE> och sedan ha 
+  en <CODE>get..()</CODE> och en <CODE>set...(..)-</CODE>-operation för att 
+  hämta och ändra värdet. </LI></UL>Det man normal kallar ett pattern är ett 
+mönster med en lite högre abstraktionsnivå än dessa idiom, ett populärt exempel 
+är <EM>MVC</EM>, en förkortning för <EM>Model - View - Control</EM> - som är ett 
+mönster som återkommer flera gånger i denna kurs.
+<P>Grundidén i MVC är att man delar upp sitt program i tre delar: 
+<UL>
+  <LI>En del som beskriver de data vi använder och hur de skall behandlas, denna 
+  del kallas på engelska <EM>"Model"</EM>. 
+  <LI>En del som tar han om presentationen av data, denna del kallas 
+  <EM>"View"</EM>. 
+  <LI>En del som kontrollerar att data uppdateras och presenteras, denna del 
+  kallas <EM>"Control"</EM>. </LI></UL>I denna uppdelning försöker man hålla 
+modellen så generell och presentations- och systemoberoende som möjligt, medan 
+man ofta måste göra de andra två delarna beroende av vilken dator och vilket 
+fönstersystem man skall använda. Språket Java medför unika möjligheter att 
+skriva plattformsoberoende program, där även vy och kontroller kan flyttas till 
+nya plattformar, men MVC används ändå ofta eftersom det gör programmens struktur 
+lättare att förstå.
+<P>Strukturen på <CODE>Life</CODE>-uppgiften följer precis MVC-modellen, vi har 
+två klasser som beskriver en modell för Life-spelet: 
+<UL>
+  <LI><CODE>Board</CODE>, som beskriver en spelplan 
+  <LI><CODE>LifePlayer</CODE>, som beskriver reglerna för "spelet" </LI></UL>Dessa 
+båda klasser är helt oberoende av hur vi visar brädet eller matar in kommandon 
+till programmet.
+<P>Vi har dessutom en klass <CODE>LifeView</CODE> som ritar ut ett bräde i ett 
+fönster, denna klass utgör View-delen av programmet.
+<P>Slutligen har vi ett huvudprogram i vilket vi skapar objekt och ser till att 
+spelplanen uppdateras och att brädet skrivs ut på skärmen när det uppdaterats. 
+Huvudprogrammet utgör "Controllern" i vårt program.
+<P>Detta mönster kommer att återkomma under samtliga återstående övningar i 
+kursen. 
+<ADDRESS></ADDRESS></BODY></HTML>

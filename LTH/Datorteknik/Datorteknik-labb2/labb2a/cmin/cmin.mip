@@ -1,0 +1,19 @@
+cmin
+H:\Datorteknik-labb2\labb2a\cmin\
+Objects\
+0
+2
+gcc
+minic
+2
+nostdinc
+msoft-float
+2
+N
+nostdlib
+1
+crt0.o
+0
+1
+objcopy.exe -O srec cmin.out cmin.srec
+80020000 start

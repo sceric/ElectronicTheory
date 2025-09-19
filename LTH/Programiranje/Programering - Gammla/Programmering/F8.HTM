@@ -1,0 +1,385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0056)http://www.cs.lth.se/Education/Courses/PT/E/lect/f8.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Föreläsning 8, mer om vektorer</H1>Förra veckan introducerade vi vektorer, 
+denna och nästa vecka skall vi fortsätta använda vektorer, och diskutera: 
+<UL>
+  <LI>registrering, 
+  <LI>sökning (både i osorterade och sorterade vektorer), 
+  <LI>insättning i en sorterad vektor, och 
+  <LI>sortering. </LI></UL>Schemat för de närmaste veckorna är: 
+<UL>
+  <LI>Vecka 5 (idag, förbereder övning 5): Fortsättning av vektorer, 
+  registrering och sökning. 
+  <LI>Vecka 6 (förbereder övning 6 och 7 eftersom vi inte har någon föreläsning 
+  i vecka 7): Insättning i sorterade vektorer och sortering, dessutom börjar vi 
+  tala om implementation av egna klasser. </LI></UL>Vi kommer idag dessutom att gå 
+igenom övning 4, särskilt uppgift P4-3.
+<P>Innan vi fortsätter med vektorerna skall vi introducera en ny typ av 
+repetitionssats (som vi kommer att använda senare). 
+<H2>Ett tredje sätt att repetera</H2>Vi har tidigare använt två slags 
+repetitionssatser, 
+<UL>
+  <LI><CODE>for</CODE>-satsen, som vi använder när vi vet i förväg hur många 
+  varv vi skall iterera, och 
+  <LI><CODE>while</CODE>-satsen, som vi använder när vi inte vet i förväg hur 
+  många varv vi skall iterera. </LI></UL>Villkoret i <CODE>while</CODE>-satsen 
+testas före första varvet, det finns emellertid en annan <CODE>while</CODE>-sats 
+i vilken villkoret testas först efter första varvet, den skrivs: <PRE>    do {
+        <I>sats</I>;
+        <I>sats</I>;
+        ...;
+    } while (<I>villkor</I>);
+</PRE>Denna konstruktion använder vi när vi inte vet hur många gånger vi skall 
+iterera, men vet att loopen skall genomlöpas minst en gång. Som exempel kan vi 
+läsa in ett tal som skall ligga i ett givet intervall: <PRE>    int nbr;
+    do {
+        nbr = Keyboard.readInt("Ange värde mellan 1 och 10: ");
+    } while (nbr &lt; 1 || nbr &gt; 10);
+</PRE>
+<H2>Startvärden för vektorer</H2>Det är möjligt att ge en vektor i Java ett 
+startvärde på följande sätt: <PRE>    int[] smallPrimes = {2,3,5,7,11,13,17,19,23,29};
+    char[] vowels = {'a','o','u','å','e','i','y','ä','ö'};
+</PRE>Vi får vektorer som är precis så stora som behövs för att lagra dessa 
+värden (<CODE>smallPrimes.length</CODE> får alltså värdet 10 och 
+<CODE>vowels.length</CODE> värdet 9).
+<P>
+<H2>Om vektorer och deras storlek</H2>När vi skapar en vektor talar vi om hur 
+många element vektorn skall innehålla, det är dock inte alltid vi vet exakt hur 
+många element som verkligen behövs. Antag exempelvis att vi skall läsa in en 
+följd av heltal, avslutad med en 0:a, och lagra talen i en vektor. Eftersom vi 
+inte i förväg vet hur många tal vi kommer att läsa in måste vi deklarera en 
+vektor som tillräckligt stor i alla realistiska fall.
+<P>Om vi förutsätter att användaren aldrig matar in mer än 100 tal skriver vi: <PRE>    int[] v = new int[100];
+    int n = 0;
+    int value = Keyboard.readInt("Ange tal: ");
+    while (value != 0) {
+        v[n] = value;
+        n++;
+    }
+</PRE>Om vi läser in talföljden <CODE>3, 5, 2, 8, 0</CODE> kommer vi att ha en 
+vektor med 100 element, men bara använda de första 4 elementen. Heltalet 
+<CODE>n</CODE> anger hur många av de <CODE>v.length</CODE> elementen i vektorn 
+som verkligen används.
+<P><EM>Det är mycket vanligt att vi till en vektor har ett heltal som anger 
+antal element som verkligen används, vi kommer ofta att kalla den 
+<CODE>n</CODE>.</EM> 
+<H2>Registrering</H2>Man kan använda vektorer på många sätt, exempelvis: 
+<OL>
+  <LI>Som en ordnad följd av värden, exempelvis när vi läste in en följd av tal 
+  för att skriva ut dem baklänges (förra gången), här används index för att ange 
+  ett elements ordningsnummer.
+  <P></P>
+  <LI>Som en oordnad följd av värden, vi kan exempelvis lagra alla tal vi läst 
+  in i en vektor för att se när vi får ett tal vi inte påträffat tidigare (mer 
+  om detta längre ner). Ordningen mellan talen i vektorn spelar då inte längre 
+  någon roll - elementen måste naturligtvis fortfarande ha ett index, men 
+  indexets värde spelar inte så stor roll.
+  <P></P>
+  <LI>Som ett register, där index är ett slags nyckel. Som exempel kan vi ta ett 
+  program som noterar antal förekomster av värden i intervallet 0..5 i 
+  vektorelement med index 0..5.
+  <P>Vi kan då betrakta vektorn som ett slags uppslagsbok, för att få 
+  information om antalet förekomster av värdet 4 'slår vi upp' värdet 4 (som 
+  ligger i index 4). (Det är inte alltid lika självklart vilket index ett 
+  nyckelvärde motsvarar, se mer nedan.) </P></LI></OL>Det är denna senare 
+användning vi skall titta närmare på härnäst.
+<P><B>Exempel:</B> Vi vill testa om vår slumptalsgenerator verkligen ger 
+rektangelfördelade tal, vi drar därför 100&nbsp;000 tal i intervallet 0..9 och 
+räknar antal förekomster av varje värde.
+<P>En väldigt klumpig lösning vore: <PRE>    int zeros, ones, twos, threes, fours, ...;
+    for (int i = 1; i &lt;= 100000; i++) {
+        int value = rng.randInt(0,9);
+        if (value == 0) {
+            zeros++;
+        } else if (value == 1) {
+            ones++;
+        } else if (value == 2) {
+            twos++;
+        } else if ... {
+            ...
+        }
+    }
+</PRE>Istället skapar vi en vektor <CODE>count</CODE> med 10 heltal, och låter 
+<CODE>count[0]</CODE> räkna antal 0-or, <CODE>count[1]</CODE> räkna antal 1-or, 
+osv (<CODE>count[value]</CODE> innehåller alltså antal gånger värdet 
+<CODE>value</CODE> förekommit). Vi kallar detta <EM>registrering</EM> och 
+programmet skulle kunna skrivas: <PRE>    RandomNumberGenerator rng = new RandomNumberGenerator();
+    int[] count = new int[10];
+    for (int i = 1; i &lt;= 100000; i++) {
+        int value = rng.randInt(0,9);
+        count[value]++;
+    }
+    for (int i = 0; i &lt; count.length; i++) {
+        System.out.println(i + ": " + count[i]);
+    }
+</PRE>(Det är tillåtet att skriva <CODE>count[rng.randInt(0,9)]++</CODE> direkt 
+i den första <CODE>for</CODE>-satsen.)
+<P>Det är tyvärr inte alltid så enkelt som att de värden vi vill ha som nycklar 
+ligger i intervallet 0,1,2,... Nedanstående fall är vanliga: 
+<UL>
+  <LI>Vi vill se hur många gånger vi får 1..6 när vi kastar en tärning 100 000 
+  gånger. Problemet här är att vi får värden från 1 och uppåt, inte från 0.
+  <P>Vi kan lösa problemet på två sätt:
+  <P>
+  <UL>
+    <LI>Genom att ha en vektor med index från 0..6, alltså 7 element, där vi 
+    inte använder elementet med index 0. Denna lösning fungerar bra så länge det 
+    bara är något enstaka värde vi inte utnyttjar, skulle vi registrera värden i 
+    intervallet 10001-10006 (och skapa en vektor med index 0..10006) är denna 
+    lösning inte bra!
+    <P></P>
+    <LI>Genom att subtrahera ett från tärningskasten, och låta <CODE>v[i]</CODE> 
+    räkna antal gånger vi får <CODE>i+1</CODE> prickar på tärningen. Denna 
+    lösning fungerar fint även då vi skall registrera värden i intervallet 
+    10001-10006, vi subtraherar helt enkelt 10001 från våra värden och använder 
+    som index i en vektor med index 0..5. </LI></UL>
+  <P></P>
+  <LI>Vi vill räkna hur många 1&nbsp;000 bilar som passerar över Öresundsbron 
+  varje dygn. Det vore direkt korkat att skapa en vektor med 30&nbsp;000 element 
+  och bara använda elementen med index 1&nbsp;000, 2&nbsp;000, 3&nbsp;000, etc. 
+  Istället skapar vi en vektor med index 0..30, och heltalsdividerar antalet 
+  bilar med 1000 innan vi lagrar resultaten i vektorn: <PRE>    int[] count = new int[31];  // antag maximalt 30 999 bilar
+    int nbrOfDays = Keyboard.readInt("Antal dagar: ");
+    for (int i = 1; i &lt;= nbrOfDays; i++) {
+        int nbrOfCars = Keyboard.readInt();
+        count[nbrOfCars/1000]++;
+    }
+    for (int i = 0; i &lt; 31; i++) {
+        System.out.println(i*1000 + " - " + ((i+1)*1000-1) + ": " + count[i]);
+    }
+      </PRE>
+  <P></P>
+  <LI>Vi vill göra en tabell över hur mycket en viss sorts bröd väger. Brödet 
+  skall väga 500 gram, men det är i praktiken omöjligt att göra bröden exakt så 
+  stora. Vi vill därför se hur 200 bröd av den givna sorten fördelar sig i olika 
+  viktintervall runt 500 gram.
+  <P>Vi är intresserade av värden i intervallet 475-525 gram och delar in 
+  intervallet i 10 delintervall med bredden 5 gram. Varje enskilt bröds vikt 
+  måste sedan <EM>klassificeras</EM>, dvs vi måste räkna ut i vilket av 
+  intervallen det ligger i, innan vi registrerar det. Se kontrolluppgift nedan.
+  <P></P></LI></UL>
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>(<I>Denna uppgift kommer vi att lösa vid tavlan</I>) Räkna hur många 
+  prickar vi får i varje kast när vi kastar <EM>två</EM> tärningar 10&nbsp;000 
+  gånger. Hur borde fördelningen se ut?
+  <P></P>
+  <LI>(<I>Denna uppgift kommer vi att lösa vid tavlan, om vi hinner, vi kommer i 
+  vart fall att diskutera ett lösningsförslag</I>) Vi vill läsa en mening från 
+  tangentbordet (meningen avslutas med '.'), och räkna antal förekomster av 
+  bokstäverna 'a'..'z'. Läs bokstäverna med 
+  <CODE>Keyboard.readChar()</CODE>-operationen.
+  <P></P>
+  <LI>(<I>Denna uppgift kommer vi att lösa vid tavlan</I>) Räkna ut fördelningen 
+  av brödvikterna i exemplet ovan.
+  <P></P></LI></OL>Ibland är man inte intreserad av hur många gånger ett värde 
+förekommit, bara om det förekommit eller inte. Det är då onödigt med en 
+heltalsvektor, det räcker med en <CODE>boolean</CODE>-vektor. Antag till exempel 
+att vi vill avgöra vilka entalssiffror som förekommer bland talen i en 
+heltalsvektor, <CODE>v</CODE>. Vi kan skriva: <PRE>    boolean[] occurs = new boolean[10];
+    for (int i = 0; i &lt; v.length; i++) {
+        occurs[v[i]%10] = true;
+    }
+    for (int digit = 0; digit &lt; 10; digit++) {
+        if (occurs[digit]) {
+            System.out.println("Siffran " + digit + " förekom.");
+        }
+    }
+</PRE>där <CODE>v[i]%10</CODE> är entalssiffran för talet <CODE>v[i]</CODE>, och 
+vi sätter motsvarande element i <CODE>occurs</CODE>-vektorn till 
+<CODE>true</CODE> (eftersom ju det värdet just förekom!).
+<P>
+<H4>Kontrolluppgift</H4>
+<OL>
+  <LI>(<I>Överkurs</I>) Skriv programrader för att bestämma om det finns 
+  1-siffriga, 2-siffriga, 3-siffriga .. 8-siffriga tal i en heltalsvektor 
+  <CODE>v</CODE> med <CODE>n</CODE> positiva värden. Vi räknar 0 som ett 
+  1-siffrigt tal.
+  <P>Använd en <CODE>boolean</CODE>-vektor!
+  <P>Om indata är <CODE>491,4,552,5521,233233,1000</CODE> skall utskriften bli: <PRE>    Det fanns 1-siffriga tal.
+    Det fanns 3-siffriga tal.
+    Det fanns 4-siffriga tal.
+    Det fanns 6-siffriga tal.
+      </PRE></LI></OL>
+<H2>Sökning i vektorer</H2>Vi kan söka efter värden i en vektor på olika sätt 
+beroende på om vektorn är sorterad eller inte. Om vektorn inte är sorterad måste 
+vi undersöka varje element innan vi kan säga att ett givet element inte finns, i 
+en sorterad vektor kan vi avbryta tidigare. 
+<H3>Sökning i osorterad vektor, linjärsökning</H3>Om vi vill söka efter ett 
+givet heltal <CODE>value</CODE> i en heltalsvektor <CODE>v</CODE> kan vi använda 
+följande standardmetod (metoden kallas <EM>linjärsökning</EM>): <PRE>    int pos = <I>startindex</I>;
+    while (pos <I>giltigt index</I> &amp;&amp; v[pos] != value) {
+        <I>ändra pos till nästa index</I>
+    }
+</PRE>Här är det mycket viktigt att vi testar att <CODE>pos</CODE> är ett 
+giltigt index innan vi testar om <CODE>v[pos] != value</CODE>, vänder vi på 
+testerna skulle vi få indexfel om värdet inte finns i vektorn.
+<P>För att söka efter ett värde med början i vektorns första element skriver vi 
+alltså (vi antar att vektorn innehåller <CODE>n</CODE> element, som ligger i 
+index 0..n-1): <PRE>    int pos = 0;
+    while (pos &lt; n &amp;&amp; v[pos] != value) {
+        pos++;
+    }
+</PRE>Hur vet vi då om vi hittat vad vi sökte efter? Vi får <EM>absolut 
+inte</EM> testa om <CODE>v[pos] == value</CODE> efter <CODE>while</CODE>-satsen, 
+eftersom <CODE>pos</CODE> kan ha blivit ett otillåtet index - om <CODE>n == 
+v.length</CODE> (dvs vi använder hela vektorn) får vi ett exekveringsfel, annars 
+jämför vi <CODE>value</CODE> med ett värde som ligger efter de <CODE>n</CODE> 
+element vi använder. Vi måste istället testa om <CODE>pos &lt; n</CODE>: <PRE>    // Efter while-satsen:
+    if (pos &lt; n) {
+        System.out.println("Värdet fanns i index " + pos);
+    } else {
+        System.out.println("Värdet fanns inte i vektorn.");
+    }
+</PRE>Man kan även söka bakifrån i en vektor med motsvarande teknik, se 
+övningsuppgift P4-2.
+<P>När vi söker i en vektor med referenser måste vi ibland vara ännu lite 
+försiktigare. Ofta ligger det <CODE>null</CODE>-referenser i index 
+[<CODE>n</CODE>, .., <CODE>v.length-1</CODE>], och om vi inte i förväg vet hur 
+många icke-<CODE>null</CODE>-referenser vi har i början av vektorn måste vi 
+skriva: <PRE>    int pos = <I>startindex</I>;
+    while (pos <I>giltigt index</I> &amp;&amp; v[pos] != null &amp;&amp; v[pos].getValue() != value) {
+        <I>ändra pos till nästa index</I>
+    }
+</PRE>En sökning från index 0 blir då: <PRE>    int pos = 0;
+    while (pos &lt; v.length &amp;&amp; v[pos] != null &amp;&amp; v[pos].getValue() != value) {
+        pos++;
+    }
+</PRE>Om vi känner <CODE>n</CODE>, antalet icke-<CODE>null</CODE>-värden i 
+början av vektorn, så kan vi skippa det andra testet genom att skriva:
+<P><PRE>    int pos = 0;
+    while (pos &lt; n &amp;&amp; v[pos].getValue() != value) {
+        pos++;
+    }
+</PRE>
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Skriv programrader för att söka det första negativa värdet i en vektorn 
+  med <CODE>n</CODE> <CODE>double</CODE>-värden.
+  <P></P>
+  <LI><I>(Denna uppgift kommer vi att lösa vid tavlan)</I> Skriv programrader 
+  som i en <CODE>Turtle</CODE>-vektor med <CODE>n</CODE> sköldpaddor söker efter 
+  en sköldpadda som befinner sig i koordinaterna <I>(x,y)</I> (exakt).
+  <P></P>
+  <LI><I>(Denna uppgift kommer vi att diskutera vid tavlan)</I> Vi har en 
+  vektor, <CODE>v</CODE>, med <CODE>n</CODE> heltal, och vill skriva ut de 
+  värden som förekommer i vektorn. Varje tal som förekommer skall skrivas ut en 
+  gång, och ordningen de skrivs ut i saknar betydelse. Vi kan förutsätta att 
+  <CODE>n</CODE> &lt; 100.
+  <P>Hur skall vi lösa uppgiften om talen i vektorn ligger i följande 
+  intervaller:
+  <P>
+  <OL>
+    <LI>0..100 
+    <LI>1000..1100 
+    <LI>0..2000000 </LI></OL>
+  <P>Vi får inte använda mer minne än nöden kräver (ett hundratal värden får 
+  lagras). </P></LI></OL>
+<H3>Sökning i sorterad vektor, binärsökning</H3>Om vektorn som skall genomsökas 
+är sorterad kan vi söka på betydligt effektivare sätt än om vektorn är 
+osorterad.
+<P>En första iakttagelse är att vi kan avbryta en linjärsökning så fort det 
+element vi stöter på är större än det eftersökta elementet. <PRE>    int pos = 0;
+    while (pos &lt; n &amp;&amp; v[pos] &lt; value) {
+        pos++;
+    }
+    if (pos &lt; n &amp;&amp; v[pos] == value) {
+        System.out.println("Värdet finns i index " + pos);
+    } else {
+        System.out.println("Värdet finns inte i vektorn.");
+    }
+</PRE>Detta leder dock inte till några drastiska hastighetsökningar. Om vi 
+dubblar antalet element i vektorn kommer det förmodligen att ta ungefär dubbelt 
+så lång tid att söka efter ett element, även om vi bryter när ett för stort 
+element påträffats.
+<P>Betydligt smartare är så kallad <EM>binärsökning</EM>. Vi börjar då med att 
+söka i mitten av vektorn: 
+<UL>
+  <LI>om värdet mitt i vektorn är större än det sökta värdet måste det sökta 
+  värdet ligga i vektorns första halva 
+  <LI>om värdet mitt i vektorn är mindre än det sökta värdet måste det sökta 
+  värdet ligga i vektorns andra halva 
+  <LI>om det sökta värdet varken är större än eller mindre än elementet mitt i 
+  vektorn måste det vara lika med det mittersta elementet i vektorn! </LI></UL>Vi 
+fortsätter sedan sökningen i respektive halva. På detta vis kan vi i varje steg 
+avfärda hälften av de återstående elementen i vektorn, i linjärsökningen kunde 
+vi bara avfärda ett element åt gången.
+<P>Vi kommer därför bara att behöva ett extra varv i loopen om vi dubblar 
+antalet element i vektorn, vilket innebär att vi kan hitta ett värde bland 
+1&nbsp;000&nbsp;000 efter maximalt 21 varv - jämfört med maximalt 
+1&nbsp;000&nbsp;000 varv i linjärsökningsfallet. För en vektor med en miljon 
+element är alltså binärsökning nästan 50&nbsp;000 gånger snabbare än 
+linjärsökning! (För en vektor med 100 element är binärsökningen bara ungefär 10 
+gånger snabbare.)
+<P>En enkel implementation av binärsökning finns nedan: <PRE>    int first = 0,
+        last = n-1,
+        mid = 0;          // Kompilatorn tvingar oss till detta!
+    boolean found = false;
+    while (first &lt;= last &amp;&amp; !found) {
+        mid = (first + last)/2;
+        if (v[mid] &lt; value) {
+            first = mid+1;
+        } else if (v[mid] &gt; value) {
+            last = mid-1;
+        } else {
+            found = true;
+        }
+    }
+    if (found) {
+        System.out.println("Värdet fanns i index " + mid);
+    } else {
+        System.out.println("Värdet fanns inte i vektorn.");
+    }
+</PRE>(Här måste <CODE>mid</CODE> få ett startvärde före 
+<CODE>while</CODE>-satsen eftersom kompilatorn annars är rädd att 
+<CODE>mid</CODE> aldrig får något värde innan det skrivs ut - kompilatorn inser 
+inte att vi inte kan få <CODE>found</CODE> till true utan att gå in i 
+<CODE>while</CODE>-loopen.)
+<P>Om vi vet att vektorn innehåller minst ett element kan vi använda en 
+<CODE>do-while</CODE>-sats istället (vi slipper då ge <CODE>mid</CODE> ett 
+startvärde före loopen): <PRE>    int first = 0,
+        last = n-1,
+        mid;
+    boolean found = false;
+    do {
+        mid = (first + last)/2;
+        if (v[mid] &lt; value) {
+            first = mid+1;
+        } else if (v[mid] &gt; value) {
+            last = mid-1;
+        } else {
+            found = true;
+        }
+    } while (!found &amp;&amp; first &lt;= last);
+    if (found) {
+        System.out.println("Värdet fanns i index " + mid);
+    } else {
+        System.out.println("Värdet fanns inte i vektorn.");
+    }
+</PRE>
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Vi har en klass med följande specifikation för att hålla reda på uppgifter 
+  om böcker: <PRE>specification Book {
+
+    int getISBN();
+
+    String getTitle();
+
+    String getAuthor();
+}
+      </PRE>I en vektor <CODE>Book[] books</CODE> finns <CODE>n</CODE> böcker, 
+  sorterade i växande ISBN-nummerordning.
+  <P>Skriv programrader för att läsa ett ISBN-nummer och skriva ut titeln på 
+  boken med det givna numret. Du kan skriva ut titeln på en bok <CODE>b</CODE> 
+  genom att skriva: <PRE>    System.out.println(b.getTitle());
+      </PRE>(Vi kommer att tala mer om typen <CODE>String</CODE> senare i 
+  kursen.)
+  <P>Antag att vektorn innehåller 10&nbsp;000-tals böcker. </P></LI></OL>
+<HR>
+
+<ADDRESS></ADDRESS></BODY></HTML>

@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://www.cs.lth.se/Education/Courses/PT/E/lect/f16.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Anteckningar till föreläsning 16</H1>Vi går nu, äntligen, in i kursens sista 
+läsperiod. Veckans övning introducerar ett nytt begrepp, abstrakta klasser, och 
+skall dessutom ge övning i felsökning. Abstrakta klasser kommer att användas 
+även i senare övningar, men det är ett begrepp som gränsar till överkurs (det 
+brukar inte förekomma på tentorna).
+<P>För dem som är intresserade kommer vi att ha en extragenomgång under 
+tisdagslunchen, precis som vanligt.
+<P>
+<H3>Om olika slags kvalifikation</H3>Vi har tidigare nämnt att Java är ett 
+<EM>starkt typat</EM> språk, dvs redan vid kompileringen måste vi kunna avgöra 
+om ett uttryck är korrekt typat eller ej. Exempelvis skulle kompilatorn upptäcka 
+felet i följande programrader: <PRE>    Die d = new Die();  // skapar en sex-sidig tärning
+    d.forward(5);       // gå framåt 5 steg (Turtle-operation)
+</PRE>eftersom den ser att det inte finns någon operation 
+<CODE>forward(int)</CODE> i klassen <CODE>Die</CODE>. Vi säger att 
+referensvariabeln <CODE>d</CODE> har <EM>kvalifikationen</EM> <CODE>Die</CODE>, 
+och att alla operationer som utförs på <CODE>d</CODE> därför måste finnas i 
+klassen <CODE>Die</CODE>.
+<P>Hittills har alla objekt vi skapat i kursen varit av samma typ som 
+kvalifikationen för de referensvariabler som refererat till dem, vi har skrivit: 
+<PRE>    ConsoleWriter writer = new ConsoleWriter();
+    Turtle t = new Turtle(w,100,100);
+    Die d = new Die();
+    ...
+</PRE>Detta är dock inte nödvändigt, en stor del av finessen med 
+objektorienterad programmering är att man kan vara lite flexibel med sina 
+referenser. Vi har följande regel för deklaration av referensvariabler i Java: 
+<EM>En referensvariabel får referera till objekt av den klass den är deklarerad 
+som, och dessutom till objekt av alla subklasser till denna klass.</EM>
+<P>Av nedanstående deklarationer är några tillåtna, och en otillåten: <PRE>    Turtle t1 = new Turtle(w,100,100);      // tillåtet (naturligtvis!)
+    Turtle t2 = new MazeTurtle(w,maze);     // också tillåtet, MazeTurtle är en
+                                            // subklass till Turtle
+    Turtle t3 = new PolyTurtle(w,100,100);  // tillåtet
+    MazeTurtle t4 = new Turtle(w,100,100);  // inte tillåtet!
+</PRE>Java-kompilatorn accepterar de första tre deklarationerna eftersom 
+klasserna <CODE>MazeTurtle</CODE> och <CODE>PolyTurtle</CODE> är subklasser till 
+klassen <CODE>Turtle</CODE>. Däremot ger den kompileringsfel vid den fjärde 
+deklarationen eftersom <CODE>Turtle</CODE> inte är en subklass till 
+<CODE>MazeTurtle</CODE>.
+<P>När vi skall använda våra sköldpaddor händer följande: <PRE>    t2.penDown();        // går fint, alla sköldpaddor kan sänka pennan.
+    t2.walk();           // går INTE, trots att t2 faktiskt refererar
+                         // till en MazeTurtle (vi får ett kompileringsfel)
+</PRE>kompilatorn accepterar den första raden, operationen 
+<CODE>penDown()</CODE> är deklarerad i klassen <CODE>Turtle</CODE>, så alla 
+sköldpaddor kan sänka pennan. Vid den andra raden får vi dock kompileringsfel, 
+och det beror på följande:
+<P>Vi skiljer i Java mellan <EM>statisk</EM> och <EM>dynamisk</EM> 
+<EM>kvalifikation</EM>, med statisk kvalifikation menar vi hur en referens är 
+deklarerad medan vi med dynamisk kvalifikation menar vilket slags objekt 
+referensen verkligen refererar till. I exemplet ovan har <CODE>t2</CODE> den 
+statiska kvalifikationen <CODE>Turtle</CODE> (eftersom den är deklarerad som en 
+<CODE>Turtle</CODE>), och den dynamiska kvalifikationen <CODE>MazeTurtle</CODE>, 
+eftersom den refererar till ett <CODE>MazeTurtle</CODE>-objekt. Tidigare i 
+kursen har alla referenser haft samma statiska och dynamiska kvalifikation.
+<P>Namnen statisk och dynamisk kvalifikation låter märkvärdiga, men är faktiskt 
+helt naturliga. En variabels statiska kvalifikation kan inte ändras (vi kan bara 
+deklarera den en gång), medan dess dynamiska kvalifikation kan ändras hur många 
+gånger som helst.
+<P>När Java-kompilatorn går igenom ett program använder den sig av 
+referensvariablernas statiska kvalifikation för att avgöra om operationerna går 
+att utföra eller inte, och eftersom operationen <CODE>walk()</CODE> inte finns i 
+klassen <CODE>Turtle</CODE> (som är <CODE>t2</CODE>:s statiska kvalifikation) så 
+ger kompilatorn ett felmeddelande.
+<P>Det kan verka korkat att använda den statiska kvalifikationen för 
+typkontrollen, men det är inte alltid kompilatorn kan göra bättre. Betrakta 
+exempelvis följande programrader: <PRE>    RandomNumberGenerator rng = new RandomNumberGenerator();
+    Turtle t;
+    if (rng.randInt(1,10) &lt; 5) {
+        t = new Turtle(w,100,100);
+    } else {
+        t = new MazeTurtle(w,maze);
+    }
+    t.walk();    // Kompilatorn vet inte säkert att t är en MazeTurtle
+</PRE>Här kan kompilatorn inte avgöra vilken dynamisk kvalifikation 
+<CODE>t</CODE> kommer att få när programmet körs, och kan därför inte garantera 
+att operationen <CODE>walk()</CODE> går att utföra.
+<P>
+<H3>Typkonvertering av referenser</H3>Precis som vi kunde med enkla variabler 
+(heltal och reella tal) kan vi konvertera referenser till mer specialiserade 
+typer. När vi avrundar till heltal skriver vi: <PRE>   int value = (int) Math.round(x);
+</PRE>vilket innebär att uttrycket <CODE>Math.round(x)</CODE> som är av typen 
+<CODE>long</CODE>, dvs ett heltal som kan vara väldigt stort, konverteras till 
+ett mindre heltal (ett <CODE>int</CODE>). Typen <CODE>long</CODE> är mer 
+generell än typen <CODE>int</CODE> eftersom alla <CODE>int</CODE>-värden kan 
+lagras i en <CODE>long</CODE>-variabel.
+<P>På samma sätt kan vi säga att typen <CODE>Turtle</CODE> är mer generell än 
+typen <CODE>MazeTurtle</CODE>, vi kan alltid lagra en <CODE>MazeTurtle</CODE> i 
+en <CODE>Turtle</CODE>-variabel. I programmet ovan vet vi att <CODE>t2</CODE>:s 
+dynamiska kvalifikation är <CODE>MazeTurtle</CODE>, så vi kan på ungefär samma 
+sätt som ovan skriva: <PRE>    Turtle t1 = new MazeTurtle(w,maze);
+    MazeTurtle t2;
+
+    t2 = (MazeTurtle) t1;
+</PRE>dvs vi talar om för kompilatorn att <CODE>t1</CODE> är en 
+<CODE>MazeTurtle</CODE>, och att det därför är korrekt att låta <CODE>t2</CODE> 
+referera till den.
+<P>Även om vi vill utföra <CODE>walk()</CODE>-operationen på <CODE>t1</CODE> 
+måste vi först försäkra kompilatorn om att <CODE>t1</CODE> verkligen har rätt 
+dynamiska kvalifikation. Det gör vi genom att skriva: <PRE>    // t1.walk() är inte inte tillåtet eftersom t1 har fel statisk
+    // kvalifikation. Däremot kan vi skriva:
+
+    ((MazeTurtle)t1).walk();
+</PRE>Tyvärr måste vi, på grund av Javas prioriteringsregler, skriva ut alla 
+parenteserna ovan, applikation av operationer har högre prioritet än 
+typkonvertering.
+<P>Om det skulle visa sig att <CODE>t1</CODE> inte refererar till en 
+<CODE>MazeTurtle</CODE> när vi gör anropet ovan så kommer vi att få ett 
+exekveringsfel.
+<P>Det kan förefalla onödigt att kladda till allt som vi gjort ovan, om vi hade 
+deklarerat <CODE>t1</CODE> som en <CODE>MazeTurtle</CODE> direkt hade vi sluppit 
+alla problem med olika kvalifikation. Det är dock inte alltid man kan undvika 
+dessa problem (som vi kommer att se när vi pratar om list-hantering mot slutet 
+av kursen), dessutom medför flexibiliteten att man ganska enkelt kan skriva 
+program som hade blivit väldigt omständiga att skriva om alla referenser hade 
+haft samma statiska och dynamiska kvalifikation (se exemplet nedan och veckans 
+övning).
+<P>
+<H3>Exempel på användning av flexibla kvalifikationer</H3>I in- och 
+utmatningspaketet (<CODE>se.lth.cs.pt.io</CODE>) finns följande klasser: 
+<CENTER>
+<P><IMG src="f16_files/io-klasser.gif">
+<P></CENTER>Alla läs- och skrivoperationer är deklarerade uppe i klasserna 
+<CODE>Reader</CODE> och <CODE>Writer</CODE>, så vi kan vara flexibla genom att 
+skriva: <PRE>    Writer writer;
+    Reader reader;
+
+    if ( utskrift till skärmen? ) {
+        writer = new ConsoleWriter();
+    } else {
+        writer = new FileWriter("output");
+    }
+
+    if ( inläsning från tangentbord? ) {
+        reader = new ConsoleReader();
+    } else {
+        reader = new FileReader("input");
+    }
+
+    // nu kan vi skriva ut och läsa in som vanligt, var utskrifterna
+    // hamnar och varifrån vi läser beror på vilken dynamisk
+    // kvalifikation writer och reader har:
+    int n = reader.readInt();
+    double sum = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        sum += reader.readDouble();
+    }
+    writer.println("Summan är " + sum);
+</PRE>Vi skulle även ha kunnat skriva: <PRE>    public void calculate(Reader reader, Writer writer) {
+        int n = reader.readInt();
+        double sum = 0;
+        for (int i = 1; i &lt;= n; i++) {
+            sum += reader.readDouble();
+        }
+        writer.println("Summan är " + sum);
+    }
+</PRE>och anropat denna med exempelvis <PRE>    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        calc.calculate(new ConsoleReader(), new ConsoleWriter());
+        
+    }
+</PRE>eller <PRE>    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        calc.calculate(new FileReader("input"), new FileWriter("output"));
+        
+    }
+</PRE>
+<H4>Kontrollfrågor</H4>
+<OL>
+  <LI>Vilka av följande deklarationer är tillåtna: <PRE>    MazeTurtle t1 = new Turtle(w,100,100);
+    Turtle t2 = new MazeTurtle(w,maze);
+    TripmeterTurtle t3 = new Turtle(w,50,100);
+      </PRE>
+  <P></P>
+  <LI>Givet följande deklarationer: <PRE>    Turtle t1 = new MazeTurtle(w,maze);
+    MazeTurtle t2 = new MazeTurtle(w,maze);
+      </PRE>Vilka av följande operationer är tillåtna: <PRE>    t1.penDown();
+    t1.walk();
+    t2.penDown();
+    t2.walk();
+      </PRE></LI></OL>
+<H3>Abstrakta klasser</H3>I övning 12 och 13 har ni haft en 
+<CODE>GameController</CODE> med två spelare (<CODE>Player</CODE>) som attribut. 
+I operationen <CODE>playOneRound()</CODE> har ni sedan låtit dessa två spelare 
+dra växelvis till dess en av dem vunnit.
+<P>I klassen <CODE>Player</CODE> har ni använt ett attribut (<CODE>char 
+strat</CODE>) för att tala om hur en spelare skall dra. Detta har inneburit att 
+klassen <CODE>Player</CODE> blivit onödigt ful, om vi vill skapa en spelare som 
+drar slumpmässigt skriver vi <PRE>    Player p1 = new Player(nbr,'B',oware,view);
+</PRE>fastän det är helt ointressant för en slumpspelare att veta något om vyn 
+(det är bara en mänsklig spelare, som skall klicka på en ruta, som behöver ha 
+tillgång till vyn).
+<P>Betydligt snyggare hade varit att ha två klasser, en klass 
+<CODE>RandomPlayer</CODE> och en klass <CODE>HumanPlayer</CODE>, för att 
+beskriva de två olika typerna av spelare. Man skulle då kunna skapa en 
+slumpspelare och en mänsklig spelare genom att skriva <PRE>    RandomPlayer p1 = new RandomPlayer(nbr,oware);
+    HumanPlayer p2 = new HumanPlayer(nbr,oware,view);
+</PRE>Problemet blir då följande: Om vår <CODE>GameController</CODE> skall kunna 
+referera till två spelare, och vi inte i förväg vet vilka två typer av spelare 
+som skall spela (en <CODE>RandomPlayer</CODE> mot en <CODE>HumanPlayer</CODE>, 
+två <CODE>RandomPlayer</CODE>s mot varandra, eller två <CODE>HumanPlayer</CODE>s 
+mot varandra), hur skall vi deklarera spelarna?
+<P>En enkel lösning vore att låta både <CODE>RandomPlayer</CODE> och 
+<CODE>HumanPlayer</CODE> ärva från en klass <CODE>Player</CODE>:
+<P><PRE>    class Player {
+    }
+    
+    class HumanPlayer extends Player {
+        // ...
+        public void move() {
+            // ...
+        }
+    }
+    
+    class RandomPlayer extends Player {
+        // ...
+        public void move() {
+            // ...
+        }
+    }
+</PRE>Vi skulle då i klassen <CODE>GameController</CODE> kunna skriva: <PRE>    class GameController {
+    
+        private Player p1, p2;
+        // ...
+    
+        public GameController(Player p1, Player p2, ...) {
+            this.p1 = p1;
+            this.p2 = p2;
+            // ...
+        }
+        // ...
+    }
+</PRE>och i huvudprogrammet: <PRE>    // ...
+    Player p1 = new HumanPlayer(1,oware,view),
+           p2 = new RandomPlayer(2,oware);
+    GameController controller = new GameController(p1,p2,...);
+    // ...
+</PRE>eftersom en <CODE>Player</CODE>-referens kan referera till alla subklasser 
+till klassen <CODE>Player</CODE>.
+<P>Nästa problem uppstår då i operationen <CODE>playOneRound()</CODE>: vi vill 
+anropa operationen <CODE>move()</CODE> i spelarklasserna, men vi vet inte i 
+förväg vilken av klasserna <CODE>p1</CODE> och <CODE>p2</CODE> refererar till. 
+Om vi skriver <PRE>    ((HumanPlayer)p1).move();
+</PRE>så måste <CODE>p1</CODE> alltid vara en <CODE>HumanPlayer</CODE> och vi 
+har mist den flexibilitet vi eftersträvade.
+<P>Lösningen på problemet är en mekanism som kallas <EM>abstrakta klasser</EM>, 
+vi deklarerar en klass <CODE>AbstractPlayer</CODE> som har en <EM>abstrakt 
+metod</EM> <CODE>move()</CODE>: <PRE>abstract class AbstractPlayer {
+
+    public abstract void move();
+
+    // ...
+}
+</PRE>Denna deklaration säger att operationen <CODE>move()</CODE> måste 
+deklareras i subklasser till klassen <CODE>AbstractPlayer</CODE>. En klass med 
+en abstrakt operation blir själv abstrakt, vilket innebär att man inte kan skapa 
+objekt av den aktuella klassen - om vi hade kunnat skapa en 
+<CODE>AbstractPlayer</CODE> hade vi fått ett objekt som inte hade kunnat göra 
+<CODE>move()</CODE>.
+<P>Poängen med att införa en abstrakt operation är att kompilatorn vet att alla 
+klasser som ärver från klassen <CODE>AbstractPlayer</CODE> implementerar en 
+operation <CODE>move()</CODE>, och att den därför kan acceptera uttrycket: <PRE>    p1.move();
+</PRE>fastän <CODE>p1</CODE> har den statiska kvalifikationen 
+<CODE>AbstractPlayer</CODE>. När programmet exekverar raden ovan kontrolleras 
+vilken dynamisk kvalifikation <CODE>p1</CODE> har, varpå 
+<CODE>move()</CODE>-operationen i den aktuella klassen anropas. 
+<H4>Sammanfattning, abstrakta klasser</H4>En abstrakt klass är alltså en klass 
+som bara kan användas genom att den ärvs, man kan inte skapa ett objekt av en 
+abstrakt klass eftersom den innehåller en eller flera operationer som måste 
+implementeras i subklasser.
+<P>En av poängerna med abstrakta klasser är att vi under exekvering kan välja 
+vilken typ av objekt som skall användas i ett givet sammanhang (i Oware-exemplet 
+ovan kan vi vänta till exekvering innan vi bestämmer vilken sorts spelare som 
+skall spela) - eftersom subklasserna har samma specifikation kan vi anropa dem 
+på ett standardiserat sätt (i Oware-exemplet kan vi be en 
+<CODE>AbstractPlayer</CODE> att göra ett <CODE>move()</CODE> utan att veta exakt 
+vilken typ av spelare <CODE>p1</CODE> refererar till).
+<P>
+<H3>Mer om övning 14</H3>Ni skall göra följande: 
+<UL>
+  <LI>Skriva och testa en egen <CODE>Oware</CODE>-klass.
+  <P></P>
+  <LI>Strukturera spelarklassen från föregående övningar (<CODE>Player</CODE>) 
+  till två nya klasser, <CODE>HumanPlayer</CODE> och 
+  <CODE>ComputerPlayer</CODE>, med hjälp av den abstrakta klassen 
+  <CODE>AbstractPlayer</CODE>.
+  <P></P></LI></UL>Gör så här: 
+<UL>
+  <LI><B>F14.1:</B> Hämta programskelettet för klassen <CODE>Oware</CODE> från 
+  kurshemsidan.
+  <P>Implementera de olika operationerna, förslaget till lösning på 
+  <CODE>movePebbles</CODE>-operationen är riktigt dåligt (det innehåller flera 
+  fel). Du kan antingen försöka hitta de fel som finns i koden, eller försöka 
+  skriva en egen lösning från grunden (kanske enklare).
+  <P>När du skrivit färdigt klassen <CODE>Oware</CODE> skall du testa den genom 
+  att i ditt gamla huvudprogram plocka bort importen av klassen 
+  <CODE>se.lth.cs.pt.ovn.oware.Oware</CODE> (för att göra det enkelt kan du helt 
+  enkelt kommentera bort import-raden).
+  <P>När programmet fungerar kan du hoppa till nästa uppgift.
+  <P></P>
+  <LI><B>F14-2</B> Hämta programskelettet för klasserna 
+  <CODE>AbstractPlayer</CODE>, <CODE>HumanPlayer</CODE> och 
+  <CODE>ComputerPlayer</CODE> från kurshemsidan (alla tre klasserna finns i 
+  filen <CODE>AbstractPlayer.java</CODE>).
+  <P>
+  <UL>
+    <LI>I klassen <CODE>AbstractPlayer</CODE> skall du implementera konstruktorn 
+    och operationen <CODE>lost()</CODE> (båda dessa påminner mycket om 
+    motsvarande operationer i klassen <CODE>Player</CODE>, som du skrev under de 
+    föregående övningarna).
+    <P></P>
+    <LI>I klasserna <CODE>HumanPlayer</CODE> och <CODE>ComputerPlayer</CODE> 
+    skall du implementera konstruktorerna och <CODE>move()</CODE>-operationerna. 
+    Även här kan du titta på hur du skrev under de föregående övningarna.
+    <P>I <CODE>ComputerPlayer</CODE>-klassens <CODE>move()</CODE> skall du 
+    slumpa fram en ruta, medan du i <CODE>HumanPlayer</CODE>-klassen skall låta 
+    användaren klicka på en ruta.
+    <P></P></LI></UL>I dessa klasser handlar det inte så mycket om att skriva ny 
+  kod som att flytta den gamla koden till nya ställen.
+  <P></P>
+  <LI>Ändra i huvudprogrammet, så att du använder de nya klasserna. Nu skall du 
+  återigen använda klassen <CODE>se.lth.cs.pt.ovn.oware.Oware</CODE>, så du får 
+  importera den i början av programmet.
+  <P></P></LI></UL></BODY></HTML>

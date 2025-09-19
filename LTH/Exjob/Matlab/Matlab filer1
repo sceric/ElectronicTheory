@@ -1,0 +1,1060 @@
+X-Account-Key: account2
+Return-Path: <e01msu@efd.lth.se>
+Received: from pyton.efd.lth.se (root@pyton [130.235.34.42])
+	by kobra.efd.lth.se (8.12.10/8.12.10) with ESMTP id k0K9ftu7009304
+	for <e00sc@efd.lth.se>; Fri, 20 Jan 2006 10:41:55 +0100 (MET)
+Received: from [130.235.210.67] (varg-1.es.lth.se [130.235.210.67])
+	by pyton.efd.lth.se (8.12.10/8.12.10) with ESMTP id k0K9fsxH001286
+	for <e00sc@efd.lth.se>; Fri, 20 Jan 2006 10:41:54 +0100 (MET)
+Message-ID: <43D0B062.3060307@efd.lth.se>
+Date: Fri, 20 Jan 2006 10:41:54 +0100
+From: Michael Sund <e01msu@efd.lth.se>
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20050930)
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: e00sc@efd.lth.se
+Subject: Matlab filer
+X-Security: MIME headers sanitized on kobra
+	See http://www.impsec.org/email-tools/sanitizer-intro.html
+	for details. $Revision: 1.139 $Date: 2003-09-07 10:14:23-07 
+Content-Type: multipart/mixed;
+ boundary="------------040509010402040508020002"
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.4 (kobra.efd.lth.se [130.235.34.36]); Fri, 20 Jan 2006 10:41:55 +0100 (MET)
+X-Spam-Flag: NO
+X-Scanned-By: milter-spamc/0.25.321 (kobra [130.235.34.36]); Fri, 20 Jan 2006 10:41:57 +0100
+X-Spam-Status: NO, hits=-4.30 required=5.00
+X-Spam-Level: 
+X-Spam-Report: List of rules triggered by spamassassin
+   pts rule name              description
+  ---- ---------------------- ---------------------------------------------
+  -4.9 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+                              [score: 0.0000]
+   0.0 CASHCASHCASH           Contains at least 3 dollar signs in a row
+   0.6 AWL                    AWL: Auto-whitelist adjustment
+  ____
+
+This is a multi-part message in MIME format.
+--------------040509010402040508020002
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+
+
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="Faraday.m"
+Content-Disposition: inline; filename="Faraday.m"
+Content-Transfer-Encoding: quoted-printable
+
+scale =3D 20e9;
+%------Frekvensen
+f =3D 1000e6;
+o =3D 2*pi*f;
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 1;
+M_S =3D 1800/(4*pi);
+w_0 =3D 10e9*2*pi;
+w_m =3D 5.04e9*2*pi;
+e =3D 14;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+%------V=E5gtal
+bp =3D o*sqrt(e*(u+k));
+bm =3D o*sqrt(e*(u-k));
+%------Amplitud f=F6r LHCP & RHCP
+a =3D e*o/bp;
+b =3D e*o/bm;
+N =3D 377;
+Ap =3D 1e10*(1/(1+bp*N));
+Am =3D 1e10*(1/(1+bm*N));
+%------Plattans tjocklek
+z =3D 1e-3;
+dz =3D 5e-5;
+
+%------Polarisationen
+for t=3D1:100
+    compass(Ap+Am);
+    hold on;
+    Ex =3D (Ap*(exp(i*(bp)*z))+Am*(exp(i*bm*z)))*exp(i*o*t/(scale));
+    Ey =3D (-i*Ap*(exp(i*(bp)*z))+Am*i*(exp(i*(bm)*z)))*exp(i*o*t/(scale)=
+);
+    %Ex1 =3D (Ap*(exp(i*(bp)*(z+dz)))+Am*(exp(i*(bm)*(z+dz))))*exp(i*o*t/=
+(1e9));
+    %Ey1 =3D (-i*Ap*(exp(i*(bp)*(z+dz)))+Am*i*(exp(i*(bm)*(z+dz))))*exp(i=
+*o*t/(1e9));
+
+%   Ex =3D 0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*sin(2*pi/50*t);
+    compass(real(Ex),real(Ey));
+%   compass(real(Ex1),real(Ey1));
+%   compass(real(Ex));
+%   compass(0,real(Ey));
+    M(t) =3D getframe;
+    hold off;
+   =20
+end
+
+   =20
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="Ferri.m"
+Content-Disposition: inline; filename="Ferri.m"
+Content-Transfer-Encoding: quoted-printable
+
+scale =3D 70e9;
+%------Frekvensen
+f =3D 2450e6;
+o =3D 2*pi*f;
+k0 =3D 2*pi/(3e8/f);
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 1;
+M_S =3D 1800/(4*pi);
+for w_o=3D1:50
+w_0 =3D 2*pi*w_o*1e9;
+w_m =3D 5.1e9*2*pi;
+e =3D 14;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+%------V=E5gtal
+bp =3D o*sqrt(e*(u+k));
+bm =3D o*sqrt(e*(u-k));
+%------Amplitud f=F6r LHCP & RHCP
+E0 =3D 1;
+a =3D e*o/bp;
+b =3D e*o/bm;
+N =3D 377;
+%------Plattans tjocklek
+d =3D 4e-4;
+%dz =3D 5e-5;
+%------Exponenter
+X =3D exp(-i*bp*d);
+Y =3D exp(-i*bm*d);
+Z =3D exp(i*bp*d);
+V =3D exp(i*bm*d);
+W =3D exp(i*k0*d);
+%------Amplituden i den reflekterade v=E5gen i x-led.
+R1 =3D -E0+Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)+X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden i den reflekterade v=E5gen i y-led.
+R2 =3D i*(-Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)-X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2))=
+;
+%------Amplituden f=F6r LHCP v=E5gen inuti ferriplattan med riktning +z.
+alpha1(w_o) =3D E0*Z*(1+N*a)/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP ferriv=E5gen riktad l=E4ngs +z.
+alpha2(w_o) =3D V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2);
+%------Amplituden f=F6r LHCP v=E5gen i ferriplattan i -z.
+Gamma1 =3D X*(N*a-1)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP v=E5gen i ferriplattan i -z.
+Gamma2 =3D Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden p=E5 den transmitterade v=E5gen i x-led.
+T1(w_o) =3D N*W*(a*X*E0*Z*(1+N*a)/(Z*(1.+N*a)^2-1.*X*(N*a-1)^2)...
+    +b*Y*V*(1+N*b)*E0/(V*(1.+N*b)^2-1.*Y*(1-N*b)^2)...
+    -1.*a*Z*X*(N*a-1)*E0/(Z*(1.+N*a)^2-1.*X*(N*a-1)^2)...
+    -1.*b*V*Y*(1-N*b)*E0/(Y*(1.-1.*N*b)^2-1.*V*(1+N*b)^2));
+%------Amplituden p=E5 den transmitterade v=E5gen i y-led.
+T2(w_o) =3D N*W*(-i*a*X*Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +i*b*Y*V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)...
+    +i*a*Z*X*(N*a-1)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    -i*b*V*Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2));
+
+%figure(1);
+%------Polarisationen
+% $$$ for t=3D1:45
+% $$$    % compass(abs(T1+T2));
+% $$$=20
+% $$$     hold on;
+% $$$     Ex =3D T1*exp(-i*k0*d)*exp(i*o*t/(scale));
+% $$$     Ey =3D T2*exp(-i*k0*d)*exp(i*o*t/(scale));
+% $$$     %Ex1 =3D (Ap*(exp(i*(bp)*(z+dz)))+Am*(exp(i*(bm)*(z+dz))))*exp(=
+i*o*t/(1e9));
+% $$$     %Ey1 =3D (-i*Ap*(exp(i*(bp)*(z+dz)))+Am*i*(exp(i*(bm)*(z+dz))))=
+*exp(i*o*t/(1e9));
+% $$$=20
+% $$$ %   Ex =3D 0.5*cos(2*pi/50*t);
+% $$$ %   Ey =3D -0.5*cos(2*pi/50*t);
+% $$$ %   Ey =3D -0.5*sin(2*pi/50*t);
+% $$$     compass(real(Ex),real(Ey));
+% $$$ %   compass(real(Ex1),real(Ey1));
+% $$$ %   compass(real(Ex));
+% $$$ %   compass(0,real(Ey));
+% $$$     M(t) =3D getframe;
+% $$$     %hold off;
+% $$$    =20
+% $$$ end
+end
+figure(1);
+plot(2*pi*linspace(1e9,50e9,50),real(T1),2*pi*linspace(1e9,50e9,50),real(=
+T2));
+figure(2);
+plot(2*pi*linspace(1e9,50e9,50),real(alpha1),2*pi*linspace(1e9,50e9,50),r=
+eal(alpha2));
+
+
+
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="Ferri_plate.m"
+Content-Disposition: inline; filename="Ferri_plate.m"
+Content-Transfer-Encoding: quoted-printable
+
+scale =3D 70e9;
+%------Frekvensen
+f =3D 2450e6;
+o =3D 2*pi*f;
+k0 =3D 2*pi/(3e8/f);
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 1;
+M_S =3D 1800/(4*pi);
+w_0 =3D 2*pi*20*1e9;
+w_m =3D 5.1e9*2*pi;
+e =3D 14;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+%------V=E5gtal
+bp =3D o*sqrt(e*(u+k));
+bm =3D o*sqrt(e*(u-k));
+%------Amplitud f=F6r LHCP & RHCP
+E0 =3D 1;
+a =3D e*o/bp;
+b =3D e*o/bm;
+N =3D 377;
+%------Plattans tjocklek
+d =3D 4e-5;
+%dz =3D 5e-5;
+%------Exponenter
+X =3D exp(-i*bp*d);
+Y =3D exp(-i*bm*d);
+Z =3D exp(i*bp*d);
+V =3D exp(i*bm*d);
+W =3D exp(i*k0*d);
+%------Amplituden i den reflekterade v=E5gen i x-led.
+R1 =3D -E0+Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)+X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden i den reflekterade v=E5gen i y-led.
+R2 =3D i*(-Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)-X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2))=
+;
+%------Amplituden f=F6r LHCP v=E5gen inuti ferriplattan med riktning +z.
+alpha1 =3D E0*Z*(1+N*a)/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP ferriv=E5gen riktad l=E4ngs +z.
+alpha2 =3D V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2);
+%------Amplituden f=F6r LHCP v=E5gen i ferriplattan i -z.
+Gamma1 =3D X*(N*a-1)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP v=E5gen i ferriplattan i -z.
+Gamma2 =3D Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden p=E5 den transmitterade v=E5gen i x-led.
+T1 =3D N*W*(a*X*E0*Z*(1+N*a)/(Z*(1.+N*a)^2-1.*X*(N*a-1)^2)...
+    +b*Y*V*(1+N*b)*E0/(V*(1.+N*b)^2-1.*Y*(1-N*b)^2)...
+    -1.*a*Z*X*(N*a-1)*E0/(Z*(1.+N*a)^2-1.*X*(N*a-1)^2)...
+    -1.*b*V*Y*(1-N*b)*E0/(Y*(1.-1.*N*b)^2-1.*V*(1+N*b)^2));
+%------Amplituden p=E5 den transmitterade v=E5gen i y-led.
+T2 =3D N*W*(-i*a*X*Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +i*b*Y*V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)...
+    +i*a*Z*X*(N*a-1)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    -i*b*V*Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2));
+
+%figure(1);
+%------Polarisationen
+for t=3D1:45
+    compass(abs(T1+T2));
+
+    hold on;
+    Ex =3D T1*exp(-i*k0*d)*exp(i*o*t/(scale));
+    Ey =3D T2*exp(-i*k0*d)*exp(i*o*t/(scale));
+    %Ex1 =3D (Ap*(exp(i*(bp)*(z+dz)))+Am*(exp(i*(bm)*(z+dz))))*exp(i*o*t/=
+(1e9));
+    %Ey1 =3D (-i*Ap*(exp(i*(bp)*(z+dz)))+Am*i*(exp(i*(bm)*(z+dz))))*exp(i=
+*o*t/(1e9));
+
+%   Ex =3D 0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*sin(2*pi/50*t);
+    compass(real(Ex),real(Ey));
+%   compass(real(Ex1),real(Ey1));
+%   compass(real(Ex));
+%   compass(0,real(Ey));
+    M(t) =3D getframe;
+    hold off;
+   =20
+end
+
+
+
+
+
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="Ferri_plate_x.m"
+Content-Disposition: inline; filename="Ferri_plate_x.m"
+Content-Transfer-Encoding: quoted-printable
+
+scale =3D 70e9;
+%------Frekvensen
+f =3D 2450e6;
+o =3D 2*pi*f;
+k0 =3D 2*pi/(3e8/f);
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 1;
+M_S =3D 1800/(4*pi);
+w_0 =3D 2*pi*5*1e9;
+w_m =3D 1e9*2*pi;
+e =3D 14;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+%------V=E5gtal
+bp =3D o*sqrt(e*(u+k));
+bm =3D o*sqrt(e*(u-k));
+%------Amplitud f=F6r LHCP & RHCP
+E0 =3D 1;
+a =3D e*o/bp;
+b =3D e*o/bm;
+N =3D 377;
+%------Plattans tjocklek
+d =3D 4e-4;
+%dz =3D 5e-5;
+%------Exponenter
+X =3D exp(-i*bp*d);
+Y =3D exp(-i*bm*d);
+Z =3D exp(i*bp*d);
+V =3D exp(i*bm*d);
+W =3D exp(i*k0*d);
+%------Amplituden i den reflekterade v=E5gen i x-led.
+R1 =3D -E0+Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)+X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden i den reflekterade v=E5gen i y-led.
+R2 =3D i*(-Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)-X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2))=
+;
+%------Amplituden f=F6r LHCP v=E5gen inuti ferriplattan med riktning +z.
+alpha1 =3D E0*Z*(1+N*a)/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP ferriv=E5gen riktad l=E4ngs +z.
+alpha2 =3D V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2);
+%------Amplituden f=F6r LHCP v=E5gen i ferriplattan i -z.
+Gamma1 =3D X*(N*a-1)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP v=E5gen i ferriplattan i -z.
+Gamma2 =3D Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden p=E5 den transmitterade RHCP v=E5gen.
+T1=3D N*W*(b*Y*V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)...
+         -b*V*Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2));
+%------Amplituden p=E5 den transmitterade LHCP v=E5gen.
+ T2=3D W*(Z*(1+N*a)*E0*X/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+          +X*(N*a-1)*E0*Z/(Z*(1+N*a)^2-X*(N*a-1)^2));   =20
+Lang =3D abs(2*(abs(T1)+abs(T2)));
+%figure(1);
+%------Polarisationen
+for t=3D1:45
+    compass(Lang);
+
+    hold on;
+    Ex =3D (T1+T2)*exp(i*o*t/(scale));
+    Ey =3D i*(-T1+T2)*exp(i*o*t/(scale));
+    %Ex1 =3D (Ap*(exp(i*(bp)*(z+dz)))+Am*(exp(i*(bm)*(z+dz))))*exp(i*o*t/=
+(1e9));
+    %Ey1 =3D (-i*Ap*(exp(i*(bp)*(z+dz)))+Am*i*(exp(i*(bm)*(z+dz))))*exp(i=
+*o*t/(1e9));
+
+%   Ex =3D 0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*sin(2*pi/50*t);
+    compass(real(Ex),real(Ey));
+%   compass(real(Ex1),real(Ey1));
+   compass(real(Ex));
+   compass(0,real(Ey));
+    M(t) =3D getframe;
+    hold off;
+   =20
+end
+
+
+
+
+
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="Ferri_platta.m"
+Content-Disposition: inline; filename="Ferri_platta.m"
+Content-Transfer-Encoding: quoted-printable
+
+scale =3D 70e9;
+%------Frekvensen
+f =3D 2450e6;
+o =3D 2*pi*f;
+k0 =3D 2*pi/(3e8/f);
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 1;
+M_S =3D 1800/(4*pi);
+for w_o=3D1:50
+w_0 =3D 2*pi*w_o*1e9;
+w_m =3D 5.04e9*2*pi;
+e =3D 14;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+%------V=E5gtal
+bp =3D o*sqrt(e*(u+k));
+bm =3D o*sqrt(e*(u-k));
+%------Amplitud f=F6r LHCP & RHCP
+E0 =3D 1;
+a =3D e*o/bp;
+b =3D e*o/bm;
+N =3D 377;
+%------Plattans tjocklek
+d =3D 4e-5;
+%dz =3D 5e-5;
+%------Exponenter
+X =3D exp(-i*bp*d);
+Y =3D exp(-i*bm*d);
+Z =3D exp(i*bp*d);
+V =3D exp(i*bm*d);
+W =3D exp(i*k0*d);
+%------Amplituden i den reflekterade v=E5gen i x-led.
+R1 =3D -E0+Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)+X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden i den reflekterade v=E5gen i y-led.
+R2 =3D i*(-Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)-X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2))=
+;
+%------Amplituden f=F6r LHCP v=E5gen inuti ferriplattan med riktning +z.
+alpha1(w_o) =3D E0*Z*(1+N*a)/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP ferriv=E5gen riktad l=E4ngs +z.
+alpha2(w_o) =3D V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2);
+%------Amplituden f=F6r LHCP v=E5gen i ferriplattan i -z.
+Gamma1 =3D X*(N*a-1)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP v=E5gen i ferriplattan i -z.
+Gamma2 =3D Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden p=E5 den transmitterade v=E5gen i x-led.
+T1(w_o) =3D N*W*(a*X*E0*Z*(1+N*a)/(Z*(1.+N*a)^2-1.*X*(N*a-1)^2)...
+    +b*Y*V*(1+N*b)*E0/(V*(1.+N*b)^2-1.*Y*(1-N*b)^2)...
+    -1.*a*Z*X*(N*a-1)*E0/(Z*(1.+N*a)^2-1.*X*(N*a-1)^2)...
+    -1.*b*V*Y*(1-N*b)*E0/(Y*(1.-1.*N*b)^2-1.*V*(1+N*b)^2));
+%------Amplituden p=E5 den transmitterade v=E5gen i y-led.
+T2(w_o) =3D N*W*(-i*a*X*Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +i*b*Y*V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)...
+    +i*a*Z*X*(N*a-1)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    -i*b*V*Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2));
+
+%figure(1);
+%------Polarisationen
+% $$$ for t=3D1:45
+% $$$    % compass(abs(T1+T2));
+% $$$=20
+% $$$     hold on;
+% $$$     Ex =3D T1*exp(-i*k0*d)*exp(i*o*t/(scale));
+% $$$     Ey =3D T2*exp(-i*k0*d)*exp(i*o*t/(scale));
+% $$$     %Ex1 =3D (Ap*(exp(i*(bp)*(z+dz)))+Am*(exp(i*(bm)*(z+dz))))*exp(=
+i*o*t/(1e9));
+% $$$     %Ey1 =3D (-i*Ap*(exp(i*(bp)*(z+dz)))+Am*i*(exp(i*(bm)*(z+dz))))=
+*exp(i*o*t/(1e9));
+% $$$=20
+% $$$ %   Ex =3D 0.5*cos(2*pi/50*t);
+% $$$ %   Ey =3D -0.5*cos(2*pi/50*t);
+% $$$ %   Ey =3D -0.5*sin(2*pi/50*t);
+% $$$     compass(real(Ex),real(Ey));
+% $$$ %   compass(real(Ex1),real(Ey1));
+% $$$ %   compass(real(Ex));
+% $$$ %   compass(0,real(Ey));
+% $$$     M(t) =3D getframe;
+% $$$     %hold off;
+% $$$    =20
+% $$$ end
+end
+figure(1);
+plot(2*pi*linspace(1e9,50e9,50),real(T1),2*pi*linspace(1e9,50e9,50),real(=
+T2));
+figure(2);
+plot(2*pi*linspace(1e9,50e9,50),real(alpha1),2*pi*linspace(1e9,50e9,50),r=
+eal(alpha2));
+
+
+
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="Ferri_t.m"
+Content-Disposition: inline; filename="Ferri_t.m"
+Content-Transfer-Encoding: quoted-printable
+
+scale =3D 20e9;
+%------Frekvensen
+f =3D 1000e6;
+o =3D 2*pi*f;
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 1;
+M_S =3D 1800/(4*pi);
+for w_o=3D1:50
+w_0 =3D 1e9*w_o*2*pi;
+w_m =3D 5.04e9*2*pi;
+e =3D 14;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+%------V=E5gtal
+bp =3D o*sqrt(e*(u+k));
+bm =3D o*sqrt(e*(u-k));
+%------Amplitud f=F6r LHCP & RHCP
+a =3D e*o/bp;
+b =3D e*o/bm;
+N =3D 377;
+Ap(w_o) =3D (1/(1+bp*N));
+Am(w_o) =3D (1/(1+bm*N));
+%------Plattans tjocklek
+z =3D 1e-3;
+dz =3D 5e-5;
+
+% $$$ %------Polarisationen
+% $$$ for t=3D1:100
+% $$$     compass(Ap+Am);
+% $$$     hold on;
+% $$$     Ex =3D (Ap*(exp(i*(bp)*z))+Am*(exp(i*bm*z)))*exp(i*o*t/(scale))=
+;
+% $$$     Ey =3D (-i*Ap*(exp(i*(bp)*z))+Am*i*(exp(i*(bm)*z)))*exp(i*o*t/(=
+scale));
+% $$$     %Ex1 =3D (Ap*(exp(i*(bp)*(z+dz)))+Am*(exp(i*(bm)*(z+dz))))*exp(=
+i*o*t/(1e9));
+% $$$     %Ey1 =3D (-i*Ap*(exp(i*(bp)*(z+dz)))+Am*i*(exp(i*(bm)*(z+dz))))=
+*exp(i*o*t/(1e9));
+% $$$=20
+% $$$ %   Ex =3D 0.5*cos(2*pi/50*t);
+% $$$ %   Ey =3D -0.5*cos(2*pi/50*t);
+% $$$ %   Ey =3D -0.5*sin(2*pi/50*t);
+% $$$     compass(real(Ex),real(Ey));
+% $$$ %   compass(real(Ex1),real(Ey1));
+% $$$ %   compass(real(Ex));
+% $$$ %   compass(0,real(Ey));
+% $$$     M(t) =3D getframe;
+% $$$     hold off;
+% $$$    =20
+% $$$ end
+end
+
+figure(3);
+plot(2*pi*linspace(1e9,50e9,50),real(Ap),2*pi*linspace(1e9,50e9,50),real(=
+Am));
+   =20
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="Ferri_trans.m"
+Content-Disposition: inline; filename="Ferri_trans.m"
+Content-Transfer-Encoding: quoted-printable
+
+scale =3D 20e9;
+%------Frekvensen
+f =3D 1000e6;
+o =3D 2*pi*f;
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 1;
+M_S =3D 1800/(4*pi);
+w_0 =3D 10e9*2*pi;
+w_m =3D 5.04e9*2*pi;
+e =3D 14;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+%------V=E5gtal
+bp =3D o*sqrt(e*(u+k));
+bm =3D o*sqrt(e*(u-k));
+%------Amplitud f=F6r LHCP & RHCP
+a =3D e*o/bp;
+b =3D e*o/bm;
+N =3D 377;
+Ap =3D (1/(1+bp*N));
+Am =3D (1/(1+bm*N));
+%------Plattans tjocklek
+z =3D 1e-3;
+dz =3D 5e-5;
+
+%------Polarisationen
+for t=3D1:100
+    compass(Ap+Am);
+    hold on;
+    Ex =3D (Ap*(exp(i*(bp)*z))+Am*(exp(i*bm*z)))*exp(i*o*t/(scale));
+    Ey =3D (-i*Ap*(exp(i*(bp)*z))+Am*i*(exp(i*(bm)*z)))*exp(i*o*t/(scale)=
+);
+    %Ex1 =3D (Ap*(exp(i*(bp)*(z+dz)))+Am*(exp(i*(bm)*(z+dz))))*exp(i*o*t/=
+(1e9));
+    %Ey1 =3D (-i*Ap*(exp(i*(bp)*(z+dz)))+Am*i*(exp(i*(bm)*(z+dz))))*exp(i=
+*o*t/(1e9));
+
+%   Ex =3D 0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*sin(2*pi/50*t);
+    compass(real(Ex),real(Ey));
+%   compass(real(Ex1),real(Ey1));
+%   compass(real(Ex));
+%   compass(0,real(Ey));
+    M(t) =3D getframe;
+    hold off;
+   =20
+end
+
+   =20
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="Fpxz.m"
+Content-Disposition: inline; filename="Fpxz.m"
+Content-Transfer-Encoding: quoted-printable
+
+scale =3D 70e9;
+%------Frekvensen
+f =3D 2450e6;
+o =3D 2*pi*f;
+k0 =3D 2*pi/(3e8/f);
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 1;
+M_S =3D 1800/(4*pi);
+figure(1); =20
+hold on;
+ =20
+for w_o=3D1:1000;
+w_0 =3D 2*pi*w_o*1e7;
+w_m =3D 1e9*2*pi;
+e =3D 14;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+%------V=E5gtal
+bp =3D o*sqrt(e*(u+k));
+bm =3D o*sqrt(e*(u-k));
+%------Amplitud f=F6r LHCP & RHCP
+E0 =3D 1;
+a =3D e*o/bp;
+b =3D e*o/bm;
+N =3D 377;
+%------Plattans tjocklek
+d =3D 4e-4;
+%dz =3D 5e-5;
+%------Exponenter
+X =3D exp(-i*bp*d);
+Y =3D exp(-i*bm*d);
+Z =3D exp(i*bp*d);
+V =3D exp(i*bm*d);
+W =3D exp(i*k0*d);
+%------Amplituden i den reflekterade v=E5gen i x-led.
+R1 =3D -E0+Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)+X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden i den reflekterade v=E5gen i y-led.
+R2 =3D i*(-Z*(1+N*a)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+    +V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)-X*(N*a-1)...
+    *E0/(Z*(1+N*a)^2-X*(N*a-1)^2)+Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2))=
+;
+%------Amplituden f=F6r LHCP v=E5gen inuti ferriplattan med riktning +z.
+alpha1 =3D E0*Z*(1+N*a)/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP ferriv=E5gen riktad l=E4ngs +z.
+alpha2 =3D V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2);
+%------Amplituden f=F6r LHCP v=E5gen i ferriplattan i -z.
+Gamma1 =3D X*(N*a-1)*E0/(Z*(1+N*a)^2-X*(N*a-1)^2);
+%------Amplituden f=F6r RHCP v=E5gen i ferriplattan i -z.
+Gamma2 =3D Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2);
+%------Amplituden p=E5 den transmitterade RHCP v=E5gen.
+T1(w_o)=3D N*W*(b*Y*V*(1+N*b)*E0/(V*(1+N*b)^2-Y*(1-N*b)^2)...
+         -b*V*Y*(1-N*b)*E0/(Y*(1-N*b)^2-V*(1+N*b)^2));
+%------Amplituden p=E5 den transmitterade LHCP v=E5gen.
+ T2(w_o)=3D W*(Z*(1+N*a)*E0*X/(Z*(1+N*a)^2-X*(N*a-1)^2)...
+          +X*(N*a-1)*E0*Z/(Z*(1+N*a)^2-X*(N*a-1)^2));   =20
+Lang =3D abs(2*(abs(T1)+abs(T2)));
+%figure(1);
+%------Polarisationen
+t =3D 10;
+
+%    compass(Lang);
+
+ =20
+    Ex =3D (T1+T2)*exp(i*o*t/(scale));
+    Ey =3D i*(-T1+T2)*exp(i*o*t/(scale));
+    %Ex1 =3D (Ap*(exp(i*(bp)*(z+dz)))+Am*(exp(i*(bm)*(z+dz))))*exp(i*o*t/=
+(1e9));
+    %Ey1 =3D (-i*Ap*(exp(i*(bp)*(z+dz)))+Am*i*(exp(i*(bm)*(z+dz))))*exp(i=
+*o*t/(1e9));
+
+%   Ex =3D 0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*cos(2*pi/50*t);
+%   Ey =3D -0.5*sin(2*pi/50*t);
+%    compass(real(Ex),real(Ey));
+%   compass(real(Ex1),real(Ey1));
+%   compass(real(Ex));
+%   compass(0,real(Ey));
+    M(w_o) =3D getframe;
+%    hold off;
+   =20
+end
+
+figure(2);
+x =3D linspace(1,1000,1000);
+plot(x,real(T1),x,real(T2));
+
+
+
+
+
+--------------040509010402040508020002
+Content-Type: text/plain; name="vog.m"
+Content-Disposition: inline; filename="vog.m"
+Content-Transfer-Encoding: quoted-printable
+
+
+%------Frekvensen----
+f =3D 2450e6;
+o =3D 2*pi*f;
+scale =3D 70e9;
+%------Materialets parametrar
+u0=3D4*pi*1e-7;
+gamma =3D 1.759e11;
+H_0 =3D 10000/(4*pi);
+M_S =3D 1800/(4*pi);
+
+w_0 =3D gamma*H_0;
+w_m =3D gamma*M_S;
+
+%w_0 =3D 12e9*2*pi;
+%w_m =3D 7.04e9*2*pi;
+
+e =3D 15;
+u =3D u0*(1+w_0*w_m/(w_0^2-o^2));
+k =3D u0*o*w_m/(w_0^2-o^2);
+
+%------V=E5gtal--------
+b =3D o*sqrt(e*(u+k));   % beta pozitiv
+bb =3D o*sqrt(e*(u-k));  % beta negativ
+
+k =3D 2*pi/(3e8/f);
+n =3D 377;
+d =3D 2e-5;
+y=3De*o/b;
+yy=3De*o/bb;
+
+% R1=3D([-1/2*(2*n^3*yy^2*exp(-i*bb*d)*exp(-i*b*d)*y^2-2*n^3*...
+%     yy^2*exp(-i*bb*d)*exp(i*b*d)*y^2+2*n^3*yy*exp(-i*bb*d)*y^3*exp(-i*b=
+*d)...
+%     +4*yy^2*exp(i*bb*d)*n^3*exp(i*b*d)*y^2-4*yy^2*exp(i*bb*d)*n^3*exp(-=
+i*b*d)...
+%     *y^2-2*yy*exp(-i*bb*d)*n^3*exp(i*b*d)*y^3+2*exp(-i*bb*d)*yy*exp(i*b=
+b*d)*n^2*y^2-2*...
+%     exp(-i*bb*d)*yy*exp(i*bb*d)*n*y-2*exp(-i*bb*d)*yy^2*exp(i*bb*d)*n^2=
+*y-2*y*...
+%     exp(-i*bb*d)*exp(i*b*d)-2*yy*exp(-i*bb*d)*exp(-i*b*d)+2*yy*exp(i*bb=
+*d)*exp(i*b*d)...
+%     -2*y*exp(-i*bb*d)*exp(-i*b*d)-2*yy*exp(i*bb*d)*exp(-i*b*d)+2*yy*exp=
+(-i*bb*d)*...
+%     exp(i*b*d)+2*y*exp(i*bb*d)*exp(i*b*d)+2*y*exp(i*bb*d)*exp(-i*b*d)+2=
+*yy^2*exp(i*bb*d)...
+%     *n*exp(i*b*d)-2*yy^2*exp(i*bb*d)*n*exp(-i*b*d)-yy^2*exp(-i*bb*d)*n*=
+exp(i*b*d)+yy^2*...
+%     exp(-i*bb*d)*n*exp(-i*b*d)+2*exp(i*bb*d)*exp(i*b*d)*y^2*n-exp(-i*bb=
+*d)*exp(i*b*d)*y^2*...
+%     n-2*exp(i*bb*d)*exp(-i*b*d)*y^2*n+3*exp(-i*bb*d)*exp(-i*b*d)*y^2*n+=
+6*yy^2*exp(i*bb*d)...
+%     *n^2*exp(i*b*d)*y+6*yy^2*exp(i*bb*d)*n^2*exp(-i*b*d)*y-3*yy^2*exp(-=
+i*bb*d)*n^2*...
+%     exp(i*b*d)*y-3*yy^2*exp(-i*bb*d)*n^2*exp(-i*b*d)*y+8*yy*exp(i*bb*d)=
+*exp(i*b*d)*...
+%     y*n+8*yy*exp(i*bb*d)*exp(-i*b*d)*y*n+6*yy*exp(-i*bb*d)*exp(i*b*d)*y=
+*n+8*yy*exp(-i*bb*d)...
+%     *exp(-i*b*d)*y*n+6*yy*exp(i*bb*d)*n^2*exp(i*b*d)*y^2+2*yy*exp(-i*bb=
+*d)*n^2*exp(i*b*d)*...
+%     y^2-6*yy*exp(i*bb*d)*n^2*exp(-i*b*d)*y^2-8*yy*exp(-i*bb*d)*n^2*exp(=
+-i*b*d)*y^2+...
+%     2*exp(-i*bb*d)*exp(i*bb*d)*y^2*n+exp(-i*bb*d)*exp(i*b*d)*y^3*n^2-n^=
+2*exp(-i*bb*d)...
+%     *y^3*exp(-i*b*d))*n*E/((yy*exp(-i*bb*d)*n^2*y+yy^2*exp(-i*bb*d)*n^2=
+-2*yy^2*exp(i*bb*d)...
+%     *n^2-exp(-i*bb*d)*y*n-4*yy*exp(i*bb*d)*n-3*yy*exp(-i*bb*d)*n+2*exp(=
+-i*bb*d)-2*exp(i*bb*d))...
+%     *(n^2*exp(-i*b*d)*y^2-n^2*exp(i*b*d)*y^2-2*exp(i*b*d)*y*n-2*exp(-i*=
+b*d)*y*n+exp(-i*b*d)...
+%     -exp(i*b*d)))-1/2*(-6*yy*exp(i*bb*d)*n*exp(i*b*d)+6*yy*exp(i*bb*d)*=
+n*exp(-i*b*d)-6*exp(i*bb*d)*...
+%     exp(i*b*d)*y*n-6*exp(i*bb*d)*exp(-i*b*d)*y*n-4*yy*exp(-i*bb*d)*n*ex=
+p(i*b*d)+4*yy*exp(-i*bb*d)*n*...
+%     exp(-i*b*d)+4*exp(-i*bb*d)*exp(i*b*d)*y*n+8*exp(-i*bb*d)*exp(-i*b*d=
+)*y*n-2*yy^2*exp(i*bb*d)*n^2*...
+%     exp(i*b*d)+2*yy^2*exp(i*bb*d)*n^2*exp(-i*b*d)+yy^2*exp(-i*bb*d)*n^2=
+*exp(i*b*d)-yy^2*exp(-i*bb*d)*...
+%     n^2*exp(-i*b*d)-2*exp(i*bb*d)*exp(i*b*d)*y^2*n^2-exp(-i*bb*d)*exp(i=
+*b*d)*y^2*n^2+2*exp(i*bb*d)*...
+%     exp(-i*b*d)*y^2*n^2-5*exp(-i*bb*d)*exp(-i*b*d)*y^2*n^2+4*exp(-i*bb*=
+d)*exp(i*b*d)-4*exp(i*bb*d)*...
+%     exp(i*b*d)+4*exp(i*bb*d)*exp(-i*b*d)-4*exp(-i*bb*d)*exp(-i*b*d)-8*y=
+y*exp(i*bb*d)*n^2*exp(i*b*d)*y-...
+%     8*yy*exp(i*bb*d)*n^2*exp(-i*b*d)*y-4*yy*exp(-i*bb*d)*n^2*exp(i*b*d)=
+*y-6*yy*exp(-i*bb*d)*n^2*exp(-i*b*d)*...
+%     y-2*yy^2*exp(i*bb*d)*n^3*exp(i*b*d)*y-2*yy^2*exp(i*bb*d)*n^3*exp(-i=
+*b*d)*y+yy^2*exp(-i*bb*d)*n^3*...
+%     exp(i*b*d)*y+yy^2*exp(-i*bb*d)*n^3*exp(-i*b*d)*y-2*yy*exp(i*bb*d)*n=
+^3*exp(i*b*d)*y^2+2*yy*exp(i*bb*d)*...
+%     n^3*exp(-i*b*d)*y^2+2*yy*exp(-i*bb*d)*n^3*exp(-i*b*d)*y^2+n^3*exp(-=
+i*bb*d)*y^3*exp(-i*b*d)-n^3*exp(-i*bb*d)...
+%     *y^3*exp(i*b*d)+2*exp(-i*bb*d)*exp(i*bb*d)*y^2*n^2-2*exp(-i*bb*d)*y=
+*n^2*yy*exp(i*bb*d)+2*exp(-i*bb*d)*...
+%     yy*exp(i*bb*d)*n^3*y^2-2*exp(-i*bb*d)*y*n^3*yy^2*exp(i*bb*d))*E/((y=
+y*exp(-i*bb*d)*n^2*y+yy^2*exp(-i*bb*d)...
+%     *n^2-2*yy^2*exp(i*bb*d)*n^2-exp(-i*bb*d)*y*n-4*yy*exp(i*bb*d)*n-3*y=
+y*exp(-i*bb*d)*n+2*exp(-i*bb*d)-...
+%     2*exp(i*bb*d))*(n^2*exp(-i*b*d)*y^2-n^2*exp(i*b*d)*y^2-2*exp(i*b*d)=
+*y*n-2*exp(-i*b*d)*y*n+exp(-i*b*d)-...
+%     exp(i*b*d)))]);
+%=20
+%=20
+% R2=3D([-(-2*exp(-i*bb*d)*yy*exp(i*bb*d)*n^2*y^2+2*exp(-i*bb*d)*yy*exp(i=
+*bb*d)*...
+%     n*y+2*exp(-i*bb*d)*yy^2*exp(i*bb*d)*n^2*y+2*y*exp(-i*bb*d)*exp(i*b*=
+d)-2*yy*exp(-i*bb*d)*...
+%     exp(-i*b*d)+2*yy*exp(i*bb*d)*exp(i*b*d)+2*y*exp(-i*bb*d)*exp(-i*b*d=
+)-2*yy*exp(i*bb*d)*...
+%     exp(-i*b*d)+2*yy*exp(-i*bb*d)*exp(i*b*d)-2*y*exp(i*bb*d)*exp(i*b*d)=
+-2*y*exp(i*bb*d)*...
+%     exp(-i*b*d)+2*yy^2*exp(i*bb*d)*n*exp(i*b*d)-2*yy^2*exp(i*bb*d)*n*ex=
+p(-i*b*d)-yy^2*exp(-i*bb*d)...
+%     *n*exp(i*b*d)+yy^2*exp(-i*bb*d)*n*exp(-i*b*d)-2*exp(i*bb*d)*exp(i*b=
+*d)*y^2*n+exp(-i*bb*d)*exp(i*b*d)...
+%     *y^2*n+2*exp(i*bb*d)*exp(-i*b*d)*y^2*n-3*exp(-i*bb*d)*exp(-i*b*d)*y=
+^2*n+2*yy^2*exp(i*bb*d)*n^2*...
+%     exp(i*b*d)*y+2*yy^2*exp(i*bb*d)*n^2*exp(-i*b*d)*y-yy^2*exp(-i*bb*d)=
+*n^2*exp(i*b*d)*y-yy^2*...
+%     exp(-i*bb*d)*n^2*exp(-i*b*d)*y+2*yy*exp(-i*bb*d)*exp(-i*b*d)*y*n-2*=
+yy*exp(i*bb*d)*n^2*exp(i*b*d)...
+%     *y^2-2*yy*exp(-i*bb*d)*n^2*exp(i*b*d)*y^2+2*yy*exp(i*bb*d)*n^2*exp(=
+-i*b*d)*y^2-2*exp(-i*bb*d)*...
+%     exp(i*bb*d)*y^2*n-exp(-i*bb*d)*exp(i*b*d)*y^3*n^2+n^2*exp(-i*bb*d)*=
+y^3*exp(-i*b*d))*n*i*...
+%     E/((yy*exp(-i*bb*d)*n^2*y+yy^2*exp(-i*bb*d)*n^2-2*yy^2*exp(i*bb*d)*=
+n^2-exp(-i*bb*d)*y*n-4*...
+%     yy*exp(i*bb*d)*n-3*yy*exp(-i*bb*d)*n+2*exp(-i*bb*d)-2*exp(i*bb*d))*=
+(n^2*exp(-i*b*d)*y^2-...
+%     n^2*exp(i*b*d)*y^2-2*exp(i*b*d)*y*n-2*exp(-i*b*d)*y*n+exp(-i*b*d)-e=
+xp(i*b*d)))]);
+%=20
+%=20
+% L1 =3D([-(yy*exp(-i*bb*d)*n^3*exp(i*b*d)*y^2+exp(-i*bb*d)*yy*exp(i*bb*d=
+)*...
+%     n^3*y^2-2*yy^2*exp(i*bb*d)*n^3*exp(i*b*d)*y-exp(-i*bb*d)*y*n^3*yy^2=
+*exp(i*bb*d)+...
+%     yy^2*exp(-i*bb*d)*n^3*exp(i*b*d)*y+exp(-i*bb*d)*exp(i*bb*d)*y^2*n^2=
+-exp(-i*bb*d)*...
+%     exp(i*b*d)*y^2*n^2-4*yy*exp(i*bb*d)*n^2*exp(i*b*d)*y-2*exp(-i*bb*d)=
+*y*n^2*yy*exp(i*bb*d)-...
+%     2*yy*exp(-i*bb*d)*n^2*exp(i*b*d)*y-2*yy^2*exp(i*bb*d)*n^2*exp(i*b*d=
+)+yy^2*exp(-i*bb*d)*...
+%     n^2*exp(i*b*d)+exp(-i*bb*d)*yy^2*exp(i*bb*d)*n^2-exp(-i*bb*d)*y*n*e=
+xp(i*bb*d)+exp(-i*bb*d)*...
+%     exp(i*b*d)*y*n-2*exp(i*bb*d)*exp(i*b*d)*y*n-3*yy*exp(-i*bb*d)*n*exp=
+(i*b*d)+exp(-i*bb*d)*yy*...
+%     exp(i*bb*d)*n-4*yy*exp(i*bb*d)*n*exp(i*b*d)+2*exp(-i*bb*d)*exp(i*b*=
+d)-2*exp(i*bb*d)*exp(i*b*d))*...
+%     E/(4*yy*exp(i*bb*d)*n*exp(i*b*d)-4*yy*exp(i*bb*d)*n*exp(-i*b*d)+4*e=
+xp(i*bb*d)*exp(i*b*d)*y*n+...
+%     4*exp(i*bb*d)*exp(-i*b*d)*y*n+3*yy*exp(-i*bb*d)*n*exp(i*b*d)-3*yy*e=
+xp(-i*bb*d)*n*exp(-i*b*d)-...
+%     3*exp(-i*bb*d)*exp(i*b*d)*y*n-5*exp(-i*bb*d)*exp(-i*b*d)*y*n+2*yy^2=
+*exp(i*bb*d)*n^2*exp(i*b*d)-...
+%     2*yy^2*exp(i*bb*d)*n^2*exp(-i*b*d)-yy^2*exp(-i*bb*d)*n^2*exp(i*b*d)=
++yy^2*exp(-i*bb*d)*n^2*...
+%     exp(-i*b*d)+2*exp(i*bb*d)*exp(i*b*d)*y^2*n^2-2*exp(i*bb*d)*exp(-i*b=
+*d)*y^2*n^2+4*exp(-i*bb*d)*...
+%     exp(-i*b*d)*y^2*n^2-2*exp(-i*bb*d)*exp(i*b*d)+2*exp(i*bb*d)*exp(i*b=
+*d)-2*exp(i*bb*d)*exp(-i*b*d)+...
+%     2*exp(-i*bb*d)*exp(-i*b*d)+8*yy*exp(i*bb*d)*n^2*exp(i*b*d)*y+8*yy*e=
+xp(i*bb*d)*n^2*exp(-i*b*d)*y+...
+%     5*yy*exp(-i*bb*d)*n^2*exp(i*b*d)*y+7*yy*exp(-i*bb*d)*n^2*exp(-i*b*d=
+)*y+4*yy^2*exp(i*bb*d)*n^3*...
+%     exp(i*b*d)*y+4*yy^2*exp(i*bb*d)*n^3*exp(-i*b*d)*y-2*yy^2*exp(-i*bb*=
+d)*n^3*exp(i*b*d)*y-2*yy^2*...
+%     exp(-i*bb*d)*n^3*exp(-i*b*d)*y+4*yy*exp(i*bb*d)*n^3*exp(i*b*d)*y^2+=
+yy*exp(-i*bb*d)*n^3*exp(i*b*d)*y^2-...
+%     4*yy*exp(i*bb*d)*n^3*exp(-i*b*d)*y^2-5*yy*exp(-i*bb*d)*n^3*exp(-i*b=
+*d)*y^2-n^3*exp(-i*bb*d)*y^3*exp(-i*b*d)+...
+%     n^3*exp(-i*bb*d)*y^3*exp(i*b*d)-n^4*yy^2*exp(-i*bb*d)*exp(i*b*d)*y^=
+2+n^4*yy^2*exp(-i*bb*d)*...
+%     exp(-i*b*d)*y^2-2*n^4*yy^2*exp(i*bb*d)*exp(-i*b*d)*y^2+2*n^4*yy^2*e=
+xp(i*bb*d)*exp(i*b*d)*y^2+...
+%     n^4*yy*exp(-i*bb*d)*y^3*exp(-i*b*d)-n^4*yy*exp(-i*bb*d)*y^3*exp(i*b=
+*d))]);
+%=20
+% L2=3D([-2*(yy*n+1)*exp(i*bb*d)*E/(yy*exp(-i*bb*d)*n^2*y+yy^2*exp(-i*bb*=
+d)*n^2-...
+%     2*yy^2*exp(i*bb*d)*n^2-exp(-i*bb*d)*y*n-4*yy*exp(i*bb*d)*n-3*yy*exp=
+(-i*bb*d)*n+...
+%     2*exp(-i*bb*d)-2*exp(i*bb*d))]);
+%=20
+%=20
+% G1=3D([-(yy*exp(-i*bb*d)*n^3*exp(-i*b*d)*y^2+exp(-i*bb*d)*yy*exp(i*bb*d=
+)*n^3*y^2+...
+%     yy^2*exp(-i*bb*d)*n^3*exp(-i*b*d)*y-2*yy^2*exp(i*bb*d)*n^3*exp(-i*b=
+*d)*y-exp(-i*bb*d)*y*...
+%     n^3*yy^2*exp(i*bb*d)-exp(-i*bb*d)*exp(-i*b*d)*y^2*n^2+exp(-i*bb*d)*=
+exp(i*bb*d)*y^2*n^2-4*...
+%     yy*exp(i*bb*d)*n^2*exp(-i*b*d)*y-4*yy*exp(-i*bb*d)*n^2*exp(-i*b*d)*=
+y-yy^2*exp(-i*bb*d)*n^2...
+%     *exp(-i*b*d)+2*yy^2*exp(i*bb*d)*n^2*exp(-i*b*d)-exp(-i*bb*d)*yy^2*e=
+xp(i*bb*d)*n^2+3*exp(-i*bb*d)...
+%     *exp(-i*b*d)*y*n-2*exp(i*bb*d)*exp(-i*b*d)*y*n+exp(-i*bb*d)*y*n*exp=
+(i*bb*d)+4*yy*exp(i*bb*d)*n*...
+%     exp(-i*b*d)+3*yy*exp(-i*bb*d)*n*exp(-i*b*d)-exp(-i*bb*d)*yy*exp(i*b=
+b*d)*n-2*exp(-i*bb*d)*exp(-i*b*d)+...
+%     2*exp(i*bb*d)*exp(-i*b*d))*E/(4*yy*exp(i*bb*d)*n*exp(i*b*d)-4*yy*ex=
+p(i*bb*d)*n*exp(-i*b*d)+4*...
+%     exp(i*bb*d)*exp(i*b*d)*y*n+4*exp(i*bb*d)*exp(-i*b*d)*y*n+3*yy*exp(-=
+i*bb*d)*n*exp(i*b*d)-3*yy*...
+%     exp(-i*bb*d)*n*exp(-i*b*d)-3*exp(-i*bb*d)*exp(i*b*d)*y*n-5*exp(-i*b=
+b*d)*exp(-i*b*d)*y*n+2*yy^2*...
+%     exp(i*bb*d)*n^2*exp(i*b*d)-2*yy^2*exp(i*bb*d)*n^2*exp(-i*b*d)-yy^2*=
+exp(-i*bb*d)*n^2*exp(i*b*d)+...
+%     yy^2*exp(-i*bb*d)*n^2*exp(-i*b*d)+2*exp(i*bb*d)*exp(i*b*d)*y^2*n^2-=
+2*exp(i*bb*d)*exp(-i*b*d)*y^2*n^2+...
+%     4*exp(-i*bb*d)*exp(-i*b*d)*y^2*n^2-2*exp(-i*bb*d)*exp(i*b*d)+2*exp(=
+i*bb*d)*exp(i*b*d)-2*exp(i*bb*d)*...
+%     exp(-i*b*d)+2*exp(-i*bb*d)*exp(-i*b*d)+8*yy*exp(i*bb*d)*n^2*exp(i*b=
+*d)*y+8*yy*exp(i*bb*d)*n^2*exp(-i*b*d)...
+%     *y+5*yy*exp(-i*bb*d)*n^2*exp(i*b*d)*y+7*yy*exp(-i*bb*d)*n^2*exp(-i*=
+b*d)*y+4*yy^2*exp(i*bb*d)*n^3*...
+%     exp(i*b*d)*y+4*yy^2*exp(i*bb*d)*n^3*exp(-i*b*d)*y-2*yy^2*exp(-i*bb*=
+d)*n^3*exp(i*b*d)*y-2*yy^2*...
+%     exp(-i*bb*d)*n^3*exp(-i*b*d)*y+4*yy*exp(i*bb*d)*n^3*exp(i*b*d)*y^2+=
+yy*exp(-i*bb*d)*n^3*exp(i*b*d)*y^2-...
+%     4*yy*exp(i*bb*d)*n^3*exp(-i*b*d)*y^2-5*yy*exp(-i*bb*d)*n^3*exp(-i*b=
+*d)*y^2-n^3*exp(-i*bb*d)*y^3*...
+%     exp(-i*b*d)+n^3*exp(-i*bb*d)*y^3*exp(i*b*d)-n^4*yy^2*exp(-i*bb*d)*e=
+xp(i*b*d)*y^2+n^4*yy^2*exp(-i*bb*d)*...
+%     exp(-i*b*d)*y^2-2*n^4*yy^2*exp(i*bb*d)*exp(-i*b*d)*y^2+2*n^4*yy^2*e=
+xp(i*bb*d)*exp(i*b*d)*y^2+n^4*yy*...
+%     exp(-i*bb*d)*y^3*exp(-i*b*d)-n^4*yy*exp(-i*bb*d)*y^3*exp(i*b*d))]);
+%=20
+% G2=3D([-exp(-i*bb*d)*(yy*n+y*n-2)*E/(yy*exp(-i*bb*d)*n^2*y+yy^2*exp(-i*=
+bb*d)*n^2-...
+%     2*yy^2*exp(i*bb*d)*n^2-exp(-i*bb*d)*y*n-4*yy*exp(i*bb*d)*n-3*yy*exp=
+(-i*bb*d)*n+...
+%     2*exp(-i*bb*d)-2*exp(i*bb*d))]);
+E=3D1;
+T1=3D -((n^2*exp(-i*bb*d)*y^3*exp(-i*b*d)*exp(i*bb*d)-n^2*exp(-i*bb*d)*y^=
+3*exp(i*b*d)*...
+    exp(i*bb*d)+4*n^2*yy*exp(-i*bb*d)*y^2*exp(-i*b*d)*exp(i*bb*d)+2*n^2*y=
+y*exp(-i*bb*d)*y^2*exp(-i*b*d)*...
+    exp(i*b*d)-2*n^2*yy*exp(-i*bb*d)*y^2*exp(i*b*d)*exp(i*bb*d)-yy^2*exp(=
+i*bb*d)*exp(-i*bb*d)*n^2*...
+    exp(-i*b*d)*y+2*n^2*yy^2*y*exp(-i*b*d)*exp(i*b*d)*exp(-i*bb*d)-4*n^2*=
+yy^2*y*exp(-i*b*d)*exp(i*b*d)*...
+    exp(i*bb*d)-yy^2*exp(i*bb*d)*exp(i*b*d)*exp(-i*bb*d)*n^2*y-y^2*exp(-i=
+*bb*d)*exp(i*bb*d)*exp(-i*b*d)*n-...
+    2*n*exp(-i*bb*d)*y^2*exp(-i*b*d)*exp(i*b*d)-y^2*exp(-i*bb*d)*exp(i*b*=
+d)*exp(i*bb*d)*n-6*y*exp(-i*b*d)*yy*n...
+    *exp(i*b*d)*exp(-i*bb*d)-8*y*n*exp(-i*b*d)*yy*exp(i*bb*d)*exp(-i*bb*d=
+)-8*y*exp(-i*b*d)*yy*n*exp(i*b*d)*...
+    exp(i*bb*d)-6*yy*exp(-i*bb*d)*exp(i*b*d)*y*n*exp(i*bb*d)+n*yy^2*exp(-=
+i*b*d)*exp(i*bb*d)*exp(-i*bb*d)-...
+    n*exp(i*b*d)*yy^2*exp(i*bb*d)*exp(-i*bb*d)+4*y*exp(-i*b*d)*exp(i*b*d)=
+*exp(-i*bb*d)-4*y*exp(-i*b*d)*...
+    exp(i*b*d)*exp(i*bb*d)+4*exp(-i*b*d)*yy*exp(i*bb*d)*exp(-i*bb*d)-4*ex=
+p(i*b*d)*yy*exp(i*bb*d)*...
+    exp(-i*bb*d))*n*E/(exp(-i*k*d)*(4*yy*exp(i*bb*d)*n*exp(i*b*d)-4*yy*ex=
+p(i*bb*d)*n*exp(-i*b*d)+...
+    4*exp(i*bb*d)*exp(i*b*d)*y*n+4*exp(i*bb*d)*exp(-i*b*d)*y*n+3*yy*exp(-=
+i*bb*d)*n*exp(i*b*d)-3*yy*...
+    exp(-i*bb*d)*n*exp(-i*b*d)-3*exp(-i*bb*d)*exp(i*b*d)*y*n-5*exp(-i*bb*=
+d)*exp(-i*b*d)*y*n+2*yy^2*...
+    exp(i*bb*d)*n^2*exp(i*b*d)-2*yy^2*exp(i*bb*d)*n^2*exp(-i*b*d)-yy^2*ex=
+p(-i*bb*d)*n^2*exp(i*b*d)+...
+    yy^2*exp(-i*bb*d)*n^2*exp(-i*b*d)+2*exp(i*bb*d)*exp(i*b*d)*y^2*n^2-2*=
+exp(i*bb*d)*exp(-i*b*d)*y^2*n^2+...
+    4*exp(-i*bb*d)*exp(-i*b*d)*y^2*n^2-2*exp(-i*bb*d)*exp(i*b*d)+2*exp(i*=
+bb*d)*exp(i*b*d)-2*exp(i*bb*d)*...
+    exp(-i*b*d)+2*exp(-i*bb*d)*exp(-i*b*d)+8*yy*exp(i*bb*d)*n^2*exp(i*b*d=
+)*y+8*yy*exp(i*bb*d)*n^2*...
+    exp(-i*b*d)*y+5*yy*exp(-i*bb*d)*n^2*exp(i*b*d)*y+7*yy*exp(-i*bb*d)*n^=
+2*exp(-i*b*d)*y+4*yy^2*...
+    exp(i*bb*d)*n^3*exp(i*b*d)*y+4*yy^2*exp(i*bb*d)*n^3*exp(-i*b*d)*y-2*y=
+y^2*exp(-i*bb*d)*n^3*...
+    exp(i*b*d)*y-2*yy^2*exp(-i*bb*d)*n^3*exp(-i*b*d)*y+4*yy*exp(i*bb*d)*n=
+^3*exp(i*b*d)*y^2+yy*...
+    exp(-i*bb*d)*n^3*exp(i*b*d)*y^2-4*yy*exp(i*bb*d)*n^3*exp(-i*b*d)*y^2-=
+5*yy*exp(-i*bb*d)*n^3*...
+    exp(-i*b*d)*y^2-n^3*exp(-i*bb*d)*y^3*exp(-i*b*d)+n^3*exp(-i*bb*d)*y^3=
+*exp(i*b*d)-n^4*yy^2*...
+    exp(-i*bb*d)*exp(i*b*d)*y^2+n^4*yy^2*exp(-i*bb*d)*exp(-i*b*d)*y^2-2*n=
+^4*yy^2*exp(i*bb*d)*exp(-i*b*d)*y^2+...
+    2*n^4*yy^2*exp(i*bb*d)*exp(i*b*d)*y^2+n^4*yy*exp(-i*bb*d)*y^3*exp(-i*=
+b*d)-n^4*yy*exp(-i*bb*d)*y^3*exp(i*b*d))));
+
+
+T2=3D[-i*(-2*n^2*yy^2*y*exp(-i*b*d)*exp(i*b*d)*exp(-i*bb*d)+yy^2*exp(i*bb=
+*d)*exp(-i*bb*d)*...
+    n^2*exp(-i*b*d)*y+yy^2*exp(i*bb*d)*exp(i*b*d)*exp(-i*bb*d)*n^2*y+4*n^=
+2*yy^2*y*exp(-i*b*d)*exp(i*b*d)*...
+    exp(i*bb*d)+2*n^2*yy*exp(-i*bb*d)*y^2*exp(-i*b*d)*exp(i*bb*d)-2*n^2*y=
+y*exp(-i*bb*d)*y^2*exp(-i*b*d)*...
+    exp(i*b*d)-4*n^2*yy*exp(-i*bb*d)*y^2*exp(i*b*d)*exp(i*bb*d)+n^2*exp(-=
+i*bb*d)*y^3*exp(-i*b*d)*exp(i*bb*d)-...
+    n^2*exp(-i*bb*d)*y^3*exp(i*b*d)*exp(i*bb*d)+n*exp(i*b*d)*yy^2*exp(i*b=
+b*d)*exp(-i*bb*d)-n*yy^2*exp(-i*b*d)*...
+    exp(i*bb*d)*exp(-i*bb*d)-6*yy*exp(-i*bb*d)*exp(i*b*d)*y*n*exp(i*bb*d)=
++6*y*exp(-i*b*d)*yy*n*exp(i*b*d)*...
+    exp(-i*bb*d)-4*y*n*exp(-i*b*d)*yy*exp(i*bb*d)*exp(-i*bb*d)+8*y*exp(-i=
+*b*d)*yy*n*exp(i*b*d)*exp(i*bb*d)-...
+    3*y^2*exp(-i*bb*d)*exp(i*bb*d)*exp(-i*b*d)*n+2*n*exp(-i*bb*d)*y^2*exp=
+(-i*b*d)*exp(i*b*d)-3*y^2*exp(-i*bb*d)*...
+    exp(i*b*d)*exp(i*bb*d)*n-2*exp(i*b*d)*yy*exp(i*bb*d)*exp(-i*bb*d)+2*e=
+xp(-i*b*d)*yy*exp(i*bb*d)*...
+    exp(-i*bb*d)-4*y*exp(-i*b*d)*exp(i*b*d)*exp(-i*bb*d)+2*exp(i*bb*d)*y*=
+exp(-i*bb*d)*exp(-i*b*d)-2*exp(i*bb*d)*...
+    exp(i*b*d)*y*exp(-i*bb*d)+4*y*exp(-i*b*d)*exp(i*b*d)*exp(i*bb*d))*n*E=
+/(exp(-i*k*d)*(4*yy*exp(i*bb*d)*...
+    n*exp(i*b*d)-4*yy*exp(i*bb*d)*n*exp(-i*b*d)+4*exp(i*bb*d)*exp(i*b*d)*=
+y*n+4*exp(i*bb*d)*exp(-i*b*d)*y*n+...
+    3*yy*exp(-i*bb*d)*n*exp(i*b*d)-3*yy*exp(-i*bb*d)*n*exp(-i*b*d)-3*exp(=
+-i*bb*d)*exp(i*b*d)*y*n-5*exp(-i*bb*d)*...
+    exp(-i*b*d)*y*n+2*yy^2*exp(i*bb*d)*n^2*exp(i*b*d)-2*yy^2*exp(i*bb*d)*=
+n^2*exp(-i*b*d)-yy^2*exp(-i*bb*d)*...
+    n^2*exp(i*b*d)+yy^2*exp(-i*bb*d)*n^2*exp(-i*b*d)+2*exp(i*bb*d)*exp(i*=
+b*d)*y^2*n^2-2*exp(i*bb*d)*exp(-i*b*d)*...
+    y^2*n^2+4*exp(-i*bb*d)*exp(-i*b*d)*y^2*n^2-2*exp(-i*bb*d)*exp(i*b*d)+=
+2*exp(i*bb*d)*exp(i*b*d)-2*exp(i*bb*d)*...
+    exp(-i*b*d)+2*exp(-i*bb*d)*exp(-i*b*d)+8*yy*exp(i*bb*d)*n^2*exp(i*b*d=
+)*y+8*yy*exp(i*bb*d)*n^2*exp(-i*b*d)*y+...
+    5*yy*exp(-i*bb*d)*n^2*exp(i*b*d)*y+7*yy*exp(-i*bb*d)*n^2*exp(-i*b*d)*=
+y+4*yy^2*exp(i*bb*d)*n^3*exp(i*b*d)*y+...
+    4*yy^2*exp(i*bb*d)*n^3*exp(-i*b*d)*y-2*yy^2*exp(-i*bb*d)*n^3*exp(i*b*=
+d)*y-2*yy^2*exp(-i*bb*d)*n^3*...
+    exp(-i*b*d)*y+4*yy*exp(i*bb*d)*n^3*exp(i*b*d)*y^2+yy*exp(-i*bb*d)*n^3=
+*exp(i*b*d)*y^2-4*yy*exp(i*bb*d)*...
+    n^3*exp(-i*b*d)*y^2-5*yy*exp(-i*bb*d)*n^3*exp(-i*b*d)*y^2-n^3*exp(-i*=
+bb*d)*y^3*exp(-i*b*d)+n^3*...
+    exp(-i*bb*d)*y^3*exp(i*b*d)-n^4*yy^2*exp(-i*bb*d)*exp(i*b*d)*y^2+n^4*=
+yy^2*exp(-i*bb*d)*exp(-i*b*d)*...
+    y^2-2*n^4*yy^2*exp(i*bb*d)*exp(-i*b*d)*y^2+2*n^4*yy^2*exp(i*bb*d)*exp=
+(i*b*d)*y^2+n^4*yy*exp(-i*bb*d)*...
+    y^3*exp(-i*b*d)-n^4*yy*exp(-i*bb*d)*y^3*exp(i*b*d)))];
+figure(2);
+for t=3D1:45
+    compass(abs(T1+T2));
+  =20
+    hold on;
+    Ex =3D (T1)*exp(-i*k*d)*exp(i*o*t/(scale));
+    Ey =3D (T2)*exp(-i*k*d)*exp(i*o*t/(scale));
+    compass(real(Ex),real(Ey));  =20
+    M(t) =3D getframe;
+    hold off;
+   =20
+end
+
+ exp(-i*k0*d);
+--------------040509010402040508020002--
+

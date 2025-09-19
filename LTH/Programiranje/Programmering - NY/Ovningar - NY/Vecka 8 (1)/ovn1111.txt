@@ -1,0 +1,17 @@
+
+Uppgift:
+
+Vi vill beskriva punkter i xy-planet med hjälp av en klass Point,punkternas
+kordinater skall vara reella värden.Deklarera klassen så att den får lämpliga 
+attrigut.
+
+Lösning:
+
+Class Point{
+
+ private double x;
+
+ private double y;
+
+
+}

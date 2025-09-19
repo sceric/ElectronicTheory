@@ -1,0 +1,85 @@
+
+%Problem 2
+
+%-------------------------------------------------
+%---------------Vandermond matrix-----------------
+
+function x=vdm(xpoints,degree);
+degree=degree+1;
+E=ones(length(xpoints),degree);
+for k=1:length(xpoints);
+    for j=1:degree;         
+           A(k,j)=dot(E(k,j),xpoints(1,k))^(j-1);
+    end;    
+end;
+A
+
+%-------------------------------------------------
+%---------------------2a--------------------------
+%-------------------------------------------------
+
+x = [1 2 4];      %x är en radvektor
+y = [2.5 4.5 9]'; % y är en kolumvektor så vi måste 
+                  %transformera radvektor till kolumvektor
+
+A=vdm(x, 1);
+
+c = lsq(A, y);
+
+axis([0, 5, 0, 10]);
+
+hold on
+plot(x, y, 'o');
+
+xx = linspace(0, 10); % xx är radvektor
+AA = vdm(xx, 1);
+yy = AA * c;
+plot(xx, yy, 'r');
+
+X1 = 3;
+Avdm = vdm(X1, 1);
+P3 = Avdm * c
+
+hold off
+
+%-------------------------------------------------
+%---------------------2b--------------------------
+%-------------------------------------------------
+
+
+x = [1 2 4];      %x är radvektor
+y = [2.5 4.5 9]'; % y är en kolumvektor så vi måste 
+                  %transvormera radvektor till kolumvektor
+
+A=vdm(x, 2);
+
+c = lsq(A, y);
+
+axis([0, 5, 0, 10]);
+
+hold on
+plot(x, y, 'o');
+
+xx = linspace(0, 10); %xx är radvektor 
+AA = vdm(xx, 2);
+yy = AA * c;
+plot(xx, yy, 'r');
+
+
+X1 = 3;
+Avdm = vdm(X1, 2);
+P3 = Avdm * c
+
+hold off
+
+
+%-------------------------------------------------
+%-om man vill kan man använda funktionen "polyval"
+% och man får samma resultat som ovan.------------
+%-------------------------------------------------
+c=c'
+d=fliplr(c)
+p3=polyval(d,3)
+%--------------------------------------------------
+%--------------------------------------------------
+

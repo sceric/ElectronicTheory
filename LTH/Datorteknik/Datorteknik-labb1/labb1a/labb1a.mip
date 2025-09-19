@@ -1,0 +1,13 @@
+p2.s
+H:\Datorteknik-labb2\p2.s\
+Objects\
+0
+1
+minic
+0
+0
+0
+0
+1
+objcopy.exe -O srec p2.s.out p2.s.srec
+80020000 start

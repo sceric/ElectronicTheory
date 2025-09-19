@@ -1,0 +1,76 @@
+n= 0:1:10;
+a=0.6252;
+b=3.1416;
+g=complex(a,b);
+
+f1=abs(exp(-g*n));
+%f2=angle(exp(-g*n));
+
+figure(3)
+
+subplot(2,2,1)
+plot(n,f1,'r')
+hold on
+%plot(n,f2,'g')
+
+grid
+xlabel('x---->')
+ylabel('Fn (eller v)---->')
+Title('Oändligt periodiskt fall för stoppband')
+legend('g=0.6252+3.1416*i');
+
+
+
+
+a=0;
+b=7.9958;
+g=complex(a,b);
+f1=abs(exp(-g*n));
+%f2=angle(exp(-g*n));
+
+subplot(2,2,2)
+plot(n,f1,'r')
+hold on
+%plot(n,f2,'g')
+
+grid
+xlabel('x---->')
+ylabel('Fn (eller v)---->')
+Title('Oändligt periodiskt fall för passband')
+legend('g=7.9958*i');
+
+
+a=0.3555;
+b=3.1416;
+g=complex(a,b);
+f1=abs(exp(-g*n));
+%f2=angle(exp(-g*n));
+
+subplot(2,2,3)
+plot(n,f1,'r')
+hold on
+%plot(n,f2,'g')
+
+grid
+xlabel('x---->')
+ylabel('Fn (eller v)---->')
+Title('Oändligt periodiskt fall för stoppband')
+legend('g=0.3555+3.1416i');
+
+
+a=0;
+b=7.0084;
+g=complex(a,b);
+f1=abs(exp(-g*n));
+%f2=angle(exp(-g*n));
+
+subplot(2,2,4)
+plot(n,f1,'r')
+hold on
+%plot(n,f2,'g')
+
+grid
+xlabel('Punktmassa n ---->')
+ylabel('Fn (eller v)---->')
+Title('Oändligt periodiskt fall för passband')
+legend('g=7.0084i');

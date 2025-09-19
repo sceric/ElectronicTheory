@@ -1,0 +1,192 @@
+import se.lth.cs.pt.ovn.oware.OwareBoard;
+import se.lth.cs.pt.ovn.oware.Oware;
+//import se.lth.cs.pt.oware.OwareInterface;
+import se.lth.cs.pt.ovn.oware.OwareView;
+import se.lth.cs.pt.random.*;
+import se.lth.cs.pt.io.*;
+import se.lth.cs.pt.random.*;
+public class Kulor1 {
+
+    public static void main(String[] args) {
+        OwareBoard board = new OwareBoard();
+	Oware oware = new Oware(board);
+	OwareView view = new OwareView(oware);
+	AbstractPlayer p1 = new HumanPlayer(1, oware, view);
+	AbstractPlayer p2 = new ComputerPlayer(2,oware);
+	GameController gameC = new GameController(p1, p2, oware, view);
+	gameC.playOneRound();
+	ConsoleWriter w = new ConsoleWriter();
+	
+	w.println("spelet slut");
+
+    }
+}
+class GameController {
+    private AbstractPlayer p1, p2;
+    private Oware theOware;
+    private OwareView theView;
+
+    public GameController(AbstractPlayer p1, AbstractPlayer p2, Oware oware, 
+OwareView view) {
+	this.p1 = p1;
+	this.p2 = p2;
+	this.theOware = oware;
+	this.theView = view;
+    }
+
+    public void playOneRound() {
+	theOware.setupStartPosition(2);
+	p1.move();
+	p2.move();
+	while ((p1.lost()== false) && (p2.lost()== false)) {
+	    p1.move();
+	    p2.move();
+	    //theView.drawPebbles();
+	}
+    }
+}
+abstract class AbstractPlayer {
+    protected int nbr;
+    protected Oware oware;
+    protected int firstSq, lastSq;
+
+    protected AbstractPlayer(int nbr, Oware oware) {
+	this.nbr = nbr;
+	this.oware = oware;
+	
+	if (nbr == 1) {
+	    this.firstSq = 1;
+	    this.lastSq = 6;
+	} else {
+	    this.firstSq = 7;
+	    this.lastSq = 12;
+	}    
+    }
+
+    public boolean lost() {
+	int a = 0;
+	for (int c = firstSq; c <= lastSq; c++) {
+	    if (oware.getNbrOfPebbles(c) == 0) {
+		a++;
+		//} else {
+		//c = lastSq;
+	    }
+	}
+    
+	if ( a == 6) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    public abstract void move();
+}
+
+class HumanPlayer extends AbstractPlayer {
+    private OwareView view;
+
+    public HumanPlayer(int nbr, Oware oware, OwareView view) {
+	super(nbr,oware);
+	this.view = view;
+    }
+    
+    public void move() {
+	view.drawPebbles();
+	int place = 20;
+	while ((place < firstSq) || (place > lastSq)) { 
+	    place = view.clickAndGetSquare();
+	    if ((place >= firstSq) && (place <= lastSq)) {
+		if (oware.getNbrOfPebbles(place) == 0) {
+		    place = 20;
+		}
+	    }
+	}
+	oware.movePebbles(place);
+	view.drawPebbles();
+    }
+}
+
+class ComputerPlayer extends AbstractPlayer { 
+    private RandomNumberGenerator rng = new RandomNumberGenerator();
+    
+    public ComputerPlayer(int nbr, Oware oware) {
+	super(nbr, oware);
+    }
+
+  
+    public void move() {
+	int place = 20;
+	while ((place < firstSq) || (place > lastSq)) {
+	    place = rng.randInt(firstSq, lastSq);
+	    if ((place >= firstSq) && (place <= lastSq)) {
+		if (oware.getNbrOfPebbles(place) == 0) {
+		    place = 20;
+		}
+	    }
+	}
+	oware.movePebbles(place);
+	//view.drawPebbles();
+	
+    }
+}
+
+class Player {
+    private int nbr;
+    private char strat;
+    private Oware theOware;
+    private OwareView theView;
+    private int firstSq, lastSq;
+    private RandomNumberGenerator rng = new RandomNumberGenerator();
+
+    public Player( int nbr, char strat, Oware oware, OwareView view) {
+	this.nbr = nbr;
+	this.strat = strat;
+	this.theOware = oware;
+	this.theView = view;
+	if (nbr == 1) {
+	    this.firstSq = 1;
+	    this.lastSq = 6;
+	} else {
+	    this.firstSq = 7;
+	    this.lastSq = 12;
+	}
+    }
+
+    public boolean lost() {
+	int a = 0;
+	for (int c = firstSq; c <= lastSq; c++) {
+	    if (theOware.getNbrOfPebbles(c) == 0) {
+		a++;
+		//} else {
+		//c = lastSq;
+	    }
+	}
+	if ( a == 6) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    public void move() {
+	int place = 20;
+	while ((place < firstSq) || (place > lastSq)) {
+	    if (strat == 'A') {
+		place = theView.clickAndGetSquare();
+	    } 
+	    if (strat == 'B') {
+		place = rng.randInt(firstSq, lastSq);
+	    }
+	    if ((place >= firstSq) && (place <= lastSq)) {
+		if (theOware.getNbrOfPebbles(place) == 0) {
+		    place = 20;
+		}
+	    }
+	}
+	theOware.movePebbles(place);
+	theView.drawPebbles();
+	
+    }
+}
+

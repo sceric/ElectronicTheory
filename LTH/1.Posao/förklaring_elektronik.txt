@@ -1,0 +1,4 @@
+
+Pull - up resistor:
+
+Ett pullup-motstånd till en input drar egentligen ingen ström alls. Motståndet är bara till för att se till att nivån håller sig stabilt hög, och inte fångar upp diverse brus som orsakar rest av misstag. Ström dras bara då man samtidigt kopplar pinnen till jord (dvs RESETtar). 

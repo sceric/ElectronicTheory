@@ -1,0 +1,37 @@
+P2-4
+
+
+import se.lth.se.window.SimpleWindow.*;
+import se.lth.se.turtle.Turtle.*;
+import se.lth.se.writer.*;
+import se.lth.se.reader.*;
+
+
+  public class P2-4{
+
+    public static void main(String[] args){
+
+      SimpleWindow wi = new SimpleWindow(500,500,"Polygon");
+      Turtle t = new Turtle(wi,300,300);
+      ConsoleReader r= new ConsoleReader();
+      ConsoleWriter w= new ConsoleWriter();
+
+      int  n , side, alfa;
+
+      w.println("Ange antal sidor?");
+      n = r.readInt();
+   
+      w.println("Ange sidans längd:");
+      p= r.readInt();
+   
+      t.penDown();
+
+         for(side=1;sida<=n;side++){
+
+            t.forward(p);
+           t.right( (double)360/n);
+
+         }
+
+      }
+   }

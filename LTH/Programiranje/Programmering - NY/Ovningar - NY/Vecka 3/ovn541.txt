@@ -1,0 +1,5 @@
+
+
+boolean toBe= 0>42 ------------- får värde "false"
+
+boolean question= toBe || !toBe -----(eversätning: toBE eller NOtoBe)---vår värde "true"

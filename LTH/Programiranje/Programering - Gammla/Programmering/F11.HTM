@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://www.cs.lth.se/Education/Courses/PT/E/lect/f11.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>Anteckningar till föreläsning 11</H1>Denna föreläsning skall förbereda 
+övning 8 (och övning 9, som är en fortsättning på övning 8). Vi kommer att 
+diskutera: 
+<UL>
+  <LI>matriser (flerdimensionella vektorer), 
+  <LI>mer om implementation av egna klasser, bland annat hur man strukturerar 
+  programkod med hjälp av klasser </LI></UL>Dessutom kommer vi att ingående 
+diskutera övning 8 och 9, även MVC-modellen (som är ett sätt att strukturera ett 
+program som skall presentera något för användaren).
+<P>
+<H2>Matriser</H2>Tidigare har vi använt vektorer för att lagra flera värden i en 
+variabel, de vektorer vi använde hade ett index. För att hämta det tredje värdet 
+i en heltalsvektor <CODE>v</CODE> skrev vi <CODE>v[2]</CODE>.
+<P>
+<CENTER><IMG src="f11_files/matrix0.gif"></CENTER>
+<P>Ibland vill man använda flera index, antag exempelvis att vi vill lagra en 
+digital bild (vi antar för enkelhets skull att den är svartvit, med ett visst 
+antal nyanser av grått). Vi delar in bilden i punkter (små kvadrater), och låter 
+varje punkt ha värden i en given gråskala:
+<P>
+<CENTER><IMG src="f11_files/pict0.gif"></CENTER>
+<P>Om vi låter <I>0</I> betyda vit och <I>255</I> betyda svart, kan vi uttrycka 
+256 olika nyanser av svart. Bilden kan alltså representeras av <I>höjd*bredd</I> 
+heltal i en <EM>matris</EM>: 
+<CENTER><PRE>    160, 160, 160,   0,   0
+    200,  80,  80,  80,  80
+    200,  80, 160, 255, 160
+    200,  80, 255, 255, 160
+    200,  80,  80,  80,  80
+</PRE></CENTER>Vi deklarerar och skapar matrisen genom att skriva: <PRE>    int width = Keyboard.readInt("Bildens bredd: "),
+        height = Keyboard.readInt("Bildens höjd: ");
+    int[][] pict = new int[height][width];
+</PRE>(Syntaxen är ganska naturlig, när vi deklarerar en endimensionell vektor 
+med heltal skriver vi <CODE>int[]</CODE>, nu skall vi ha en vektor med vektorer, 
+alltså skriver vi <CODE>[]</CODE> efter <CODE>int[]</CODE>, dvs 
+<CODE>int[][]</CODE>. Vi får en hakparentes för varje index.)
+<P>Även flerdimensionella vektorer räknar sina index från 0, så värdet i andra 
+raden, fjärde kolumnen skriver vi <CODE>pict[1][3]</CODE>:
+<P>
+<CENTER><IMG src="f11_files/matrix1.gif"></CENTER>
+<P>Vi behöver inte skapa hela matrisen på en gång och vi kan ha olika många 
+värden i de olika raderna, men det är överkurs. I denna kurs kommer alla 
+matriser att vara rektangulära (och många dessutom kvadratiska, dvs med lika 
+många rader som kolumner).
+<P>För att skriva ut bilden <CODE>pict</CODE> på en skärm med följande 
+klasspecifikation: <PRE>    specification Screen {
+
+        Screen(int width, int height);
+
+        clear();
+
+        setValue(int row, int col, int value);
+    }
+</PRE>kan vi gå igenom hela bilden, rad för rad, kolumn för kolumn: <PRE>    Screen screen = new Screen(width,height);
+    screen.clear();
+    for (int row = 0; row &lt; height; row++) {
+        for (int col = 0; col &lt; width; col++) {
+            screen.setValue(row,col,pict[row][col]);
+    }
+</PRE>
+<H3>Att besöka grannar till en ruta i en matris</H3>Om vi vill jämna ut bilden 
+kan vi ersätta samtliga punkter i bildens inre med medelvärdet av de omgivande 
+punkterna (inklusive det egna värdet), grannarna till rutan med index (1,3) 
+framgår av figuren:
+<P>
+<CENTER><IMG src="f11_files/pict1.gif"></CENTER>
+<P>Följande programrader beräknar medelvärdena kring samtliga punkter i bildens 
+inre: <PRE>    int[][] tmp = new int[height][width];
+    for (int row = 1; row &lt; height-1; row++) {
+        for (int col = 1; col &lt; width-1; col++) {
+            // beräkna summan av värden runt pict[row][col]:
+            int sum = 0;
+            for (int dr = -1; dr &lt;= 1; dr++) {
+                for (int dc = -1; dc &lt;= 1; dc++) {
+                    sum += pict[row+dr][col+dc];
+                }
+            }
+            tmp[row][col] = (int) Math.round((double)sum/8);
+        }
+    }
+    pict = tmp;
+</PRE>Här är det några saker som bör noteras: 
+<UL>
+  <LI>Konstruktionen med fyra nästlade <CODE>for</CODE>-satser är viktig, vi 
+  behöver två <CODE>for</CODE>-satser för att gå igenom varje ruta i matrisen, 
+  och två <CODE>for</CODE>-satser för för varje ruta att gå igenom samtliga 
+  grannar.
+  <P></P>
+  <LI>Lägg särskilt märke till de innersta två <CODE>for</CODE>-satserna, de gör 
+  att vi går i de tre rader och tre kolumner som ligger runt den aktuella rutan 
+  (<CODE>row</CODE>, <CODE>col</CODE>). De hade även kunnat skrivas: <PRE>        // beräkna summan av värden runt pict[row][col]:
+        int sum = 0;
+        for (int r = row-1; r &lt;= row+1; r++) {
+            for (int c = col-1; c &lt;= col+1; c++) {
+                sum += pict[r][c];
+            }
+        }
+        tmp[row][col] = (int) Math.round((double)sum/9);
+</PRE>Vilket skrivsätt man använder är en smaksak.
+  <P></P>
+  <LI>Vi kan inte ändra på matrisen <CODE>pict</CODE> förrän efter att vi räknat 
+  ut medelvärden runt samtliga punkter, annars får vi fel medelvärden (vi måste 
+  alltså undersöka en ögonblicksbild av matrisen). Medelvärdena lagras i en 
+  temporär matris medan undersökningen pågår.
+  <P></P>
+  <LI>Det är lite knepigt att jämna ut punkterna i bildens kant, eftersom de 
+  inte har grannar på alla sidor. Vi har därför i exemplet inte brytt oss om att 
+  ändra punkterna i bildkanten.
+  <P></P>
+  <LI>Tilldelningen på den sista raden innebär bara att matrisvariabeln 
+  <CODE>pict</CODE> sätts att referera till den nya matrisen, dess gamla värde 
+  slängs bort automagiskt (vektorer och matriser är ju en slags objekt).
+  <P></P></LI></UL>Veckans övning innehåller en uppgift som är väldigt besläktad 
+med denna uppgift (vi kommer längre ner i texten att gå igenom ett sätt att göra 
+detta programavsnitt bättre strukturerat).
+<P>
+<H3>Andra användningar av matriser</H3>Vi kan även använda tvådimensionella 
+vektorer för att lagra matematiska matriser, för att lagra en reell 3*3-matris 
+kan vi skriva: <PRE>    double[][] a = new double[3][3];
+</PRE>Att addera två reella 3*3 matriser, <CODE>a</CODE> och <CODE>b</CODE> är 
+enkelt: <PRE>    double[][]
+        a = new double[3][3],
+        b = new double[3][3],
+        c = new double[3][3];
+    // ...
+    // ... rader där a och b får värden ...
+    // ...
+    for (int row = 0; row &lt; 3; row++) {
+        for (int col = 0; col &lt; 3; col++) {
+            c[row][col] = a[row][col] + b[row][col];
+        }
+    }
+</PRE>
+<H4>Kontrolluppgifter</H4>Den första kontrolluppgiften 
+(<CODE>Image</CODE>-klassen) nedan kommer att användas längre ner i texten, läs 
+därför åtminstone igenom uppgiften.
+<P>
+<OL>
+  <LI>Skriv en klass <CODE>Image</CODE> som innehåller en tvådimensionell matris 
+  <CODE>pict</CODE> enligt ovan för att beskriva en svartvit bild.
+  <P>Konstruktorn skall ha följande deklaration: <PRE>    Image(int width, int height);
+      </PRE>Implementera konstruktorn, och operationer för att: 
+  <OL>
+    <LI>radera bilden (sätta alla punkter till 0), 
+    <LI>sätta värdet i en given punkt (<I>row,col</I>) till ett givet värde, 
+    <LI>bestämma värdet av ljusaste punkten (dvs den med minst svärta), 
+    <LI>bestämma värdet av mörkaste punkten (dvs den med mest svärta), 
+    <LI>beräkna den totala svärtan i bilden, och 
+    <LI>jämna ut bilden (dvs ersätta varje bildpunkt med medelvärdet av de 
+    omgivande punkterna). </LI></OL>
+  <P>Bestäm själv hur klasspecifikationen skall se ut (när ovanstående 
+  operationer implementeras).
+  <P>(Längre ner på sidan finns ett förslag till lösning av en del av uppgiften, 
+  försök lösa uppgiften utan att tjuvkika!).
+  <P></P>
+  <LI>Lös samma uppgift, men nu med en färgbild. Varje punkt är ett objekt av 
+  typen <CODE>RGBColor</CODE>, med följande klasspecifikation: <PRE>    specification RGBColor {
+
+        RGBColor(int red, int green, int blue);
+
+        void set(int red, int green, int blue);
+
+        int getRed();
+
+        int getGreen();
+
+        int getBlue();
+    }
+      </PRE>
+  <LI>Skriv programrader för att multiplicera två reella <I>n*n</I>-matriser, 
+  <CODE>a</CODE> och <CODE>b</CODE>. Lagra resultatet i matrisen <CODE>c</CODE>. 
+  </LI></OL>
+<H3>Mångdimensionella matriser (överkurs)</H3>Ibland kan man ha nytta av 
+matriser med mer än två index, antag till exempel att vi vill lagra alla 
+bokstäver i en bok, och delar in boken i 
+<OL>
+  <LI>avsnitt, 
+  <LI>kapitel, 
+  <LI>stycken, och 
+  <LI>rader. </LI></OL>Vi skulle kunna lagra hela boken i en matris med fyra 
+index:
+<P><PRE>    char[][][][] book;
+</PRE>Det blir då väldigt enkelt att plocka fram det tredje tecknet på den 
+fjärde raden i andra stycket i första kapitlet i det fjärde avsnittet, det finns 
+i <CODE>book[3][1][3][2]</CODE>
+<P>Vi kommer dock inte att använda denna typ av matriser i denna kurs. 
+<H2>Mer om implementation av egna klasser</H2>
+<H3>Strukturering av programkod med hjälp av operationer</H3>Under övning 7 
+skulle ni skriva ett program i vilket två sköldpaddor irrar omkring i ett 
+fönster, programmet skulle avbrytas när de båda sköldpaddorna kom närmre än 50 
+punkter ifrån varandra.
+<P>Med den givna klasspecifikationen för <CODE>Turtle</CODE> blev programmet 
+ganska klumpigt, ni fick skriva något i stil med: <PRE>    while ((t1.getX()-t2.getX())*(t1.getX()-t2.getX()) +
+           (t1.getY()-t2.getY())*(t1.getY()-t2.getY()) &gt; 50*50) {
+        t1.left(rng.randInt(0,359));
+        t1.forward(rng.randInt(1,5));
+        t2.left(rng.randInt(0,359));
+        t2.forward(rng.randInt(1,5));
+    }
+</PRE>Programmet går att läsa, men det är otympligt (och då har vi ändå inte 
+testat att båda sköldpaddorna befinner sig innanför fönstret). Betydligt enklare 
+vore något i stil med: <PRE>    while (t1.distanceTo(t2) &gt; 50) {
+        t1.randomStep(1,5);
+        t2.randomStep(1,5);
+    }
+</PRE>Eftersom vi numera själva skriver klassen <CODE>Turtle</CODE> kan vi lägga 
+till de operationer vi vill, exempelvis de operationer som skulle göra 
+programmet ovan möjligt att skriva.
+<P>Att dela upp program i mindre delar, som löser väl avgränsade deluppgifter, 
+är en väldigt viktig programmeringsteknik. I exemplet ovan har vi infört två 
+ytterligare operationer, och därigenom fått ett program som är betydligt enklare 
+att läsa. (Nästa vecka skall vi se hur vi kan utvidga klassen 
+<CODE>Turtle</CODE> utan att påverka samtliga <CODE>Turtle</CODE>-objekt.) 
+<H4>Kontrolluppgift</H4>
+<OL>
+  <LI>Deklarera och implementera de två operationerna <CODE>distanceTo</CODE> 
+  och <CODE>randomStep</CODE> ovan.
+  <P></P>
+  <LI>Vilken ytterligare operation skulle vara användbar om vi dessutom vill 
+  avbryta programmet så snart någon av sköldpaddorna lämnar fönstret? </LI></OL>
+<H3>Uppdelning i 'interna' operationer</H3>Klassen <CODE>Image</CODE> i exemplet 
+ovan kan deklareras ungefär så här: <PRE>    class Image {
+
+        private int width, height;
+        private int[][] pict;
+
+        public Image(int width, int height) {
+            // ...
+        }
+
+        // ...
+
+        public void soften() {
+            // ...
+        }
+    }
+</PRE>Operationen <CODE>soften</CODE> kan då implementeras: <PRE>    public void soften() {
+        int[][] tmp = new int[this.height][this.width];
+        for (int row = 1; row &lt; this.height-1; row++) {
+            for (int col = 1; col &lt; this.width-1; col++) {
+                // beräkna summan av värden runt this.pict[row][col]:
+                int sum = 0;
+                for (int r = row-1; r &lt;= row+1; r++) {
+                    for (int c = col-1; c &lt;= col+1; c++) {
+                        sum += this.pict[r][c];
+                    }
+                }
+                tmp[row][col] = (int) Math.round((double)sum/9);
+            }
+        }
+        this.pict = tmp;
+    }
+</PRE>men enklare vore att bryta ut beräkningen av medelvärdet runt ett givet 
+bildelement: <PRE>    public void soften() {
+        int[][] tmp = new int[this.height][this.width];
+        for (int row = 1; row &lt; this.height-1; row++) {
+            for (int col = 1; col &lt; this.width-1; col++) {
+                // beräkna summan av värden runt this.pict[row][col]:
+                tmp[row][col] = this.averageAround(row,col);
+            }
+        }
+        this.pict = tmp;
+    }
+</PRE>där <CODE>averageAround</CODE> bara beräknar medelvärdet runt en given 
+punkt i bilden.
+<P>Eftersom denna operation bara skall användas av operationer inne i 
+<CODE>Image</CODE>-klassen behöver den inte vara <CODE>public</CODE>, bättre är 
+att dölja den genom att deklarera den <CODE>private</CODE>: <PRE>    private int averageAround(int row, int col) {
+        int sum = 0;
+        for (int r = row-1; r &lt;= row+1; r++) {
+            for (int c = col-1; c &lt;= col+1; c++) {
+                sum += this.pict[r][c];
+            }
+        }
+        return (int)Math.round((double)sum/9);
+    }
+</PRE>Det är mycket möjligt att vi får nytta av denna operation när vi 
+implementerar någon annan operation på klassen <CODE>Image</CODE>, men även om 
+den bara används av operationen <CODE>soften()</CODE> så har den fyllt sitt 
+syfte genom att den gjort programkoden enklare.
+<P>
+<H3>När skall man ha attribut och när skall man ha lokala variabler?</H3>Vi såg 
+förra veckan tre sorters variabler: 
+<UL>
+  <LI>attribut (kallas även tillståndsvariabler), 
+  <LI>lokala variabler, och 
+  <LI>parametrar (som är ett slags lokala variabler, men som får startvärden i 
+  operationsanropet). </LI></UL>Det är viktigt att skilja på de tre, attribut 
+skall bara användas för att beskriva tillståndet hos ett objekt.
+<P>En del vill 'spara' in lokala variabler genom att deklarera dem som attribut 
+istället, dvs istället för att ha de lokala variablerna <CODE>i</CODE> och 
+<CODE>j</CODE> deklarerade i både <CODE>op1()</CODE> och <CODE>op2()</CODE> <PRE>    class A {
+
+        int a, b;
+
+        public void op1() {
+            int i,j;
+            // ...
+        }
+
+        public void op2() {
+            int i,j;
+            // ...
+        }
+    }
+</PRE>så flyttar de ut dem: <PRE>    class A {
+
+        int a, b;
+
+        int i,j;  // Beskriver inte tillståndet, men används i op1() och op2().
+                  // Detta är våldsamt olämpligt!
+
+        public void op1() {
+            // ...
+        }
+
+        public void op2() {
+            // ...
+        }
+    }
+</PRE><EM>Detta är inte bra</EM>, det innebär att alla <CODE>A</CODE>-objekt 
+släpar med sig två onödiga heltal (<CODE>i</CODE> och <CODE>j</CODE>), men vad 
+värre är, det inbjuder till en otrevlig typ av fel (som om inte alla fel är 
+otrevliga!) - se andra uppgiften nedan. Vi kommer att gå igenom uppgiften under 
+föreläsningen.
+<P>Alltså: <EM>använd bara attribut till att beskriva tillståndet hos ett 
+objekt.</EM> 
+<H4>Kontrolluppgifter</H4>Nedanstående två problem är viktiga, vi kommer att 
+behandla dem under föreläsningen. 
+<OL>
+  <LI>Vilket allvarligt fel finns det i följande förslag till konstruktor för 
+  klassen <CODE>Image</CODE>: <PRE>    public Image(int width, int height) {
+        this.width = width;
+        this.height = height;
+        int[][] pict = new int[height][width];
+    }
+      </PRE>Ledtråd: första gången någon anropar exempelvis 
+  <CODE>setValue</CODE> kommer vi att få exekveringsfel 
+  (<CODE>null</CODE>-referensfel).
+  <P></P>
+  <LI>Om vi vill spara in lokala variabler i operationerna <CODE>soften()</CODE> 
+  och <CODE>averageAround()</CODE>, och skriver: <PRE>    class Image {
+
+        private int[][] pict;
+        private int width, height;
+        private int r, c;
+          
+        public void soften() {
+            int[][] tmp = new int[this.height][this.width];
+            for (r = 1; r &lt; this.height-1; r++) {
+                for (c = 1; c &lt; this.width-1; c++) {
+                    // beräkna summan av värden runt this.pict[r][c]:
+                    tmp[r][c] = (int) Math.round(this.averageAround(r,c));
+                }
+            }
+            this.pict = tmp;
+        }
+
+        private double averageAround(int row, int col) {
+            int sum = 0;
+            for (r = row-1; r &lt;= row+1; r++) {
+                for (int c = col-1; c &lt;= col+1; c++) {
+                    sum += this.pict[r][c];
+                }
+            }
+            return (double) sum/9;
+        }
+    }
+      </PRE>
+  <UL>
+    <LI>Vilket problem får vi? 
+    <LI>Hur löser vi problemet? </LI></UL></LI></OL></BODY></HTML>

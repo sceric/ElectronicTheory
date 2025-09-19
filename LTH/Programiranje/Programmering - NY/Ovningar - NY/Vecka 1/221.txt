@@ -1,0 +1,11 @@
+
+1.Antal bilar som passerat Öresundsbrun under en dag ------- int
+
+2.Den genomsnittliga antal bilar som passerat 
+  Öresundsbrun varje dag under en vecka ---- double
+
+3.Priset på en vara i ne butik ------ double
+
+4.Det antal varor en kun har köpt ----- int
+
+5.Det belopp en kun skall betala-------int

@@ -1,0 +1,156 @@
+
+ALT1:
+
+class Turtle{
+
+        private int x;
+        private int y;
+        private int angle;
+        private SimpleWindow w;
+        private boolean penDown;            
+
+        Turtle(SimpleWindow w, int x, int y){
+
+             this.w = w;
+             this.x = x;
+             this.y = y;
+
+             this.penUp();
+             this.turnNorth();
+             
+
+
+
+       public void penDown(){
+
+              this.penDown = tru;
+       }
+
+           public void penUp(){
+
+              this.penDown = false;
+       }
+
+       public void getX(){
+
+              return this.x;
+       }
+
+       public void getY(){
+
+              return this.y;
+       }
+
+
+       public void left(int beta){
+  
+               angle= angle+beta;
+       }
+
+       public void right(int beta){
+
+               angle= angle-beta
+
+       }
+
+       public void jumTo(int x, int y){
+
+            this.x = x;
+            this.y = y;
+       }
+
+       public void Forward(int nbrOfSteps){
+        
+       (double) this.x = this.x + nbrOfSteps*Math.cos(angle);
+       (double) this.y = this.y + nbrOfSteps*Math.sin(angle); 
+                this.x = Math.round(this.x)
+                this.y = Math.round(this.y)
+        this.w.moveTo(this.x, this.y)
+       
+              if(this.penDown()){
+
+                this.w.moveLine(this.x, this.y)
+
+              }
+
+        }
+              
+
+               
+
+ALT2:
+
+class Turtle{
+
+        private int x;               //atributer
+        private int y;
+        private int angle;
+        private SimpleWindow w;
+        private boolean penDown;            
+
+        Turtle(SimpleWindow w, int x, int y){
+
+             this.w = w;
+             this.x = x;
+             this.y = y;
+
+             this.penUp();
+             this.turnNorth();
+             
+
+
+
+       public void penDown(){
+
+              this.penDown = tru;
+       }
+
+           public void penUp(){
+
+              this.penDown = false;
+       }
+
+       
+       public void left(int beta){          //beta är lokal atribut här
+  
+               angle= angle+beta;
+       }
+
+       public void right(int beta){
+
+               angle= angle-beta
+
+       }
+
+       public void Forward(int nbrOfSteps){
+        
+        this.x = this.x + nbrOfSteps*(int)Math.cos(angle);
+        this.y = this.y + nbrOfSteps*(int)Math.sin(angle); 
+        this.w.moveTo(this.getX(), this.getY());
+       
+              if(this.penDown()){
+
+                this.w.moveLine(this.getX(), this.getY())
+
+              }
+
+
+
+        public void getX(){
+
+              return (int)Math.round(this.x);
+       }
+
+       public void getY(){
+
+              return (int)Math.round(this.y);
+
+        }
+            
+       public void jumTo(int x, int y){
+
+            this.x = x;
+            this.y = y; 
+
+        }
+  }      

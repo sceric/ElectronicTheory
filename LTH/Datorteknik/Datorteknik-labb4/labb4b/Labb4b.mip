@@ -1,0 +1,13 @@
+Labb4b
+H:\Datorteknik-Labb4\Labb4b\
+Objects\
+0
+1
+minic
+0
+0
+0
+0
+1
+objcopy.exe -O srec Labb4b.out Labb4b.srec
+80020000 start

@@ -1,0 +1,7 @@
+
+
+
+
+function x=lsq(A,y
+ x=A\y;
+

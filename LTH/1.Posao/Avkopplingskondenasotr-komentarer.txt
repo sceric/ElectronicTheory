@@ -1,0 +1,16 @@
+
+Finns det några tumregeler vad det gäller att välja rätt kapacitans hos avkopplingskondensatorer? Vet att 100 nF är vanligt att ha precis intill digitala krestar "internt" på kretskortet. Håller på med ett kort där spänningsmatningen sker via en lång kabel och skulle då vilja ha en större konding precis vid anslutningen av kabeln. Hur ska jag tänka här ? Vet strömmen som kortet drar och spänningen över.
+
+Det säjs att varje kretskort skall ha en elektrolyt på minst 100uF någonstans på kortet. Drar komponenterna på kortet mycket ström så är det de vanliga 1000uF per ampere (2000uf / ampere vid känsligare kretsar - förförstärkare och dyligt). Vid större strömmar (över några 100mA) så måste du även fundera på arean på de långa kablarna så att det inte blir så stora spänningsfall. Eftersom halva spänningsfallet vanligtvis blir i minusledaren (gnd) så kommer ev logiksignaler i andra ledare i kabeln att få problem.
+
+
+Om det är snabba digitala kretsar och en bra layout så skall faktorn mellan avkopplingskondensatorena vara 1:100 och inte 1:10 då kan man nämligen drabbas av nya kul problem istället. För snabba kopplingar typ 600MHz DSP osv så kör jag 1u/10n, för vanliga 1-20MHz konstruktioner så funkar en drös 100n utmärkt med ett par hundra uF som tank någonstans (endast av låg ESR typ såklart).
+
+
+Glöm inte heller att ferriter kan göra underverk på matningar (givetvis också på signaler i många fall). Till strömmatning kan man också använda sig av induktor/kondensator och sen liten kondensator vid kretsen. Det finns oändligt många fall och man måste oftast analysera vad man gör innan man kan ge bra svar. Elytar är induktiva vid höga frekvenser och har man otur kan man skapa sig en resonanskrets med bara kondensatorer... Till saker som drar lite ström kan även resistorer vara bra för avstörning då en RC-krets alltid kommer att dämpa resonaner. 
+
+Så till en krets man matar med 12V kan en bra koppling vara - ferrit på 12V ingången, 100nF direkt efter ferriten, resistor till spänningsreulatorn och 100nF-1uF keramiska på både in och ut ifrån spänningsreguatorn, E-lyt på 5V(eller 3,3...) sidan och små 100nF intill uC. Kan verka lite överkurs, men det kan verkligen behövas.... Switchar man MOSFETAR någon annan stanns i kretsen så kan dessa ge lite roliga ringningar som gärna fortplantar sig till 5VDC sidan... Givetvis bör man snubbla switcharna, men det dödar inte allt utan kortar oftast bara varaktigheten på ringningarna. 
+
+Glöm inte heller vikten av bra jordplan och genomtänkt layout.
+_________________
+

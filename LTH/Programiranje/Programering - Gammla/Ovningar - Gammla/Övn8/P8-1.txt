@@ -1,0 +1,80 @@
+
+
+class Board implements LifeBoard{
+
+          private int n;
+          private boolean [][] sq;
+
+          
+          public Board(int n){
+          
+          this.n = n;
+          this.sg = new boolean[n][n];
+
+          }
+
+
+         public void getSize(){
+
+         return this.n;
+  
+         }
+
+         public boolean validPos(int row, int col){
+
+          if(row<n && col<n && row>=0 && col>=0){
+
+            return tru;
+
+          }else{
+               reutrn false;
+          }
+
+
+        public boolean getValue(int row, int col){
+
+          if(this.validPos(row,col){                          //tru---i rutnät--
+
+            return tru;
+          
+          }else{                                              //false---utanför rutnät--
+
+            return false;
+
+          }
+
+        public void setValue(int row, int col, boolean value){
+
+          if(this.validPos(row,col){
+   
+            this.sq[row][col]=value;
+ 
+        }
+  
+       public void flip (int row, int col){       //skiftar värde tru/false i ruta row och 
+						  //col
+        if(this,validPos(row,col){
+
+           if(this.sq[row][col]){
+
+             this.sq[row][col]=false;
+
+           }else{
+ 
+                this.sq[row][col]=tru;
+
+           }
+ 
+        }
+
+      }
+
+ }
+
+            
+  
+
+
+
+comentar://detta kolar värde ej row eller col i rutnät
+         //if(this.sg[row-1][col]<0 && this.sg[row][col-1]<0)         

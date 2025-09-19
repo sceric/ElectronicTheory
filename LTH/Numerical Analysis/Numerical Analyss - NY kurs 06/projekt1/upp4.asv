@@ -1,0 +1,56 @@
+
+%Problem 4
+
+%---------------------------------------------
+%---------------------------------------------
+%---------------------------------------------
+%--------------BMI - linjär skala-------------
+
+hogt=[0.912 0.986 1.060 1.130 1.190 1.260 1.320 1.380 1.410 1.490];
+vikt=[13.7 15.9 18.5 21.3 23.5 27.2 32.7 36.0 38.6 43.7]';
+logX=log(hogt);
+logY=log(vikt);
+
+
+%bilda matrisen
+A=vdm(logX,1); %bildar Vandermond matris
+c=lsq(A,logY);  
+plot(hogt,vikt,'o') %plotta punkterna
+hold on
+x=linspace(0,2,20);
+
+b=c(2)   % berekna beta koefficient
+a=exp(c(1));
+
+
+y=a*(x.^b); %skapa funktion
+%plot(x,y,'r')
+
+
+%---------------------------------------------
+%---------------------------------------------
+%---------------------------------------------
+%--------------BMI - log-log skala-------------
+
+A=vdm(logX,1);
+
+
+f=lsq(A,logY);
+
+
+loglog(xpoints,vikt,'b*') %plotta punkterna
+grid on
+
+hold on
+x=linspace(0,3.5,36);
+
+b=f(2)
+a=exp(f(1));
+
+%Skapa funktionen med de ovan framtagna koefficienterna
+y=a*(x.^b);
+%Plotta funktionen
+loglog(x,y,'r')
+xlabel('height');
+ylabel('weight');
+title('BMI - logaritmisk skala');

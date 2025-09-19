@@ -1,0 +1,493 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0056)http://www.cs.lth.se/Education/Courses/PT/E/lect/f2.html -->
+<HTML><HEAD><TITLE>Föreläsningsanteckningar i Programmeringsteknik</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H1>1. Introduktion till programmering</H1>
+<H2>En kort genomgång av några viktiga begrepp</H2>Under denna första 
+föreläsning kommer vi att behandla några grundläggande begrepp, såsom 
+<UL>
+  <LI>hur man lagrar värden i datorns minne 
+  <LI>hur man gör enkla beräkningar 
+  <LI>hur man läser in värden från användaren 
+  <LI>hur man skriver ut värden 
+  <LI>hur man får ett körbart program </LI></UL>Tanken är att ni efter att ha 
+arbetat med detta avsnitt skall kunna skriva enkla program själva, för att få en 
+känsla för principen med källkod och kompilering.
+<P>Det är inte säkert att vi hinner gå igenom allt under tisdagen, resten tar vi 
+på måndag nästa vecka (då vi även kommer att diskutera objekt och referenser).
+<P>Under slutet av denna vecka kommer anteckningar till nästa veckas 
+måndagsföreläsning att läggas ut.
+<P>
+<H3>Variabler och enkla typer</H3>I datorns minne kan vi lagra värden, 
+exempelvis 
+<UL>
+  <LI>antal personer i ett register, antal sidor i en polygon etc (båda dessa 
+  värden är heltal) 
+  <LI>en persons längd, mätt i meter, arean av en cirkel etc (dessa värden är 
+  reella tal) 
+  <LI>enstaka bokstäver eller siffror (exempelvis 'a' eller '4') </LI></UL>För att 
+lagra värden använder vi så kallade <EM>variabler</EM>. Varje variabel har en 
+given <EM>typ</EM> (exempelvis heltal, reellt tal eller tecken) och den 
+innehåller ett värde.
+<P>Variabler får ha namn som börjar på en bokstav och följs av bokstäver eller 
+siffror. Exempel på tillåtna variabelnamn är <CODE>a</CODE>, <CODE>area</CODE>, 
+<CODE>distance</CODE>, <CODE>side1</CODE>. <EM>Det är viktigt att variablerna 
+har namn som förklarar vad de innehåller</EM>, om vi vill lagra basen och höjden 
+i en triangel bör variablerna heta något i stil med <CODE>base</CODE> och 
+<CODE>height</CODE> hellre än <CODE>a</CODE> och <CODE>b</CODE> (man använder i 
+regel engelska variabelnamn). I Java skiljer man mellan små och stora bokstäver, 
+så <CODE>nbrOfSides</CODE> och <CODE>nbrofsides</CODE> är inte samma variabel.
+<P>Alla variabler måste <EM>deklareras</EM> innan de används. Vid deklarationen 
+talar man om vad variabeln heter och vilken typ den har.
+<P>De <EM>primitiva</EM> typer vi kommer att använda oss av mest i början av 
+kursen är: 
+<UL>
+  <LI>heltal, kallas i Java för <CODE>int</CODE> (efter engelskans 
+  <EM><B>int</B>eger</EM>), 
+  <LI>reella tal, kallas i Java för <CODE>double</CODE> (efter engelskans 
+  <EM><B>double</B> precision floating point number</EM>) 
+  <LI>tecken, kallas i Java för <CODE>char</CODE> (efter engelskans 
+  <EM><B>char</B>acter</EM>) </LI></UL>Man skiljer i Java (liksom i de flesta 
+andra programspråk) mellan heltal och reella tal, heltal är exakta medan reella 
+tal alltid är avrundade. Mer om detta senare.
+<P>Vi kan deklarera två heltalsvariabler, <CODE>a</CODE> och <CODE>b</CODE>, 
+genom att skriva <PRE>    int a;
+    int b;
+</PRE>eller, enklare <PRE>    int a,b;
+</PRE>Först skriver vi alltså vilken typ vi vill ha, sedan våra variabelnamn 
+(avgränsade med kommateckan), och så avslutar vi deklarationen med ett 
+semikolon.
+<P>Deklarationen ovan ger två namngivna platser i minnet, som i följande figur: 
+<P>
+<CENTER><IMG src="f2_files/abInt.gif"></CENTER>
+<P>Variablerna har från början inget värde, man säger att de är 'oinitierade'.
+<P>Vi kan i ett program ha i princip hur många variabler som helst, när vi i ett 
+program gör deklarationerna <PRE>    int nbrOfSides;
+    double base, height, area;
+    char answer;
+</PRE>kommer vi att få följande variabellista i datorns minne: 
+<P>
+<CENTER><IMG src="f2_files/severalVars.gif"></CENTER>
+<P>Ingen av dessa variabler får något startvärde (att boxarna är olika stora 
+beror på att det krävs mer minne att lagra ett <CODE>double</CODE>-värde än ett 
+<CODE>int</CODE>-värde, som i sin tur kräver mer minne än ett 
+<CODE>char</CODE>-värde). 
+<H3>Tilldelningssatsen</H3>För att lagra värden i våra variabler använder vi 
+<EM>tilldelningssatser</EM>. I en tilldelningssats skriver vi <PRE>    'variabel' = 'uttryck';
+</PRE>där '<CODE>variabel</CODE>' är den variabel vi vill lagra ett värde i, och 
+'<CODE>uttryck</CODE>' kan vara ett vanligt matematiskt uttryck (med samma 
+prioritetsregler som vi är vana vid). Vi avslutar tilldelningssatsen med ett 
+semikolon (precis som vi avslutade deklarationerna med ett semikolon).
+<P>Om vi vill lagra värdet 3 i heltalsvariabeln <CODE>nbrOfSides</CODE> skriver 
+vi: <PRE>    nbrOfSides = 3;
+</PRE>vilket ger följande minnesinnehåll: 
+<P>
+<CENTER><IMG src="f2_files/nbrOfSidesIs3.gif"></CENTER>
+<P>Om vi vill låta <CODE>base</CODE> få värdet 4, <CODE>height</CODE> värdet 3.5 
+och <CODE>area</CODE> värdet av arean av en triangel med basen <CODE>base</CODE> 
+och höjden <CODE>height</CODE> skriver vi: <PRE>    base = 4;
+    height = 3.5;
+    area = base*height/2;
+</PRE>och minnesinnehållet blir: 
+<P>
+<CENTER><IMG src="f2_files/severalVars3.gif"></CENTER>
+<P>Det är även möjligt att använda samma variabel på båda sidor av 
+tilldelningstecknet, om vi vill öka värdet på <CODE>nbrOfSides</CODE> med 1 kan 
+vi skriva <PRE>    nbrOfSides = nbrOfSides + 1;
+</PRE>dvs vi beräknar uttrycket <CODE>nbrOfSides</CODE> + 1 (då används det 
+gamla värde som låg i variabeln <CODE>nbrOfSides</CODE>), därefter lagrar vi 
+summan i variabeln <CODE>nbrOfSides</CODE>. Minnet får alltså följande utseende: 
+
+<P>
+<CENTER><IMG src="f2_files/severalVars5.gif"></CENTER>
+<P>
+<H3>Inläsning av värden från tangentbordet</H3>Det finns faktiskt inget riktigt 
+enkelt sätt att läsa värden från tangentbordet i standard Java, men i denna kurs 
+kommer vi att använda ett specialskrivet inläsningspaket för att förenkla för er 
+(paketet heter <CODE>se.lth.cs.pt.io.Keyboard</CODE>, mer om detta i avsnittet 
+om hur man sätter ihop sitt program, nedan).
+<P>Med hjälp av kurspaketet har vi två sätt att läsa in varje typ av primitivt 
+värde, ett med <EM>ledtext</EM>, och ett utan. En ledtext är en text som skrivs 
+ut på skärmen och talar om för användaren vad hon skall mata in.
+<P>För inläsning av heltal har vi: 
+<UL>
+  <LI><CODE>Keyboard.readInt("Ledtext: ")</CODE>, och 
+  <LI><CODE>Keyboard.readInt()</CODE> </LI></UL>och för de andra typerna ovan, 
+<CODE>double</CODE> och <CODE>char</CODE>, har vi motsvarande operationer.
+<P>Om vi vill läsa in basen och höjden i en triangel kan vi skriva (vi antar att 
+vi har deklarerat de reella variablerna <CODE>base</CODE> och 
+<CODE>height</CODE> som ovan): <PRE>    base = Keyboard.readDouble("Ange triangelns bas: ");
+    height = Keyboard.readDouble("Ange triangelns höjd: ");
+</PRE>När vi kör dessa rader kommer användaren att få upp följande text på i 
+terminalfönstret (det fetstilta är de värden användaren matar in): <PRE>    Ange triangelns bas: <B>4</B>
+    Ange triangelns höjd: <B>3.5</B>
+</PRE>I exemplet kommer minnet att få följande utseende: 
+<P>
+<CENTER><IMG src="f2_files/severalVars4.gif"></CENTER>
+<P>
+<H3>Att göra utskrifter</H3>I motsats till fallet med inläsning finns det i 
+standard Java ett enkelt sätt att skriva ut i terminalfönstret. Man kan skriva 
+<UL>
+  <LI><CODE>System.out.print("text att skriva ut");</CODE>, eller 
+  <LI><CODE>System.out.println("text att skriva ut");</CODE> </LI></UL>Skillnaden 
+mellan de båda är att man i det andra fallet bryter till en ny rad efter 
+utskriften, <CODE>ln</CODE> i <CODE>println</CODE> kan alltså tolkas "print 
+line".
+<P>Här är ett exempel: <PRE>    System.out.print("Första utskriften.");
+    System.out.print("Andra utskriften.");
+</PRE>ger utskriften <PRE>    Första utskriften.Andra utskriften.
+</PRE>medan <PRE>    System.out.println("Första utskriften.");
+    System.out.println("Andra utskriften.");
+</PRE>ger <PRE>    Första utskriften.
+    Andra utskriften.
+</PRE>Om vi vill skriva ut värdet på variabeln <CODE>area</CODE> kan vi göra det 
+genom att skriva <PRE>    System.out.println(area);
+</PRE>eller, med förklarande text: <PRE>    System.out.println("Arean är " + area);
+</PRE>Det andra exemplet kan även skrivas <PRE>    System.out.print("Arean är ");
+    System.out.println(area);
+</PRE>Vi kommer senare i kursen att se mer på hur man skriver ut på detta vis, 
+vi kommer även (snart) att se ett alternativt sätt att skriva ut, med vars hjälp 
+vi kan formattera utskrifterna bättre. 
+<H3>Att göra programkoden till ett fungerande program</H3>Vi vet nu tillräckligt 
+mycket för att skriva ett program som läser in basen och höjden i en triangel, 
+och sedan skriver ut triangelns area.
+<P>De programrader vi behöver är <PRE>    double base, height, area;
+    base = Keyboard.readDouble("Ange triangelns bas: ");
+    height = Keyboard.readDouble("Ange triangelns höjd: ");
+    area = base*height/2;
+    System.out.println("Triangelns area är " + area);
+</PRE>men för att få ett körbart program måste vi packa in raderna i den form 
+alla Java-program skall ha.
+<P>Innan kursen är slut kommer ni att förstå (hoppas jag!) precis vad den 
+allmäna formen egentligen betyder, men till dess får ni helt enkelt lära er den 
+som ett 'mantra': <PRE>    import <I>...eventuella hjälppaket...</I>;
+
+    public class <I>...programnamn...</I> {
+    
+        public static void main(String[] args) {
+            <I>...de egentliga programraderna...</I>
+        }
+    }
+</PRE>där det är tre saker som ni skall fylla i: 
+<UL>
+  <LI>Import av eventuella hjälppaket, om ni skall läsa från tangentbordet med 
+  hjälp av <CODE>Keyboard</CODE>-funktionerna måste ni importera paketet 
+  <CODE>se.lth.cs.pt.io.Keyboard</CODE>. Namnet ser avskräckande ut, men är 
+  egentligen logiskt, paketet är skrivet på institutionen 
+  (<CODE>cs.lth.se</CODE>) och det tillhör programmeringsteknik-kursen 
+  (<CODE>pt</CODE>). Paketnamnet skrivs baklänges, alltså 
+  <CODE>se.lth.cs</CODE>, och därefter <CODE>pt.Keyboard</CODE>.
+  <P></P>
+  <LI>Programnamnet, som bör vara ett namn som beskriver programmets uppgift. 
+  <EM>Programnamnet måste vara samma som namnet på källkodsfilen</EM> (den fil 
+  som innehåller programtexten). Enligt gängse konventioner skall programnamnet 
+  skrivas med stor begynnelsebokstav.
+  <P></P>
+  <LI>De egentliga programraderna infogas sedan efter <CODE>public static void 
+  main(String[] args)</CODE>-deklarationen. </LI></UL>I vårt exempel får vi <PRE>    import se.lth.cs.pt.io.Keyboard;
+    
+    public class Area {
+    
+        public static void main(String[] args) {
+            double base, height, area;
+            base = Keyboard.readDouble("Ange triangelns bas: ");
+            height = Keyboard.readDouble("Ange triangelns höjd: ");
+            area = base*height/2;
+            System.out.println("Triangelns area är " + area);
+        }
+    }
+</PRE>Denna text skall sparas i en vanlig textfil med namnet 
+<CODE>Area.java</CODE> (filen <EM>måste</EM> alltså heta så).
+<P>För att nu datorn skall förstå programmet skall det <EM>kompileras</EM> till 
+ett för datorn begripligt format. Det gör vi genom att i terminalfönstret skriva 
+<PRE>    javac Area.java
+</PRE>där <CODE>javc</CODE> betyder <EM><B>java</B> <B>c</B>ompiler</EM>.
+<P>Om programmet är korrekt så skapar kompilatorn en ny fil som heter 
+<CODE>Area.class</CODE>. Det är denna fil vi sedan kan köra.
+<P>
+<P>
+<CENTER><IMG src="f2_files/javaToClass.gif" width=400></CENTER>
+<P>Vi kör programmet genom att skriva <PRE>    java Area
+</PRE>Observera att det inte går att skriva <CODE>java Area.class</CODE>, trots 
+att det är filen <CODE>Area.class</CODE> som körs (man anger alltså 
+filnamnstillägg (.java) när man kompilerar, men inte när man kör programmet).
+<P>När vi kör programmet får vi följande dialog (det fetstilta är det användaren 
+matar in): <PRE>    Ange triangelns bas: <B>4</B>
+    Ange triangelns höjd: <B>3.5</B>
+    Triangelns area är 7.0
+</PRE>
+<H4>Kontrolluppgifter</H4>Nu har vi kommit så långt att ni, förhoppningsvis, kan 
+lösa några testuppgifter. 
+<OL>
+  <LI>Vilken slags variabler skulle du använda för att lagra följande värden: 
+  <OL>
+    <LI>det antal bilar som passerat Öresundsbron under en dag 
+    <LI>genomsnittligt antal bilar som passerar Öresundsbron varje dag under en 
+    vecka 
+    <LI>första bokstaven i för- och efternamnen på en person 
+    <LI>priset på en vara i en butik 
+    <LI>det antal varor en kund har köpt 
+    <LI>det belopp en kund skall betala </LI></OL>
+  <P></P>
+  <LI>Rita en figur över variablerna i nedanstående programavsnitt, fyll även i 
+  hur deras värden ändras under exekveringen om vi på rad 3 läser in värdet 
+  <CODE>5</CODE>.
+  <P><PRE>    int a,b,c,d;
+    a = 1;
+    b = Keyboard.readInt("Ange värde på b: ");
+    c = 1 + 2*b;
+    d = (b+c)*(a+1);
+    System.out.println("Värdet på d blir " + d);
+</PRE>Vad kommer att skrivas ut?
+  <P></P>
+  <LI>Skriv ett fullständigt program för att skriva ut texten <CODE>Hello, 
+  world!</CODE> på skärmen.
+  <P>Vilket namn ger du källkodsfilen, och hur gör man för att få ett körbart 
+  program och köra programmet?
+  <P></P>
+  <LI>Skriv programrader som beräknar volymen av en box med bredd, höjd och djup 
+  (heltal) som läses in från tangentbordet. </LI></OL>
+<H2>Att styra exekveringen</H2>I de exempel vi sett ovan körs satserna en efter 
+en, från den första till den sista. Det är inte ofta program blir så enkla. 
+<H3>Alternativ</H3>Ibland måste programmet välja vad som skall göras beroende på 
+något villkor. Antag till exempel att vi skall läsa ett tal och avgöra om det är 
+större än 10, eller bestämma vilket av två inlästa tal som är störst. I Java 
+använder man <CODE>if</CODE>-satsen för att göra olika saker beroende på ett 
+villkor.
+<P>Vi har två olika slags <CODE>if</CODE>-satser: 
+<UL>
+  <LI>I den ena varianten gör vi något bara då ett villkor är uppfyllt: <PRE>    if (a &gt; 10) {
+        System.out.println("a är större än 10");
+    }
+      </PRE>Om <CODE>a</CODE> är större än 10 skrivs texten ut, annars händer 
+  ingenting.
+  <P></P>
+  <LI>I det andra fallet gör vi något även då villkoret inte är uppfyllt: <PRE>    if (a &gt; 10) {
+        System.out.println("a är större än 10");
+    } else {
+        System.out.println("a är inte större än 10");
+    }
+      </PRE>I detta fall skrivs, precis som ovan, texten <CODE>a är större än 
+  10</CODE> ut om <CODE>a</CODE> är större än 10, men nu skrivs även en text ut 
+  ifall <CODE>a</CODE> inte är större än 10. </LI></UL>De allmäna formerna är <PRE>    if (<I>villkor</I>) {
+        <I>...satser som utförs om villkoret är uppfyllt...</I>
+    }
+</PRE>respektive <PRE>    if (<I>villkor</I>) {
+        <I>...satser som utförs om villkoret är uppfyllt...</I>
+    } else {
+        <I>...satser som utförs om villkoret inte är uppfyllt...</I>
+    }
+</PRE>Lägg märke till klamrarna, <CODE>{</CODE> och <CODE>}</CODE>, de används 
+för att avgränsa de satser som skall utföras i respektive fall. Klamrarna behövs 
+egentligen inte om bara en sats skall utföras, men enligt Javas 'kodstandard' 
+bör man sätta ut klamrarna även då. I kursen kommer vi att följa denna 
+konvention och tvinga er att alltid sätta ut klamrarna! Genom att alltid skriva 
+ut klamrarna slipper man många onödiga fel och många timmars onödig felsökning.
+<P>För att programmen skall bli lättare att läsa skall de satser som står 
+innanför klamrarna dras in fyra mellanslag (som ovan), även detta anges i Javas 
+kodstandard och vi kommer att begära att ni gör det. Lyckligtvis kan man få 
+emacs (den texteditor ni använder) att automatiskt dra in raderna på rätt sätt.
+<P>Ingen människa blir lycklig av att läsa <CODE>if</CODE>-satsen ovan som: <PRE>      if (a &gt; 10)System.out.println("a är större än 10"); else{
+    System.out.println("a är inte större än 10");}
+</PRE>även om kompilatorn accepterar den.
+<P>Villkoren kan se ut på olika sätt, till en början kommer vi att använda 
+följande: 
+<UL>
+  <LI>test av likhet: vi kan se om två heltal eller tecken, <CODE>a</CODE> och 
+  <CODE>b</CODE>, är lika med hjälp av villkoret <CODE>a == b</CODE> (observera 
+  att vi har två likhetstecken, ett likhetstecken används vid tilldelning).
+  <P>Denna jämförelse är meningslös för reella tal eftersom de är avrundade och 
+  vi därför med stor sannolikhet får problem med avrundningsfel.
+  <P></P>
+  <LI>test av olikhet: <CODE>a != b</CODE>
+  <P>(även denna jämförelse är meningslös för reella tal)
+  <P></P>
+  <LI>test om ett värde är mindre än ett annat: <CODE>a &lt; b</CODE>
+  <P></P>
+  <LI>test om ett värde är mindre än eller lika med ett annat: <CODE>a &lt;= 
+  b</CODE>
+  <P></P>
+  <LI>test om ett värde är större än ett annat: <CODE>a &gt; b</CODE>
+  <P></P>
+  <LI>test om ett värde är större än eller lika med ett annat: <CODE>a &gt;= 
+  b</CODE> </LI></UL>Satserna innanför klamrarna kan vara vilka satser som helst, 
+exempelvis nya <CODE>if</CODE>-satser. Det är alltså tillåtet att skriva: <PRE>    if (a &gt; b) {
+        if (c &gt; d) {
+            <I>...hit kommer vi bara om både a &gt; b och c &gt; d...</I>
+        }
+    }
+</PRE>Dessutom är det vanligt att man efter <CODE>else</CODE> vill testa ett 
+nytt villkor, enligt rekommendationen att sätta ut klamrar borde man då 
+egentligen skriva <PRE>    if (a &gt; b) {
+        ...
+    } else {
+        if (c &gt; d) {
+            <I>...hit kommer vi bara om c &gt; d och dessutom inte a &gt; b...</I>
+        } else {
+            <I>...hit kommer vi om varken a &gt; b eller c &gt; d...</I>
+        }
+    }
+</PRE>men man skriver istället hellre (och det är OK enligt kodkonventionen!): <PRE>    if (a &gt; b) {
+        ...
+    } else if (c &gt; d) {
+        <I>...hit kommer vi bara om c &gt; d och dessutom inte a &gt; b...</I>
+    } else {
+        <I>...hit kommer vi om varken a &gt; b eller c &gt; d...</I>
+    }
+</PRE>Vi kan använda denna konstruktion exempelvis för att avgöra om ett tal är 
+positivt, negativt eller noll: <PRE>    int a;
+    a = Keyboard.readInt("a: ");
+    if (a &gt; 0) {
+        System.out.println("a är positivt");
+    } else if (a &lt; 0) {
+        System.out.println("a är negativt");
+    } else {
+        System.out.println("a har värdet noll");
+    }
+</PRE>I det sista fallet är <CODE>a</CODE> varken större än eller mindre än 
+noll, det måste därför vara noll. Se även den sista kontrolluppgiften nedan.
+<P>
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Skriv programrader för att läsa in en heltalsvariabel <CODE>value</CODE>, 
+  och sedan sätta den till 1 om det inmatade värdet var negativt.
+  <P></P>
+  <LI>Skriv ett programavsnitt som läser in två heltal, och skriver ut det 
+  största värdet.
+  <P></P>
+  <LI>Försök förstå programkoden nedan, fungerar den? <PRE>    int a, b;
+    a = Keyboard.readInt("a: ");
+    b = Keyboard.readInt("b: ");
+    if (a*b &gt; 0) {
+        if (a &gt; 0) {
+            System.out.println("Både a och b är positiva");
+        } else {
+            System.out.println("Både a och b är negativa");
+        }
+    } else if (a*b &lt; 0) {
+        if (a &lt; 0) {
+            System.out.println("a är negativt och b är positivt");
+        } else {
+            System.out.println("a är positivt och b är negativt");
+        }
+    } else {
+        if (a != 0) {
+            System.out.println("b är noll");
+        } else if (b != 0) {
+            System.out.println("a är noll");
+        } else {
+            System.out.println("Både a och b är noll");
+        }
+    }
+      </PRE></LI></OL>
+<H3>Upprepning</H3>Om vi i ett program skall läsa in och beräkna medelvärdet av 
+100 tal skulle vi få en väldigt klumpig lösning om det inte fanns något enkelt 
+sätt att upprepa satser. Än värre vore det om vi skulle läsa en följd av 
+positiva tal avslutade med en 0:a, eftersom vi då inte i förhand vet hur många 
+tal som skall läsas in.
+<P>Lyckligtvis finns det i Java sätt att upprepa satser (det kallas även för 
+iteration), vi kommer här att behandla de två vanligaste varianterna: 
+<UL>
+  <LI><CODE>for</CODE>-satsen, och 
+  <LI><CODE>while</CODE>-satsen. </LI></UL>
+<H4><CODE>for</CODE>-satsen</H4>Den enklaste formen av <CODE>for</CODE>-sats ser 
+ut så här: <PRE>    int i;
+    for (i = 1; i &lt;= 100; i = i + 1) {
+        <I>...dessa satser upprepas 100 gånger...</I>
+    }
+</PRE>där parentesen innehåller tre delar: 
+<UL>
+  <LI>en initieringsdel, som utförs före första varvet, 
+  <LI>en villkorsdel, som innehåller ett villkor som måste vara uppfyllt för att 
+  vi skall utföra satserna innanför klamrarna, och 
+  <LI>en uppräkningsdel, som utförs efter varje varv, precis innan vi testar 
+  villkorsdelen nästa gång. </LI></UL>Formellt skriver man alltså: <PRE>    for (<I>initiering</I>; <I>villkor</I>; <I>uppdatering</I>) {
+        <I>...satser...</I>
+    }
+</PRE>Precis som i fallet med <CODE>if</CODE>-satsen bör man använda klamrarna 
+runt de satser som skall utföras.
+<P>Ett program som läser in och beräknar medelvärdet av 100 tal skulle kunna 
+skrivas: <PRE>    int i;
+    double nbr, sum, average;
+    sum = 0;
+    for (int i = 1; i &lt;= 100; i = i+1) {
+        nbr = Keyboard.readDouble();
+        sum = sum + nbr;
+    }
+    average = sum/100;
+    System.out.println("Medelvärdet är " + average);
+</PRE>Lägg märke till att vi måste nollställa variabeln <CODE>sum</CODE> före 
+<CODE>for</CODE>-loopen (de andra variablerna får värden innan de används första 
+gången).
+<P>Denna form av <CODE>for</CODE>-satsen är bekväm när vi i förväg vet hur många 
+gånger vi vill upprepa någonting.
+<P>
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Skriv programrader för att skriva ut talen 1, 2, 3, ..., 1000. Varje tal 
+  skall stå på en egen rad.
+  <P></P>
+  <LI>Skriv ett program som läser in två heltal, <I>n</I> och <I>m</I>, där 
+  <I>n&lt;m</I>, och sedan skriver ut summan av talen <I>n, n+1, n+1, ..., 
+m</I>.
+  <P></P>
+  <LI>Vad händer i följande programavsnitt: <PRE>    int i;
+    for (i = 1; i &gt;= 0; i = i + 1) {
+        System.out.println(i);
+    }
+      </PRE>Hur många varv går vi inne i loopen? </LI></OL>
+<H4><CODE>while</CODE>-satsen</H4>Om vi inte vet i förväg hur många gånger vi 
+skall upprepa våra satser är det enklare att använda <CODE>while</CODE>-satsen. 
+Den har den allmäna formen: <PRE>    while (<I>...villkor...</I>) {
+        <I>...dessa satser upprepas så länge villkoret är uppfyllt...</I>
+    }
+</PRE><CODE>while</CODE>-satsen illustreras nog bäst med ett exempel: Vi vill 
+läsa in en följd av positiva heltal, avslutade med ett negativt tal, och beräkna 
+deras summa: <PRE>    int nbr, sum;
+    sum = 0;
+    nbr = Keyboard.readInt();
+    while (nbr &gt;= 0) {
+        sum = sum + nbr;
+        nbr = Keyboard.readInt();
+    }
+    System.out.println("Summan är " + sum);
+</PRE>Vi börjar med att nollställa summan, därefter låter vi variabeln 
+<CODE>nbr</CODE> få värdet av det först inlästa talet. Om detta tal är större än 
+0 ökar vi summan med talet och låter <CODE>nbr</CODE> få värdet av nästa inlästa 
+tal. Detta upprepas tills det inlästa talet inte längre är större än 0.
+<P>En vanlig missuppfattning är att <CODE>while</CODE>-satsen bryts så fort 
+villkoret inte är uppfyllt, men den bryts inte förrän alla satser inne i loopen 
+är färdiga och villkoret testas på nytt. I exemplet nedan kommer alltså den 
+sista utskriften inne i <CODE>while</CODE>-loopen att skrivas ut: <PRE>    int value;
+    value = 1;
+    while (value &gt; 0) {
+        value = -1;
+        System.out.println("Loopen bryts inte förrän efter denna utskrift");
+    }
+</PRE>Se även den sista kontrolluppgiften nedan. 
+<H4>Kontrolluppgifter</H4>
+<OL>
+  <LI>Skriv programrader för att läsa en följd av positiva heltal, avslutade med 
+  en 0:a, och sedan skriva ut hur många tal som fanns i följden (0:an skall inte 
+  räknas med).
+  <P></P>
+  <LI>Skriv, med hjälp av en <CODE>while</CODE>-sats, programrader för att 
+  skriva ut talen 1, 2, 3, ..., 1000. Varje tal skall stå på en egen rad.
+  <P></P>
+  <LI>Nedanstående lösning på problemet att beräkna summan av en följd av 
+  inlästa positiva heltal (se texten ovan) innehåller en felaktighet (bortsett 
+  från att det är fult att ge variabeln <CODE>nbr</CODE> värdet 1 bara för att 
+  komma in i <CODE>while</CODE>-loopen), vad är det som blir fel? <PRE>    int nbr, sum;
+    nbr = 1;
+    sum = 0;
+    while (nbr &gt;= 0) {
+        nbr = Keyboard.readInt();
+        sum = sum + nbr;
+    }
+    System.out.println("Summan är " + sum);
+      </PRE></LI></OL>
+<HR>
+
+<ADDRESS></ADDRESS></BODY></HTML>

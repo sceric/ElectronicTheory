@@ -1,0 +1,27 @@
+P1-2
+
+import se.lth.cs.pt.io.*;
+
+pablic class P1-2{
+
+publik static void main (String[] args){
+
+Simple Window w = new SimpleWindow (600,600);
+Turtle t = new Turtle(w,250,250);
+
+ t.right(90);
+ t.penDown();
+
+     for(int i=1;i<=3;i++){
+         t.forward(100);
+         t.left(120);
+     }
+
+  t.JampTo(300,300);
+      for(int i=1;i<=3;i++){
+        t.forward(100);
+        t.left(120);
+    }
+  }
+}
+

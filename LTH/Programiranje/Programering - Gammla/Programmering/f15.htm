@@ -1,0 +1,385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0065)http://www.cs.lth.se/Education/Courses/EDA011/e/lect/f15soln.html -->
+<HTML><HEAD><TITLE></TITLE>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+<META content="MSHTML 5.00.2314.1000" name=GENERATOR></HEAD>
+<BODY>
+<H1>Lösningsförslag till uppgifterna vi löste under f15</H1>
+<H2><CODE>Complex</CODE>-uppgiften</H2>Under föreläsningen kommenterade vi 
+särskilt tre saker (punkt 2 är betydligt viktigare än punkt 1 och 3, som är av 
+ringa betydelse). 
+<OL>
+  <LI>Vi har en privat konstruktor, dvs vi tillåter inte användaren att skapa 
+  nya komplexa tal med hjälp av <CODE>c = new Complex()</CODE>, istället måste 
+  hon anropa någon av våra "pseudo-konstruktorer" (<CODE>newCartesian</CODE> och 
+  <CODE>newPolar</CODE>). Dessa båda operationer är klassoperationer, eftersom 
+  de inte utförs på ett enskilt objekt utan på klassen i sin helhet.
+  <P></P>
+  <LI>Vi försöker kapsla in attributen så väl som möjligt, även inom klassen. 
+  Som klassen är skriven nu är det bara operationerna på gul bakgrund som 
+  använder attributen direkt, överallt annars hämtas deras värde med hjälp av 
+  operationer. Poängen med detta är att klassen blir flexiblare, vi kan 
+  exempelvis byta tillståndsvariabler (till polär form, se nedan) utan att 
+  övriga operationer ändras.
+  <P></P>
+  <LI>Vi låter operationerna <CODE>setCartesian</CODE> och <CODE>setPolar</CODE> 
+  returnera <CODE>this</CODE>. På så vis kan vi använda det värde som returneras 
+  direkt, exempelvis i <CODE>newPolar</CODE> som annars hade fått skrivas: <PRE>    public static Complex newCartesian(double re, double im) {
+        Complex c = new Complex();
+        c.setCartesian(re,im);
+        return c;
+    }
+      </PRE></LI></OL>Nedan har jag dessutom lagt till en operation <CODE>String 
+toString()</CODE> som ger en strängrepresentation av talet. Alla klasser som har 
+en sådan operation kan skrivas ut mycket enkelt, se exemplet nedan (i 
+<CODE>toString()</CODE> har jag använt en av de formateringsklasser som finns i 
+paketet <CODE>java.text</CODE>, dessa behöver ni inte lära er använda i kursen).
+<P>Det kan tyckas att lösningen är onödigt tillkrånglad, men dess avsikt är att 
+visa ett antal tekniker som är användbara i större exempel (vi har i denna kurs 
+inte tid att ge oss in i större exempel, så vi får använda principerna i enklare 
+exempel).
+<P><PRE><TABLE width=800>class Complex {
+
+        private Complex() {
+        }
+    
+        public static Complex newCartesian(double re, double im) {
+            return new Complex().setCartesian(re,im);
+        }
+    
+        public static Complex newPolar(double mag, double arg) {
+            return new Complex().setPolar(mag,arg);
+        }
+
+<TBODY><TR bgColor=#ffff88>// ================================================================
+        
+        private double
+            re,
+            im;
+    
+        public double getRe() {
+            return this.re;
+        }
+        
+        public double getIm() {
+            return this.im;
+        }
+        
+        public double getMagnitude() {
+            return Math.sqrt(this.re*this.re + this.im*this.im);
+        }
+        
+        public double getArgument() {
+            return Math.atan2(this.im,this.re);
+        }            
+        
+        public Complex setCartesian(double re, double im) {
+            this.re = re;
+            this.im = im;
+            return this;
+        }
+        
+        public Complex setPolar(double magnitude, double argument) {
+            this.re = magnitude*Math.cos(argument);
+            this.im = magnitude*Math.sin(argument);
+            return this;
+        }
+</TR>// ================================================================
+    
+        public Complex add(Complex other) {
+            return Complex.newCartesian(this.getRe() + other.getRe(),
+                                        this.getIm() + other.getIm());
+        }
+        
+        public Complex subtract(Complex other) {
+            return Complex.newCartesian(this.getRe() - other.getRe(),
+                                        this.getIm() - other.getIm());
+        }
+        
+        public Complex multiply(Complex other) {
+            return Complex.newPolar(this.getMagnitude()*other.getMagnitude(),
+                                    this.getArgument() + other.getArgument());
+        }
+        
+        public Complex divide(Complex other) {
+            return Complex.newPolar(this.getMagnitude()/other.getMagnitude(),
+                                    this.getArgument() - other.getArgument());
+        }
+    
+        public Complex exp(double x) {
+            return Complex.newPolar(Math.pow(this.getMagnitude(),x),
+                                    x*this.getArgument());
+        }
+    
+        public String toString() {
+            final double eps = 0.0001;
+            boolean
+                hasRealPart = Math.abs(this.getRe()) &gt; eps,
+                hasImaginaryPart = Math.abs(this.getIm()) &gt; eps;
+            if (!(hasRealPart || hasImaginaryPart)) {
+                return "0";
+            } else {
+                String re, im;
+                if (hasRealPart) {
+                    re = new DecimalFormat("0.0000;-0.0000").format(this.getRe());
+                    if (hasImaginaryPart) {
+                        im = new DecimalFormat(" + 0.0000i; - 0.0000i").format(this.getIm());
+                    } else {
+                        im = "";
+                    }
+                } else {
+                    re = "";
+                    im = new DecimalFormat("0.0000i;-0.0000i").format(this.getIm());
+                }
+                return re + im;
+            }
+        }
+    }
+</TBODY></TABLE>
+</PRE>Vi hade kunnat ändra tillståndsvariabler till <CODE>magnitude</CODE> och 
+<CODE>argument</CODE> (polär form) genom att bara byta ut programkoden på gul 
+bakgrund mot: <PRE><TABLE width=800><TBODY><TR bgColor=#ffff88>// ================================================================
+        
+        private double
+            magnitude,
+            argument;
+    
+        public double getRe() {
+            return this.magnitude*Math.cos(this.argument);
+        }
+        
+        public double getIm() {
+            return this.magnitude*Math.sin(this.argument);
+        }
+        
+        public double getMagnitude() {
+            return magnitude;
+        }
+        
+        public double getArgument() {
+            return argument;
+        }            
+        
+        public Complex setCartesian(double re, double im) {
+            this.magnitude = Math.sqrt(re*re + im*im);
+            this.argument = Math.atan2(im,re);
+            return this;
+        }
+        
+        public Complex setPolar(double magnitude, double argument) {
+            this.magnitude = magnitude;
+            this.argument = argument;
+            return this;
+        }
+</TR></TBODY></TABLE>
+</PRE>Resten av klassen fungerar som tidigare, utan några ändringar.
+<P>Exempel på program för att utföra några beräkningar på komplexa tal: <PRE>    public class f15 {
+    
+        public static void main(String[] args) {
+            Complex
+                i = Complex.newCartesian(0,1),
+                z0 = Complex.newCartesian(1,1),
+                z1 = Complex.newPolar(1,Math.PI/4),
+                z2 = z0.multiply(z1),
+                z3 = i.add(Complex.newPolar(1,-Math.PI/2)),
+                z4, z5;
+            z4 = z1.multiply(i);
+            z5 = i.exp(2);
+            System.out.println("i = " + i);
+            System.out.println("z3 = " + z3);
+            System.out.println("z4 = " + z4);
+            System.out.println("z5 = " + z5);
+        }
+    }
+</PRE>som ger utskriften <PRE>    i = 1,0000i
+    z3 = 0
+    z4 = -0,7071 + 0,7071i
+    z5 = -1,0000
+</PRE>
+<H2><CODE>BigBangTurtle</CODE>-uppgiften</H2>Uppgiften var att skriva ett 
+program som lät ett godtyckligt antal sköldpaddor samtidigt göra 
+slumpvandringar. I den första versionen lät vi sköldpaddorna hålla på tills 
+någon lämnat fönstret, i den andra versionen bröt vi dessutom när två 
+sköldpaddor befann sig mer än 70% av fönstrets bredd ifrån varandra.
+<P>Uppgiften skulle framförallt ge träning i att använda loopar, särskilt 
+'nästlade' loopar.
+<P>Vi har i lösningen två typer av loopar och nästling: 
+<UL>
+  <LI>Ytterst har vi en <CODE>while</CODE>-sats och inne i den en 
+  <CODE>for</CODE>-sats. När vi skrev den första versionen av programmet (som 
+  bara höll på tills någon sköldpadda lämnat skärmen) hade vi: <PRE>    while (!finished) {
+      for (int i = 0; i &lt; n; i++) {
+            t[i].randomStep(1,5);
+            if (!t[i].insideWindow()) {
+                finished = true;
+            }
+        }
+    }
+      </PRE>dvs vi lät samtliga sköldpaddor ta sitt sista steg innan vi bröt - 
+  den inre loopen går alltid ett bestämt antal varv.
+  <P></P>
+  <LI>I den andra versionen av programmet (se nedan) har vi inne i den yttre 
+  <CODE>while</CODE>-satsen två nästlade <CODE>while</CODE>-satser för att 
+  jämföra alla kombinationer av två sköldpaddor. Båda dessa senare 
+  <CODE>while</CODE>-satser skall brytas så snart vi hittat två sköldpaddor som 
+  är tillräckligt långt ifrån varandra.
+  <P>I programmet skrev vi dessa loopar med hjälp av <CODE>while</CODE>: <PRE>    int i = 0;
+    while (i &lt; n-1 &amp;&amp; !finished) {
+        int j = i+1;
+        while (j &lt; n &amp;&amp; !finished) {
+            if (t[i].distanceTo(t[j]) &gt; maxDistance) {
+                finished = true;
+            } else {
+                j++;
+            }
+        }
+        i++;
+    }
+      </PRE>men man kan faktiskt skriva dem med hjälp av 
+  <CODE>for</CODE>-satser: <PRE>    for (int i = 0; i &lt; n-1 &amp;&amp; !finished; i++) {
+        for (int j = 0; j &lt; n-1 &amp;&amp; !finished; j++) {
+            if (t[i].distanceTo(t[j]) &gt; maxDistance) {
+                finished = true;
+            }
+        }
+    }
+      </PRE>Det är dock inte alla språk som kan bryta en <CODE>for</CODE>-loop 
+  på detta vis, och det är bra om ni i denna kurs tydligt markerar skillnaden 
+  mellan:
+  <P>
+  <UL>
+    <LI>loopar som går ett bestämt antal varv (använd gärna 
+    <CODE>for</CODE>-sats för dessa), och
+    <P></P>
+    <LI>loopar som avbryts av ett villkor som vi inte kan bestämma innan loopen 
+    körts (använd helst <CODE>while</CODE>- eller <CODE>do-while</CODE>-satser 
+    för dessa). </LI></UL></LI></UL>För att ge övning i ärvning skapade vi olika 
+subklasser till klassen <CODE>Turtle</CODE>, se programlistningen nedan. Vi har: 
+
+<UL>
+  <LI><CODE>SmarterTurtle</CODE>, som är den första utvidgningen av 
+  <CODE>Turtle</CODE>-klassen som vi gjorde under en föreläsning. Denna klass 
+  har operationer för att mäta avstånd mellan sköldpaddor, och dessutom en 
+  operation som testar om sköldpaddan befinner sig innanför sitt fönster.
+  <P></P>
+  <LI><CODE>TripmeterTurtle</CODE>, som är en <CODE>SmarterTurtle</CODE> som kan 
+  räkna sina steg.
+  <P></P>
+  <LI><CODE>RandomTurtle</CODE>, som är en <CODE>TripmeterTurtle</CODE> som kan 
+  ta slumpsteg.
+  <P></P>
+  <LI><CODE>BigBangTurtle</CODE>, som är en <CODE>RandomTurtle</CODE> som skapas 
+  mitt i sitt fönster, med pennan nere. </LI></UL>Exemplet är, precis som det 
+förra exemplet, draget till sin spets, men dess uppgift är bara att illustrera 
+några vanliga programmeringstekniker.
+<P><PRE>    import se.lth.cs.pt.io.*;
+    import se.lth.cs.pt.random.*;
+    import se.lth.cs.pt.window.*;
+    import se.lth.cs.pt.turtle.*;
+    
+    public class f15 {
+    
+        public static void main(String[] args) {
+            int windowSize = 500;
+            int n = Keyboard.readInt("Antal sköldpaddor: ");
+            SimpleWindow w = new SimpleWindow(windowSize,windowSize);
+            BigBangTurtle[] t = new BigBangTurtle[n];
+            for (int i = 0; i &lt; n; i++) {
+                t[i] = new BigBangTurtle(w);
+            }
+            boolean finished = false;
+            double maxDistance = 0.70*windowSize;
+            while (!finished) {
+                for (int i = 0; i &lt; n; i++) {
+                    t[i].randomStep(1,5);
+                    if (!t[i].insideWindow()) {
+                        finished = true;
+                    }
+                }
+                int i = 0;
+                while (i &lt; n-1 &amp;&amp; !finished) {
+                    int j = i+1;
+                    while (j &lt; n &amp;&amp; !finished) {
+                        if (t[i].distanceTo(t[j]) &gt; maxDistance) {
+                            finished = true;
+                        } else {
+                            j++;
+                        }
+                    }
+                    i++;
+                }
+            }
+            int sum = 0;
+            for (int i = 0; i &lt; n; i++) {
+                sum += t[i].getNbrOfSteps();
+            }
+            System.out.println("Totalt antal steg: " + sum);
+        }
+    }
+    
+    class SmarterTurtle extends Turtle {
+    
+        public SmarterTurtle(SimpleWindow w, int x, int y) {
+            super(w,x,y);
+        }
+        
+        public boolean insideWindow() {
+            return
+                1 &lt;= this.getX() &amp;&amp; this.getX() &lt;= this.getWindow().getWidth() &amp;&amp;
+                1 &lt;= this.getY() &amp;&amp; this.getY() &lt;= this.getWindow().getHeight();
+        }
+    
+        public double distanceTo(Turtle other) {
+            int dx = this.getX() - other.getX(),
+                dy = this.getY() - other.getY();
+            return Math.sqrt(dx*dx + dy*dy);
+        }        
+    }
+    
+    class TripmeterTurtle extends SmarterTurtle {
+    
+        private int
+            nbrOfSteps;
+    
+        public TripmeterTurtle(SimpleWindow w, int x, int y) {
+            super(w,x,y);
+            this.reset();
+        }
+    
+        public void reset() {
+            this.nbrOfSteps = 0;
+        }
+    
+        public int getNbrOfSteps() {
+            return this.nbrOfSteps;
+        }
+    
+        public void forward(int n) {
+            super.forward(n);
+            this.nbrOfSteps += n;
+        }
+    }
+    
+    class RandomTurtle extends TripmeterTurtle {
+    
+        protected RandomNumberGenerator rng;
+        
+        public RandomTurtle(SimpleWindow w, int x, int y) {
+            super(w,x,y);
+            this.rng = new RandomNumberGenerator();
+        }
+        
+        public void randomStep(int minStep, int maxStep) {
+            this.left(this.rng.randInt(0,359));
+            this.forward(this.rng.randInt(minStep,maxStep));
+        }
+    }
+    
+    class BigBangTurtle extends RandomTurtle {
+        
+        public BigBangTurtle(SimpleWindow w) {
+            super(w,w.getWidth()/2,w.getHeight()/2);
+            this.penDown();
+        }
+    }
+</PRE></BODY></HTML>

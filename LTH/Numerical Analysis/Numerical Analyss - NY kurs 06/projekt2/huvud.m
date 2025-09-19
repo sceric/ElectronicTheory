@@ -1,0 +1,33 @@
+
+% x=[0 1 2 4 5 5 1];
+% y=[1 4 5 6 7 6 8; 3 6 7 2 8 0 1];
+% T=2*pi;
+% 
+% yleft=[4 5 6 6 6 6 6 ]';
+% yright=[3 1 6 6 6 6 6]';
+
+ 
+
+options = bvpset('RelTol', 1e-5, 'Stats', 'on');
+solinit = bvpinit(linspace(0,1,100)',@guess, 2*pi);
+sol = bvp4c(@ode, @bcdeviation, solinit,options);
+T = sol.parameters
+tid = T*sol.x;
+y = sol.y;
+tt2 = [tid tid+T];
+y2 = [y y];
+y21 = y2(1,:);
+y22 = y2(2,:);
+plot(tt2,y21,'r');
+hold
+yy = guess(linspace(0,2,200));
+yy1 = yy(1,:);
+yy2 = yy(2,:);
+xkord = T*linspace(0,2,200);
+plot(xkord,yy1,'b');
+figure
+plot(tt2,y22,'*'); %graf
+hold
+plot(xkord,yy2,'b');
+figure
+plot(y(1,:),y(2,:)),'o';

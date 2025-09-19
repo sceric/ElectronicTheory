@@ -1,0 +1,58 @@
+P4-2
+
+import se.lth.se.writer.*;
+import se.lth.se.reader.*;
+
+public class Vikt{
+
+  public static void main(String[] args){
+
+   
+   ConsoleWriter w = new ConsoleWriter();
+
+   FoleReader r= new FileReader("skoldata")
+
+   RandomNumberGenerator rng=new RandomNumberGenerator();
+
+   int[]= new pass[12];
+
+
+
+   for(int i=1 ; i<=240 ;i++){
+
+    int studentID=r.readint();
+ 
+    for(int k=1; k<=20 ; k++){
+       
+        int grade=r.redInt()
+
+        if (grade>0){
+     
+           nbrPassd++;
+        }
+
+        if{nbrPassd<11){
+
+         pass[nbrPassd]++;
+
+         }else pass[11]++;
+        }
+
+
+        r.flushLine();
+        if(grade==20){
+        w.println(studentID)
+
+
+     for(int p=0; p<11 ; p++){
+
+       w.println(" "+p +" " +pass[i];
+
+     }
+
+     w.println(" >=11" +pass[11]);
+
+} 
+
+ 
+     

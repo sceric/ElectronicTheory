@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<title>Lösningsförslag till tentamen den 24 maj 2000</title>
+</head>
+
+<body>
+<h1>Lösningsförslag till tentamen den 24 maj 2000</h1>
+
+<h2>Uppgift 1</h2>
+
+<pre>
+    class Runner {
+    
+        private int nbr;
+        private String name;
+        private int startTime;
+        private Control lastControl;
+    
+        public Runner(int nbr, String name, int startTime) {
+            this.nbr = nbr;
+            this.name = name;
+            this.startTime = startTime;
+        }
+    
+        public int getNbr() {
+            return this.nbr;
+        }
+    
+        public String getName() {
+            return this.name;
+        }
+    
+        public int getStartTime() {
+            return this.startTime;
+        }
+    
+        public void setLastControl(Control control) {
+            this.lastControl = control;
+        }
+    
+        public Control getLastControl() {
+            return this.lastControl;
+        }
+    }
+</pre>
+
+
+<h2>Uppgift 2</h2>
+
+<pre>
+    class SplitTime extends Link {
+    
+        private Runner runner;
+        private int cTime;
+    
+        public SplitTime(Runner runner, int cTime) {
+            this.runner = runner;
+            this.cTime = cTime;
+        }
+    
+        public Runner getRunner() {
+            return this.runner;
+        }
+    
+        public int getCTime() {
+            return this.cTime;
+        }
+    }
+</pre>
+
+<h2>Uppgift 3</h2>
+
+<pre>
+    class Control {
+    
+        private double distance;
+        private SplitTime[] splitVec;
+        private int nbrPassed;
+    
+        public Control(double dist, int maxNbrPassed) {
+            this.distance = dist;
+            this.splitVec = new SplitTime[maxNbrPassed];
+            this.nbrPassed = 0;
+        }
+    
+        public double getDistance() {
+            return this.distance;
+        }
+    
+        public void runnerPassed(Runner runner, int clock) {
+            runner.setLastControl(this);
+            SplitTime splitTime = new SplitTime(runner, clock - runner.getStartTime());
+            int pos = this.nbrPassed;
+            while (pos > 0 && splitTime.getCTime() < this.splitVec[pos-1].getCTime()) {
+                this.splitVec[pos] = this.splitVec[pos-1];
+                pos--;
+            }
+            this.splitVec[pos] = splitTime;
+            this.nbrPassed++;
+        }
+    
+        public int getNbrPassed() {
+            return this.nbrPassed;
+        }
+    
+        public SplitTime getSplitTime(int place) {
+            return this.splitVec[place-1];
+        }
+    
+        public int getClock(Runner runner) {
+            int pos = 0;
+            while (pos < this.nbrPassed && this.splitVec[pos].getRunner() != runner) {
+                pos++;
+            }
+            if (pos < this.nbrPassed) {
+                return runner.getStartTime() + this.splitVec[pos].getCTime();
+            } else {
+                return -1;
+            }
+        }
+</pre>
+
+I <code>getClock()</code> kan vi istället använda en
+<code>for</code>-loop och bryta när vi funnit rätt löpare:
+
+<pre>    
+        public int getClock(Runner runner) {
+            for (int i = 0; i < this.nbrPassed; i++) {
+                if (this.splitVec[i].getRunner() == runner) {
+                    return runner.getStartTime() + this.splitVec[i].getCTime();
+                }
+            }
+            return -1;
+        }
+    }
+</pre>
+
+<h2>Uppgift 4</h2>
+
+<pre>
+    class Organizer {
+    
+        private Runner[] runnerVec;
+        private int nbrOfParticipants;
+        private Control[] controlVec;
+        private int nbrOfControls;
+    
+        public void reportStanding(Control control, Writer writer) {
+            writer.println("Vid kontrollen " + control.getDistance() + " är ställningen just nu:");
+            for (int i = 1; i <= control.getNbrPassed(); i++) {
+                SplitTime splitTime = control.getSplitTime(i);
+                Runner runner = splitTime.getRunner();
+                int time = splitTime.getCTime(),
+                    hours = time / 3600,
+                    minutes = (time/60) % 60,
+                    seconds = time % 60;
+                writer.println(i + ". " +
+                               splitTime.getRunner().getNbr() + ", " +
+                               splitTime.getRunner().getName() + ": " +
+                               hours + ":" + minutes + "." + seconds);
+            }
+        }
+    
+        public void reportRunner(int nbr, Writer writer) {
+            Runner runner = this.runnerVec[nbr];
+            Control lastControl = runner.getLastControl();
+            if (lastControl == null) {
+                writer.println(nbr + ", " +
+                               runner.getName() +
+                               " har inte passerat någon kontroll.");
+            } else {
+                int time = runner.getStartTime() + lastControl.getClock(runner),
+                    hour = time / 3600,
+                    minute = (time / 60) % 60;
+                writer.println(nbr + ", " +
+                               runner.getName() +
+                               " passerade kontrollen " +
+                               lastControl.getDistance() +
+                               " klockan " +
+                               hour + "." + minute);
+            }
+        }
+    }
+</pre>
+
+<h2>Uppgift 5</h2>
+
+<pre>
+    class Control {
+    
+        private double distance;
+        private Head list;
+    
+        public Control(double dist) {
+            this.distance = dist;
+            this.list = new Head();
+        }
+    
+        public void runnerPassed(Runner runner, int clock) {
+            runner.setLastControl(this);
+            SplitTime
+                splitTime = new SplitTime(runner, clock - runner.getStartTime()),
+                e = (SplitTime) this.list.first();
+            while (e != null && e.getCTime() < splitTime.getCTime()) {
+                e = (SplitTime) e.suc();
+            }
+            if (e == null) {
+                splitTime.into(this.list);
+            } else {
+                splitTime.precede(e);
+            }
+        }
+    
+        public int getNbrPassed() {
+            return this.list.cardinal();
+        }
+    
+        public SplitTime getSplitTime(int place) {
+            SplitTime e = (SplitTime) this.list.first();
+            for (int i = 2; i <= place; i++) {
+                e = (SplitTime) e.suc();
+            }
+            return e;
+        }
+    
+        public int getClock(Runner runner) {
+            SplitTime e = (SplitTime) this.list.first();
+            while (e != null && e.getRunner() != runner) {
+                e = (SplitTime) e.suc();
+            }
+            if (e == null) {
+                return -1;
+            } else {
+                return runner.getStartTime() + e.getCTime();
+            }
+        }
+    }
+</pre>
+
+
+</body>
+</html>

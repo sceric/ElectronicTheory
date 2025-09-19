@@ -1,0 +1,16 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "email"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "..\\emaill\\email.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "\\Email.java" #[EndFile]
+#[BeginFile]SOURCE := "\\classes\\Email.htm" #[EndFile]
+#[BeginFile]SOURCE := "..\\emaill\\Email.java" #[EndFile]
+
+! Start Breakpoint Structure
+
